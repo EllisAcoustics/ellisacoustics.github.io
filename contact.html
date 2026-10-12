@@ -84,7 +84,7 @@
   }
   .topnav .home { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; min-height: 44px; }
   .topnav .home svg { display: block; }
-  .topnav .home svg { width: 54px; height: auto; }
+  .topnav .home svg { width: 68px; height: auto; }
   .topnav .home .mk-spin { transform-box: view-box; animation: mk-spin 7s linear infinite; }
   .topnav .home .mk-rotor { transform-box: fill-box; transform-origin: center; animation: mk-rotor 0.2s linear infinite; }
   @keyframes mk-spin { to { transform: rotate(360deg); } }
@@ -154,7 +154,7 @@
   #intro { display: none; }
   html.intro #intro {
     display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden;
-    animation: intro-failsafe 0s linear 2.4s forwards;
+    animation: intro-failsafe 0s linear 4.4s forwards;
   }
   @keyframes intro-failsafe { to { visibility: hidden; } }
   #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
@@ -175,7 +175,7 @@
 </div>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
-    <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="0 0 48 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><path d="M32.6 25V28.6" stroke-width="0.8"/><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><path d="M1 30H47"/></svg><span class="home-label" aria-hidden="true">Max Ellis</span></a>
+    <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><path d="M32.6 25V28.6" stroke-width="0.8"/><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
     <div class="links">
       <a href="about">About</a>
       <a href="contact" aria-current="page">Contact</a>
@@ -235,7 +235,7 @@
 <script>
 (() => {
   // Fly-past intro: a line draws out, a drone crosses left to right and an eVTOL right to left,
-  // then the line settles onto the first divider as the page fades in. About 1.7 s.
+  // then the line settles onto the first divider as the page fades in. About 3.2 s.
   const root = document.documentElement;
   const el = document.getElementById('intro');
   if (!el) return;
@@ -258,7 +258,7 @@
     Object.assign(line.style, { left: r.left + 'px', width: r.width + 'px', top: y0 + 'px' });
     drone.style.width = dw + 'px'; evtol.style.width = ew + 'px';
 
-    const DRAW = 320, FLY = 900, SETTLE = 480;
+    const DRAW = 600, FLY = 2000, SETTLE = 760;
     line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
                  { duration: DRAW, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
     const fly = (node, from, to, y, bob) => node.animate([
