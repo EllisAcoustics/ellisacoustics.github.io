@@ -191,6 +191,40 @@
     .src .note, .src .pulse.p1 { opacity: 1; }
   }
 
+  /* ---------- Research method figure ---------- */
+  .method { min-width: 0; }
+  .steps { display: grid; gap: calc(var(--u) * 4); position: relative; }
+  .step { position: relative; padding-left: calc(var(--u) * 4); }
+  .step .node {
+    position: absolute; left: 0; top: 4px; width: 11px; height: 11px;
+    border: 1px solid var(--ink); background: var(--paper); border-radius: 50%;
+  }
+  .steps::before {
+    content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1px; background: var(--rule);
+    transform-origin: top; transform: scaleY(var(--progress, 1));
+  }
+  .step-icon { display: block; width: 48px; color: var(--ink); margin-bottom: var(--u); }
+  .step-icon svg { display: block; width: 100%; height: auto; }
+  .step-no { display: block; font-family: var(--mono); font-size: 13px; line-height: 16px; color: var(--ink-2); }
+  .step h3 { margin: 2px 0 4px; font-size: 17px; line-height: 24px; font-weight: 600; }
+  .step p { color: var(--ink-2); font-size: 15px; line-height: 22px; max-width: 46ch; }
+  @media (min-width: 880px) {
+    .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(var(--u) * 3); padding-top: 24px; }
+    .step { padding-left: 0; padding-top: 0; }
+    .step .node { top: -24px; left: 0; }
+    .steps::before { left: 6px; right: 6px; top: 5px; bottom: auto; width: auto; height: 1px; transform-origin: left; transform: scaleX(var(--progress, 1)); }
+    .step p { font-size: 14px; line-height: 21px; }
+  }
+  /* Scroll reveal: steps light up in sequence the first time the figure is seen */
+  .steps.armed .step { opacity: 0.28; transition: opacity 500ms ease; }
+  .steps.armed .step .node { transition: background 300ms ease; }
+  .steps.lit .step { opacity: 1; transition-delay: calc(var(--n) * 260ms); }
+  .steps.lit .step .node { background: var(--ink); transition-delay: calc(var(--n) * 260ms); }
+  .steps.armed { --progress: 0; }
+  .steps.armed::before { transition: transform 1300ms cubic-bezier(.4,0,.2,1); }
+  .steps.lit { --progress: 1; }
+  @media print { .steps.armed .step { opacity: 1; } }
+
   /* ---------- Hero ---------- */
   .hero { margin-top: calc(var(--u) * 6); max-width: 820px; }
   .hero-claim em { font-style: italic; }
@@ -222,6 +256,9 @@
     border-radius: 2px;
   }
   .btn:hover { background: var(--accent); color: var(--paper); }
+  .btn-quiet { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+  .btn-quiet:hover { background: transparent; color: var(--accent); border-color: var(--ink); }
+  .btn-meta { margin-left: 8px; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink-2); }
   .social {
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; color: var(--ink);
@@ -462,8 +499,36 @@
   .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u); }
   .credits { margin-top: var(--u); max-width: 80ch; font-size: 12px; line-height: 16px; }
 
+  .print-only { display: none; }
   @media print {
+    @page { size: A4; margin: 14mm 14mm 16mm; }
+    html, body { background: #fff; }
+    body { font-size: 10.5pt; line-height: 1.45; }
+    .print-only { display: block; margin-top: 8px; font-family: var(--mono); font-size: 9pt; color: var(--ink-2); }
+    .theme-switch, .cta, #intro, .courier, .impulse, .skip { display: none !important; }
+    .src { opacity: 1 !important; animation: none !important; }
+    .src * { animation: none !important; }
+    .masthead { padding-top: 0; padding-bottom: 12px; }
+    .masthead h1 { font-size: 40pt; }
+    .hero { margin-top: 18px; }
+    .hero-claim { font-size: 18pt; }
+    .hero-why { font-size: 10.5pt; line-height: 1.5; }
+    .section { padding: 14px 0 18px; }
+    .timeline li, .outputs li, .step, .logo { break-inside: avoid; }
+    .section > h2, .tl-head { break-after: avoid; }
+    .honour { -webkit-text-fill-color: var(--ink); color: var(--ink); background: none; }
+    .logo { height: 96px; }
+    .sub-strip { break-inside: avoid; }
     .skip, .marquee-list[aria-hidden="true"] { display: none; }
+    #method, .freq, .marquee, footer, .icon-tile img { display: none !important; }
+    .print-list { display: grid !important; gap: 2px; margin: 0; }
+    .print-list strong { font-weight: 600; }
+    .icon-grid { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 0; }
+    .icon-tile .tip { position: static; opacity: 1; transform: none; color: var(--ink); font-size: 10pt; }
+    .section { grid-template-columns: 130px minmax(0, 1fr) !important; gap: 18px !important; }
+    .sub-strip { margin-top: 18px; }
+    .timeline li { padding-bottom: 14px; }
+    .outputs li { padding: 10px 0; grid-template-columns: 70px minmax(0, 1fr); }
     .marquee { -webkit-mask-image: none; mask-image: none; }
     .marquee-track { transform: none !important; width: auto; }
     .marquee-list { flex-wrap: wrap; }
@@ -490,6 +555,7 @@
   <h1><span class="name"><span class="visually-hidden">Max Ellis</span><span aria-hidden="true">Max Ell<span class="i-wrap"><span class="bl"></span>ı<span class="tittle"></span></span>s</span></span> <span class="postnominals">BDes MSc AFHEA</span></h1>
   <p class="role">PhD Candidate in Psychoacoustics</p>
   <p class="affil">Acoustics Innovation Institute, University of Salford<br>EPSRC Centre for Doctoral Training in Sustainable Sound Futures</p>
+  <p class="print-only">maxellis01.github.io · linkedin.com/in/psychoacoustic · github.com/MaxEllis01</p>
 
   <figure class="freq" aria-hidden="true">
   <!-- Noise sources placed at their characteristic frequency: x = log2(Hz / 63) / 8 -->
@@ -521,7 +587,9 @@
     <p class="hero-claim">Drones, air taxis and heat pumps are about to change how our towns and cities sound forever. I work out how people will perceive them — <em>before</em> they arrive.</p>
     <p class="hero-why">Noise already causes more ill health in Europe than any environmental factor except air pollution<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe">WHO, 2011</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge<a class="cite" href="https://committees.parliament.uk/event/17423">House of Lords, 2023</a>: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft flying low over gardens. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere.</p>
     <div class="cta">
-      <a class="btn" href="#publications">Read the research</a>
+      <a class="btn" href="contact.html">Get in touch</a>
+      <a class="btn btn-quiet" href="#publications">Read the research</a>
+      <a class="btn btn-quiet" href="cv/Max-Ellis-CV.pdf" download>Download CV <span class="btn-meta">PDF</span></a>
       <a class="social" href="https://www.linkedin.com/in/psychoacoustic/" rel="me" aria-label="LinkedIn profile" title="LinkedIn">
         <svg viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path fill="currentColor" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z"/></svg>
       </a>
@@ -536,8 +604,59 @@
 
 <main id="main" class="wrap" tabindex="-1">
 
+  <section class="section" id="method" aria-labelledby="method-h">
+    <h2 id="method-h">How the Research Works</h2>
+    <div class="method">
+      <ol class="steps">
+        <li class="step" style="--n:0">
+          <span class="node" aria-hidden="true"></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 31V19H9V31M9 31V12H17V31M17 31V22H23V31M23 31V15H31V31M31 31V24H37V31M1 31H39"/><path d="M12 16H14M12 20H14M12 24H14M26 19H28M26 23H28" stroke-width="0.8"/><path d="M27 6H35M29 6V8M33 6V8M29.5 8H32.5" stroke-width="0.9"/></svg></span>
+          <span class="step-no">01</span>
+          <h3>Future soundscape</h3>
+          <p>Real places are recorded, then drones, eVTOL aircraft, heat pumps and EVs are added at realistic levels.</p>
+        </li>
+        <li class="step" style="--n:1">
+          <span class="node" aria-hidden="true"></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="20" cy="16" r="3.2"/><path d="M14.5 29Q20 21.5 25.5 29"/><rect x="3" y="12" width="4" height="7" rx="0.8"/><rect x="33" y="12" width="4" height="7" rx="0.8"/><rect x="18" y="1" width="4" height="5" rx="0.8"/><path d="M9 13.5Q10.5 15.5 9 17.5M31 13.5Q29.5 15.5 31 17.5M18 8Q20 9.4 22 8" stroke-width="0.8"/></svg></span>
+          <span class="step-no">02</span>
+          <h3>Auralisation</h3>
+          <p>Each scene is rendered spatially, so listeners hear it as they would standing there.</p>
+        </li>
+        <li class="step" style="--n:2">
+          <span class="node" aria-hidden="true"></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 22V18A12 12 0 0 1 32 18V22"/><rect x="5" y="21" width="6" height="9" rx="2"/><rect x="29" y="21" width="6" height="9" rx="2"/><path d="M15 26H25M17 23H23M17 29H23" stroke-width="0.7" stroke-dasharray="1 1.4"/></svg></span>
+          <span class="step-no">03</span>
+          <h3>Listening panels</h3>
+          <p>Participants rate annoyance in controlled jury tests, across different ambiences and contexts.</p>
+        </li>
+        <li class="step" style="--n:3">
+          <span class="node" aria-hidden="true"></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9L20 6M7 9L20 17M7 9L20 28M7 25L20 6M7 25L20 17M7 25L20 28M20 6L33 17M20 17L33 17M20 28L33 17" stroke-width="0.6"/><circle cx="7" cy="9" r="2.4" fill="var(--paper)"/><circle cx="7" cy="25" r="2.4" fill="var(--paper)"/><circle cx="20" cy="6" r="2.4" fill="var(--paper)"/><circle cx="20" cy="17" r="2.4" fill="var(--paper)"/><circle cx="20" cy="28" r="2.4" fill="var(--paper)"/><circle cx="33" cy="17" r="2.8" fill="currentColor"/></svg></span>
+          <span class="step-no">04</span>
+          <h3>Machine learning</h3>
+          <p>Models learn which acoustic, operational and contextual factors drive the ratings.</p>
+        </li>
+        <li class="step" style="--n:4">
+          <span class="node" aria-hidden="true"></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 3V30H37"/><path d="M6 27C13 26 17 22 21 16S29 6 35 5" /><path d="M24 30V12.6M4 12.6H24" stroke-width="0.6" stroke-dasharray="1.2 1.6"/><circle cx="24" cy="12.6" r="2" fill="currentColor"/></svg></span>
+          <span class="step-no">05</span>
+          <h3>Prediction</h3>
+          <p>Annoyance can be estimated for scenarios that do not exist yet, giving regulators evidence and engineers a target.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <section class="section" id="collaborations" aria-labelledby="collab-h">
     <h2 id="collab-h">Research Collaborations</h2>
+    <ul class="print-only print-list">
+      <li><strong>Defra</strong> — PhD Sponsor</li>
+      <li><strong>Noise Consultants Ltd.</strong> (part of Logika Group) — PhD Placement</li>
+      <li><strong>Dyson</strong> — PhD Placement</li>
+      <li><strong>HEAD Acoustics GmbH</strong> — Journal Paper</li>
+      <li><strong>Joby Aviation Ltd.</strong> — Journal Paper</li>
+      <li><strong>Arcani</strong> — Journal Paper and Internship</li>
+    </ul>
     <div class="marquee" data-speed="47" data-direction="-1">
       <div class="marquee-track">
         <ul class="marquee-list" aria-label="Research collaborators">
@@ -730,6 +849,13 @@
 
       <div id="memberships" class="sub-strip">
         <h3 class="tl-head" id="groups-h">Working Groups and Committees</h3>
+        <ul class="print-only print-list">
+          <li><strong>NASA</strong> Unmanned Aircraft Systems Noise Working Group (UNWG) — Member</li>
+          <li><strong>Noise Network Plus</strong> — Working Group Member</li>
+          <li><strong>Institute of Acoustics</strong> Scottish Branch — Committee Member</li>
+          <li><strong>Institute of Acoustics</strong> Early Careers Group — Committee Member</li>
+          <li><strong>Young Acousticians Network</strong> — Committee Member</li>
+        </ul>
       <div class="marquee" data-speed="46" data-direction="1">
         <div class="marquee-track">
           <ul class="marquee-list" aria-label="Working groups and committees">
@@ -772,7 +898,7 @@
   <div class="foot">
     <div class="foot-row">
       <span>© 2026 Max Ellis</span>
-      <span>Updated October 2026</span>
+      <span><a href="contact.html">Contact</a> · <a href="cv/Max-Ellis-CV.pdf" download>CV (PDF)</a> · Updated October 2026</span>
     </div>
     <p class="credits">Logos are trademarks of their owners and are used only to name the organisations and software listed. Icons from Simple Icons and Devicon. R logo © The R Foundation, CC BY-SA 4.0.</p>
   </div>
@@ -1010,6 +1136,21 @@
   if (root.classList.contains('intro')) addEventListener('intro-done', start, { once: true });
   else start();
   setTimeout(finish, 6000); // never leave the dot missing
+})();
+</script>
+<script>
+(() => {
+  // Light the research steps in sequence the first time the figure scrolls into view.
+  const steps = document.querySelector('.steps');
+  if (!steps || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  steps.classList.add('armed');
+  const io = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) {
+      requestAnimationFrame(() => steps.classList.add('lit'));
+      io.disconnect();
+    }
+  }, { threshold: 0.35 });
+  io.observe(steps);
 })();
 </script>
 <script>
