@@ -31,7 +31,9 @@
     // Skipped for reduced motion and for links straight to a section.
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!location.hash && !reduce) document.documentElement.classList.add('intro', 'awaiting-dot');
+    var go = null; try { go = sessionStorage.getItem('goto'); sessionStorage.removeItem('goto'); } catch (e) {}
+    if (go) window.__goto = go;
+    if (!location.hash && !go && !reduce) document.documentElement.classList.add('intro', 'awaiting-dot');
   })();
 </script>
 <style>
@@ -1624,6 +1626,18 @@
     }).observe(svg);
     addEventListener('resize', () => draw(performance.now()));
     draw(performance.now());
+  })();
+</script>
+<script>
+  // Arriving from another page that asked for a section: jump there, then keep the address clean
+  (() => {
+    const id = window.__goto, el = id && document.getElementById(id);
+    if (location.hash) {
+      const t = document.getElementById(location.hash.slice(1));
+      history.replaceState(null, '', location.pathname + location.search);
+      if (t) addEventListener('load', () => t.scrollIntoView({ block: 'start' }));
+    }
+    if (el) addEventListener('load', () => el.scrollIntoView({ block: 'start' }));
   })();
 </script>
 </body>

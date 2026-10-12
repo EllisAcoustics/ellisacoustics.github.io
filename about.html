@@ -263,7 +263,7 @@
     <h2 id="next-h">Where Next</h2>
     <div class="next">
       <a class="btn" href="contact">Get in touch</a>
-      <a class="btn btn-quiet" href="./#publications">Read the research</a>
+      <a class="btn btn-quiet" href="./#publications" data-section="publications">Read the research</a>
       <a class="btn btn-quiet" href="cv/Max-Ellis-CV.pdf" download>My CV (PDF)</a>
     </div>
   </section>
@@ -426,6 +426,14 @@
     addEventListener('resize', () => draw(performance.now()));
     draw(performance.now());
   })();
+</script>
+<script>
+  // Go to a section of the home page without putting #section in the address
+  document.querySelectorAll('a[data-section]').forEach((a) => a.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    try { sessionStorage.setItem('goto', a.dataset.section); } catch (err) { return; }
+    e.preventDefault(); location.href = './';
+  }));
 </script>
 </body>
 </html>
