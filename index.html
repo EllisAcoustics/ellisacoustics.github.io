@@ -5,7 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Max Ellis — Psychoacoustics researcher</title>
 <meta name="description" content="Max Ellis is a Defra-funded PhD candidate in psychoacoustics at the University of Salford, researching how people perceive drones, eVTOL aircraft, heat pumps and electric-vehicle warning sounds in complex soundscapes.">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <style>
   :root {
     --paper: #F6F5F1;
@@ -19,6 +29,30 @@
     --u: 8px;
     --measure: 68ch;
     --gutter: 16px;
+  }
+  :root { --logo-filter: none; color-scheme: light; }
+  :root[data-theme="dark"] {
+    --paper: #161614;
+    --ink: #ECEAE4;
+    --ink-2: #B9B6AD;
+    --rule: #8C8980;
+    --hairline: #3A3935;
+    --accent: #A9BEFF;
+    --logo-filter: invert(1);
+    color-scheme: dark;
+  }
+  /* No JavaScript: follow the system setting */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --paper: #161614;
+      --ink: #ECEAE4;
+      --ink-2: #B9B6AD;
+      --rule: #8C8980;
+      --hairline: #3A3935;
+      --accent: #A9BEFF;
+      --logo-filter: invert(1);
+      color-scheme: dark;
+    }
   }
   @media (min-width: 720px) { :root { --gutter: 40px; } }
 
@@ -75,7 +109,33 @@
   }
 
   /* ---------- Header ---------- */
-  .masthead { padding-top: calc(var(--u) * 10); padding-bottom: calc(var(--u) * 6); }
+  .masthead { position: relative; padding-top: calc(var(--u) * 10); padding-bottom: calc(var(--u) * 6); }
+
+  /* ---------- Theme switch ---------- */
+  .theme-switch {
+    position: absolute; top: calc(var(--u) * 3); right: var(--gutter);
+    display: flex; align-items: center; gap: var(--u);
+    color: var(--ink-2);
+  }
+  .theme-switch svg { display: block; width: 16px; height: 16px; transition: color 200ms ease; }
+  :root:not([data-theme="dark"]) .theme-switch .sun,
+  :root[data-theme="dark"] .theme-switch .moon { color: var(--ink); }
+  .theme-switch button {
+    position: relative;
+    width: 40px; height: 24px; padding: 0;
+    background: transparent; border: 1px solid var(--rule); border-radius: 12px;
+    cursor: pointer;
+  }
+  .theme-switch button::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--ink);
+    transition: transform 200ms ease;
+  }
+  .theme-switch button[aria-checked="true"]::after { transform: translateX(16px); }
+  .theme-switch button:hover { border-color: var(--ink); }
+  @media (prefers-reduced-motion: reduce) { .theme-switch button::after { transition: none; } }
+  @media print { .theme-switch { display: none; } }
   .masthead h1 {
     font-size: clamp(48px, 9vw, 96px);
     line-height: 1;
@@ -148,7 +208,7 @@
     display: flex; align-items: center; justify-content: center;
     width: 240px; height: 160px; padding: 0 calc(var(--u) * 2);
   }
-  .logo img { display: block; max-width: 100%; height: auto; }
+  .logo img { display: block; max-width: 100%; height: auto; filter: var(--logo-filter); }
   .caption {
     position: absolute; left: 0; right: 0; bottom: var(--u);
     display: flex; flex-direction: column; align-items: center;
@@ -220,7 +280,7 @@
     max-width: 760px;
   }
   .icon-tile { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
-  .icon-tile img { display: block; width: auto; height: 40px; max-width: 96px; object-fit: contain; }
+  .icon-tile img { display: block; width: auto; height: 40px; max-width: 96px; object-fit: contain; filter: var(--logo-filter); }
 
   /* ---------- Footer ---------- */
   .foot {
@@ -245,6 +305,16 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="wrap masthead">
+  <div class="theme-switch">
+    <svg class="sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+      <circle cx="8" cy="8" r="3"/>
+      <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06"/>
+    </svg>
+    <button type="button" role="switch" aria-checked="false" aria-label="Dark mode" id="theme-toggle"></button>
+    <svg class="moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
+      <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
+    </svg>
+  </div>
   <h1>Max Ellis</h1>
   <p class="role">PhD Candidate in Psychoacoustics and Associate Lecturer in Computer Science</p>
   <p class="affil">Acoustics Research Centre, University of Salford — EPSRC Centre for Doctoral Training in Sustainable Sound Futures. Based in Glasgow.</p>
@@ -482,6 +552,27 @@
   </div>
 </footer>
 
+<script>
+(() => {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  const sync = () => btn.setAttribute('aria-checked', String(root.getAttribute('data-theme') === 'dark'));
+  sync();
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    sync();
+  });
+  // Follow system changes until the visitor picks a theme themselves
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  mq.addEventListener && mq.addEventListener('change', (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (err) {}
+    if (!saved) { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); sync(); }
+  });
+})();
+</script>
 <script>
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
