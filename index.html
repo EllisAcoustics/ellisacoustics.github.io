@@ -912,11 +912,10 @@
       { transform: at(tx + 14, ty - 34, -3), offset: 0.28, easing: e2 },
       { transform: at(tx, ty, 0), offset: 0.39, easing: 'linear' },
       { transform: at(tx, ty, 0), offset: 0.48, easing: e2 },
-      { transform: at(tx + 8, ty - 22, 4), offset: 0.62, easing: e2 },
-      { transform: at(W - 48, ty - 4, 10), offset: 0.8, easing: e2 },
-      { transform: at(W - 48, scrollY + innerHeight + 120, 2), offset: 1 }
+      { transform: at(tx, ty - 24, 0), offset: 0.62, easing: 'cubic-bezier(.5,0,.75,0)' },
+      { transform: at(tx + 30, scrollY - 140, 4), offset: 1 }
     ];
-    const anim = drone.animate(path, { duration: 3400, easing: 'linear', fill: 'forwards' });
+    const anim = drone.animate(path, { duration: 3000, easing: 'linear', fill: 'forwards' });
     drone.style.visibility = 'visible';
     // release the dot during the hover over the i
     setTimeout(() => {
@@ -924,7 +923,7 @@
       root.classList.remove('awaiting-dot');
       dot.animate([{ transform: 'translateY(-2px)' }, { transform: 'translateY(1px)' }, { transform: 'translateY(0)' }],
                   { duration: 260, easing: 'ease-out' });
-    }, 3400 * 0.43);
+    }, 3000 * 0.43);
     anim.onfinish = finish;
   };
   const start = () => requestAnimationFrame(fly);
