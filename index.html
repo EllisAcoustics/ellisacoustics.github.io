@@ -14,6 +14,12 @@
       t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', t);
+
+    // Intro: plays on first visit and on refresh (refresh always starts at the top).
+    // Skipped for reduced motion and for links straight to a section.
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!location.hash && !reduce) document.documentElement.classList.add('intro');
   })();
 </script>
 <style>
@@ -110,6 +116,18 @@
 
   /* ---------- Header ---------- */
   .masthead { position: relative; padding-top: calc(var(--u) * 10); padding-bottom: calc(var(--u) * 6); }
+
+  /* ---------- Intro ---------- */
+  #intro { display: none; }
+  html.intro #intro {
+    display: block; position: fixed; inset: 0; z-index: 100;
+    background: var(--paper);
+    animation: intro-failsafe 0s linear 2.4s forwards; /* never blocks the page, even if scripts fail */
+  }
+  html.intro #intro.drawing { background: transparent; }
+  #intro canvas { display: block; width: 100%; height: 100%; }
+  @keyframes intro-failsafe { to { visibility: hidden; } }
+  @media print { #intro { display: none !important; } }
 
   /* ---------- Theme switch ---------- */
   .theme-switch {
@@ -302,6 +320,7 @@
 </style>
 </head>
 <body>
+<div id="intro" aria-hidden="true"><canvas></canvas></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="wrap masthead">
@@ -552,6 +571,101 @@
   </div>
 </footer>
 
+<script>
+(() => {
+  const root = document.documentElement;
+  const el = document.getElementById('intro');
+  if (!root.classList.contains('intro') || !el) { el && el.remove(); return; }
+
+  const cv = el.querySelector('canvas');
+  const ctx = cv.getContext('2d');
+  const ruler = document.querySelector('.scale');
+  const css = getComputedStyle(root);
+  const INK = css.getPropertyValue('--ink').trim();
+  const PAPER = css.getPropertyValue('--paper').trim();
+  const RULE = css.getPropertyValue('--rule').trim();
+
+  const DRAW = 350, WAVE = 800, SETTLE = 450;          // ms, 1.6 s in total
+  const TOTAL = DRAW + WAVE + SETTLE;
+
+  let W, H;
+  const size = () => {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  size();
+  window.scrollTo(0, 0);
+
+  const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+  const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+  const line = (x0, x1, y, colour, alpha, width) => {
+    ctx.globalAlpha = alpha; ctx.strokeStyle = colour; ctx.lineWidth = width;
+    ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  };
+
+  let done = false, start = null;
+  const finish = () => {
+    if (done) return; done = true;
+    root.classList.remove('intro');
+    el.remove();
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, finish));
+  };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, finish, { passive: true }));
+
+  const frame = (now) => {
+    if (done) return;
+    if (start === null) { start = now; el.classList.add('drawing'); }
+    const t = now - start;
+    const r = ruler ? ruler.getBoundingClientRect() : { left: W * 0.1, right: W * 0.9, top: H * 0.4, height: 0 };
+    const x0 = r.left, x1 = r.right, cx = (x0 + x1) / 2, half = (x1 - x0) / 2;
+    const yMid = H / 2, yRuler = r.top + r.height / 2;
+
+    ctx.globalAlpha = 1;
+    ctx.clearRect(0, 0, W, H);
+
+    if (t < DRAW) {
+      // 1. A line draws outward from the centre
+      ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+      const h = half * easeOut(t / DRAW);
+      line(cx - h, cx + h, yMid, INK, 1, 1.25);
+    } else if (t < DRAW + WAVE) {
+      // 2. A pulse leaves the centre and ripples out both ways, decaying as it travels
+      ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+      const tau = (t - DRAW) / WAVE;
+      const front = tau * half * 1.15;
+      const sigma = Math.max(24, half * 0.14);
+      const amp = Math.min(40, H * 0.06) * Math.pow(1 - tau, 1.4);
+      const lambda = Math.max(18, half * 0.045);
+      ctx.globalAlpha = 1; ctx.strokeStyle = INK; ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      for (let x = x0; x <= x1; x += 1.5) {
+        const d = Math.abs(x - cx) - front;
+        const env = Math.exp(-(d * d) / (2 * sigma * sigma));
+        const y = yMid - amp * env * Math.sin((2 * Math.PI * d) / lambda);
+        x === x0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    } else if (t < TOTAL) {
+      // 3. The line settles onto the ruler while the page fades in around it
+      const p = easeInOut((t - DRAW - WAVE) / SETTLE);
+      ctx.globalAlpha = 1 - p; ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+      const y = yMid + (yRuler - yMid) * p;
+      line(x0, x1, y, INK, 1 - p, 1.25 - 0.25 * p);
+      line(x0, x1, y, RULE, p, 1);
+    } else {
+      finish();
+      return;
+    }
+    requestAnimationFrame(frame);
+  };
+
+  addEventListener('resize', size);
+  requestAnimationFrame(frame);
+})();
+</script>
 <script>
 (() => {
   const root = document.documentElement;
