@@ -137,7 +137,7 @@
   .back::before { content: "← "; }
   h1 { margin-top: calc(var(--u) * 4); font-size: clamp(40px, 7vw, 72px); line-height: 1.02; font-weight: 650; letter-spacing: -0.035em; }
   .lede { margin-top: calc(var(--u) * 3); max-width: 40ch; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; }
-  .section { border-top: 1px solid var(--rule); padding: calc(var(--u) * 5) 0 calc(var(--u) * 7); display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
+  .section { padding: calc(var(--u) * 5) 0 calc(var(--u) * 7); display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
   @media (min-width: 880px) { .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); } }
   .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
   .open { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3) calc(var(--u) * 4); max-width: 820px; }
@@ -254,17 +254,6 @@
     </div>
   </section>
 
-  <section class="section" aria-labelledby="facts-h">
-    <h2 id="facts-h">At a Glance</h2>
-    <ul class="facts">
-      <li><strong>Based in</strong><span>Glasgow, Scotland</span></li>
-      <li><strong>Studying</strong><span>PhD, University of Salford Acoustics Innovation Institute, with the <a href="https://soundfutures.salford.ac.uk/">EPSRC CDT in Sustainable Sound Futures</a></span></li>
-      <li><strong>Teaching</strong><span>St Mary’s University, University of Salford, University of the West of Scotland</span></li>
-      <li><strong>Working on</strong><span>Drone, eVTOL, heat pump and EV noise, and how people perceive it</span></li>
-      <li><strong>Background</strong><span>Music technology, sound for film, computer science and AI</span></li>
-      <li><strong>Languages</strong><span>English, Scots, learning Spanish</span></li>
-    </ul>
-  </section>
 
   <section class="section" aria-labelledby="next-h">
     <h2 id="next-h">Where Next</h2>
@@ -371,7 +360,7 @@
     // 4. heat pump fades, ground line settles onto the first divider, page appears
     at(3000, () => {
       [hp, bird, windEl, noiseEl].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
-      line.animate([{ transform: 'scaleX(1) translateY(0)' }, { transform: `scaleX(1) translateY(${r.top - ground}px)` }],
+      line.animate([{ transform: 'scaleX(1) translateY(0)', opacity: 1 }, { transform: `scaleX(1) translateY(${r.top - ground}px)`, opacity: 0 }],
                    { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
       el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
                  { duration: 650, easing: 'ease', fill: 'forwards' }).onfinish = finish;
