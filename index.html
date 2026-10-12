@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Max Ellis — Psychoacoustics researcher</title>
+<meta name="description" content="Max Ellis is a Defra-funded PhD candidate in psychoacoustics at the University of Salford, researching how people perceive drones, eVTOL aircraft, heat pumps and electric-vehicle warning sounds in complex soundscapes.">
+<meta name="color-scheme" content="light">
+<style>
+  :root {
+    --paper: #F6F5F1;
+    --ink: #1A1A18;
+    --ink-2: #45443F;
+    --rule: #6B6A64;
+    --hairline: #CFCDC6;
+    --accent: #1B3A94;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --u: 8px;
+    --measure: 68ch;
+    --gutter: 16px;
+  }
+  @media (min-width: 720px) { :root { --gutter: 40px; } }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 24px;
+    font-feature-settings: "kern", "liga", "tnum";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+
+  a {
+    color: var(--accent);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+  a:hover { text-decoration-thickness: 2px; }
+
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px var(--paper);
+    border-radius: 1px;
+  }
+
+  .skip {
+    position: absolute; left: var(--gutter); top: -100px;
+    background: var(--ink); color: var(--paper);
+    padding: var(--u) calc(var(--u) * 2);
+    z-index: 10;
+  }
+  .skip:focus { top: var(--u); }
+
+  .visually-hidden {
+    position: absolute !important; width: 1px; height: 1px;
+    overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ---------- Header ---------- */
+  .masthead { padding-top: calc(var(--u) * 10); padding-bottom: calc(var(--u) * 6); }
+  .masthead h1 {
+    font-size: clamp(48px, 9vw, 96px);
+    line-height: 1;
+    font-weight: 650;
+    letter-spacing: -0.035em;
+  }
+  .role {
+    margin-top: calc(var(--u) * 3);
+    font-size: 20px;
+    line-height: 32px;
+    max-width: 40ch;
+  }
+  .affil { color: var(--ink-2); max-width: 60ch; }
+
+  .scale {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--rule);
+  }
+  .freq { margin: calc(var(--u) * 6) 0 calc(var(--u) * 4); }
+  .freq-labels {
+    position: relative; height: 16px; margin-top: var(--u);
+    font-family: var(--mono); font-size: 12px; line-height: 16px; color: var(--ink-2);
+  }
+  .freq-labels span { position: absolute; top: 0; left: calc(var(--i) * 12.5%); transform: translateX(-50%); white-space: nowrap; }
+  .freq-labels span:first-child { transform: none; }
+  .freq-labels span:last-child { transform: translateX(-100%); }
+  @media (max-width: 599px) { .freq-labels span:nth-child(even) { visibility: hidden; } }
+
+  .contact {
+    display: flex; flex-wrap: wrap; gap: var(--u) calc(var(--u) * 4);
+    font-family: var(--mono); font-size: 14px; line-height: 24px;
+  }
+  .contact span { color: var(--ink-2); }
+
+  /* ---------- Sections ---------- */
+  .section {
+    border-top: 1px solid var(--rule);
+    padding: calc(var(--u) * 5) 0 calc(var(--u) * 8);
+    display: grid;
+    gap: calc(var(--u) * 3);
+  }
+  @media (min-width: 880px) {
+    .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); }
+  }
+  .section > h2 {
+    font-size: 16px; line-height: 24px; font-weight: 600;
+  }
+  .section > h2 small {
+    display: block; font-weight: 400; color: var(--ink-2);
+    font-family: var(--mono); font-size: 13px;
+  }
+  .body { max-width: var(--measure); }
+  .body p + p { margin-top: calc(var(--u) * 2); }
+  .lede { font-size: 20px; line-height: 32px; }
+
+  /* ---------- Carousel ---------- */
+  .carousel { min-width: 0; }
+  .carousel-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: calc(var(--u) * 2); margin-bottom: calc(var(--u) * 2);
+  }
+  .carousel-status { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+  .carousel-controls { display: flex; gap: var(--u); }
+  .carousel-controls button {
+    font: inherit; font-family: var(--mono); font-size: 14px;
+    min-width: 44px; min-height: 40px; padding: 0 calc(var(--u) * 2);
+    background: var(--paper); color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 2px; cursor: pointer;
+  }
+  .carousel-controls button:hover:not([disabled]) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .carousel-controls button[disabled] { color: var(--ink-2); border-style: dashed; cursor: default; }
+
+  .track {
+    display: grid; grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, calc((100% - 32px) / 3));
+    gap: calc(var(--u) * 2);
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding: 0 0 calc(var(--u) * 2);
+    scrollbar-width: thin; scrollbar-color: var(--rule) transparent;
+  }
+  @media (max-width: 879px) { .track { grid-auto-columns: minmax(240px, 78%); } }
+  @media (prefers-reduced-motion: no-preference) { .track { scroll-behavior: smooth; } }
+
+  .slide {
+    scroll-snap-align: start;
+    border: 1px solid var(--rule);
+    padding: calc(var(--u) * 3);
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 208px;
+    background: var(--paper);
+  }
+  .slide .org { font-size: 22px; line-height: 32px; font-weight: 600; letter-spacing: -0.01em; }
+  .slide .rel { margin-top: var(--u); color: var(--ink-2); }
+  .slide .kind {
+    margin-top: calc(var(--u) * 3);
+    font-family: var(--mono); font-size: 13px; line-height: 24px;
+    border-top: 1px solid var(--hairline); padding-top: var(--u);
+  }
+
+  /* ---------- Outputs list ---------- */
+  .outputs li {
+    display: grid; gap: var(--u) calc(var(--u) * 3);
+    padding: calc(var(--u) * 3) 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .outputs li:first-child { padding-top: 0; }
+  @media (min-width: 600px) { .outputs li { grid-template-columns: 112px minmax(0, 1fr); } }
+  .date { font-family: var(--mono); font-size: 13px; line-height: 24px; color: var(--ink-2); white-space: nowrap; }
+  .outputs h3 { font-size: 16px; line-height: 24px; font-weight: 600; }
+  .outputs p { color: var(--ink-2); margin-top: var(--u); }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: var(--u) calc(var(--u) * 2);
+    margin-top: var(--u);
+    font-family: var(--mono); font-size: 13px; line-height: 24px;
+  }
+  .tag { border: 1px solid var(--rule); padding: 0 var(--u); border-radius: 2px; color: var(--ink); }
+  .note { margin-top: calc(var(--u) * 3); color: var(--ink-2); font-size: 14px; line-height: 24px; }
+
+  /* ---------- Timeline ---------- */
+  .timeline + h3 { margin-top: calc(var(--u) * 6); }
+  .tl-head { font-size: 16px; line-height: 24px; font-weight: 600; margin-bottom: calc(var(--u) * 2); }
+  .timeline { border-left: 1px solid var(--rule); margin-left: 4px; }
+  .timeline li { position: relative; padding: 0 0 calc(var(--u) * 4) calc(var(--u) * 3); }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: ""; position: absolute; left: -5px; top: 8px;
+    width: 9px; height: 9px; background: var(--paper); border: 1px solid var(--ink);
+  }
+  .timeline li.current::before { background: var(--ink); }
+  .timeline h4 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+  .timeline .where { color: var(--ink); }
+  .timeline .detail { color: var(--ink-2); margin-top: var(--u); max-width: var(--measure); }
+  .timeline .detail li { padding: 0 0 0 calc(var(--u) * 2); }
+  .timeline .detail li::before { content: "–"; border: 0; background: none; width: auto; height: auto; left: 0; top: 0; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: calc(var(--u) * 3) 0 calc(var(--u) * 6);
+    font-family: var(--mono); font-size: 13px; color: var(--ink-2);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u);
+  }
+
+  @media print {
+    .skip, .carousel-bar { display: none; }
+    .track { grid-auto-flow: row; grid-template-columns: repeat(2, 1fr); overflow: visible; }
+    a { color: var(--ink); }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="wrap masthead">
+  <h1>Max Ellis</h1>
+  <p class="role">PhD candidate in psychoacoustics and Associate Lecturer in computer science</p>
+  <p class="affil">Acoustics Research Centre, University of Salford — EPSRC Centre for Doctoral Training in Sustainable Sound Futures. Based in Glasgow.</p>
+
+  <figure class="freq" aria-hidden="true">
+  <svg class="scale" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <line x1="0" y1="12" x2="1000" y2="12" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    <g stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
+      <line x1="0" y1="4" x2="0" y2="20"/><line x1="125" y1="4" x2="125" y2="20"/><line x1="250" y1="4" x2="250" y2="20"/>
+      <line x1="375" y1="4" x2="375" y2="20"/><line x1="500" y1="4" x2="500" y2="20"/><line x1="625" y1="4" x2="625" y2="20"/>
+      <line x1="750" y1="4" x2="750" y2="20"/><line x1="875" y1="4" x2="875" y2="20"/><line x1="999" y1="4" x2="999" y2="20"/>
+      <line x1="41.6" y1="8" x2="41.6" y2="16"/><line x1="83.3" y1="8" x2="83.3" y2="16"/><line x1="166.6" y1="8" x2="166.6" y2="16"/><line x1="208.3" y1="8" x2="208.3" y2="16"/>
+      <line x1="291.6" y1="8" x2="291.6" y2="16"/><line x1="333.3" y1="8" x2="333.3" y2="16"/><line x1="416.6" y1="8" x2="416.6" y2="16"/><line x1="458.3" y1="8" x2="458.3" y2="16"/>
+      <line x1="541.6" y1="8" x2="541.6" y2="16"/><line x1="583.3" y1="8" x2="583.3" y2="16"/><line x1="666.6" y1="8" x2="666.6" y2="16"/><line x1="708.3" y1="8" x2="708.3" y2="16"/>
+      <line x1="791.6" y1="8" x2="791.6" y2="16"/><line x1="833.3" y1="8" x2="833.3" y2="16"/><line x1="916.6" y1="8" x2="916.6" y2="16"/><line x1="958.3" y1="8" x2="958.3" y2="16"/>
+    </g>
+  </svg>
+  <div class="freq-labels"><span style="--i:0">63</span><span style="--i:1">125</span><span style="--i:2">250</span><span style="--i:3">500</span><span style="--i:4">1k</span><span style="--i:5">2k</span><span style="--i:6">4k</span><span style="--i:7">8k</span><span style="--i:8">16k Hz</span></div>
+  </figure>
+
+  <ul class="contact" aria-label="Contact and profiles">
+    <li><a href="https://www.linkedin.com/in/psychoacoustic/" rel="me">LinkedIn</a></li>
+    <li><a href="#collaborations">Research collaborations</a></li>
+    <li><a href="#experience">Experience and education</a></li>
+  </ul>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+
+  <section class="section" aria-labelledby="bio-h">
+    <h2 id="bio-h">Abstract</h2>
+    <div class="body">
+      <p class="lede">I study how people hear new sources of noise — delivery drones, eVTOL aircraft, air-source heat pumps and the warning sounds of electric vehicles — once they arrive in places that already have a soundscape.</p>
+      <p>My Defra-funded PhD at the University of Salford builds auralised “future soundscapes” and plays them to listening juries. I use the responses to train neural networks that predict how a sound environment will be perceived, and to develop a psychoacoustic annoyance model that accounts for operational, environmental and contextual factors, automated through sound event detection.</p>
+      <p>I teach on the online MSc Computer Science suite at St Mary’s University, Twickenham, and have demonstrated environmental noise measurement and modelling at Salford. I sit on the Institute of Acoustics Scottish Branch and Early Careers committees, and on working groups for NASA’s unmanned aircraft systems noise and Noise Network Plus AI &amp; digital.</p>
+    </div>
+  </section>
+
+  <section class="section" id="collaborations" aria-labelledby="collab-h">
+    <h2 id="collab-h">Research collaborations</h2>
+    <div class="carousel" aria-roledescription="carousel" aria-labelledby="collab-h">
+      <div class="carousel-bar">
+        <p class="carousel-status" id="carousel-status" aria-live="polite">1–3 of 9</p>
+        <div class="carousel-controls">
+          <button type="button" data-dir="-1" aria-controls="track" aria-label="Previous collaborators">Prev</button>
+          <button type="button" data-dir="1" aria-controls="track" aria-label="Next collaborators">Next</button>
+        </div>
+      </div>
+      <ul class="track" id="track" tabindex="0" aria-label="Collaborating institutions, scroll or use arrow keys">
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="1 of 9">
+          <div><p class="org">Defra</p><p class="rel">Funds the PhD. Two Defra noise specialists co-supervise.</p></div>
+          <p class="kind">Government, funder</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="2 of 9">
+          <div><p class="org">University of Salford</p><p class="rel">Acoustics Research Centre. Host institution and teaching.</p></div>
+          <p class="kind">Academic, host</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="3 of 9">
+          <div><p class="org">Sustainable Sound Futures CDT</p><p class="rel">EPSRC doctoral training centre across Salford, Sheffield, Bristol and Southampton.</p></div>
+          <p class="kind">Academic, consortium</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="4 of 9">
+          <div><p class="org">NASA</p><p class="rel">Unmanned Aircraft Systems Noise Working Group.</p></div>
+          <p class="kind">Working group, since 2026</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="5 of 9">
+          <div><p class="org">Noise Network Plus</p><p class="rel">AI &amp; Digital Working Group.</p></div>
+          <p class="kind">Working group, since 2025</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="6 of 9">
+          <div><p class="org">Noise Consultants Ltd</p><p class="rel">Part of Logika Group. PhD industrial placement on aircraft and infrastructure noise.</p></div>
+          <p class="kind">Industry, placement 2026</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="7 of 9">
+          <div><p class="org">Institute of Acoustics</p><p class="rel">Scottish Branch and Early Careers Group committees.</p></div>
+          <p class="kind">Professional body</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="8 of 9">
+          <div><p class="org">St Mary’s University, Twickenham</p><p class="rel">Online MSc Computer Science: teaching, module review and authoring.</p></div>
+          <p class="kind">Academic, teaching</p>
+        </li>
+        <li class="slide" role="group" aria-roledescription="slide" aria-label="9 of 9">
+          <div><p class="org">European Acoustics Association</p><p class="rel">Summer School on applications of AI in acoustics, 2025.</p></div>
+          <p class="kind">Professional body, training</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pubs-h">
+    <h2 id="pubs-h">Publications and projects</h2>
+    <div class="body">
+      <ol class="outputs" reversed>
+        <li>
+          <span class="date">2026</span>
+          <div>
+            <h3>Physical and perceptual dominance of aircraft noise near an expanding airport</h3>
+            <p>Field measurement campaign during a placement with Noise Consultants Ltd, alongside a validation of open-source noise measurements against Defra noise-mapping data.</p>
+            <div class="meta"><span class="tag">Fieldwork</span><span class="tag">QGIS</span><span class="tag">SQAT</span></div>
+          </div>
+        </li>
+        <li>
+          <span class="date">2025–2028</span>
+          <div>
+            <h3>Psychoacoustic assessment and machine-learning-based modelling of novel noise source perception in complex soundscapes</h3>
+            <p>PhD thesis, University of Salford. Supervised by Prof. Antonio J. Torija Martínez and Dr Zuzanna Podwińska, with Hilary Notley and Dr Ruth Waite (Defra).</p>
+            <div class="meta"><span class="tag">In progress</span><span class="tag">Auralisation</span><span class="tag">Neural networks</span></div>
+          </div>
+        </li>
+        <li>
+          <span class="date">2024</span>
+          <div>
+            <h3>MSc dissertation, Computer Science with Artificial Intelligence</h3>
+            <p>Abertay University. Awarded with distinction.</p>
+            <div class="meta"><span class="tag">Machine learning</span><span class="tag">Python</span></div>
+          </div>
+        </li>
+        <li>
+          <span class="date">2023</span>
+          <div>
+            <h3>Datasets of AI-generated electronic music</h3>
+            <p>Honours dissertation, University of Glasgow. Collated and analysed music produced with ChatGPT, Claude, AIVA and Jukebox.</p>
+            <div class="meta"><span class="tag">Generative AI</span><span class="tag">Music</span></div>
+          </div>
+        </li>
+      </ol>
+      <p class="note">Peer-reviewed outputs from the PhD will be listed here with DOI and PDF links as they are published.</p>
+    </div>
+  </section>
+
+  <section class="section" id="experience" aria-labelledby="exp-h">
+    <h2 id="exp-h">Experience and education</h2>
+    <div>
+      <h3 class="tl-head">Experience</h3>
+      <ol class="timeline">
+        <li>
+          <span class="date">Aug 2026 – Oct 2026</span>
+          <h4>PhD placement, acoustics</h4>
+          <p class="where">Noise Consultants Ltd, Logika Group — Warrington and Leeds</p>
+          <ul class="detail">
+            <li>Validated open-source noise measurements against modelled Defra noise-mapping data for infrastructure assessment.</li>
+            <li>Ran a field campaign on an airport expansion project comparing physical and perceptual dominance of aircraft noise.</li>
+          </ul>
+        </li>
+        <li class="current">
+          <span class="date">Apr 2026 – present</span>
+          <h4>Scottish Branch committee member</h4>
+          <p class="where">Institute of Acoustics</p>
+        </li>
+        <li class="current">
+          <span class="date">Mar 2026 – present</span>
+          <h4>Associate Lecturer, computer science</h4>
+          <p class="where">St Mary’s University, Twickenham — remote</p>
+          <p class="detail">Teaching, marking and moderation across the online MSc Computer Science suite. Module reviewer and author.</p>
+        </li>
+        <li>
+          <span class="date">Jan 2026 – Apr 2026</span>
+          <h4>Teaching assistant</h4>
+          <p class="where">University of Salford</p>
+          <p class="detail">Lab demonstrator for Environmental Noise Measurement and Modelling (BEng/MSc), including a practical assessment at Manchester Airport.</p>
+        </li>
+        <li class="current">
+          <span class="date">Jan 2025 – present</span>
+          <h4>PhD candidate</h4>
+          <p class="where">EPSRC CDT in Sustainable Sound Futures — Salford, Sheffield, Bristol, Southampton</p>
+          <ul class="detail">
+            <li>Auralises future soundscapes for jury tests on UAV, eVTOL, heat pump and AVAS noise.</li>
+            <li>Trains neural networks on listener responses to predict perception.</li>
+            <li>Develops a psychoacoustic annoyance model automated through sound event detection.</li>
+          </ul>
+        </li>
+        <li>
+          <span class="date">Jan 2024 – Dec 2024</span>
+          <h4>Lifeguard</h4>
+          <p class="where">Nuffield Health — Glasgow West End</p>
+        </li>
+      </ol>
+
+      <h3 class="tl-head">Education</h3>
+      <ol class="timeline">
+        <li class="current">
+          <span class="date">2025 – 2028</span>
+          <h4>PhD, Acoustics and Audio Engineering</h4>
+          <p class="where">University of Salford — Defra-funded, year 2</p>
+        </li>
+        <li>
+          <span class="date">2023 – 2024</span>
+          <h4>MSc Computer Science with Artificial Intelligence</h4>
+          <p class="where">Abertay University — Distinction</p>
+        </li>
+        <li>
+          <span class="date">2021 – 2023</span>
+          <h4>BDes (Hons) Sound for Moving Image</h4>
+          <p class="where">University of Glasgow — 2:1</p>
+        </li>
+        <li>
+          <span class="date">2019 – 2021</span>
+          <h4>DipHE Music Technology</h4>
+          <p class="where">University of the West of Scotland — Distinction, Court Medal 2021</p>
+        </li>
+      </ol>
+
+      <h3 class="tl-head">Certificates</h3>
+      <ol class="timeline">
+        <li><span class="date">2025</span><h4>Digital Signal Processing</h4><p class="where">EPFL</p></li>
+        <li><span class="date">2025</span><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
+        <li><span class="date">2025</span><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p></li>
+        <li><span class="date">2024</span><h4>PgCert AI for Noise Pollution Control</h4><p class="where">London School of International Business</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="skills-h">
+    <h2 id="skills-h">Methods and tools</h2>
+    <div class="body">
+      <p>Psychoacoustics, auralisation, spatial audio, jury testing, aircraft noise modelling, field recording, digital signal processing, machine learning, statistical modelling.</p>
+      <div class="meta" aria-label="Software">
+        <span class="tag">Python</span><span class="tag">R</span><span class="tag">MATLAB</span><span class="tag">Max/MSP</span><span class="tag">QGIS</span><span class="tag">FME</span><span class="tag">Reaper</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Max Ellis</span>
+  <span>Updated October 2026</span>
+</footer>
+
+<script>
+(() => {
+  const track = document.getElementById('track');
+  if (!track) return;
+  const slides = Array.from(track.children);
+  const status = document.getElementById('carousel-status');
+  const prev = document.querySelector('[data-dir="-1"]');
+  const next = document.querySelector('[data-dir="1"]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const behavior = () => (reduce.matches ? 'auto' : 'smooth');
+
+  const step = () => {
+    const a = slides[0].getBoundingClientRect();
+    const b = slides[1] ? slides[1].getBoundingClientRect() : a;
+    return b.left - a.left || a.width;
+  };
+  const visible = () => Math.max(1, Math.round(track.clientWidth / step()));
+
+  const update = () => {
+    const first = Math.round(track.scrollLeft / step());
+    const last = Math.min(slides.length, first + visible());
+    status.textContent = (first + 1) + (last > first + 1 ? '–' + last : '') + ' of ' + slides.length;
+    const max = track.scrollWidth - track.clientWidth - 2;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
+  };
+
+  const move = (dir) => track.scrollBy({ left: dir * step(), behavior: behavior() });
+
+  [prev, next].forEach(btn => btn.addEventListener('click', () => move(Number(btn.dataset.dir))));
+
+  track.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); move(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); move(-1); }
+    else if (e.key === 'Home') { e.preventDefault(); track.scrollTo({ left: 0, behavior: behavior() }); }
+    else if (e.key === 'End') { e.preventDefault(); track.scrollTo({ left: track.scrollWidth, behavior: behavior() }); }
+  });
+
+  let t;
+  track.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(update, 60); }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>
