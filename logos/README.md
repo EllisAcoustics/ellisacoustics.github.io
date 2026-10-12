@@ -1,8 +1,10 @@
 # Organisation logos
 
-Drop official logo files here and the two scrolling strips (Research collaborations,
-and Working groups and committees) will show them instead of the text names.
-The role label under each one stays. No code changes needed.
+These logos appear in the two scrolling strips (Research Collaborations, and Working
+Groups and Committees). Each one is sized in `index.html` (its `width` and `height`)
+so that every logo carries a similar visual weight, taking its shape and how much ink
+it has into account. If you replace a file, keep the same name and adjust those two
+numbers if it looks too heavy or too light.
 
 Use these exact file names (SVG preferred, PNG also works):
 
@@ -19,7 +21,7 @@ Use these exact file names (SVG preferred, PNG also works):
 | Institute of Acoustics (both committees)    | `ioa.svg` or `.png`                        |
 | Young Acousticians Network                  | `young-acousticians-network.svg` or `.png` |
 
-Logos are shown in a single ink colour, up to 160 × 56 px. A version on a transparent
+Logos are shown in a single ink colour, at most 200 px wide and 64 px tall. A version on a transparent
 background works best. Check each organisation's brand guidelines, and get
 permission where needed, before publishing their logo.
 
