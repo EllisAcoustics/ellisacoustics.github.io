@@ -10,9 +10,12 @@ software listed on this CV.
 | max.svg      | Simple Icons (Max by Cycling '74)                | CC0 1.0 (Simple Icons)            |
 | qgis.svg     | Simple Icons, from the QGIS style guide          | CC0 1.0 (Simple Icons)            |
 | matlab.svg   | Devicon (devicons/devicon), matlab-plain         | MIT, see below                    |
+| fme.png      | Supplied by Max (originals/FME.png)              | FME is a trademark of Safe Software |
+| reaper.png   | Supplied by Max (originals/REAPER_logo.png)      | REAPER is a trademark of Cockos   |
+| artemis.png  | Supplied by Max (originals/maxresdefault.jpg), trimmed to the A mark | ArtemiS SUITE is a trademark of HEAD acoustics GmbH |
 
-Colour changed to the site's ink (#1A1A18). FME and REAPER are shown as text until
-logo files are added here as fme.svg / reaper.svg (or .png).
+Colour changed to the site's ink (#1A1A18). The supplied logos were converted with
+logos/originals/make_mono.py; your uploads are kept unchanged in originals/.
 
 ## Devicon licence
 
