@@ -211,6 +211,10 @@
     font-family: var(--mono); font-size: 13px; line-height: 24px;
   }
   .tag { border: 1px solid var(--rule); padding: 0 var(--u); border-radius: 2px; color: var(--ink); }
+  .outputs .authors { color: var(--ink); }
+  .outputs .authors strong { font-weight: 600; }
+  .outputs .venue { margin-top: 0; font-style: italic; }
+  .outputs + .tl-head { margin-top: calc(var(--u) * 6); }
   .note { margin-top: calc(var(--u) * 3); color: var(--ink-2); font-size: 14px; line-height: 24px; }
 
   /* ---------- Timeline ---------- */
@@ -348,6 +352,37 @@
   <section class="section" aria-labelledby="pubs-h">
     <h2 id="pubs-h">Publications and projects</h2>
     <div class="body">
+      <h3 class="tl-head" id="publications">Publications</h3>
+      <ol class="outputs pubs" reversed>
+        <li>
+          <span class="date">Pending</span>
+          <div>
+            <h3>Multi-model analysis for prediction of perceived annoyance from UAVs</h3>
+            <p class="authors"><strong>M. W. Ellis</strong> et al.</p>
+            <div class="meta"><span class="tag">Journal paper</span></div>
+          </div>
+        </li>
+        <li>
+          <span class="date">2026</span>
+          <div>
+            <h3>Comparing a general sound quality metric for aircraft noise using a pre-trained neural network model to traditional psychoacoustics</h3>
+            <p class="authors">T. Lobato, T. Kamper-Schley, R. Sottek, M. C. Green, <strong>M. W. Ellis</strong>, A. J. Torija</p>
+            <p class="venue">Quiet Drones 2026, Human Response to UAS and UAM Noise. With HEAD Acoustics GmbH.</p>
+            <div class="meta"><span class="tag">Conference paper</span></div>
+          </div>
+        </li>
+        <li>
+          <span class="date">2025</span>
+          <div>
+            <h3>Comparison of deep learning and psychoacoustic models to predict UAV noise impact in soundscapes</h3>
+            <p class="authors"><strong>M. W. Ellis</strong>, M. C. Green, M. J. B. Lotinga, A. J. Torija Martínez</p>
+            <p class="venue">Forum Acusticum EuroNoise 2025, 11th Convention of the European Acoustics Association, Málaga.</p>
+            <div class="meta"><a href="https://doi.org/10.61782/fa.2025.0235">doi:10.61782/fa.2025.0235</a><span class="tag">Conference paper</span><span class="tag">Open access</span></div>
+          </div>
+        </li>
+      </ol>
+
+      <h3 class="tl-head" id="projects">Projects</h3>
       <ol class="outputs" reversed>
         <li>
           <span class="date">2026</span>
@@ -382,7 +417,6 @@
           </div>
         </li>
       </ol>
-      <p class="note">Peer-reviewed outputs from the PhD will be listed here with DOI and PDF links as they are published.</p>
     </div>
   </section>
 
