@@ -393,8 +393,6 @@
     margin-top: var(--u);
     font-family: var(--mono); font-size: 13px; line-height: 24px;
   }
-  .skills { max-width: 760px; margin-top: 0; font-size: 14px; }
-  .skills .tag { padding: 2px 10px; }
   .tag { border: 1px solid var(--rule); padding: 0 var(--u); border-radius: 2px; color: var(--ink); }
   .outputs .authors { color: var(--ink); }
   .outputs .authors strong { font-weight: 600; }
@@ -431,6 +429,7 @@
   }
   @keyframes holo { to { background-position: -250% 0; } }
   @media (prefers-reduced-motion: reduce) { .honour { animation: none; } }
+  .timeline .meta { margin-top: var(--u); }
   .timeline .grade { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); }
   .timeline .detail { color: var(--ink-2); margin-top: var(--u); max-width: var(--measure); }
   .timeline .detail li { padding: 0 0 0 calc(var(--u) * 2); }
@@ -629,11 +628,6 @@
     </ul>
   </section>
 
-  <section class="section" id="skills" aria-labelledby="skills-h">
-    <h2 id="skills-h">Technical Skills</h2>
-    <ul class="meta skills" aria-label="Technical skills"><li class="tag">University Teaching</li><li class="tag">Auralisation</li><li class="tag">DSP</li><li class="tag">Field Measurements</li><li class="tag">Data Visualisation</li><li class="tag">Statistical Modelling</li><li class="tag">Spatial Audio</li><li class="tag">Jury Testing</li><li class="tag">Psychoacoustics</li><li class="tag">Acoustical Engineering</li></ul>
-  </section>
-
   <section class="section" id="experience" aria-labelledby="exp-h">
     <h2 id="exp-h">Experience and Education</h2>
     <div>
@@ -647,6 +641,7 @@
             <li>Assessing whether structural vibration can underpin sound quality metrics for product components, comparing vibration and sound quality data across anechoic, semi-reverberant and reverberant conditions.</li>
             <li>Applying transfer learning across sound quality metrics and jury test data from other products, to build machine learning models that predict listener response and satisfaction.</li>
           </ul>
+          <div class="meta"><span class="tag">Machine Learning</span><span class="tag">Psychoacoustics</span><span class="tag">Jury Testing</span><span class="tag">DSP</span><span class="tag">Acoustical Engineering</span></div>
         </li>
         <li>
           <span class="date">Sep 2026 – May 2027</span>
@@ -655,6 +650,7 @@
           <ul class="detail">
             <li>1st Supervisor on the Major Project (Dissertation) module for BSc (Hons) Music Technology students specialising in Acoustics and Environmental Noise.</li>
           </ul>
+          <div class="meta"><span class="tag">University Teaching</span></div>
         </li>
         <li>
           <span class="date">Aug 2026 – Oct 2026</span>
@@ -664,6 +660,7 @@
             <li>Validated open-source noise measurements against modelled Defra noise-mapping data for infrastructure assessment.</li>
             <li>Ran a field campaign on an airport expansion project comparing physical and perceptual dominance of aircraft noise.</li>
           </ul>
+          <div class="meta"><span class="tag">Field Measurements</span><span class="tag">Statistical Modelling</span><span class="tag">Data Visualisation</span><span class="tag">Acoustical Engineering</span></div>
         </li>
         <li class="current">
           <span class="date">2026 – Present</span>
@@ -673,6 +670,7 @@
             <li>Teaching, marking and moderation across the online MSc Computer Science suite.</li>
             <li>Module reviewer and author.</li>
           </ul>
+          <div class="meta"><span class="tag">University Teaching</span></div>
         </li>
         <li class="current">
           <span class="date">2026 – Present</span>
@@ -682,6 +680,7 @@
             <li>Lab demonstrator for Environmental Noise Measurement and Modelling (BEng/MSc).</li>
             <li>Tutor for Immersive Sound Reproduction (MSc/PgDip).</li>
           </ul>
+          <div class="meta"><span class="tag">University Teaching</span><span class="tag">Field Measurements</span><span class="tag">Spatial Audio</span></div>
         </li>
       </ol>
 
@@ -691,18 +690,21 @@
           <span class="date">2025 – 2028</span>
           <h4>PhD Acoustics and Audio Engineering</h4>
           <p class="where">University of Salford Acoustics Innovation Institute</p>
+          <div class="meta"><span class="tag">Psychoacoustics</span><span class="tag">Auralisation</span><span class="tag">Jury Testing</span><span class="tag">Machine Learning</span><span class="tag">Spatial Audio</span><span class="tag">DSP</span><span class="tag">Statistical Modelling</span><span class="tag">Data Visualisation</span></div>
         </li>
         <li>
           <span class="date">2023 – 2024</span>
           <h4>MSc Computer Science with Artificial Intelligence</h4>
           <p class="grade">Distinction</p>
           <p class="where">Abertay University</p>
+          <div class="meta"><span class="tag">Machine Learning</span><span class="tag">Data Visualisation</span></div>
         </li>
         <li>
           <span class="date">2021 – 2023</span>
           <h4>BDes (Hons) Sound for Moving Image</h4>
           <p class="grade">2:1</p>
           <p class="where">University of Glasgow</p>
+          <div class="meta"><span class="tag">Spatial Audio</span><span class="tag">Field Measurements</span></div>
         </li>
         <li>
           <span class="date">2019 – 2021</span>
@@ -710,6 +712,7 @@
           <p class="grade">Distinction</p>
           <p class="where">University of the West of Scotland</p>
           <p class="honour">BSc Level 8 Court Medal</p>
+          <div class="meta"><span class="tag">DSP</span><span class="tag">Acoustical Engineering</span></div>
         </li>
         <li>
           <span class="date">2019</span>
