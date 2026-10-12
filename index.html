@@ -439,9 +439,17 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: calc(var(--u) * 4) calc(var(--u) * 2);
-    max-width: 760px;
+    max-width: 760px; padding-bottom: 24px;
   }
-  .icon-tile { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
+  .icon-tile .tip {
+    position: absolute; top: calc(100% + 6px); left: 50%;
+    font-family: var(--mono); font-size: 13px; line-height: 16px; white-space: nowrap; color: var(--ink-2);
+    opacity: 0; transform: translate(-50%, 4px); transition: opacity 400ms ease, transform 400ms ease;
+    pointer-events: none;
+  }
+  .icon-tile:hover .tip { opacity: 1; transform: translate(-50%, 0); }
+  @media (prefers-reduced-motion: reduce) { .icon-tile .tip { transition: none; } }
+  .icon-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
   .icon-tile img { display: block; width: auto; height: 40px; max-width: 96px; object-fit: contain; filter: var(--logo-filter); }
 
   /* ---------- Footer ---------- */
@@ -734,16 +742,16 @@
   </section>
 
   <section class="section" id="software" aria-labelledby="software-h">
-    <h2 id="software-h">Software</h2>
+    <h2 id="software-h">Software Proficiencies</h2>
     <ul class="icon-grid" aria-label="Software">
-        <li class="icon-tile"><img src="software/python.svg" width="40" height="40" alt="Python" decoding="async"></li>
-        <li class="icon-tile"><img src="software/r.svg" width="40" height="40" alt="R" decoding="async"></li>
-        <li class="icon-tile"><img src="software/matlab.svg" width="40" height="40" alt="MATLAB" decoding="async"></li>
-        <li class="icon-tile"><img src="software/max.svg" width="40" height="40" alt="Max/MSP" decoding="async"></li>
-        <li class="icon-tile"><img src="software/artemis.png" width="39" height="40" alt="ArtemiS SUITE" decoding="async"></li>
-        <li class="icon-tile"><img src="software/qgis.svg" width="40" height="40" alt="QGIS" decoding="async"></li>
-        <li class="icon-tile"><img src="software/fme.png" width="80" height="26" style="height:26px;margin:7px 0" alt="FME" decoding="async"></li>
-        <li class="icon-tile"><img src="software/reaper.png" width="38" height="40" alt="REAPER" decoding="async"></li>
+        <li class="icon-tile"><img src="software/python.svg" width="40" height="40" alt="Python" decoding="async"><span class="tip" aria-hidden="true">Python</span></li>
+        <li class="icon-tile"><img src="software/r.svg" width="40" height="40" alt="R" decoding="async"><span class="tip" aria-hidden="true">R</span></li>
+        <li class="icon-tile"><img src="software/matlab.svg" width="40" height="40" alt="MATLAB" decoding="async"><span class="tip" aria-hidden="true">MATLAB</span></li>
+        <li class="icon-tile"><img src="software/max.svg" width="40" height="40" alt="Max/MSP" decoding="async"><span class="tip" aria-hidden="true">Max/MSP</span></li>
+        <li class="icon-tile"><img src="software/artemis.png" width="39" height="40" alt="ArtemiS SUITE" decoding="async"><span class="tip" aria-hidden="true">ArtemiS SUITE</span></li>
+        <li class="icon-tile"><img src="software/qgis.svg" width="40" height="40" alt="QGIS" decoding="async"><span class="tip" aria-hidden="true">QGIS</span></li>
+        <li class="icon-tile"><img src="software/fme.png" width="80" height="26" style="height:26px;margin:7px 0" alt="FME" decoding="async"><span class="tip" aria-hidden="true">FME</span></li>
+        <li class="icon-tile"><img src="software/reaper.png" width="38" height="40" alt="REAPER" decoding="async"><span class="tip" aria-hidden="true">REAPER</span></li>
     </ul>
   </section>
 
