@@ -212,13 +212,20 @@
   .proof li { border-top: 1px solid var(--rule); padding-top: var(--u); }
   .proof strong { display: block; font-weight: 600; }
   .proof span { display: block; font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); }
-  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * 2) calc(var(--u) * 3); margin-top: calc(var(--u) * 4); }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * 1.5); margin-top: calc(var(--u) * 4); }
   .btn {
     display: inline-flex; align-items: center; min-height: 44px; padding: 0 calc(var(--u) * 2.5);
     background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 600;
     border-radius: 2px;
   }
   .btn:hover { background: var(--accent); color: var(--paper); }
+  .social {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 2px;
+  }
+  .social svg { width: 20px; height: 20px; display: block; }
+  .social:hover { border-color: var(--ink); color: var(--accent); }
 
   /* ---------- Theme switch ---------- */
   .theme-switch {
@@ -463,16 +470,15 @@
 
   <div class="hero">
     <p class="hero-claim">Drones, air taxis and heat pumps are about to change how our towns and cities sound forever. I work out how people will perceive them — <em>before</em> they arrive.</p>
-    <p class="hero-why">Noise already causes more ill health in Europe than any environmental factor except air pollution<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe">WHO, 2011</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft flying low over gardens. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere<a class="cite" href="https://committees.parliament.uk/event/17423">House of Lords, 2023</a>.</p>
-    <ul class="proof" aria-label="Highlights">
-      <li><strong>Defra-funded PhD</strong><span>University of Salford</span></li>
-      <li><strong>NASA working group</strong><span>Unmanned Aircraft Systems Noise</span></li>
-      <li><strong>Industry research</strong><span>HEAD acoustics, Joby Aviation, Dyson</span></li>
-      <li><strong>Best Student Paper</strong><span>Forum Acusticum 2027</span></li>
-    </ul>
+    <p class="hero-why">Noise already causes more ill health in Europe than any environmental factor except air pollution<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe">WHO, 2011</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge<a class="cite" href="https://committees.parliament.uk/event/17423">House of Lords, 2023</a>: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft flying low over gardens. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere.</p>
     <div class="cta">
       <a class="btn" href="#publications">Read the research</a>
-      <a href="https://www.linkedin.com/in/psychoacoustic/" rel="me">Connect on LinkedIn</a>
+      <a class="social" href="https://www.linkedin.com/in/psychoacoustic/" rel="me" aria-label="LinkedIn profile" title="LinkedIn">
+        <svg viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path fill="currentColor" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z"/></svg>
+      </a>
+      <a class="social" href="https://github.com/MaxEllis01" rel="me" aria-label="GitHub profile" title="GitHub">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
     </div>
   </div>
 
@@ -602,7 +608,7 @@
         <li class="current">
           <span class="date">Mar 2026 – present</span>
           <h4>Associate Lecturer, Computer Science</h4>
-          <p class="where">St Mary’s University, Twickenham — Remote</p>
+          <p class="where">St Mary’s University, Twickenham</p>
           <p class="detail">Teaching, marking and moderation across the online MSc Computer Science suite. Module reviewer and author.</p>
         </li>
         <li>
@@ -668,13 +674,13 @@
 
       <h3 class="tl-head">Certificates</h3>
       <ol class="timeline">
-        <li><span class="date">2025</span><h4>Digital Signal Processing</h4><p class="where">EPFL</p></li>
-        <li><span class="date">2025</span><h4>Trustworthy Generative AI</h4><p class="where">Vanderbilt University</p></li>
-        <li><span class="date">2025</span><h4>Transformer Models and BERT Model</h4><p class="where">Google</p></li>
-        <li><span class="date">2025</span><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
-        <li><span class="date">2025</span><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p></li>
-        <li><span class="date">2024</span><h4>Advanced Prompt Engineering</h4><p class="where">Vanderbilt University</p></li>
-        <li><span class="date">2024</span><h4>PgCert AI for Noise Pollution Control</h4><p class="where">London School of International Business</p></li>
+        <li><h4>Digital Signal Processing</h4><p class="where">EPFL</p></li>
+        <li><h4>Trustworthy Generative AI</h4><p class="where">Vanderbilt University</p></li>
+        <li><h4>Transformer Models and BERT Model</h4><p class="where">Google</p></li>
+        <li><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
+        <li><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p></li>
+        <li><h4>Advanced Prompt Engineering</h4><p class="where">Vanderbilt University</p></li>
+        <li><h4>PgCert AI for Noise Pollution Control</h4><p class="where">London School of International Business</p></li>
         <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
         <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
       </ol>
