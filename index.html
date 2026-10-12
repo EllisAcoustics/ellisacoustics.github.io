@@ -408,6 +408,22 @@
   .timeline li.current::before { background: var(--ink); }
   .timeline h4 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
   .timeline .where { color: var(--ink); }
+  .sub-strip { margin-top: calc(var(--u) * 6); margin-bottom: calc(var(--u) * 2); }
+  .sub-strip + .tl-head { margin-top: calc(var(--u) * 4); }
+  .honour {
+    display: inline-block; margin-top: 4px;
+    font-weight: 700; font-size: 15px; line-height: 22px; letter-spacing: 0.01em;
+    background: linear-gradient(100deg, #7A3E9D 0%, #1F6F8B 22%, #246640 40%, #7C5507 58%, #B0305C 76%, #7A3E9D 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    animation: holo 6s linear infinite;
+  }
+  :root[data-theme="dark"] .honour {
+    background-image: linear-gradient(100deg, #E2B8FF 0%, #8FE3FF 22%, #A8F5C2 40%, #FFE29A 58%, #FFB3CF 76%, #E2B8FF 100%);
+  }
+  @keyframes holo { to { background-position: -250% 0; } }
+  @media (prefers-reduced-motion: reduce) { .honour { animation: none; } }
   .timeline .grade { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); }
   .timeline .detail { color: var(--ink-2); margin-top: var(--u); max-width: var(--measure); }
   .timeline .detail li { padding: 0 0 0 calc(var(--u) * 2); }
@@ -549,6 +565,7 @@
             <h3>Psychoacoustic Assessment of UAV Noise in Varying Ambiences, Operational Conditions and Contexts</h3>
             <p class="authors"><strong>M. W. Ellis</strong>, Z. Podwińska, A. J. Torija</p>
             <p class="venue">Forum Acusticum 2027, Brussels.</p>
+            <p class="honour">Best Student Paper</p>
             <div class="meta"><span class="tag">Pending</span><span class="tag">Conference Paper</span></div>
           </div>
         </li>
@@ -649,6 +666,7 @@
           <h4>DipHE Music Technology</h4>
           <p class="grade">Distinction</p>
           <p class="where">University of the West of Scotland</p>
+          <p class="honour">BSc Level 8 Court Medal</p>
         </li>
         <li>
           <span class="date">2019</span>
@@ -664,19 +682,27 @@
         </li>
       </ol>
 
-      <h3 class="tl-head">Awards</h3>
-      <ol class="timeline">
-        <li>
-          <span class="date">2027</span>
-          <h4>Best Student Paper</h4>
-          <p class="where">Forum Acusticum 2027, Brussels</p>
-        </li>
-        <li>
-          <span class="date">2021</span>
-          <h4>BSc Level 8 Court Medal</h4>
-          <p class="where">University of the West of Scotland</p>
-        </li>
-      </ol>
+      <div id="memberships" class="sub-strip">
+        <h3 class="tl-head" id="groups-h">Working Groups and Committees</h3>
+      <div class="marquee" data-speed="46" data-direction="1">
+        <div class="marquee-track">
+          <ul class="marquee-list" aria-label="Working groups and committees">
+            <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
+            <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="Institute of Acoustics Scottish Branch" decoding="async"><span class="caption"><span>Scottish Branch</span><span>Committee Member</span></span></li>
+            <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="Noise Network Plus" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
+            <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="Institute of Acoustics Early Careers Group" decoding="async"><span class="caption"><span>Early Careers Group</span><span>Committee Member</span></span></li>
+            <li class="logo"><img src="logos/young-acousticians-network.png" width="96" height="64" alt="Young Acousticians Network" decoding="async"><span class="caption"><span>Committee Member</span></span></li>
+          </ul>
+          <ul class="marquee-list" aria-hidden="true">
+            <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
+            <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="" decoding="async"><span class="caption"><span>Scottish Branch</span><span>Committee Member</span></span></li>
+            <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
+            <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="" decoding="async"><span class="caption"><span>Early Careers Group</span><span>Committee Member</span></span></li>
+            <li class="logo"><img src="logos/young-acousticians-network.png" width="96" height="64" alt="" decoding="async"><span class="caption"><span>Committee Member</span></span></li>
+          </ul>
+        </div>
+      </div>
+      </div>
 
       <h3 class="tl-head">Certificates</h3>
       <ol class="timeline">
@@ -690,28 +716,6 @@
         <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
         <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
       </ol>
-    </div>
-  </section>
-
-  <section class="section" id="memberships" aria-labelledby="groups-h">
-    <h2 id="groups-h">Working Groups and Committees</h2>
-    <div class="marquee" data-speed="46" data-direction="1">
-      <div class="marquee-track">
-        <ul class="marquee-list" aria-label="Working groups and committees">
-          <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-          <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="Institute of Acoustics Scottish Branch" decoding="async"><span class="caption"><span>Scottish Branch</span><span>Committee Member</span></span></li>
-          <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="Noise Network Plus" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
-          <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="Institute of Acoustics Early Careers Group" decoding="async"><span class="caption"><span>Early Careers Group</span><span>Committee Member</span></span></li>
-          <li class="logo"><img src="logos/young-acousticians-network.png" width="96" height="64" alt="Young Acousticians Network" decoding="async"><span class="caption"><span>Committee Member</span></span></li>
-        </ul>
-        <ul class="marquee-list" aria-hidden="true">
-          <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-          <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="" decoding="async"><span class="caption"><span>Scottish Branch</span><span>Committee Member</span></span></li>
-          <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
-          <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="" decoding="async"><span class="caption"><span>Early Careers Group</span><span>Committee Member</span></span></li>
-          <li class="logo"><img src="logos/young-acousticians-network.png" width="96" height="64" alt="" decoding="async"><span class="caption"><span>Committee Member</span></span></li>
-        </ul>
-      </div>
     </div>
   </section>
 
