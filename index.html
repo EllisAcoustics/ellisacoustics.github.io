@@ -132,13 +132,13 @@
   /* ---------- Intro ---------- */
   #intro { display: none; }
   html.intro #intro {
-    display: block; position: fixed; inset: 0; z-index: 100; pointer-events: none;
-    animation: intro-failsafe 0s linear 9s forwards; /* never lingers, even if scripts fail */
+    display: block; position: fixed; inset: 0; z-index: 100; pointer-events: none; background: var(--paper);
+    animation: intro-failsafe 0s linear 11s forwards; /* never lingers, even if scripts fail */
   }
   /* The ruler waits until the courier drone has delivered the dot and flown off */
-  .scale, .sources, .freq-labels { transition: opacity 450ms ease; }
-  html.intro .scale, html.intro .sources, html.intro .freq-labels { opacity: 0; animation: ruler-failsafe 0s linear 9s forwards; }
+  html.intro .scale, html.intro .sources, html.intro .freq-labels { opacity: 0; animation: ruler-failsafe 0s linear 11s forwards; }
   @keyframes ruler-failsafe { to { opacity: 1; } }
+  #intro.live { display: block; position: fixed; inset: 0; z-index: 100; pointer-events: none; }
   #intro canvas { display: block; width: 100%; height: 100%; }
   @keyframes intro-failsafe { to { visibility: hidden; } }
   @media print { #intro { display: none !important; } }
@@ -1072,6 +1072,8 @@
 
 <script>
 (() => {
+  // Opening sequence: 1. a pulse ripples across a blank page  2. the courier drone delivers the dot of the "i"
+  // 3. the ruler draws itself left to right as a sine wave travels along it
   const root = document.documentElement;
   const el = document.getElementById('intro');
   if (!root.classList.contains('intro') || !el) { el && el.remove(); return; }
@@ -1079,13 +1081,13 @@
   const cv = el.querySelector('canvas');
   const ctx = cv.getContext('2d');
   const ruler = document.querySelector('.scale');
+  const reveal = [ruler, document.querySelector('.sources'), document.querySelector('.freq-labels')].filter(Boolean);
   const css = getComputedStyle(root);
-  const INK = css.getPropertyValue('--ink').trim();
-  const PAPER = css.getPropertyValue('--paper').trim();
-  const RULE = css.getPropertyValue('--rule').trim();
+  const v = (n) => css.getPropertyValue(n).trim();
+  const INK = v('--ink'), PAPER = v('--paper');
 
-  const DRAW = 450, WAVE = 900, SETTLE = 450;          // ms, 1.8 s in total
-  const TOTAL = DRAW + WAVE + SETTLE;
+  const DRAW = 400, WAVE = 900, FADE = 450;            // the opening pulse
+  const SWEEP = 1500;                                 // the ruler sweep
 
   let W, H;
   const size = () => {
@@ -1095,76 +1097,106 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
   size();
+  addEventListener('resize', size);
   window.scrollTo(0, 0);
 
   const easeOut = (x) => 1 - Math.pow(1 - x, 3);
   const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-
-  const line = (x0, x1, y, colour, alpha, width) => {
-    ctx.globalAlpha = alpha; ctx.strokeStyle = colour; ctx.lineWidth = width;
+  const box = () => {
+    const r = ruler ? ruler.getBoundingClientRect() : { left: W * 0.1, right: W * 0.9, top: H * 0.4, height: 0 };
+    return { x0: r.left, x1: r.right, y: r.top + r.height / 2 };
+  };
+  const hline = (x0, x1, y, alpha) => {
+    ctx.globalAlpha = alpha; ctx.strokeStyle = INK; ctx.lineWidth = 1.25;
     ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
   };
 
-  let done = false, start = null, revealed = false;
-  const finish = () => {
-    if (done) return; done = true;
-    root.classList.remove('intro');
-    el.remove();
-    dispatchEvent(new Event('intro-done'));
-    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, finish));
-  };
-  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, finish, { passive: true }));
+  let pulsed = false, swept = false, sweeping = false;
+  const clip = (px) => reveal.forEach((e) => { e.style.clipPath = px == null ? '' : `inset(-60px ${px}px -60px -60px)`; });
 
-  const frame = (now) => {
-    if (done) return;
-    if (start === null) start = now;
-    const t = now - start;
-    const r = ruler ? ruler.getBoundingClientRect() : { left: W * 0.1, right: W * 0.9, top: H * 0.4, height: 0 };
-    const x0 = r.left, x1 = r.right, cx = (x0 + x1) / 2, half = (x1 - x0) / 2;
-    const yRuler = r.top + r.height / 2;
-
-    ctx.globalAlpha = 1;
+  // ---------- 1. the pulse ----------
+  const pulseDone = () => {
+    if (pulsed) return; pulsed = true;
+    el.style.background = 'transparent';
     ctx.clearRect(0, 0, W, H);
-
+    dispatchEvent(new Event('pulse-done'));
+  };
+  let t0 = null;
+  const pulse = (now) => {
+    if (pulsed) return;
+    if (t0 === null) { t0 = now; el.style.background = 'transparent'; }
+    const t = now - t0, { x0, x1 } = box(), cx = (x0 + x1) / 2, half = (x1 - x0) / 2, y = H / 2;
+    ctx.globalAlpha = 1; ctx.clearRect(0, 0, W, H);
     if (t < DRAW) {
-      // 1. A line draws outward from the centre of the ruler
+      ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
       const h = half * easeOut(t / DRAW);
-      line(cx - h, cx + h, yRuler, INK, 1, 1.25);
+      hline(cx - h, cx + h, y, 1);
     } else if (t < DRAW + WAVE) {
-      // 2. A pulse leaves the centre and ripples out both ways, decaying as it travels
-      const tau = (t - DRAW) / WAVE;
-      const front = tau * half * 1.15;
-      const sigma = Math.max(24, half * 0.14);
-      const amp = Math.min(32, H * 0.05) * Math.pow(1 - tau, 1.4);
-      const lambda = Math.max(18, half * 0.045);
-      ctx.globalAlpha = 1; ctx.strokeStyle = INK; ctx.lineWidth = 1.25;
-      ctx.beginPath();
+      ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+      const tau = (t - DRAW) / WAVE, front = tau * half * 1.15;
+      const sigma = Math.max(24, half * 0.14), amp = Math.min(40, H * 0.06) * Math.pow(1 - tau, 1.4), lambda = Math.max(18, half * 0.045);
+      ctx.globalAlpha = 1; ctx.strokeStyle = INK; ctx.lineWidth = 1.25; ctx.beginPath();
       for (let x = x0; x <= x1; x += 1.5) {
-        const d = Math.abs(x - cx) - front;
-        const env = Math.exp(-(d * d) / (2 * sigma * sigma));
-        const y = yRuler - amp * env * Math.sin((2 * Math.PI * d) / lambda);
-        x === x0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        const d = Math.abs(x - cx) - front, env = Math.exp(-(d * d) / (2 * sigma * sigma));
+        const yy = y - amp * env * Math.sin((2 * Math.PI * d) / lambda);
+        x === x0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
       }
       ctx.stroke();
-    } else if (t < TOTAL) {
-      // 3. The real ruler and its noise sources fade in under the line
-      const p = easeInOut((t - DRAW - WAVE) / SETTLE);
-      if (!revealed) { revealed = true; root.classList.remove('intro'); }
-      line(x0, x1, yRuler, INK, 1 - p, 1.25);
-    } else {
-      finish();
-      return;
-    }
-    requestAnimationFrame(frame);
+    } else if (t < DRAW + WAVE + FADE) {
+      // the line and the blank page fade away together, revealing the name for the drone
+      const p = easeInOut((t - DRAW - WAVE) / FADE);
+      ctx.globalAlpha = 1 - p; ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+      hline(x0, x1, y, 1 - p);
+    } else { pulseDone(); return; }
+    requestAnimationFrame(pulse);
   };
 
-  addEventListener('resize', size);
-  // Wait for the courier drone to deliver the dot and fly away, then a beat, then the ruler
-  let begun = false;
-  const begin = () => { if (begun) return; begun = true; setTimeout(() => requestAnimationFrame(frame), 350); };
-  if (root.classList.contains('awaiting-dot')) addEventListener('dot-delivered', begin, { once: true });
-  else begin();
-  setTimeout(begin, 6500);   // never wait forever
+  // ---------- 3. the ruler sweep ----------
+  const finish = () => {
+    swept = true; sweeping = false;
+    root.classList.remove('intro'); clip(null); el.remove();
+    dispatchEvent(new Event('intro-done'));
+  };
+  let s0 = null;
+  const sweep = (now) => {
+    if (swept) return;
+    if (s0 === null) {
+      s0 = now; sweeping = true;
+      const { x0, x1 } = box(); clip(x1 - x0);
+      el.classList.add('live');               // keep the canvas once the intro class goes
+      root.classList.remove('intro');          // ruler is visible, but clipped to nothing
+    }
+    const { x0, x1, y } = box(), len = x1 - x0;
+    const p = Math.min(1, (now - s0) / SWEEP), front = x0 + len * easeInOut(p);
+    clip(Math.max(0, x1 - front));
+    // a short sine wave rides the leading edge, in the ruler's own viridis colours
+    const lambda = Math.max(22, len * 0.035), amp = 10 * Math.sin(Math.PI * Math.min(1, p * 1.25));
+    const g = ctx.createLinearGradient(x0, 0, x1, 0);
+    ['--v0', '--v1', '--v2', '--v3', '--v4', '--v5'].forEach((n, i) => g.addColorStop(i / 5, v(n)));
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.beginPath();
+    const span = lambda * 3;
+    for (let x = Math.max(x0, front - span); x <= Math.min(x1, front + lambda * 0.5); x += 1) {
+      const d = x - front, env = Math.exp(-((d + span * 0.45) ** 2) / (2 * (span * 0.28) ** 2));
+      const yy = y - amp * env * Math.sin((2 * Math.PI * d) / lambda + now / 70);
+      x <= Math.max(x0, front - span) ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+    }
+    ctx.stroke();
+    if (p < 1) requestAnimationFrame(sweep); else finish();
+  };
+  const startSweep = () => { if (!swept && !sweeping) setTimeout(() => requestAnimationFrame(sweep), 300); };
+
+  // Skipping (scroll, key, tap) jumps straight to the finished page; the drone still delivers the dot
+  const skip = () => {
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, skip));
+    pulseDone(); if (!swept) finish();
+  };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, skip, { passive: true }));
+
+  if (root.classList.contains('awaiting-dot')) addEventListener('dot-delivered', startSweep, { once: true });
+  else addEventListener('pulse-done', startSweep, { once: true });
+  setTimeout(startSweep, 8000);       // never wait forever
+  requestAnimationFrame(pulse);
 })();
 </script>
 <script>
@@ -1304,10 +1336,16 @@
     anim.onfinish = finish;
   };
   const start = () => requestAnimationFrame(fly);
-  // Start once the name's font has loaded, so the dot lands in the right place
-  (document.fonts ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 600))]) : Promise.resolve())
-    .then(() => setTimeout(start, 250));
-  setTimeout(finish, 6000); // never leave the dot missing
+  // Fly in once the opening pulse has cleared (and the name's font has loaded, so the dot lands in the right place)
+  let started = false;
+  const go = () => {
+    if (started) return; started = true;
+    (document.fonts ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 600))]) : Promise.resolve())
+      .then(() => setTimeout(start, 150));
+  };
+  if (root.classList.contains('intro')) { addEventListener('pulse-done', go, { once: true }); setTimeout(go, 3000); }
+  else go();
+  setTimeout(finish, 8000); // never leave the dot missing
 })();
 </script>
 <script>
