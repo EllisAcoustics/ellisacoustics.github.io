@@ -330,6 +330,9 @@
     width: 240px; height: 160px; padding: 0 calc(var(--u) * 2);
   }
   .logo img { display: block; max-width: 100%; height: auto; filter: var(--logo-filter); }
+  .logo img { transition: transform 400ms ease; }
+  .logo:hover img, .logo.is-active img { transform: translateY(-14px); }
+  @media (prefers-reduced-motion: reduce) { .logo img { transition: none; } }
   .caption {
     position: absolute; left: 0; right: 0; bottom: var(--u);
     display: flex; flex-direction: column; align-items: center;
@@ -516,16 +519,16 @@
     <div class="marquee" data-speed="46" data-direction="1">
       <div class="marquee-track">
         <ul class="marquee-list" aria-label="Working groups and committees">
-          <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="NASA" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
-          <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="Noise Network Plus" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
+          <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
           <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="Institute of Acoustics Scottish Branch" decoding="async"><span class="caption"><span>Scottish Branch</span><span>Committee Member</span></span></li>
+          <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="Noise Network Plus" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
           <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="Institute of Acoustics Early Careers Group" decoding="async"><span class="caption"><span>Early Careers Group</span><span>Committee Member</span></span></li>
           <li class="logo"><img src="logos/young-acousticians-network.png" width="96" height="64" alt="Young Acousticians Network" decoding="async"><span class="caption"><span>Committee Member</span></span></li>
         </ul>
         <ul class="marquee-list" aria-hidden="true">
-          <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
-          <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
+          <li class="logo"><img src="logos/nasa.png" width="77" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
           <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="" decoding="async"><span class="caption"><span>Scottish Branch</span><span>Committee Member</span></span></li>
+          <li class="logo"><img src="logos/noise-network-plus.png" width="129" height="57" alt="" decoding="async"><span class="caption"><span>Working Group Member</span></span></li>
           <li class="logo"><img src="logos/ioa.svg" width="142" height="64" alt="" decoding="async"><span class="caption"><span>Early Careers Group</span><span>Committee Member</span></span></li>
           <li class="logo"><img src="logos/young-acousticians-network.png" width="96" height="64" alt="" decoding="async"><span class="caption"><span>Committee Member</span></span></li>
         </ul>
