@@ -117,6 +117,7 @@
     border-top: 1px solid var(--rule);
     padding: calc(var(--u) * 5) 0 calc(var(--u) * 8);
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: calc(var(--u) * 3);
   }
   @media (min-width: 880px) {
@@ -211,13 +212,30 @@
   .timeline .detail li { padding: 0 0 0 calc(var(--u) * 2); }
   .timeline .detail li::before { content: "–"; border: 0; background: none; width: auto; height: auto; left: 0; top: 0; }
 
+  /* ---------- Software and interests ---------- */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+    gap: calc(var(--u) * 4) calc(var(--u) * 2);
+    max-width: 720px;
+  }
+  .icon-tile { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
+  .icon-tile img { display: block; width: 40px; height: 40px; }
+  .icon-name { font-family: var(--mono); font-size: 13px; line-height: 16px; color: var(--ink); }
+  .wordmark {
+    display: flex; align-items: center; justify-content: center;
+    height: 40px; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: var(--ink);
+  }
+  .wordmark + .icon-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
   /* ---------- Footer ---------- */
-  footer {
+  .foot {
     border-top: 1px solid var(--rule);
     padding: calc(var(--u) * 3) 0 calc(var(--u) * 6);
-    font-family: var(--mono); font-size: 13px; color: var(--ink-2);
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u);
+    font-family: var(--mono); font-size: 13px; line-height: 24px; color: var(--ink-2);
   }
+  .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u); }
+  .credits { margin-top: var(--u); max-width: 80ch; font-size: 12px; line-height: 16px; }
 
   @media print {
     .skip, .marquee-list[aria-hidden="true"] { display: none; }
@@ -481,21 +499,41 @@
     </div>
   </section>
 
-  <section class="section" aria-labelledby="skills-h">
-    <h2 id="skills-h">Methods and Tools</h2>
-    <div class="body">
-      <p>Psychoacoustics, auralisation, spatial audio, jury testing, aircraft noise modelling, field recording, digital signal processing, machine learning, statistical modelling.</p>
-      <div class="meta" aria-label="Software">
-        <span class="tag">Python</span><span class="tag">R</span><span class="tag">MATLAB</span><span class="tag">Max/MSP</span><span class="tag">QGIS</span><span class="tag">FME</span><span class="tag">Reaper</span>
-      </div>
-    </div>
+  <section class="section" id="software" aria-labelledby="software-h">
+    <h2 id="software-h">Software</h2>
+    <ul class="icon-grid" aria-label="Software">
+        <li class="icon-tile"><img src="software/python.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Python</span></li>
+        <li class="icon-tile"><img src="software/r.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">R</span></li>
+        <li class="icon-tile"><img src="software/matlab.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">MATLAB</span></li>
+        <li class="icon-tile"><img src="software/max.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Max/MSP</span></li>
+        <li class="icon-tile"><img src="software/qgis.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">QGIS</span></li>
+        <li class="icon-tile"><span class="wordmark" aria-hidden="true">FME</span><span class="icon-name">FME</span></li>
+        <li class="icon-tile"><span class="wordmark" aria-hidden="true">REAPER</span><span class="icon-name">REAPER</span></li>
+    </ul>
+  </section>
+
+  <section class="section" id="interests" aria-labelledby="interests-h">
+    <h2 id="interests-h">Interests</h2>
+    <ul class="icon-grid" aria-label="Interests">
+        <li class="icon-tile"><img src="interests/chess.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Chess</span></li>
+        <li class="icon-tile"><img src="interests/gym.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Gym</span></li>
+        <li class="icon-tile"><img src="interests/djing.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">DJing</span></li>
+        <li class="icon-tile"><img src="interests/film-photography.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Film Photography</span></li>
+        <li class="icon-tile"><img src="interests/piano.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Piano</span></li>
+        <li class="icon-tile"><img src="interests/spanish.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Learning Spanish</span></li>
+    </ul>
   </section>
 
 </main>
 
 <footer class="wrap">
-  <span>© 2026 Max Ellis</span>
-  <span>Updated October 2026</span>
+  <div class="foot">
+    <div class="foot-row">
+      <span>© 2026 Max Ellis</span>
+      <span>Updated October 2026</span>
+    </div>
+    <p class="credits">Logos are trademarks of their owners and are used only to name the organisations and software listed. Icons from Simple Icons, Devicon and Lucide. R logo © The R Foundation, CC BY-SA 4.0.</p>
+  </div>
 </footer>
 
 <script>
