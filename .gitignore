@@ -24,3 +24,7 @@ npm-debug.log*
 # Deployment CLIs
 .vercel/
 .netlify/
+
+# Python
+__pycache__/
+*.pyc
