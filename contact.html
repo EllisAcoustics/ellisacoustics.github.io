@@ -73,6 +73,23 @@
   :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; box-shadow: 0 0 0 6px var(--paper); border-radius: 1px; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
   .masthead { position: relative; padding-top: calc(var(--u) * 10); padding-bottom: calc(var(--u) * 4); }
+  /* ---------- Site navigation ---------- */
+  .topnav {
+    position: absolute; top: calc(var(--u) * 2); left: var(--gutter); right: var(--gutter);
+    display: flex; align-items: center; justify-content: space-between; gap: calc(var(--u) * 2);
+    min-height: 44px;
+  }
+  .topnav .home { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; min-height: 44px; }
+  .topnav .home svg { width: 26px; height: 26px; display: block; }
+  .topnav .home .home-label { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+  .topnav .links { display: flex; align-items: center; gap: calc(var(--u) * 3); }
+  .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
+  .topnav .links a:hover, .topnav .links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  .topnav .links a[aria-current="page"] { text-decoration-thickness: 2px; }
+  .topnav .theme-switch { position: static; }
+  @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
+  @media print { .topnav { display: none; } }
+
   /* ---------- Theme switch ---------- */
   .theme-switch {
     position: absolute; top: calc(var(--u) * 3); right: var(--gutter);
@@ -98,8 +115,6 @@
   .theme-switch button:hover { border-color: var(--ink); }
   @media (prefers-reduced-motion: reduce) { .theme-switch button::after { transition: none; } }
 
-  .back { font-family: var(--mono); font-size: 14px; }
-  .back::before { content: "← "; }
   h1 { margin-top: calc(var(--u) * 4); font-size: clamp(40px, 7vw, 72px); line-height: 1.02; font-weight: 650; letter-spacing: -0.035em; }
   .lede { margin-top: calc(var(--u) * 3); max-width: 40ch; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; }
   .section { border-top: 1px solid var(--rule); padding: calc(var(--u) * 5) 0 calc(var(--u) * 7); display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
@@ -130,17 +145,23 @@
 </head>
 <body>
 <header class="wrap masthead">
-  <div class="theme-switch">
-    <svg class="sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
-      <circle cx="8" cy="8" r="3"/>
-      <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06"/>
-    </svg>
-    <button type="button" role="switch" aria-checked="false" aria-label="Dark mode" id="theme-toggle"></button>
-    <svg class="moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
-      <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
-    </svg>
-  </div>
-  <a class="back" href="./">Back to the main page</a>
+  <nav class="topnav" aria-label="Site">
+    <a class="home" href="./" aria-label="Max Ellis, home"><svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><circle cx="13" cy="13" r="4.2" fill="currentColor"/><circle cx="13" cy="13" r="8.4" fill="none" stroke="currentColor" stroke-width="1" opacity="0.55"/><circle cx="13" cy="13" r="12.2" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/></svg><span class="home-label" aria-hidden="true">Max Ellis</span></a>
+    <div class="links">
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+      <div class="theme-switch">
+        <svg class="sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3"/>
+          <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06"/>
+        </svg>
+        <button type="button" role="switch" aria-checked="false" aria-label="Dark mode" id="theme-toggle"></button>
+        <svg class="moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
+          <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
+        </svg>
+      </div>
+    </div>
+  </nav>
   <h1>Get in touch</h1>
   <p class="lede">I’m open to interviews, podcasts, press statements and collaboration on how new technology will sound, and how people will respond to it.</p>
 </header>

@@ -191,9 +191,6 @@
     .src .note, .src .pulse.p1 { opacity: 1; }
   }
 
-  .about p { font-size: 17px; line-height: 27px; }
-  .about p + p { margin-top: calc(var(--u) * 2); }
-
   /* ---------- Research method figure ---------- */
   .method { min-width: 0; }
   @media (min-width: 880px) {
@@ -272,6 +269,23 @@
   }
   .social svg { width: 20px; height: 20px; display: block; }
   .social:hover { border-color: var(--ink); color: var(--accent); }
+
+  /* ---------- Site navigation ---------- */
+  .topnav {
+    position: absolute; top: calc(var(--u) * 2); left: var(--gutter); right: var(--gutter);
+    display: flex; align-items: center; justify-content: space-between; gap: calc(var(--u) * 2);
+    min-height: 44px;
+  }
+  .topnav .home { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; min-height: 44px; }
+  .topnav .home svg { width: 26px; height: 26px; display: block; }
+  .topnav .home .home-label { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+  .topnav .links { display: flex; align-items: center; gap: calc(var(--u) * 3); }
+  .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
+  .topnav .links a:hover, .topnav .links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  .topnav .links a[aria-current="page"] { text-decoration-thickness: 2px; }
+  .topnav .theme-switch { position: static; }
+  @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
+  @media print { .topnav { display: none; } }
 
   /* ---------- Theme switch ---------- */
   .theme-switch {
@@ -548,16 +562,23 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="wrap masthead">
-  <div class="theme-switch">
-    <svg class="sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
-      <circle cx="8" cy="8" r="3"/>
-      <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06"/>
-    </svg>
-    <button type="button" role="switch" aria-checked="false" aria-label="Dark mode" id="theme-toggle"></button>
-    <svg class="moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
-      <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
-    </svg>
-  </div>
+  <nav class="topnav" aria-label="Site">
+    <a class="home" href="./" aria-current="page" aria-label="Max Ellis, home"><svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><circle cx="13" cy="13" r="4.2" fill="currentColor"/><circle cx="13" cy="13" r="8.4" fill="none" stroke="currentColor" stroke-width="1" opacity="0.55"/><circle cx="13" cy="13" r="12.2" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/></svg><span class="home-label" aria-hidden="true">Max Ellis</span></a>
+    <div class="links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <div class="theme-switch">
+        <svg class="sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3"/>
+          <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06"/>
+        </svg>
+        <button type="button" role="switch" aria-checked="false" aria-label="Dark mode" id="theme-toggle"></button>
+        <svg class="moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
+          <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
+        </svg>
+      </div>
+    </div>
+  </nav>
   <h1><span class="name"><span class="visually-hidden">Max Ellis</span><span aria-hidden="true">Max Ell<span class="i-wrap"><span class="bl"></span>ı<span class="tittle"></span></span>s</span></span> <span class="postnominals">BDes MSc AFHEA</span></h1>
   <p class="role">PhD Candidate in Psychoacoustics</p>
   <p class="affil">Acoustics Innovation Institute, University of Salford<br>EPSRC Centre for Doctoral Training in Sustainable Sound Futures</p>
@@ -609,15 +630,6 @@
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
-
-  <section class="section" id="about" aria-labelledby="about-h">
-    <h2 id="about-h">About Me</h2>
-    <div class="body about">
-      <p>I’m a Glasgow-based acoustician who came to research through music. I started out recording and mixing local bands at The Audio Lounge in Maryhill, studied music technology and sound for film, then moved into computer science and artificial intelligence, which is how I ended up teaching machines to hear the way people do.</p>
-      <p>That mix of studio ears and data science shapes how I work: I care about how something actually sounds to the person standing there, not just what a meter says. Alongside my PhD I teach, supervise dissertations and volunteer as a STEM Ambassador in Scotland.</p>
-      <p>Away from work you’ll find me at the chessboard, the piano or the decks, shooting on film, at the gym, or slowly improving my Spanish.</p>
-    </div>
-  </section>
 
   <section class="section" id="method" aria-labelledby="method-h">
     <h2 id="method-h">How the Research Works</h2>
