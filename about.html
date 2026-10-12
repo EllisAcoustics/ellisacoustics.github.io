@@ -181,6 +181,13 @@
   #intro .jaw { transform-origin: 31.4px 10.4px; }
   #intro .head { transform-origin: 26px 13px; }
   #intro .wing { transform-origin: 22px 16.6px; }
+  #intro .gust { stroke-dasharray: 5 4; animation: gust 0.7s linear infinite; }
+  #intro .gust.g2 { animation-duration: 0.55s; }
+  #intro .gust.g3 { animation-duration: 0.8s; }
+  @keyframes gust { to { stroke-dashoffset: -9; } }
+  #intro .arc { opacity: 0; transform-box: view-box; transform-origin: 0 15px; animation: arc 1.2s ease-out infinite; }
+  #intro .arc.a2 { animation-delay: 0.4s; } #intro .arc.a3 { animation-delay: 0.8s; }
+  @keyframes arc { 0% { opacity: 0; transform: scale(0.7); } 25% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
   @media print { #intro { display: none !important; } }
 </style>
 </head>
@@ -189,6 +196,9 @@
   <span class="line"></span>
   <span class="piece hp"><svg viewBox="3 14 32 20.5" fill="none" stroke="currentColor" stroke-width="0.55" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.3"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.3"/><g class="fan" stroke-width="0.4"><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(120 13.5 23.25)"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(240 13.5 23.25)"/></g><circle cx="13.5" cy="23.25" r="0.6" fill="currentColor" stroke="none"/><path d="M24.00 17V29.5M25.15 17V29.5M26.30 17V29.5M27.45 17V29.5M28.60 17V29.5M29.75 17V29.5M30.90 17V29.5" stroke-width="0.3"/><path d="M7 32V33.5M31 32V33.5"/></svg></span>
   <span class="piece bird"><svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17L3 13.6L5 18.6L10 20"/><path d="M10 19.6Q12 25.4 19.4 25Q26.4 24.4 27.6 17.6"/><path d="M10.6 17Q13.6 12.4 21.6 12.8"/><path d="M16.4 24.8V28.6M20.4 24.6V28.6M15.2 28.6H17.6M19.2 28.6H21.6" stroke-width="1"/><g class="wing"><path d="M22.6 15.6Q16 10.8 8.4 13.2Q12.6 20.6 22.6 18.2Z" fill="var(--paper)"/><path d="M11.6 15.2L17.4 15.9M12.6 17.2L18.4 17.3" stroke-width="0.7"/></g><g class="head"><path d="M21.6 12.8Q22.6 6.4 27.6 6.4Q32 6.6 31.4 10.6Q30.6 15.6 27.6 17.6"/><circle cx="28" cy="9.6" r="0.9" fill="currentColor" stroke="none"/><path d="M31.2 9.2L35.6 10.2L31.4 10.6"/><path class="jaw" d="M31.4 10.6L35 11.2L31 12" stroke-width="1"/></g></svg></span>
+  <span class="piece wind"><svg viewBox="0 0 34 22" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><path class="gust" d="M1 6Q12 3.6 22 6.4T33 7"/><path class="gust g2" d="M3 11H33"/><path class="gust g3" d="M1 16Q12 18.4 22 15.6T33 15"/></svg></span>
+  <span class="piece noise"><svg viewBox="0 0 24 30" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path class="arc a1" d="M3 8Q8 15 3 22"/><path class="arc a2" d="M9 4.6Q16 15 9 25.4"/><path class="arc a3" d="M15 1.4Q24 15 15 28.6"/></svg></span>
+  <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
   <template id="note-tpl"><span class="piece note"><svg viewBox="0 0 12 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="14.6" rx="2.7" ry="2" transform="rotate(-22 3.4 14.6)" fill="currentColor" stroke="none"/><path d="M5.9 13.8V1.6"/><path d="M5.9 1.6Q6.6 5 9.8 6.6Q11.6 8.4 10.4 11.2" stroke-width="1.1"/></svg></span></template><template id="note-tpl-2"><span class="piece note"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="15" rx="2.7" ry="2" transform="rotate(-22 3.4 15)" fill="currentColor" stroke="none"/><ellipse cx="13" cy="13" rx="2.7" ry="2" transform="rotate(-22 13 13)" fill="currentColor" stroke="none"/><path d="M5.9 14.2V3.4M15.5 12.2V1.6"/><path d="M5.9 3.4L15.5 1.6" stroke-width="2.4" stroke-linecap="butt"/></svg></span></template>
 </div>
 <header class="wrap masthead">
@@ -251,8 +261,8 @@
 
 <script>
 (() => {
-  // Bird intro: a bird on a heat pump chirps three times, notes float from its beak,
-  // it flies off, then the ground line settles onto the first divider. About 4 s.
+  // Bird intro: wind blows into a heat pump, sound pulses from it, a bird on top sings six notes,
+  // a gust of leaves blows across, then the ground line settles onto the first divider. About 3.7 s.
   const root = document.documentElement;
   const el = document.getElementById('intro');
   if (!el) return;
@@ -260,6 +270,8 @@
   const line = el.querySelector('.line'), hp = el.querySelector('.hp'), bird = el.querySelector('.bird');
   const jaw = bird.querySelector('.jaw'), head = bird.querySelector('.head'), wing = bird.querySelector('.wing');
   const tpls = [document.getElementById('note-tpl'), document.getElementById('note-tpl-2')];
+  const leafTpl = document.getElementById('leaf-tpl');
+  const windEl = el.querySelector('.wind'), noiseEl = el.querySelector('.noise');
   const target = document.querySelector('main .section');
   window.scrollTo(0, 0);
   let done = false;
@@ -284,10 +296,14 @@
     Object.assign(line.style, { left: r.left + 'px', width: r.width + 'px', top: ground + 'px' });
     Object.assign(hp.style, { width: hpW + 'px', transform: `translate(${hpX}px, ${hpY}px)`, opacity: 0 });
     Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px)`, opacity: 0 });
+    const fanY = hpY + hpH * (9.25 / 20.5);
+    const wW = hpW * 0.34, wH = wW * 22 / 34, nW = hpW * 0.2, nH = nW * 30 / 24;
+    Object.assign(windEl.style, { width: wW + 'px', transform: `translate(${hpX - wW - hpW * 0.04}px, ${fanY - wH / 2}px)`, opacity: 0 });
+    Object.assign(noiseEl.style, { width: nW + 'px', transform: `translate(${hpX + hpW + hpW * 0.03}px, ${fanY - nH / 2}px)`, opacity: 0 });
 
     // 1. ground draws, heat pump and bird appear
     line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
-    [hp, bird].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, delay: 200, fill: 'forwards' }));
+    [hp, bird, windEl, noiseEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, delay: 200, fill: 'forwards' }));
 
     // 2. three chirps, each with a note from the beak
     const beakX = bX + bW * (35.4 / 40), beakY = bY + bH * (10.6 / 30);
@@ -298,33 +314,42 @@
       const nw = bW * (i % 2 ? 0.46 : 0.3);
       n.style.width = nw + 'px';
       el.appendChild(n);
-      const dx = 18 + i * 10, dy = -46 - i * 8, rot = i % 2 ? 12 : -10;
+      const dx = 14 + (i % 3) * 12, dy = -42 - (i % 3) * 10, rot = i % 2 ? 12 : -10;
       n.animate([
         { transform: `translate(${beakX}px, ${beakY - nw}px) scale(0.5) rotate(0)`, opacity: 0 },
         { transform: `translate(${beakX + dx * 0.3}px, ${beakY - nw + dy * 0.3}px) scale(1) rotate(${rot / 2}deg)`, opacity: 1, offset: 0.25 },
         { transform: `translate(${beakX + dx}px, ${beakY - nw + dy}px) scale(1) rotate(${rot}deg)`, opacity: 0 }
       ], { duration: 1100, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' }).onfinish = () => n.remove();
     };
-    at(650, () => chirp(0)); at(1150, () => chirp(1)); at(1650, () => chirp(2));
+    [600, 850, 1100, 1350, 1600, 1850].forEach((t, i) => at(t, () => chirp(i)));
 
     // 3. take off: wings flap, bird arcs up and away to the right
     const beat = (count, period, up, down) => wing.animate(
       [{ transform: 'rotate(0)' }, { transform: `rotate(${up}deg)` }, { transform: `rotate(${down}deg)` }, { transform: 'rotate(0)' }],
       { duration: period, iterations: count, easing: 'ease-in-out' });
-    at(2150, () => beat(2, 180, 38, -12));                         // flutter on the perch
-    at(2500, () => {
-      beat(9, 150, 62, -48);                                       // deep wingbeats in flight
-      bird.animate([
-        { transform: `translate(${bX}px, ${bY}px) rotate(0)` },
-        { transform: `translate(${bX + 6}px, ${bY - bH * 0.6}px) rotate(-6deg)`, offset: 0.15 },
-        { transform: `translate(${bX + W * 0.2}px, ${bY - H * 0.16}px) rotate(-12deg)`, offset: 0.5 },
-        { transform: `translate(${W + bW}px, ${-bH * 2}px) rotate(-16deg)` }
-      ], { duration: 1300, easing: 'cubic-bezier(.35,0,.75,.6)', fill: 'forwards' });
+    // 3. a gust of leaves blows across the scene; the bird ruffles its wing as they pass
+    at(2150, () => {
+      const lw = Math.max(18, hpW * 0.11);
+      for (let k = 0; k < 9; k++) {
+        const leafEl = leafTpl.content.firstElementChild.cloneNode(true);
+        const size = lw * (0.75 + ((k * 37) % 10) / 20);
+        leafEl.style.width = size + 'px';
+        el.appendChild(leafEl);
+        const y = ground - hpH * 1.6 + ((k * 53) % 100) / 100 * hpH * 1.9;
+        const wob = 18 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (360 + k * 40);
+        leafEl.animate([
+          { transform: `translate(${-size * 2}px, ${y}px) rotate(0)` },
+          { transform: `translate(${W * 0.35}px, ${y - wob}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
+          { transform: `translate(${W * 0.7}px, ${y + wob}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
+          { transform: `translate(${W + size * 2}px, ${y - wob / 2}px) rotate(${spin}deg)` }
+        ], { duration: 1100 + (k % 4) * 120, delay: k * 70, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
+      }
+      at(2450, () => beat(3, 170, 40, -16));
     });
 
     // 4. heat pump fades, ground line settles onto the first divider, page appears
-    at(3300, () => {
-      hp.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' });
+    at(3000, () => {
+      [hp, bird, windEl, noiseEl].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
       line.animate([{ transform: 'scaleX(1) translateY(0)' }, { transform: `scaleX(1) translateY(${r.top - ground}px)` }],
                    { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
       el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
