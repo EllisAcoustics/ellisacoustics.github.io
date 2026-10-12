@@ -80,7 +80,13 @@
     min-height: 44px;
   }
   .topnav .home { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; min-height: 44px; }
-  .topnav .home svg { width: 26px; height: 26px; display: block; }
+  .topnav .home svg { display: block; }
+  .topnav .home svg { width: 54px; height: auto; }
+  .topnav .home .mk-spin { transform-box: view-box; animation: mk-spin 7s linear infinite; }
+  .topnav .home .mk-rotor { transform-box: fill-box; transform-origin: center; animation: mk-rotor 0.2s linear infinite; }
+  @keyframes mk-spin { to { transform: rotate(360deg); } }
+  @keyframes mk-rotor { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.55); } }
+  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-spin, .topnav .home .mk-rotor { animation: none; } }
   .topnav .home .home-label { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
   .topnav .links { display: flex; align-items: center; gap: calc(var(--u) * 3); }
   .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
@@ -161,7 +167,7 @@
 <body>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
-    <a class="home" href="./" aria-label="Max Ellis, home"><svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><circle cx="13" cy="13" r="4.2" fill="currentColor"/><circle cx="13" cy="13" r="8.4" fill="none" stroke="currentColor" stroke-width="1" opacity="0.55"/><circle cx="13" cy="13" r="12.2" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25"/></svg><span class="home-label" aria-hidden="true">Max Ellis</span></a>
+    <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="0 0 48 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><path d="M32.6 25V28.6" stroke-width="0.8"/><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><path d="M1 30H47"/></svg><span class="home-label" aria-hidden="true">Max Ellis</span></a>
     <div class="links">
       <a href="about" aria-current="page">About</a>
       <a href="contact">Contact</a>
