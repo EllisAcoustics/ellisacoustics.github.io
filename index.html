@@ -908,20 +908,21 @@
     const e1 = 'cubic-bezier(.25,.1,.25,1)', e2 = 'ease-in-out', e3 = 'cubic-bezier(.55,0,.9,.45)';
     const path = [
       { transform: at(Math.min(tx + 320, W + 80), ty - 260, -10), offset: 0, easing: e1 },
-      { transform: at(tx + 14, ty - 34, -3), offset: 0.36, easing: e2 },
-      { transform: at(tx, ty, 0), offset: 0.5, easing: 'linear' },
-      { transform: at(tx, ty, 0), offset: 0.6, easing: e2 },
-      { transform: at(tx + 8, ty - 26, 5), offset: 0.7, easing: e3 },
-      { transform: at(tx - 60, scrollY + innerHeight + 120, 18), offset: 1 }
+      { transform: at(tx + 14, ty - 34, -3), offset: 0.28, easing: e2 },
+      { transform: at(tx, ty, 0), offset: 0.39, easing: 'linear' },
+      { transform: at(tx, ty, 0), offset: 0.48, easing: e2 },
+      { transform: at(tx + 8, ty - 22, 4), offset: 0.62, easing: e2 },
+      { transform: at(W - 48, ty - 4, 10), offset: 0.8, easing: e2 },
+      { transform: at(W - 48, scrollY + innerHeight + 120, 2), offset: 1 }
     ];
-    const anim = drone.animate(path, { duration: 2600, easing: 'linear', fill: 'forwards' });
+    const anim = drone.animate(path, { duration: 3400, easing: 'linear', fill: 'forwards' });
     // release the dot during the hover over the i
     setTimeout(() => {
       drone.querySelector('.carried').style.opacity = '0';
       root.classList.remove('awaiting-dot');
       dot.animate([{ transform: 'translateY(-2px)' }, { transform: 'translateY(1px)' }, { transform: 'translateY(0)' }],
                   { duration: 260, easing: 'ease-out' });
-    }, 2600 * 0.54);
+    }, 3400 * 0.43);
     anim.onfinish = finish;
   };
   const start = () => requestAnimationFrame(fly);
