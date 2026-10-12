@@ -191,8 +191,14 @@
     .src .note, .src .pulse.p1 { opacity: 1; }
   }
 
+  .about p { font-size: 17px; line-height: 27px; }
+  .about p + p { margin-top: calc(var(--u) * 2); }
+
   /* ---------- Research method figure ---------- */
   .method { min-width: 0; }
+  @media (min-width: 880px) {
+    #method { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
+  }
   .steps { display: grid; gap: calc(var(--u) * 4); position: relative; }
   .step { position: relative; padding-left: calc(var(--u) * 4); }
   .step .node {
@@ -209,7 +215,7 @@
   .step h3 { margin: 2px 0 4px; font-size: 17px; line-height: 24px; font-weight: 600; }
   .step p { color: var(--ink-2); font-size: 15px; line-height: 22px; max-width: 46ch; }
   @media (min-width: 880px) {
-    .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(var(--u) * 3); padding-top: 24px; }
+    .steps { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: calc(var(--u) * 3); padding-top: 24px; }
     .step { padding-left: 0; padding-top: 0; }
     .step .node { top: -24px; left: 0; }
     .steps::before { left: 6px; right: 6px; top: 5px; bottom: auto; width: auto; height: 1px; transform-origin: left; transform: scaleX(var(--progress, 1)); }
@@ -579,7 +585,7 @@
       <line x1="791.6" y1="8" x2="791.6" y2="16"/><line x1="833.3" y1="8" x2="833.3" y2="16"/><line x1="916.6" y1="8" x2="916.6" y2="16"/><line x1="958.3" y1="8" x2="958.3" y2="16"/>
     </g>
   </svg>
-  <div class="freq-labels"><span style="--i:0">63</span><span style="--i:1">125</span><span style="--i:2">250</span><span style="--i:3">500</span><span style="--i:4">1k</span><span style="--i:5">2k</span><span style="--i:6">4k</span><span style="--i:7">8k</span><span style="--i:8">16k Hz</span></div>
+  <div class="freq-labels"><span style="--i:0">63 Hz</span><span style="--i:1">125 Hz</span><span style="--i:2">250 Hz</span><span style="--i:3">500 Hz</span><span style="--i:4">1 kHz</span><span style="--i:5">2 kHz</span><span style="--i:6">4 kHz</span><span style="--i:7">8 kHz</span><span style="--i:8">16 kHz</span></div>
   </figure>
   <p class="visually-hidden">Frequency scale from 63 Hz to 16 kHz, marking where the noise of the sources I study is concentrated: next-generation wind turbines around 100 Hz, air-source heat pumps around 200 Hz, fixed-wing eVTOL aircraft around 400 Hz, electric cars around 1 kHz, drones around 2.5 kHz and e-scooters around 5 kHz.</p>
 
@@ -604,6 +610,15 @@
 
 <main id="main" class="wrap" tabindex="-1">
 
+  <section class="section" id="about" aria-labelledby="about-h">
+    <h2 id="about-h">About Me</h2>
+    <div class="body about">
+      <p>I’m a Glasgow-based acoustician who came to research through music. I started out recording and mixing local bands at The Audio Lounge in Maryhill, studied music technology and sound for film, then moved into computer science and artificial intelligence, which is how I ended up teaching machines to hear the way people do.</p>
+      <p>That mix of studio ears and data science shapes how I work: I care about how something actually sounds to the person standing there, not just what a meter says. Alongside my PhD I teach, supervise dissertations and volunteer as a STEM Ambassador in Scotland.</p>
+      <p>Away from work you’ll find me at the chessboard, the piano or the decks, shooting on film, at the gym, or slowly improving my Spanish.</p>
+    </div>
+  </section>
+
   <section class="section" id="method" aria-labelledby="method-h">
     <h2 id="method-h">How the Research Works</h2>
     <div class="method">
@@ -612,7 +627,7 @@
           <span class="node" aria-hidden="true"></span>
           <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 31V19H9V31M9 31V12H17V31M17 31V22H23V31M23 31V15H31V31M31 31V24H37V31M1 31H39"/><path d="M12 16H14M12 20H14M12 24H14M26 19H28M26 23H28" stroke-width="0.8"/><path d="M27 6H35M29 6V8M33 6V8M29.5 8H32.5" stroke-width="0.9"/></svg></span>
           <span class="step-no">01</span>
-          <h3>Future soundscape</h3>
+          <h3>Soundscape</h3>
           <p>Real places are recorded, then drones, eVTOL aircraft, heat pumps and EVs are added at realistic levels.</p>
         </li>
         <li class="step" style="--n:1">
@@ -626,14 +641,14 @@
           <span class="node" aria-hidden="true"></span>
           <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 22V18A12 12 0 0 1 32 18V22"/><rect x="5" y="21" width="6" height="9" rx="2"/><rect x="29" y="21" width="6" height="9" rx="2"/><path d="M15 26H25M17 23H23M17 29H23" stroke-width="0.7" stroke-dasharray="1 1.4"/></svg></span>
           <span class="step-no">03</span>
-          <h3>Listening panels</h3>
+          <h3>Listening Panels</h3>
           <p>Participants rate annoyance in controlled jury tests, across different ambiences and contexts.</p>
         </li>
         <li class="step" style="--n:3">
           <span class="node" aria-hidden="true"></span>
           <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9L20 6M7 9L20 17M7 9L20 28M7 25L20 6M7 25L20 17M7 25L20 28M20 6L33 17M20 17L33 17M20 28L33 17" stroke-width="0.6"/><circle cx="7" cy="9" r="2.4" fill="var(--paper)"/><circle cx="7" cy="25" r="2.4" fill="var(--paper)"/><circle cx="20" cy="6" r="2.4" fill="var(--paper)"/><circle cx="20" cy="17" r="2.4" fill="var(--paper)"/><circle cx="20" cy="28" r="2.4" fill="var(--paper)"/><circle cx="33" cy="17" r="2.8" fill="currentColor"/></svg></span>
           <span class="step-no">04</span>
-          <h3>Machine learning</h3>
+          <h3>Machine Learning</h3>
           <p>Models learn which acoustic, operational and contextual factors drive the ratings.</p>
         </li>
         <li class="step" style="--n:4">
@@ -642,6 +657,13 @@
           <span class="step-no">05</span>
           <h3>Prediction</h3>
           <p>Annoyance can be estimated for scenarios that do not exist yet, giving regulators evidence and engineers a target.</p>
+        </li>
+        <li class="step" style="--n:5">
+          <span class="node" aria-hidden="true"></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 3H25L31 9V31H10Z"/><path d="M25 3V9H31"/><path d="M14 15H27M14 19H27M14 23H22" stroke-width="0.8"/><circle cx="29" cy="26" r="5" fill="var(--paper)"/><path d="M26.7 26L28.4 27.7L31.4 24.4" stroke-width="1.1"/></svg></span>
+          <span class="step-no">06</span>
+          <h3>Findings</h3>
+          <p>Models trained on listener ratings predict drone and aircraft annoyance more reliably than traditional metrics alone. <a href="#publications">See the papers</a></p>
         </li>
       </ol>
     </div>
@@ -898,7 +920,7 @@
   <div class="foot">
     <div class="foot-row">
       <span>© 2026 Max Ellis</span>
-      <span><a href="contact.html">Contact</a> · <a href="cv/Max-Ellis-CV.pdf" download>CV (PDF)</a> · Updated October 2026</span>
+      <span><a href="contact.html">Contact</a> · <a href="cv/Max-Ellis-CV.pdf" download>My CV (PDF)</a> · Updated October 2026</span>
     </div>
     <p class="credits">Logos are trademarks of their owners and are used only to name the organisations and software listed. Icons from Simple Icons and Devicon. R logo © The R Foundation, CC BY-SA 4.0.</p>
   </div>
