@@ -257,6 +257,11 @@
     max-width: 40ch;
   }
   .affil { color: var(--ink-2); max-width: 60ch; }
+  .postnominals {
+    font-size: 13px; line-height: 1; font-style: italic; font-weight: 400;
+    letter-spacing: 0.02em; color: var(--ink-2); white-space: nowrap;
+    margin-left: 0.15em;
+  }
 
   .scale {
     display: block;
@@ -425,9 +430,9 @@
       <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
     </svg>
   </div>
-  <h1>Max Ellis</h1>
-  <p class="role">PhD Candidate in Psychoacoustics and Associate Lecturer in Computer Science</p>
-  <p class="affil">Acoustics Innovation Institute, University of Salford — EPSRC Centre for Doctoral Training in Sustainable Sound Futures. Based in Glasgow.</p>
+  <h1>Max Ellis <span class="postnominals">BDes MSc AFHEA</span></h1>
+  <p class="role">PhD Candidate in Psychoacoustics</p>
+  <p class="affil">Acoustics Innovation Institute, University of Salford<br>EPSRC Centre for Doctoral Training in Sustainable Sound Futures</p>
 
   <figure class="freq" aria-hidden="true">
   <!-- Noise sources placed at their characteristic frequency: x = log2(Hz / 63) / 8 -->
