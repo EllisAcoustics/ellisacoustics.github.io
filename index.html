@@ -277,7 +277,9 @@
   }
   .bl { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
   html.awaiting-dot .tittle { visibility: hidden; }
-  .impulse { position: absolute; border: 1px solid currentColor; border-radius: 50%; pointer-events: none; opacity: 0; }
+  .tittle { cursor: pointer; }
+  .tittle::before { content: ""; position: absolute; inset: -10px; border-radius: 50%; }
+  .impulse { position: absolute; transform: translate(-50%, -50%); border: 1px solid currentColor; border-radius: 50%; pointer-events: none; opacity: 0; }
   .courier { position: absolute; top: 0; left: 0; z-index: 50; width: 56px; height: 48px; pointer-events: none; color: var(--ink); }
   .courier svg { display: block; width: 100%; height: 100%; overflow: visible; }
   .courier .srot { transform-box: view-box; animation: src-blade-x 0.2s linear infinite; }
@@ -881,6 +883,37 @@
 </script>
 <script>
 (() => {
+  // Sonar pings from the dot of the i, plus a one-off large ping when it is clicked.
+  const dot = document.querySelector('.tittle');
+  if (!dot) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.dotPing = (scale, opacity, duration, delay) => {
+    if (reduce) return;
+    const d = dot.offsetWidth;
+    const cx = dot.offsetLeft + d / 2, cy = dot.offsetTop + d / 2;
+    const ring = document.createElement('span');
+    ring.className = 'impulse';
+    ring.style.left = cx + 'px'; ring.style.top = cy + 'px';
+    dot.parentNode.appendChild(ring);
+    // grow the ring itself (not a scale transform) so the line stays a 1px hairline
+    ring.animate([{ width: d + 'px', height: d + 'px', opacity }, { width: d * scale + 'px', height: d * scale + 'px', opacity: 0 }],
+                 { duration, delay, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'both' }).onfinish = () => ring.remove();
+  };
+  let pinged = false;
+  dot.addEventListener('click', () => {
+    if (!pinged) {
+      pinged = true;
+      dotPing(26, 0.5, 1400, 0); dotPing(26, 0.3, 1400, 260);
+    } else if (!reduce) {
+      dot.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-1.5px)' }, { transform: 'translateX(1.5px)' },
+                   { transform: 'translateX(-1px)' }, { transform: 'translateX(1px)' }, { transform: 'translateX(0)' }],
+                  { duration: 260, easing: 'linear' });
+    }
+  });
+})();
+</script>
+<script>
+(() => {
   // A courier drone delivers the dot of the "i", then flies off down the screen.
   const root = document.documentElement;
   const dot = document.querySelector('.tittle');
@@ -929,15 +962,7 @@
       root.classList.remove('awaiting-dot');
       dot.animate([{ transform: 'translateY(-1.5px)' }, { transform: 'translateY(0.5px)' }, { transform: 'translateY(0)' }],
                   { duration: 220, easing: 'ease-out' });
-      [0, 140].forEach((delay, n) => {
-        const ring = document.createElement('span');
-        ring.className = 'impulse';
-        ring.style.left = dot.style.left; ring.style.top = dot.style.top;
-        ring.style.width = ring.style.height = dot.offsetWidth + 'px';
-        dot.parentNode.appendChild(ring);
-        ring.animate([{ transform: 'scale(1)', opacity: n ? 0.25 : 0.45 }, { transform: 'scale(3.2)', opacity: 0 }],
-                     { duration: 520, delay, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'both' }).onfinish = () => ring.remove();
-      });
+      window.dotPing && (window.dotPing(3.4, 0.45, 700, 0), window.dotPing(3.4, 0.35, 700, 650));
     }, 3000 * 0.43);
     anim.onfinish = finish;
   };
