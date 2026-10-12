@@ -77,6 +77,7 @@
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  section[tabindex="-1"]:focus { outline: none; }
 
   body {
     margin: 0;
@@ -1568,6 +1569,21 @@
 <script>
   // Hold the network animation still for people who prefer reduced motion
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelectorAll('.step-icon svg').forEach((s) => s.pauseAnimations && s.pauseAnimations());
+</script>
+<script>
+  // Links within the page scroll smoothly to their section without adding #section to the address
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const id = a.getAttribute('href').slice(1), target = id && document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  });
 </script>
 </body>
 </html>
