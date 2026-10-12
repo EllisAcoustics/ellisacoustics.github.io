@@ -156,9 +156,14 @@
   .marquee-track { display: flex; width: max-content; }
   .marquee-list { display: flex; flex-shrink: 0; }
   .logo {
-    display: flex; align-items: center; justify-content: center;
-    width: 224px; height: 120px; padding: 0 calc(var(--u) * 3);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: var(--u);
+    width: 240px; height: 144px; padding: 0 calc(var(--u) * 3);
     border-right: 1px solid var(--hairline);
+  }
+  .logo .org-role {
+    font-family: var(--mono); font-size: 13px; line-height: 16px;
+    color: var(--ink-2); text-align: center;
   }
   .logo .name {
     font-size: 20px; line-height: 24px; font-weight: 600;
@@ -171,6 +176,7 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .marquee-track { animation: marquee 40s linear infinite; }
+    #memberships .marquee-track { animation-duration: 34s; animation-direction: reverse; }
     .marquee:hover .marquee-track,
     .marquee:focus-within .marquee-track,
     .marquee[data-paused="true"] .marquee-track { animation-play-state: paused; }
@@ -266,6 +272,7 @@
   <ul class="contact" aria-label="Contact and profiles">
     <li><a href="https://www.linkedin.com/in/psychoacoustic/" rel="me">LinkedIn</a></li>
     <li><a href="#collaborations">Research collaborations</a></li>
+    <li><a href="#memberships">Working groups</a></li>
     <li><a href="#experience">Experience and education</a></li>
   </ul>
 </header>
@@ -277,7 +284,7 @@
     <div class="body">
       <p class="lede">I study how people hear new sources of noise — delivery drones, eVTOL aircraft, air-source heat pumps and the warning sounds of electric vehicles — once they arrive in places that already have a soundscape.</p>
       <p>My Defra-funded PhD at the University of Salford builds auralised “future soundscapes” and plays them to listening juries. I use the responses to train neural networks that predict how a sound environment will be perceived, and to develop a psychoacoustic annoyance model that accounts for operational, environmental and contextual factors, automated through sound event detection.</p>
-      <p>I teach on the online MSc Computer Science suite at St Mary’s University, Twickenham, and have demonstrated environmental noise measurement and modelling at Salford. I sit on the Institute of Acoustics Scottish Branch and Early Careers committees, and on working groups for NASA’s unmanned aircraft systems noise and Noise Network Plus AI &amp; digital.</p>
+      <p>I teach on the online MSc Computer Science suite at St Mary’s University, Twickenham, and have demonstrated environmental noise measurement and modelling at Salford. I sit on the Institute of Acoustics Scottish Branch and Early Careers committees and the Young Acousticians Network committee, and on working groups for NASA’s unmanned aircraft systems noise and Noise Network Plus AI &amp; digital.</p>
     </div>
   </section>
 
@@ -285,29 +292,52 @@
     <h2 id="collab-h">Research collaborations</h2>
     <div class="marquee-wrap">
       <div class="marquee-bar">
-        <button type="button" class="marquee-toggle" aria-pressed="false" aria-controls="marquee">Pause</button>
+        <button type="button" class="marquee-toggle" aria-pressed="false" aria-controls="collaborations-marquee">Pause</button>
       </div>
-      <div class="marquee" id="marquee" data-paused="false">
+      <div class="marquee" id="collaborations-marquee" data-paused="false">
         <div class="marquee-track">
-          <ul class="marquee-list" aria-label="Collaborating organisations">
-          <li class="logo" data-logo="defra"><span class="name">Defra</span></li>
-          <li class="logo" data-logo="noise-consultants"><span class="name">Noise Consultants Ltd.</span></li>
-          <li class="logo" data-logo="nasa"><span class="name">NASA</span></li>
-          <li class="logo" data-logo="noise-network-plus"><span class="name">Noise Network Plus</span></li>
-          <li class="logo" data-logo="joby-aviation"><span class="name">Joby Aviation Ltd.</span></li>
-          <li class="logo" data-logo="head-acoustics"><span class="name">HEAD Acoustics GmbH</span></li>
-          <li class="logo" data-logo="dyson"><span class="name">Dyson</span></li>
-          <li class="logo" data-logo="arcani"><span class="name">Arcani</span></li>
+          <ul class="marquee-list" aria-label="Research collaborators">
+          <li class="logo" data-logo="defra"><span class="name">Defra</span><span class="org-role">PhD sponsor</span></li>
+          <li class="logo" data-logo="noise-consultants"><span class="name">Noise Consultants Ltd.</span><span class="org-role">PhD placement</span></li>
+          <li class="logo" data-logo="dyson"><span class="name">Dyson</span><span class="org-role">PhD placement</span></li>
+          <li class="logo" data-logo="head-acoustics"><span class="name">HEAD Acoustics GmbH</span><span class="org-role">Journal paper</span></li>
+          <li class="logo" data-logo="joby-aviation"><span class="name">Joby Aviation Ltd.</span><span class="org-role">Journal paper</span></li>
+          <li class="logo" data-logo="arcani"><span class="name">Arcani</span><span class="org-role">Journal paper, internship</span></li>
           </ul>
           <ul class="marquee-list" aria-hidden="true">
-          <li class="logo" data-logo="defra"><span class="name">Defra</span></li>
-          <li class="logo" data-logo="noise-consultants"><span class="name">Noise Consultants Ltd.</span></li>
-          <li class="logo" data-logo="nasa"><span class="name">NASA</span></li>
-          <li class="logo" data-logo="noise-network-plus"><span class="name">Noise Network Plus</span></li>
-          <li class="logo" data-logo="joby-aviation"><span class="name">Joby Aviation Ltd.</span></li>
-          <li class="logo" data-logo="head-acoustics"><span class="name">HEAD Acoustics GmbH</span></li>
-          <li class="logo" data-logo="dyson"><span class="name">Dyson</span></li>
-          <li class="logo" data-logo="arcani"><span class="name">Arcani</span></li>
+          <li class="logo" data-logo="defra"><span class="name">Defra</span><span class="org-role">PhD sponsor</span></li>
+          <li class="logo" data-logo="noise-consultants"><span class="name">Noise Consultants Ltd.</span><span class="org-role">PhD placement</span></li>
+          <li class="logo" data-logo="dyson"><span class="name">Dyson</span><span class="org-role">PhD placement</span></li>
+          <li class="logo" data-logo="head-acoustics"><span class="name">HEAD Acoustics GmbH</span><span class="org-role">Journal paper</span></li>
+          <li class="logo" data-logo="joby-aviation"><span class="name">Joby Aviation Ltd.</span><span class="org-role">Journal paper</span></li>
+          <li class="logo" data-logo="arcani"><span class="name">Arcani</span><span class="org-role">Journal paper, internship</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="memberships" aria-labelledby="groups-h">
+    <h2 id="groups-h">Working groups and committees</h2>
+    <div class="marquee-wrap">
+      <div class="marquee-bar">
+        <button type="button" class="marquee-toggle" aria-pressed="false" aria-controls="memberships-marquee">Pause</button>
+      </div>
+      <div class="marquee" id="memberships-marquee" data-paused="false">
+        <div class="marquee-track">
+          <ul class="marquee-list" aria-label="Working groups and committees">
+          <li class="logo" data-logo="nasa"><span class="name">NASA</span><span class="org-role">Working group member</span></li>
+          <li class="logo" data-logo="noise-network-plus"><span class="name">Noise Network Plus</span><span class="org-role">Working group member</span></li>
+          <li class="logo" data-logo="ioa-scottish-branch"><span class="name">Institute of Acoustics Scottish Branch</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="ioa-early-careers"><span class="name">Institute of Acoustics Early Careers Group</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="young-acousticians-network"><span class="name">Young Acousticians Network</span><span class="org-role">Committee member</span></li>
+          </ul>
+          <ul class="marquee-list" aria-hidden="true">
+          <li class="logo" data-logo="nasa"><span class="name">NASA</span><span class="org-role">Working group member</span></li>
+          <li class="logo" data-logo="noise-network-plus"><span class="name">Noise Network Plus</span><span class="org-role">Working group member</span></li>
+          <li class="logo" data-logo="ioa-scottish-branch"><span class="name">Institute of Acoustics Scottish Branch</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="ioa-early-careers"><span class="name">Institute of Acoustics Early Careers Group</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="young-acousticians-network"><span class="name">Young Acousticians Network</span><span class="org-role">Committee member</span></li>
           </ul>
         </div>
       </div>
@@ -456,20 +486,18 @@
 
 <script>
 (() => {
-  const marquee = document.getElementById('marquee');
-  if (!marquee) return;
-
-  // Pause / play control (WCAG 2.2.2). Hover and keyboard focus also pause via CSS.
-  const toggle = document.querySelector('.marquee-toggle');
-  toggle.addEventListener('click', () => {
-    const paused = marquee.dataset.paused !== 'true';
-    marquee.dataset.paused = String(paused);
-    toggle.setAttribute('aria-pressed', String(paused));
-    toggle.textContent = paused ? 'Play' : 'Pause';
+  // Pause / play per strip (WCAG 2.2.2). Hover and keyboard focus also pause via CSS.
+  document.querySelectorAll('.marquee-toggle').forEach((toggle) => {
+    const marquee = document.getElementById(toggle.getAttribute('aria-controls'));
+    toggle.addEventListener('click', () => {
+      const paused = marquee.dataset.paused !== 'true';
+      marquee.dataset.paused = String(paused);
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.textContent = paused ? 'Play' : 'Pause';
+    });
   });
 
-  // Swap each text name for an official logo file if one is present in /logos.
-  // Accepted names: logos/<slug>.svg, then logos/<slug>.png
+  // Swap each text name for an official logo if logos/<slug>.svg or .png exists.
   const tryLoad = (slug, exts) => new Promise((resolve) => {
     if (!exts.length) return resolve(null);
     const img = new Image();
@@ -477,18 +505,17 @@
     img.onerror = () => resolve(tryLoad(slug, exts.slice(1)));
     img.src = 'logos/' + slug + '.' + exts[0];
   });
-  const firstList = marquee.querySelector('.marquee-list');
-  firstList.querySelectorAll('.logo').forEach(async (li) => {
-    const slug = li.dataset.logo;
+  const slugs = new Set(Array.from(document.querySelectorAll('.logo[data-logo]'), (el) => el.dataset.logo));
+  slugs.forEach(async (slug) => {
     const src = await tryLoad(slug, ['svg', 'png']);
     if (!src) return;
-    marquee.querySelectorAll('.logo[data-logo="' + slug + '"]').forEach((el, i) => {
-      const name = el.textContent.trim();
+    document.querySelectorAll('.logo[data-logo="' + slug + '"]').forEach((el) => {
+      const nameEl = el.querySelector('.name');
+      const hidden = el.closest('[aria-hidden="true"]');
       const img = document.createElement('img');
       img.src = src;
-      img.alt = i === 0 ? name : '';
-      img.loading = 'lazy';
-      el.replaceChildren(img);
+      img.alt = hidden ? '' : nameEl.textContent.trim();
+      nameEl.replaceWith(img);
     });
   });
 })();
