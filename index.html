@@ -9,6 +9,9 @@
 <meta property="og:url" content="https://maxellis01.github.io/">
 <meta name="description" content="Max Ellis is a Defra-funded PhD candidate in psychoacoustics at the University of Salford, researching how people perceive drones, eVTOL aircraft, heat pumps and electric-vehicle warning sounds in complex soundscapes.">
 <meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap">
 <script>
   (function () {
     var t = null;
@@ -268,6 +271,19 @@
     max-width: 40ch;
   }
   .affil { color: var(--ink-2); max-width: 60ch; }
+  .masthead h1 .name { font-family: "Nunito", var(--sans); font-weight: 800; letter-spacing: -0.03em; }
+  .name .ch { display: inline-block; }
+  .name.ring .ch { animation: name-ring 650ms cubic-bezier(.2,.6,.3,1) both; animation-delay: calc(var(--i) * 32ms); }
+  @keyframes name-ring {
+    0% { transform: translateY(0); }
+    15% { transform: translateY(-5px); }
+    32% { transform: translateY(3px); }
+    50% { transform: translateY(-1.6px); }
+    68% { transform: translateY(0.8px); }
+    84% { transform: translateY(-0.3px); }
+    100% { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .name.ring .ch { animation: none; } }
   .postnominals {
     font-size: 13px; line-height: 1; font-style: italic; font-weight: 400;
     letter-spacing: 0.02em; color: var(--ink-2); white-space: nowrap;
@@ -444,7 +460,7 @@
       <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
     </svg>
   </div>
-  <h1>Max Ellis <span class="postnominals">BDes MSc AFHEA</span></h1>
+  <h1><span class="name">Max Ellis</span> <span class="postnominals">BDes MSc AFHEA</span></h1>
   <p class="role">PhD Candidate in Psychoacoustics</p>
   <p class="affil">Acoustics Innovation Institute, University of Salford<br>EPSRC Centre for Doctoral Training in Sustainable Sound Futures</p>
 
@@ -769,6 +785,7 @@
     if (done) return; done = true;
     root.classList.remove('intro');
     el.remove();
+    dispatchEvent(new Event('intro-done'));
     ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, finish));
   };
   ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, finish, { passive: true }));
@@ -822,6 +839,25 @@
 
   addEventListener('resize', size);
   requestAnimationFrame(frame);
+})();
+</script>
+<script>
+(() => {
+  const name = document.querySelector('.masthead .name');
+  if (!name) return;
+  const text = name.textContent;
+  name.setAttribute('aria-label', text);
+  name.textContent = '';
+  [...text].forEach((c, i) => {
+    const s = document.createElement('span');
+    s.className = 'ch'; s.setAttribute('aria-hidden', 'true');
+    s.style.setProperty('--i', i);
+    s.textContent = c === ' ' ? '\u00a0' : c;
+    name.appendChild(s);
+  });
+  const ring = () => name.classList.add('ring');
+  if (document.documentElement.classList.contains('intro')) addEventListener('intro-done', ring, { once: true });
+  else requestAnimationFrame(ring);
 })();
 </script>
 <script>
