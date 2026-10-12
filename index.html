@@ -170,9 +170,10 @@
     letter-spacing: -0.01em; text-align: center; color: var(--ink);
   }
   .logo img {
-    display: block; max-width: 160px; max-height: 56px; width: auto; height: auto;
-    filter: grayscale(1) contrast(1.1);
+    display: block; max-width: 168px; max-height: 56px; width: auto; height: auto;
   }
+  .logo .sub { display: none; font-size: 14px; line-height: 16px; font-weight: 600; text-align: center; }
+  .logo img + .sub { display: block; margin-top: calc(var(--u) * -0.5); }
 
   @media (prefers-reduced-motion: no-preference) {
     .marquee-track { animation: marquee 40s linear infinite; }
@@ -328,15 +329,15 @@
           <ul class="marquee-list" aria-label="Working groups and committees">
           <li class="logo" data-logo="nasa"><span class="name">NASA</span><span class="org-role">Working group member</span></li>
           <li class="logo" data-logo="noise-network-plus"><span class="name">Noise Network Plus</span><span class="org-role">Working group member</span></li>
-          <li class="logo" data-logo="ioa-scottish-branch"><span class="name">Institute of Acoustics Scottish Branch</span><span class="org-role">Committee member</span></li>
-          <li class="logo" data-logo="ioa-early-careers"><span class="name">Institute of Acoustics Early Careers Group</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="ioa"><span class="name">Institute of Acoustics Scottish Branch</span><span class="sub">Scottish Branch</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="ioa"><span class="name">Institute of Acoustics Early Careers Group</span><span class="sub">Early Careers Group</span><span class="org-role">Committee member</span></li>
           <li class="logo" data-logo="young-acousticians-network"><span class="name">Young Acousticians Network</span><span class="org-role">Committee member</span></li>
           </ul>
           <ul class="marquee-list" aria-hidden="true">
           <li class="logo" data-logo="nasa"><span class="name">NASA</span><span class="org-role">Working group member</span></li>
           <li class="logo" data-logo="noise-network-plus"><span class="name">Noise Network Plus</span><span class="org-role">Working group member</span></li>
-          <li class="logo" data-logo="ioa-scottish-branch"><span class="name">Institute of Acoustics Scottish Branch</span><span class="org-role">Committee member</span></li>
-          <li class="logo" data-logo="ioa-early-careers"><span class="name">Institute of Acoustics Early Careers Group</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="ioa"><span class="name">Institute of Acoustics Scottish Branch</span><span class="sub">Scottish Branch</span><span class="org-role">Committee member</span></li>
+          <li class="logo" data-logo="ioa"><span class="name">Institute of Acoustics Early Careers Group</span><span class="sub">Early Careers Group</span><span class="org-role">Committee member</span></li>
           <li class="logo" data-logo="young-acousticians-network"><span class="name">Young Acousticians Network</span><span class="org-role">Committee member</span></li>
           </ul>
         </div>

@@ -16,10 +16,15 @@ Use these exact file names (SVG preferred, PNG also works):
 | Arcani                                      | `arcani.svg` or `.png`                     |
 | NASA                                        | `nasa.svg` or `.png`                       |
 | Noise Network Plus                          | `noise-network-plus.svg` or `.png`         |
-| Institute of Acoustics Scottish Branch      | `ioa-scottish-branch.svg` or `.png`        |
-| Institute of Acoustics Early Careers Group  | `ioa-early-careers.svg` or `.png`          |
+| Institute of Acoustics (both committees)    | `ioa.svg` or `.png`                        |
 | Young Acousticians Network                  | `young-acousticians-network.svg` or `.png` |
 
-Logos are shown in greyscale, up to 160 × 56 px. A version on a transparent
+Logos are shown in a single ink colour, up to 160 × 56 px. A version on a transparent
 background works best. Check each organisation's brand guidelines, and get
 permission where needed, before publishing their logo.
+
+## Originals
+
+The files you uploaded are kept unchanged in `originals/`. The versions used on the
+site were converted to the site's ink colour (#1A1A18) on a transparent background
+and trimmed to their edges by `originals/make_mono.py`.
