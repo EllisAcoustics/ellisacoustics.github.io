@@ -132,11 +132,13 @@
   /* ---------- Intro ---------- */
   #intro { display: none; }
   html.intro #intro {
-    display: block; position: fixed; inset: 0; z-index: 100;
-    background: var(--paper);
-    animation: intro-failsafe 0s linear 2.4s forwards; /* never blocks the page, even if scripts fail */
+    display: block; position: fixed; inset: 0; z-index: 100; pointer-events: none;
+    animation: intro-failsafe 0s linear 9s forwards; /* never lingers, even if scripts fail */
   }
-  html.intro #intro.drawing { background: transparent; }
+  /* The ruler waits until the courier drone has delivered the dot and flown off */
+  .scale, .sources, .freq-labels { transition: opacity 450ms ease; }
+  html.intro .scale, html.intro .sources, html.intro .freq-labels { opacity: 0; animation: ruler-failsafe 0s linear 9s forwards; }
+  @keyframes ruler-failsafe { to { opacity: 1; } }
   #intro canvas { display: block; width: 100%; height: 100%; }
   @keyframes intro-failsafe { to { visibility: hidden; } }
   @media print { #intro { display: none !important; } }
@@ -144,20 +146,19 @@
   /* ---------- Noise sources on the frequency ruler ---------- */
   .scale { height: 24px; }
   .sources { position: relative; height: 48px; margin-bottom: 0; }
+  .sources { --ih: 34px; }
   .src {
-    position: absolute; bottom: 0; left: calc(var(--x) * 100%);
-    width: 56px;
-    transform: translateX(-50%);
+    position: absolute; top: 50%; left: calc(var(--x) * 100%);
+    transform: translate(-50%, -50%);
     opacity: 0;
     animation: src-in 500ms ease forwards;
     animation-delay: calc(var(--i) * 90ms);
   }
   html.intro .src { animation-play-state: paused; }
-  .src svg { display: block; width: 100%; height: auto; overflow: visible; }
-  @keyframes src-in { from { opacity: 0; transform: translate(-50%, 4px); } to { opacity: 1; transform: translateX(-50%); } }
+  .src svg { display: block; width: 56px; height: auto; overflow: visible; }
+  @keyframes src-in { from { opacity: 0; transform: translate(-50%, calc(-50% + 4px)); } to { opacity: 1; transform: translate(-50%, -50%); } }
   @media (max-width: 599px) {
-    .sources { height: 30px; }
-    .src { width: 34px; }
+    .sources { height: 30px; --ih: 18px; }
   }
 
   .src .spin, .src .wheel, .src .head, .src .pushprop, .src .srot, .src .cargo, .src .pulse { transform-box: view-box; }
@@ -278,6 +279,10 @@
   }
   .social svg { width: 20px; height: 20px; display: block; }
   .social:hover { border-color: var(--ink); color: var(--accent); }
+  .socials { display: flex; gap: calc(var(--u) * 1.5); }
+  @media (max-width: 599px) {
+    .socials { flex-basis: 100%; justify-content: center; gap: calc(var(--u) * 3); margin-top: var(--u); }
+  }
 
   /* ---------- Site navigation ---------- */
   .topnav {
@@ -458,7 +463,6 @@
 
   /* ---------- Sections ---------- */
   .section {
-    border-top: 1px solid var(--rule);
     padding: calc(var(--u) * 5) 0 calc(var(--u) * 8);
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -558,7 +562,11 @@
   .timeline li.current::before { background: var(--deep-green); border-color: var(--deep-green); }
   .timeline h4 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
   .timeline .where { color: var(--ink); }
-  .timeline .where.org { display: flex; align-items: center; gap: calc(var(--u) * 1.5); margin: var(--u) 0 calc(var(--u) * .5); }
+  .timeline .where.org { display: flex; align-items: center; gap: calc(var(--u) * 1.5); margin: calc(var(--u) * 2) 0; }
+  .timeline .where.org + * { margin-top: 0 !important; }
+  .timeline .thesis { margin-top: 4px; max-width: var(--measure); color: var(--ink-2); font-style: italic; }
+  .timeline .thesis span { display: block; font-style: normal; font-family: var(--mono); font-size: 12px; line-height: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--deep-blue); }
+  .timeline .thesis + .grade { margin-top: 4px; }
   .timeline .where.org img { display: block; width: auto; max-width: 160px; }
   .org-sep { width: 1px; height: 24px; background: var(--hairline); }
   @media print { .timeline .where.org img, .org-sep { display: none; } .timeline .where.org { display: block; margin: 0; } }
@@ -590,6 +598,9 @@
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: calc(var(--u) * 4) calc(var(--u) * 2);
     max-width: 760px; padding-bottom: 24px;
+  }
+  @media (max-width: 599px) {
+    .icon-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(var(--u) * 4) var(--u); justify-items: center; max-width: none; }
   }
   .icon-tile .tip {
     position: absolute; top: calc(100% + 6px); left: 50%;
@@ -709,18 +720,20 @@
       <a class="btn" href="contact">Get in touch</a>
       <a class="btn btn-quiet" href="#publications">Read the research</a>
       <a class="btn btn-quiet" href="cv/Max-Ellis-CV.pdf" download>Download CV <span class="btn-meta">PDF</span></a>
-      <a class="social" href="https://www.linkedin.com/in/psychoacoustic/" rel="me" aria-label="LinkedIn profile" title="LinkedIn">
-        <svg viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path fill="currentColor" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z"/></svg>
-      </a>
-      <a class="social" href="https://github.com/ellisacoustics" rel="me" aria-label="GitHub profile" title="GitHub">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-      </a>
-      <a class="social" href="https://orcid.org/0009-0007-5909-854X" rel="me" aria-label="ORCID profile" title="ORCID">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg>
-      </a>
-      <a class="social" href="https://scholar.google.co.uk/citations?hl=en&amp;user=KxviwY4AAAAJ" rel="me" aria-label="Google Scholar profile" title="Google Scholar">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
-      </a>
+      <div class="socials">
+        <a class="social" href="https://www.linkedin.com/in/psychoacoustic/" rel="me" aria-label="LinkedIn profile" title="LinkedIn">
+          <svg viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path fill="currentColor" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z"/></svg>
+        </a>
+        <a class="social" href="https://github.com/ellisacoustics" rel="me" aria-label="GitHub profile" title="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+        <a class="social" href="https://orcid.org/0009-0007-5909-854X" rel="me" aria-label="ORCID profile" title="ORCID">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg>
+        </a>
+        <a class="social" href="https://scholar.google.co.uk/citations?hl=en&amp;user=KxviwY4AAAAJ" rel="me" aria-label="Google Scholar profile" title="Google Scholar">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -827,7 +840,7 @@
             <h3>Psychoacoustic Assessment of UAV Noise in Varying Ambiences, Operational Conditions and Contexts</h3>
             <p class="authors"><strong>M. W. Ellis</strong>, Z. Podwińska, A. J. Torija</p>
             <p class="venue">Forum Acusticum 2027, Brussels.</p>
-            <p class="honour">Best Student Paper</p>
+            <p class="honour">Awarded Best Student Paper</p>
             <div class="meta"><span class="tag">Pending</span><span class="tag">Conference Paper</span></div>
           </div>
         </li>
@@ -903,7 +916,7 @@
         <li>
           <span class="date">Aug 2026 – Oct 2026</span>
           <h4>Specialist Consultant (PhD Placement)</h4>
-          <p class="where org"><img src="logos/orgs/noise-consultants.png" width="134" height="36" alt="Noise Consultants Ltd." title="Noise Consultants Ltd." class="colour dark-ink" loading="lazy" decoding="async"><span class="org-sep" aria-hidden="true"></span><img src="logos/orgs/logika.png" width="36" height="36" alt="Logika Group" title="Logika Group" class="colour" loading="lazy" decoding="async"><span class="print-only">Noise Consultants Ltd. (part of Logika Group)</span></p>
+          <p class="where org"><img src="logos/orgs/noise-consultants.png" width="134" height="36" alt="Noise Consultants Ltd. (part of Logika Group)" title="Noise Consultants Ltd. (part of Logika Group)" class="colour dark-bright" loading="lazy" decoding="async"><span class="print-only">Noise Consultants Ltd. (part of Logika Group)</span></p>
           <ul class="detail">
             <li>Validated open-source noise measurements against modelled Defra noise-mapping data for infrastructure assessment.</li>
             <li>Ran a field campaign on an airport expansion project comparing physical and perceptual dominance of aircraft noise.</li>
@@ -941,12 +954,14 @@
         <li class="current">
           <span class="date">2025 – 2028</span>
           <h4>PhD Acoustics and Audio Engineering</h4>
-          <p class="where org"><img src="logos/orgs/salford.png" width="56" height="56" alt="University of Salford Acoustics Innovation Institute" title="University of Salford Acoustics Innovation Institute" class="colour dark-bright" loading="lazy" decoding="async"><span class="print-only">University of Salford Acoustics Innovation Institute</span></p>
+          <p class="thesis"><span>Thesis</span>Psychoacoustic Assessment and Machine Learning-Based Modelling of Novel Noise Source Perception in Complex Soundscapes</p>
+          <p class="where org"><img src="logos/orgs/salford-mark.png" width="48" height="48" alt="University of Salford Acoustics Innovation Institute" title="University of Salford Acoustics Innovation Institute" class="colour" loading="lazy" decoding="async"><span class="print-only">University of Salford Acoustics Innovation Institute</span></p>
           <div class="meta"><span class="tag">Psychoacoustics</span><span class="tag">Auralisation</span><span class="tag">Jury Testing</span><span class="tag">Machine Learning</span><span class="tag">Spatial Audio</span><span class="tag">DSP</span><span class="tag">Statistical Modelling</span><span class="tag">Data Visualisation</span></div>
         </li>
         <li>
           <span class="date">2023 – 2024</span>
           <h4>MSc Computer Science with Artificial Intelligence</h4>
+          <p class="thesis"><span>Dissertation</span>A Future Research Framework: Psychoacoustic Annoyance Models and Deep Learning for Prediction of UAV Noise Affect</p>
           <p class="grade">Distinction</p>
           <p class="where org"><img src="logos/orgs/abertay.png" width="45" height="52" alt="Abertay University" title="Abertay University" class="colour" loading="lazy" decoding="async"><span class="print-only">Abertay University</span></p>
           <div class="meta"><span class="tag">Machine Learning</span><span class="tag">Data Visualisation</span></div>
@@ -954,6 +969,7 @@
         <li>
           <span class="date">2021 – 2023</span>
           <h4>BDes (Hons) Sound for Moving Image</h4>
+          <p class="thesis"><span>Dissertation</span>A Comparative Analysis of AI Tools for Electronic Music Production: Large Language Models, Generative-AI and Virtual Composers</p>
           <p class="grade">2:1</p>
           <p class="where org"><img src="logos/orgs/glasgow.png" width="50" height="64" alt="University of Glasgow" title="University of Glasgow" class="colour dark-ink" loading="lazy" decoding="async"><span class="print-only">University of Glasgow</span></p>
           <div class="meta"><span class="tag">Spatial Audio</span><span class="tag">Field Measurements</span></div>
@@ -963,7 +979,7 @@
           <h4>DipHE Music Technology</h4>
           <p class="grade">Distinction</p>
           <p class="where org"><img src="logos/orgs/uws.png" width="82" height="56" alt="University of the West of Scotland" title="University of the West of Scotland" class="colour dark-ink" loading="lazy" decoding="async"><span class="print-only">University of the West of Scotland</span></p>
-          <p class="honour">BSc Level 8 Court Medal</p>
+          <p class="honour">Awarded BSc Level 8 Court Medal</p>
           <div class="meta"><span class="tag">DSP</span><span class="tag">Acoustical Engineering</span></div>
         </li>
         <li>
@@ -976,7 +992,7 @@
           <span class="date">2018 – 2019</span>
           <h4>SCQF Level 6 Sound Production</h4>
           <p class="grade">Pass</p>
-          <p class="where org"><img src="logos/orgs/glasgow-clyde-college.png" width="64" height="52" alt="Glasgow Clyde College Anniesland" title="Glasgow Clyde College Anniesland" class="colour dark-ink" loading="lazy" decoding="async"><span class="print-only">Glasgow Clyde College Anniesland</span></p>
+          <p class="where org"><img src="logos/orgs/glasgow-clyde-college.png" width="64" height="52" alt="Glasgow Clyde College Anniesland" title="Glasgow Clyde College Anniesland" class="colour" loading="lazy" decoding="async"><span class="print-only">Glasgow Clyde College Anniesland</span></p>
         </li>
       </ol>
     </div>
@@ -1012,10 +1028,10 @@
   </section>
 
   <section class="section" id="certificates" aria-labelledby="cert-h">
-    <h2 id="cert-h">Certificates</h2>
+    <h2 id="cert-h">Certifications</h2>
     <div class="scroll" data-open="true">
       <button type="button" class="scroll-toggle" aria-expanded="true" aria-controls="cert-sheet">
-        <span class="scroll-label"><strong>9 certificates</strong><span class="scroll-hint">Roll up</span></span>
+        <span class="scroll-label"><strong>10 certifications</strong><span class="scroll-hint">Roll up</span></span>
       </button>
       <div class="scroll-body">
         <div class="ribbon" aria-hidden="true"></div>
@@ -1027,6 +1043,7 @@
         <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
         <li><h4>AI for Noise Pollution Control</h4><p class="where">LSIB</p></li>
         <li><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
+              <li><h4>Auralization</h4><p class="where">Autumn School Series in Acoustics (ASSA) 2026</p></li>
         <li><h4>Digital Signal Processing</h4><p class="where">EPFL</p></li>
         <li><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p></li>
         <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
@@ -1067,7 +1084,7 @@
   const PAPER = css.getPropertyValue('--paper').trim();
   const RULE = css.getPropertyValue('--rule').trim();
 
-  const DRAW = 350, WAVE = 800, SETTLE = 450;          // ms, 1.6 s in total
+  const DRAW = 450, WAVE = 900, SETTLE = 450;          // ms, 1.8 s in total
   const TOTAL = DRAW + WAVE + SETTLE;
 
   let W, H;
@@ -1088,7 +1105,7 @@
     ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
   };
 
-  let done = false, start = null;
+  let done = false, start = null, revealed = false;
   const finish = () => {
     if (done) return; done = true;
     root.classList.remove('intro');
@@ -1100,44 +1117,40 @@
 
   const frame = (now) => {
     if (done) return;
-    if (start === null) { start = now; el.classList.add('drawing'); }
+    if (start === null) start = now;
     const t = now - start;
     const r = ruler ? ruler.getBoundingClientRect() : { left: W * 0.1, right: W * 0.9, top: H * 0.4, height: 0 };
     const x0 = r.left, x1 = r.right, cx = (x0 + x1) / 2, half = (x1 - x0) / 2;
-    const yMid = H / 2, yRuler = r.top + r.height / 2;
+    const yRuler = r.top + r.height / 2;
 
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, W, H);
 
     if (t < DRAW) {
-      // 1. A line draws outward from the centre
-      ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
+      // 1. A line draws outward from the centre of the ruler
       const h = half * easeOut(t / DRAW);
-      line(cx - h, cx + h, yMid, INK, 1, 1.25);
+      line(cx - h, cx + h, yRuler, INK, 1, 1.25);
     } else if (t < DRAW + WAVE) {
       // 2. A pulse leaves the centre and ripples out both ways, decaying as it travels
-      ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
       const tau = (t - DRAW) / WAVE;
       const front = tau * half * 1.15;
       const sigma = Math.max(24, half * 0.14);
-      const amp = Math.min(40, H * 0.06) * Math.pow(1 - tau, 1.4);
+      const amp = Math.min(32, H * 0.05) * Math.pow(1 - tau, 1.4);
       const lambda = Math.max(18, half * 0.045);
       ctx.globalAlpha = 1; ctx.strokeStyle = INK; ctx.lineWidth = 1.25;
       ctx.beginPath();
       for (let x = x0; x <= x1; x += 1.5) {
         const d = Math.abs(x - cx) - front;
         const env = Math.exp(-(d * d) / (2 * sigma * sigma));
-        const y = yMid - amp * env * Math.sin((2 * Math.PI * d) / lambda);
+        const y = yRuler - amp * env * Math.sin((2 * Math.PI * d) / lambda);
         x === x0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
       ctx.stroke();
     } else if (t < TOTAL) {
-      // 3. The line settles onto the ruler while the page fades in around it
+      // 3. The real ruler and its noise sources fade in under the line
       const p = easeInOut((t - DRAW - WAVE) / SETTLE);
-      ctx.globalAlpha = 1 - p; ctx.fillStyle = PAPER; ctx.fillRect(0, 0, W, H);
-      const y = yMid + (yRuler - yMid) * p;
-      line(x0, x1, y, INK, 1 - p, 1.25 - 0.25 * p);
-      line(x0, x1, y, RULE, p, 1);
+      if (!revealed) { revealed = true; root.classList.remove('intro'); }
+      line(x0, x1, yRuler, INK, 1 - p, 1.25);
     } else {
       finish();
       return;
@@ -1146,7 +1159,12 @@
   };
 
   addEventListener('resize', size);
-  requestAnimationFrame(frame);
+  // Wait for the courier drone to deliver the dot and fly away, then a beat, then the ruler
+  let begun = false;
+  const begin = () => { if (begun) return; begun = true; setTimeout(() => requestAnimationFrame(frame), 350); };
+  if (root.classList.contains('awaiting-dot')) addEventListener('dot-delivered', begin, { once: true });
+  else begin();
+  setTimeout(begin, 6500);   // never wait forever
 })();
 </script>
 <script>
@@ -1242,7 +1260,11 @@
     + '<path class="door door-r" d="M20 21H24.5" stroke-width="0.7"/></svg>';
   document.body.appendChild(drone);
 
-  const finish = () => { root.classList.remove('awaiting-dot'); drone.remove(); };
+  let gone = false;
+  const finish = () => {
+    root.classList.remove('awaiting-dot'); drone.remove();
+    if (!gone) { gone = true; dispatchEvent(new Event('dot-delivered')); }
+  };
   const fly = () => {
     const r = dot.getBoundingClientRect();
     const tx = r.left + r.width / 2 + scrollX, ty = r.top + r.height / 2 + scrollY;
@@ -1282,8 +1304,9 @@
     anim.onfinish = finish;
   };
   const start = () => requestAnimationFrame(fly);
-  if (root.classList.contains('intro')) addEventListener('intro-done', start, { once: true });
-  else start();
+  // Start once the name's font has loaded, so the dot lands in the right place
+  (document.fonts ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 600))]) : Promise.resolve())
+    .then(() => setTimeout(start, 250));
   setTimeout(finish, 6000); // never leave the dot missing
 })();
 </script>
@@ -1424,6 +1447,45 @@
     btn.addEventListener('click', () => set(scroll.dataset.open !== 'true'));
     body.addEventListener('click', () => { if (scroll.dataset.open !== 'true') set(true); });
     window.addEventListener('beforeprint', () => { sheet.inert = false; });
+  })();
+</script>
+<script>
+  /* Ruler icons: crop each drawing to its own outline, then size them all to one height on one centre line */
+  (() => {
+    const fit = () => {
+      const sources = document.querySelector('.sources'); if (!sources) return;
+      const H = parseFloat(getComputedStyle(sources).getPropertyValue('--ih')) || 34;
+      sources.querySelectorAll('.src svg').forEach((svg) => {
+        if (!svg.dataset.vb) {
+          let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+          svg.querySelectorAll('path, rect, circle, ellipse, line, polygon, polyline').forEach((el) => {
+            if (el.closest('.pulse, .ring, .wind, .note')) return;
+            const b = el.getBBox(); if (!b.width && !b.height) return;
+            const m = el.getCTM && svg.getCTM() ? svg.getCTM().inverse().multiply(el.getCTM()) : null;
+            const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => {
+              if (!m) return [x, y];
+              return [m.a * x + m.c * y + m.e, m.b * x + m.d * y + m.f];
+            });
+            pts.forEach(([x, y]) => { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); });
+          });
+          if (!isFinite(x0)) return;
+          const p = 0.6;
+          svg.dataset.vb = [x0 - p, y0 - p, x1 - x0 + 2 * p, y1 - y0 + 2 * p].map((v) => +v.toFixed(2)).join(' ');
+          svg.setAttribute('viewBox', svg.dataset.vb);
+        }
+        const [, , w, h] = svg.dataset.vb.split(' ').map(Number);
+        const width = Math.min(H * w / h, H * 2.1);
+        svg.style.width = width + 'px'; svg.style.height = (width * h / w) + 'px';
+        // keep line weights the same on every icon, whatever its scale (as drawn at 1.4 px per unit)
+        const k = width / w, ref = 1.4 * (H / 34);
+        [svg, ...svg.querySelectorAll('[stroke-width]')].forEach((el) => {
+          if (!el.dataset.sw) el.dataset.sw = el.getAttribute('stroke-width') || '1';
+          el.setAttribute('stroke-width', (+el.dataset.sw * ref / k).toFixed(3));
+        });
+      });
+    };
+    fit();
+    addEventListener('resize', () => { clearTimeout(fit.t); fit.t = setTimeout(fit, 150); });
   })();
 </script>
 </body>
