@@ -549,7 +549,9 @@
     transition: opacity 400ms ease, transform 400ms ease;
     pointer-events: none;
   }
-  .caption:not(.plain) span:first-child:not(:last-child) { color: var(--ink); font-family: var(--sans); font-weight: 600; font-size: 14px; }
+  .caption span.t + span + span.t { margin-top: 4px; }
+  .logo:has(.caption .t):hover img, .logo.is-active:has(.caption .t) img { transform: translateY(-30px); }
+  .caption span.t, .caption:not(.plain) span:first-child:not(:last-child) { color: var(--ink); font-family: var(--sans); font-weight: 600; font-size: 14px; }
   .logo:hover .caption, .logo.is-active .caption { opacity: 1; transform: none; }
 
   /* Reduced motion: no movement, every logo in a still grid, no fade */
@@ -1043,25 +1045,25 @@
     <ul class="print-only print-list">
       <li><strong>NASA</strong> Unmanned Aircraft Systems Noise Working Group (UNWG) — Member</li>
       <li><strong>Noise Network Plus</strong> A.I. and Digital Working Group — Member</li>
-      <li><strong>Institute of Acoustics</strong> Scottish Branch and Early Careers Group — Committee Member</li>
+      <li><strong>Institute of Acoustics</strong> Scottish Branch Committee — Member; Early Careers Group — Member</li>
     </ul>
     <div class="marquee" data-speed="46" data-direction="1">
       <div class="marquee-track">
         <ul class="marquee-list" aria-label="Working groups and committees">
           <li class="logo"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
           <li class="logo"><img src="logos/colour/noise-network-plus.png" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption plain"><span>Scottish Branch and</span><span>Early Careers Group</span><span>Committee Member</span></span></li>
+          <li class="logo"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
           <li class="logo" aria-hidden="true"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
           <li class="logo" aria-hidden="true"><img src="logos/colour/noise-network-plus.png" class="colour dark-ink" width="129" height="57" alt="" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="" decoding="async"><span class="caption plain"><span>Scottish Branch and</span><span>Early Careers Group</span><span>Committee Member</span></span></li>
+          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
         </ul>
         <ul class="marquee-list" aria-hidden="true">
           <li class="logo" aria-hidden="true"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
           <li class="logo" aria-hidden="true"><img src="logos/colour/noise-network-plus.png" class="colour dark-ink" width="129" height="57" alt="" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="" decoding="async"><span class="caption plain"><span>Scottish Branch and</span><span>Early Careers Group</span><span>Committee Member</span></span></li>
+          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
           <li class="logo" aria-hidden="true"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
           <li class="logo" aria-hidden="true"><img src="logos/colour/noise-network-plus.png" class="colour dark-ink" width="129" height="57" alt="" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="" decoding="async"><span class="caption plain"><span>Scottish Branch and</span><span>Early Careers Group</span><span>Committee Member</span></span></li>
+          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg" class="colour dark-ink" width="142" height="64" alt="" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
         </ul>
       </div>
     </div>
