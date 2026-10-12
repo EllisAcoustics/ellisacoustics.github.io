@@ -140,8 +140,8 @@
   .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
   html, body { overflow-x: clip; }
   .itiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); max-width: 640px; }
-  .open-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 520px; }
-  @media (min-width: 640px) { .itiles { grid-template-columns: repeat(8, minmax(0, 1fr)); max-width: 820px; } .open-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); max-width: 640px; } }
+  .open-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 520px; }
+  @media (min-width: 640px) { .itiles { grid-template-columns: repeat(8, minmax(0, 1fr)); max-width: 820px; } .open-tiles { grid-template-columns: repeat(7, minmax(0, 1fr)); max-width: 740px; } }
   .itile { position: relative; display: flex; justify-content: center; padding: 6px 0; outline-offset: 4px; cursor: default; }
   .itile svg { width: 44px; height: 44px; color: var(--c, var(--ink)); transition: transform 300ms ease; }
   .itile:hover svg, .itile:focus-visible svg, .itile.is-active svg { transform: translateY(-4px); }
@@ -154,6 +154,48 @@
   .itile:hover .pop, .itile:focus .pop, .itile.is-active .pop { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
   .pop-t { display: block; font-weight: 600; font-size: 14px; line-height: 20px; }
   .pop-d { display: block; margin-top: 4px; color: var(--ink-2); font-size: 13px; line-height: 19px; }
+  /* ---------- Looping icon animations ---------- */
+  .itile svg { overflow: visible; }
+  .itile svg * { transform-box: view-box; }
+  .a-wave { opacity: 0; animation: a-wave 1.4s ease-out infinite; }
+  @keyframes a-wave { 0% { opacity: 0; transform: scale(0.7); } 20% { opacity: 0.9; } 100% { opacity: 0; transform: scale(1.7); } }
+  .a-antenna { transform-origin: 8px 11px; animation: a-antenna 2.4s ease-in-out infinite; }
+  @keyframes a-antenna { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-8deg); } }
+  .a-cone { transform-origin: 11px 19px; animation: a-cone 0.5s ease-in-out infinite alternate; }
+  @keyframes a-cone { to { transform: scale(1.12); } }
+  .a-ln { stroke-dasharray: 13; animation: a-ln 3.6s linear infinite; }
+  .a-ln2 { animation-delay: 0.25s; } .a-ln3 { animation-delay: 0.5s; } .a-ln4 { animation-delay: 0.75s; }
+  @keyframes a-ln { 0% { stroke-dashoffset: 13; } 25%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -13; } }
+  .a-ring-l { animation: a-ring-l 3s ease-in-out infinite; } .a-ring-r { animation: a-ring-r 3s ease-in-out infinite; }
+  @keyframes a-ring-l { 0%, 100% { transform: translateX(-2.5px); } 50% { transform: translateX(0.5px); } }
+  @keyframes a-ring-r { 0%, 100% { transform: translateX(2.5px); } 50% { transform: translateX(-0.5px); } }
+  .a-puff { opacity: 0; transform-origin: 26px 4px; animation: a-puff 2.4s ease-out infinite; }
+  .a-puff.p2 { animation-delay: 1.2s; }
+  @keyframes a-puff { 0% { opacity: 0; transform: translate(0, 2px) scale(0.5); } 20% { opacity: 0.9; } 100% { opacity: 0; transform: translate(3px, -4px) scale(1.4); } }
+  .a-chart { stroke-dasharray: 22; animation: a-chart 3s ease-in-out infinite; }
+  @keyframes a-chart { 0% { stroke-dashoffset: 22; } 45%, 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -22; } }
+  .a-swing { transform-origin: 16px 3px; animation: a-swing 2.6s ease-in-out infinite; }
+  @keyframes a-swing { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+  .a-hover { animation: a-hover 2.6s ease-in-out infinite; }
+  @keyframes a-hover { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.6px, -1.6px); } }
+  .a-rotor { transform-box: fill-box; transform-origin: center; animation: a-rotor 0.16s linear infinite; }
+  .a-rotor.r2 { animation-delay: -0.08s; }
+  @keyframes a-rotor { 50% { transform: scaleX(0.2); } }
+  .a-spin { animation: a-spin 1.2s linear infinite; }
+  @keyframes a-spin { to { transform: rotate(360deg); } }
+  .a-drive { animation: a-drive 1.8s ease-in-out infinite; }
+  @keyframes a-drive { 0%, 100% { transform: translateX(-0.8px); } 50% { transform: translateX(0.8px); } }
+  .a-sway { transform-origin: 11px 28px; animation: a-sway 3.2s ease-in-out infinite; }
+  @keyframes a-sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  .a-beat { transform-origin: 16px 16px; animation: a-beat 1.2s ease-in-out infinite; }
+  @keyframes a-beat { 0%, 40%, 100% { transform: scale(1); } 15% { transform: scale(1.08); } 28% { transform: scale(0.98); } }
+  .a-ecg { stroke-dasharray: 28; animation: a-ecg 1.2s linear infinite; }
+  @keyframes a-ecg { 0% { stroke-dashoffset: 28; } 60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -28; } }
+  .a-win { animation: a-win 2.8s steps(1) infinite; }
+  @keyframes a-win { 0%, 100% { opacity: 1; } 40% { opacity: 0.25; } 70% { opacity: 1; } }
+  .a-tram { animation: a-tram 4s ease-in-out infinite; }
+  @keyframes a-tram { 0% { transform: translateX(-6px); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(12px); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .itile svg * { animation: none !important; } .a-wave, .a-puff { opacity: 0.6; } }
   @media (prefers-reduced-motion: reduce) { .itile svg, .pop { transition: none; } }
   @media print { .itiles { display: block; } .itile svg { display: none; } .itile { display: block; padding: 0 0 6px; } .pop { position: static; opacity: 1; transform: none; border: 0; padding: 0; text-align: left; max-width: none; } }
   .routes { display: grid; gap: calc(var(--u) * 1.5); max-width: 520px; }
@@ -185,6 +227,10 @@
   @keyframes blade-x { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.15); } }
   @keyframes blade-y { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.15); } }
   @media print { #intro { display: none !important; } }
+  .foot { border-top: 0 !important; position: relative; }
+  .foot-line { position: absolute; left: 0; top: -16px; width: 100%; height: 32px; display: block; overflow: visible; pointer-events: none; }
+  .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  @media print { .foot-line { display: none; } }
 </style>
 </head>
 <body>
@@ -219,26 +265,27 @@
   <section class="section" aria-labelledby="open-h">
     <h2 id="open-h">Open to</h2>
     <ul class="itiles open-tiles">
-      <li class="itile" tabindex="0" style="--c:var(--f0)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="12" y="3.5" width="8" height="14" rx="4"/><path d="M8 14.5A8 8 0 0 0 24 14.5M16 22.5V27.5M11.5 27.5H20.5"/><path d="M12 9H14.5M12 12H14.5" stroke-width="1.1"/></svg><span class="pop"><span class="pop-t">Media interviews</span><span class="pop-d">Print, broadcast and online, on drones, air taxis, heat pumps, electric vehicles and environmental noise.</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f1)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="11" width="25" height="16" rx="2"/><path d="M8 11L21 4.5"/><circle cx="11" cy="19" r="4.2"/><circle cx="11" cy="19" r="1.2"/><path d="M19 16H25M19 19H25M19 22H25" stroke-width="1.1"/></svg><span class="pop"><span class="pop-t">Podcasts and radio</span><span class="pop-d">Long-form conversations about sound, perception and the future soundscape of towns and cities.</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f2)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 6H26V24.5A2.5 2.5 0 0 1 23.5 27H6.5A2.5 2.5 0 0 1 4 24.5V11H7"/><path d="M7 6V24.5A2.5 2.5 0 0 1 4.5 27"/><rect x="10.5" y="9.5" width="6.5" height="6" stroke-width="1.2"/><path d="M19.5 10H22.5M19.5 13H22.5M10.5 18.5H22.5M10.5 21.5H22.5" stroke-width="1.2"/></svg><span class="pop"><span class="pop-t">Press statements and expert comment</span><span class="pop-d">Quick, accurate comment on new noise policy, research findings and emerging technology.</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f3)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="16" r="7.5"/><circle cx="20" cy="16" r="7.5"/><path d="M16 9.6Q19.2 16 16 22.4" stroke-width="1.1"/></svg><span class="pop"><span class="pop-t">Research collaboration</span><span class="pop-d">Joint studies, listening experiments, datasets and papers with academic and industry partners.</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f4)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 27V15L10 11V15L17 11V15L24 11V27Z"/><path d="M24 27V5H28V27"/><path d="M2 27H30"/><path d="M7 19H9M13 19H15M19 19H21M7 23H9M13 23H15M19 23H21" stroke-width="1.3"/></svg><span class="pop"><span class="pop-t">Industry and policy</span><span class="pop-d">Sound quality, psychoacoustic assessment and annoyance prediction for products, infrastructure and standards.</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f5)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4" width="25" height="15" rx="1"/><path d="M8 15L12 11L15 13L20 8L24 11" stroke-width="1.2"/><path d="M16 19V22M11 28L16 22L21 28"/></svg><span class="pop"><span class="pop-t">Talks and guest lectures</span><span class="pop-d">Conferences, seminars, schools and public engagement events.</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f0)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="12" y="3.5" width="8" height="14" rx="4"/><path d="M8 14.5A8 8 0 0 0 24 14.5M16 22.5V27.5M11.5 27.5H20.5"/><path d="M12 9H14.5M12 12H14.5" stroke-width="1.1"/><path class="a-wave" d="M5 8Q3.5 11 5 14" stroke-width="1.1" style="transform-origin:8px 11px;animation-delay:0.0s"/><path class="a-wave" d="M5 8Q3.5 11 5 14" stroke-width="1.1" style="transform-origin:8px 11px;animation-delay:0.7s"/><path class="a-wave" d="M27 8Q28.5 11 27 14" stroke-width="1.1" style="transform-origin:24px 11px;animation-delay:0.0s"/><path class="a-wave" d="M27 8Q28.5 11 27 14" stroke-width="1.1" style="transform-origin:24px 11px;animation-delay:0.7s"/></svg><span class="pop"><span class="pop-t">Media interviews</span><span class="pop-d">Print, broadcast and online, on drones, air taxis, heat pumps, electric vehicles and environmental noise.</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f1)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="11" width="25" height="16" rx="2"/><path class="a-antenna" d="M8 11L21 4.5"/><circle class="a-cone" cx="11" cy="19" r="4.2"/><circle cx="11" cy="19" r="1.2"/><path d="M19 16H25M19 19H25M19 22H25" stroke-width="1.1"/></svg><span class="pop"><span class="pop-t">Podcasts and radio</span><span class="pop-d">Long-form conversations about sound, perception and the future soundscape of towns and cities.</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f2)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 6H26V24.5A2.5 2.5 0 0 1 23.5 27H6.5A2.5 2.5 0 0 1 4 24.5V11H7"/><path d="M7 6V24.5A2.5 2.5 0 0 1 4.5 27"/><rect x="10.5" y="9.5" width="6.5" height="6" stroke-width="1.2"/><path class="a-ln a-ln1" d="M19.5 10H22.5" stroke-width="1.2"/><path class="a-ln a-ln2" d="M19.5 13H22.5" stroke-width="1.2"/><path class="a-ln a-ln3" d="M10.5 18.5H22.5" stroke-width="1.2"/><path class="a-ln a-ln4" d="M10.5 21.5H22.5" stroke-width="1.2"/></svg><span class="pop"><span class="pop-t">Press statements and expert comment</span><span class="pop-d">Quick, accurate comment on new noise policy, research findings and emerging technology.</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f2)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle class="a-ring-l" cx="12" cy="16" r="7.5"/><circle class="a-ring-r" cx="20" cy="16" r="7.5"/></svg><span class="pop"><span class="pop-t">Research collaboration</span><span class="pop-d">Joint studies, listening experiments, datasets and papers with academic and industry partners.</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f3)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 27V15L10 11V15L17 11V15L24 11V27Z"/><path d="M24 27V5H28V27"/><path d="M2 27H30"/><path d="M7 19H9M13 19H15M19 19H21M7 23H9M13 23H15M19 23H21" stroke-width="1.3"/><circle class="a-puff" cx="26" cy="3" r="1.6" stroke-width="1.1"/><circle class="a-puff p2" cx="26" cy="3" r="1.6" stroke-width="1.1"/></svg><span class="pop"><span class="pop-t">Industry and policy</span><span class="pop-d">Sound quality, psychoacoustic assessment and annoyance prediction for products, infrastructure and standards.</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f4)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4" width="25" height="15" rx="1"/><path class="a-chart" d="M8 15L12 11L15 13L20 8L24 11" stroke-width="1.2"/><path d="M16 19V22M11 28L16 22L21 28"/></svg><span class="pop"><span class="pop-t">Talks and guest lectures</span><span class="pop-d">Conferences, seminars, schools and public engagement events.</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f5)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g class="a-swing"><path d="M11 3L16 10L21 3" stroke-width="1.2"/><rect x="9" y="10" width="14" height="18" rx="2"/><path d="M14 10V12.5H18V10" stroke-width="1.1"/><circle cx="16" cy="18" r="2.6" stroke-width="1.2"/><path d="M12 25Q16 21 20 25" stroke-width="1.2"/></g></svg><span class="pop"><span class="pop-t">Internships</span><span class="pop-d">Research and industry internships in acoustics, psychoacoustics and machine learning.</span></span></li>
     </ul>
   </section>
 
   <section class="section" aria-labelledby="topics-h">
     <h2 id="topics-h">Topics I can speak on</h2>
     <ul class="itiles">
-      <li class="itile" tabindex="0" style="--c:var(--f0)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 12L16 16L22 12M10 20L16 16L22 20"/><rect x="13.5" y="13.5" width="5" height="5" rx="1.2"/><path d="M5 12H15M17 12H27M5 20H11M21 20H27" stroke-width="1.2"/><path d="M7 25Q16 29 25 25M9.5 28Q16 31 22.5 28" stroke-width="1.1" opacity="0.7"/></svg><span class="pop"><span class="pop-t">Drone and eVTOL Noise</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f1)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="8" width="26" height="17" rx="1.5"/><circle cx="11.5" cy="16.5" r="5"/><path d="M11.5 16.5V12.5M11.5 16.5L15 18.5M11.5 16.5L8 18.5" stroke-width="1.2"/><path d="M20 12H26M20 15H26M20 18H26M20 21H26" stroke-width="1.1"/><path d="M6 25V27M26 25V27"/></svg><span class="pop"><span class="pop-t">ASHP Noise</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f1)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21V18Q3.3 16.2 6.5 15.8L10 12.3Q11.2 11.3 13 11.3H19Q20.8 11.3 22 12.5L24.5 15.6Q26.5 16 26.7 18V21H24.4A3 3 0 0 0 18.6 21H11.4A3 3 0 0 0 5.6 21Z"/><circle cx="8.5" cy="21.5" r="2.3"/><circle cx="21.5" cy="21.5" r="2.3"/><path d="M28.5 13.5Q30 16.5 28.5 19.5M30.5 11.5Q32.5 16.5 30.5 21.5" stroke-width="1.1"/></svg><span class="pop"><span class="pop-t">Electric Vehicle Warning Sounds</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f2)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 28V20"/><path d="M11 21C6 21 4 17.5 5.5 14.5C4.5 10.5 8 7.5 11 8.5C14 7.5 17.5 10.5 16.5 14.5C18 17.5 16 21 11 21Z"/><path d="M8 28H14"/><path d="M21 11Q23 14 21 17M24 8.5Q27.5 14 24 19.5M27 6Q32 14 27 22" stroke-width="1.2"/></svg><span class="pop"><span class="pop-t">Soundscapes and Wellbeing</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f3)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 27.5C9 22.5 3.5 18 3.5 11.8C3.5 8.3 6.2 5.5 9.6 5.5C12.3 5.5 14.6 7.2 16 9.5C17.4 7.2 19.7 5.5 22.4 5.5C25.8 5.5 28.5 8.3 28.5 11.8C28.5 18 23 22.5 16 27.5Z"/><path d="M6 15H11L13 11L16 19L18.5 13L20 15H26" stroke-width="1.3"/></svg><span class="pop"><span class="pop-t">Noise and Health</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f4)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 13C9 8.6 12.3 5.5 16.3 5.5C20.6 5.5 23.5 8.8 23.5 12.8C23.5 16.5 21 17.8 19.6 19.4C18.4 20.8 18.6 23 17.6 25.2C16.8 26.9 15.2 27.8 13.6 27.6C11.6 27.3 10.4 25.6 10.4 23.8"/><path d="M13 13.2C13 10.8 14.6 9.3 16.5 9.3C18.5 9.3 19.8 10.8 19.8 12.6C19.8 14.4 18.4 15 17.4 15.9C16.6 16.6 16.8 17.6 16.2 18.4"/><path d="M4 10Q2.5 14 4 18M6.5 11.5Q5.5 14 6.5 16.5" stroke-width="1.1"/></svg><span class="pop"><span class="pop-t">Psychoacoustics</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f4)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9L16 6M6 9L16 16M6 9L16 26M6 23L16 6M6 23L16 16M6 23L16 26M16 6L26 16M16 16L26 16M16 26L26 16" stroke-width="0.9"/><circle cx="6" cy="9" r="2.2" fill="var(--paper)"/><circle cx="6" cy="23" r="2.2" fill="var(--paper)"/><circle cx="16" cy="6" r="2.2" fill="var(--paper)"/><circle cx="16" cy="16" r="2.2" fill="var(--paper)"/><circle cx="16" cy="26" r="2.2" fill="var(--paper)"/><circle cx="26" cy="16" r="2.6" fill="currentColor"/></svg><span class="pop"><span class="pop-t">Machine Learning for Acoustics</span></span></li>
-      <li class="itile" tabindex="0" style="--c:var(--f5)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 23V13H8V23M8 23V7H14V23M14 23V11H19V23M19 23V9H25V23M25 23V15H29V23"/><path d="M10.5 10H11.5M10.5 13H11.5M10.5 16H11.5M21.5 12H22.5M21.5 15H22.5" stroke-width="1.2"/><path d="M2 23H30"/><rect x="6" y="25" width="15" height="4" rx="1.6" stroke-width="1.2"/><path d="M23 27H29" stroke-width="1.1" stroke-dasharray="1.5 1.5"/></svg><span class="pop"><span class="pop-t">Future Cities and Transport</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f0)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g class="a-hover"><path d="M10 12L16 16L22 12M10 20L16 16L22 20"/><rect x="13.5" y="13.5" width="5" height="5" rx="1.2"/><path class="a-rotor" d="M6 12H14" stroke-width="1.2"/><path class="a-rotor r2" d="M18 12H26" stroke-width="1.2"/><path class="a-rotor" d="M6 20H14" stroke-width="1.2"/><path class="a-rotor r2" d="M18 20H26" stroke-width="1.2"/></g><path class="a-wave" d="M9 26Q16 29.5 23 26" stroke-width="1.1" style="transform-origin:16px 22px;animation-delay:0.0s"/><path class="a-wave" d="M9 26Q16 29.5 23 26" stroke-width="1.1" style="transform-origin:16px 22px;animation-delay:0.7s"/></svg><span class="pop"><span class="pop-t">Drone and eVTOL Noise</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f1)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="8" width="26" height="17" rx="1.5"/><circle cx="11.5" cy="16.5" r="5"/><g class="a-spin" style="transform-origin:11.5px 16.5px"><path d="M11.5 16.5V12.5M11.5 16.5L15 18.5M11.5 16.5L8 18.5" stroke-width="1.2"/></g><path d="M20 12H26M20 15H26M20 18H26M20 21H26" stroke-width="1.1"/><path d="M6 25V27M26 25V27"/></svg><span class="pop"><span class="pop-t">ASHP Noise</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f1)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g class="a-drive"><path d="M3 21V18Q3.3 16.2 6.5 15.8L10 12.3Q11.2 11.3 13 11.3H19Q20.8 11.3 22 12.5L24.5 15.6Q26.5 16 26.7 18V21H24.4A3 3 0 0 0 18.6 21H11.4A3 3 0 0 0 5.6 21Z"/><g class="a-spin" style="transform-origin:8.5px 21.5px"><circle cx="8.5" cy="21.5" r="2.3"/><path d="M8.5 19.2V23.8" stroke-width="0.9"/></g><g class="a-spin" style="transform-origin:21.5px 21.5px"><circle cx="21.5" cy="21.5" r="2.3"/><path d="M21.5 19.2V23.8" stroke-width="0.9"/></g></g><path class="a-wave" d="M28 13.5Q29.5 16.5 28 19.5" stroke-width="1.1" style="transform-origin:26.7px 16.5px;animation-delay:0.0s"/><path class="a-wave" d="M28 13.5Q29.5 16.5 28 19.5" stroke-width="1.1" style="transform-origin:26.7px 16.5px;animation-delay:0.7s"/><path class="a-wave" d="M28 13.5Q29.5 16.5 28 19.5" stroke-width="1.1" style="transform-origin:26.7px 16.5px;animation-delay:1.4s"/></svg><span class="pop"><span class="pop-t">Electric Vehicle Warning Sounds</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f2)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g class="a-sway"><path d="M11 28V20"/><path d="M11 21C6 21 4 17.5 5.5 14.5C4.5 10.5 8 7.5 11 8.5C14 7.5 17.5 10.5 16.5 14.5C18 17.5 16 21 11 21Z"/></g><path d="M8 28H14"/><path class="a-wave" d="M21 11Q23 14 21 17" stroke-width="1.1" style="transform-origin:18px 14px;animation-delay:0.0s"/><path class="a-wave" d="M21 11Q23 14 21 17" stroke-width="1.1" style="transform-origin:18px 14px;animation-delay:0.7s"/><path class="a-wave" d="M21 11Q23 14 21 17" stroke-width="1.1" style="transform-origin:18px 14px;animation-delay:1.4s"/></svg><span class="pop"><span class="pop-t">Soundscapes and Wellbeing</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f3)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="a-beat" d="M16 27.5C9 22.5 3.5 18 3.5 11.8C3.5 8.3 6.2 5.5 9.6 5.5C12.3 5.5 14.6 7.2 16 9.5C17.4 7.2 19.7 5.5 22.4 5.5C25.8 5.5 28.5 8.3 28.5 11.8C28.5 18 23 22.5 16 27.5Z"/><path class="a-ecg" d="M6 15H11L13 11L16 19L18.5 13L20 15H26" stroke-width="1.3"/></svg><span class="pop"><span class="pop-t">Noise and Health</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f4)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 13C9 8.6 12.3 5.5 16.3 5.5C20.6 5.5 23.5 8.8 23.5 12.8C23.5 16.5 21 17.8 19.6 19.4C18.4 20.8 18.6 23 17.6 25.2C16.8 26.9 15.2 27.8 13.6 27.6C11.6 27.3 10.4 25.6 10.4 23.8"/><path d="M13 13.2C13 10.8 14.6 9.3 16.5 9.3C18.5 9.3 19.8 10.8 19.8 12.6C19.8 14.4 18.4 15 17.4 15.9C16.6 16.6 16.8 17.6 16.2 18.4"/><path class="a-wave" d="M6 10Q4.5 14 6 18" stroke-width="1.1" style="transform-origin:8.5px 14px;animation-delay:0.0s"/><path class="a-wave" d="M6 10Q4.5 14 6 18" stroke-width="1.1" style="transform-origin:8.5px 14px;animation-delay:0.7s"/><path class="a-wave" d="M6 10Q4.5 14 6 18" stroke-width="1.1" style="transform-origin:8.5px 14px;animation-delay:1.4s"/></svg><span class="pop"><span class="pop-t">Psychoacoustics</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f4)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9L16 6M6 9L16 16M6 9L16 26M6 23L16 6M6 23L16 16M6 23L16 26M16 6L26 16M16 16L26 16M16 26L26 16" stroke-width="0.9"/><circle cx="6" cy="9" r="2.2" fill="var(--paper)"/><circle cx="6" cy="23" r="2.2" fill="var(--paper)"/><circle cx="16" cy="6" r="2.2" fill="var(--paper)"/><circle cx="16" cy="16" r="2.2" fill="var(--paper)"/><circle cx="16" cy="26" r="2.2" fill="var(--paper)"/><circle cx="26" cy="16" r="2.6" fill="var(--paper)"/><circle cx="6" cy="9" r="2.2" fill="currentColor" stroke="none"><animate attributeName="cx" dur="10.50s" repeatCount="indefinite" keyTimes="0.0000;0.0114;0.0257;0.0686;0.0829;0.1257;0.1543;0.1657;0.1667;0.1781;0.1924;0.2352;0.2495;0.2924;0.3210;0.3324;0.3333;0.3448;0.3590;0.4019;0.4162;0.4590;0.4876;0.4990;0.5000;0.5114;0.5257;0.5686;0.5829;0.6257;0.6543;0.6657;0.6667;0.6781;0.6924;0.7352;0.7495;0.7924;0.8210;0.8324;0.8333;0.8448;0.8590;0.9019;0.9162;0.9590;0.9876;1" values="6;6;6;16;16;26;26;26;6;6;6;16;16;26;26;26;6;6;6;16;16;26;26;26;6;6;6;16;16;26;26;26;6;6;6;16;16;26;26;26;6;6;6;16;16;26;26;26"/><animate attributeName="cy" dur="10.50s" repeatCount="indefinite" keyTimes="0.0000;0.0114;0.0257;0.0686;0.0829;0.1257;0.1543;0.1657;0.1667;0.1781;0.1924;0.2352;0.2495;0.2924;0.3210;0.3324;0.3333;0.3448;0.3590;0.4019;0.4162;0.4590;0.4876;0.4990;0.5000;0.5114;0.5257;0.5686;0.5829;0.6257;0.6543;0.6657;0.6667;0.6781;0.6924;0.7352;0.7495;0.7924;0.8210;0.8324;0.8333;0.8448;0.8590;0.9019;0.9162;0.9590;0.9876;1" values="9;9;9;6;6;16;16;16;23;23;23;16;16;16;16;16;9;9;9;26;26;16;16;16;23;23;23;6;6;16;16;16;9;9;9;16;16;16;16;16;23;23;23;26;26;16;16;16"/><animate attributeName="r" dur="10.50s" repeatCount="indefinite" keyTimes="0.0000;0.0114;0.0257;0.0686;0.0829;0.1257;0.1543;0.1657;0.1667;0.1781;0.1924;0.2352;0.2495;0.2924;0.3210;0.3324;0.3333;0.3448;0.3590;0.4019;0.4162;0.4590;0.4876;0.4990;0.5000;0.5114;0.5257;0.5686;0.5829;0.6257;0.6543;0.6657;0.6667;0.6781;0.6924;0.7352;0.7495;0.7924;0.8210;0.8324;0.8333;0.8448;0.8590;0.9019;0.9162;0.9590;0.9876;1" values="0;2.2;2.2;2.2;2.2;2.6;2.6;0;0;2.2;2.2;2.2;2.2;2.6;2.6;0;0;2.2;2.2;2.2;2.2;2.6;2.6;0;0;2.2;2.2;2.2;2.2;2.6;2.6;0;0;2.2;2.2;2.2;2.2;2.6;2.6;0;0;2.2;2.2;2.2;2.2;2.6;2.6;0"/></circle></svg><span class="pop"><span class="pop-t">Machine Learning for Acoustics</span></span></li>
+      <li class="itile" tabindex="0" style="--c:var(--f5)"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 23V13H8V23M8 23V7H14V23M14 23V11H19V23M19 23V9H25V23M25 23V15H29V23"/><path class="a-win" d="M10.5 10H11.5M10.5 13H11.5M10.5 16H11.5M21.5 12H22.5M21.5 15H22.5" stroke-width="1.2"/><path d="M2 23H30"/><g class="a-tram"><rect x="6" y="25" width="15" height="4" rx="1.6" stroke-width="1.2"/></g><path d="M2 30H30" stroke-width="0.8" stroke-dasharray="1.5 1.5"/></svg><span class="pop"><span class="pop-t">Future Cities and Transport</span></span></li>
     </ul>
   </section>
 
@@ -260,7 +307,7 @@
 </main>
 
 <footer class="wrap">
-  <div class="foot"><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
+  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
 </footer>
 
 <script>
@@ -347,6 +394,40 @@
       });
     });
     document.addEventListener('click', (e) => { if (!e.target.closest('.itile')) tiles.forEach((o) => o.classList.remove('is-active')); });
+  })();
+</script>
+<script>
+  /* Footer line: every few seconds a pulse leaves the centre and ripples out both ways, as in the opening */
+  (() => {
+    const svg = document.querySelector('.foot-line'); if (!svg) return;
+    const path = svg.querySelector('path');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, visible = false, raf = 0, t0 = performance.now();
+    const PERIOD = 4200, WAVE = 1600;
+    const draw = (now) => {
+      W = svg.clientWidth; svg.setAttribute('viewBox', `0 -16 ${W} 32`);
+      const t = (now - t0) % PERIOD;
+      if (reduce || t > WAVE) { path.setAttribute('d', `M0 0H${W}`); }
+      else {
+        const tau = t / WAVE, half = W / 2, cx = half;
+        const front = tau * half * 1.15, sigma = Math.max(20, half * 0.12);
+        const amp = 9 * Math.pow(1 - tau, 1.4), lambda = Math.max(16, half * 0.04);
+        let d = '';
+        for (let x = 0; x <= W; x += 2) {
+          const dd = Math.abs(x - cx) - front, env = Math.exp(-(dd * dd) / (2 * sigma * sigma));
+          const y = -amp * env * Math.sin((2 * Math.PI * dd) / lambda);
+          d += (x ? 'L' : 'M') + x + ' ' + y.toFixed(2);
+        }
+        path.setAttribute('d', d);
+      }
+      if (visible && !reduce) raf = requestAnimationFrame(draw);
+    };
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting; cancelAnimationFrame(raf);
+      if (visible) { t0 = performance.now(); raf = requestAnimationFrame(draw); } else draw(performance.now());
+    }).observe(svg);
+    addEventListener('resize', () => draw(performance.now()));
+    draw(performance.now());
   })();
 </script>
 </body>

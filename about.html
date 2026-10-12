@@ -204,6 +204,10 @@
   #intro .arc.a2 { animation-delay: 0.4s; } #intro .arc.a3 { animation-delay: 0.8s; }
   @keyframes arc { 0% { opacity: 0; transform: scale(0.7); } 25% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
   @media print { #intro { display: none !important; } }
+  .foot { border-top: 0 !important; position: relative; }
+  .foot-line { position: absolute; left: 0; top: -16px; width: 100%; height: 32px; display: block; overflow: visible; pointer-events: none; }
+  .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  @media print { .foot-line { display: none; } }
 </style>
 </head>
 <body>
@@ -266,7 +270,7 @@
 </main>
 
 <footer class="wrap">
-  <div class="foot"><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
+  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
 </footer>
 
 <script>
@@ -388,6 +392,40 @@
     if (!saved) { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); sync(); }
   });
 })();
+</script>
+<script>
+  /* Footer line: every few seconds a pulse leaves the centre and ripples out both ways, as in the opening */
+  (() => {
+    const svg = document.querySelector('.foot-line'); if (!svg) return;
+    const path = svg.querySelector('path');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, visible = false, raf = 0, t0 = performance.now();
+    const PERIOD = 4200, WAVE = 1600;
+    const draw = (now) => {
+      W = svg.clientWidth; svg.setAttribute('viewBox', `0 -16 ${W} 32`);
+      const t = (now - t0) % PERIOD;
+      if (reduce || t > WAVE) { path.setAttribute('d', `M0 0H${W}`); }
+      else {
+        const tau = t / WAVE, half = W / 2, cx = half;
+        const front = tau * half * 1.15, sigma = Math.max(20, half * 0.12);
+        const amp = 9 * Math.pow(1 - tau, 1.4), lambda = Math.max(16, half * 0.04);
+        let d = '';
+        for (let x = 0; x <= W; x += 2) {
+          const dd = Math.abs(x - cx) - front, env = Math.exp(-(dd * dd) / (2 * sigma * sigma));
+          const y = -amp * env * Math.sin((2 * Math.PI * dd) / lambda);
+          d += (x ? 'L' : 'M') + x + ' ' + y.toFixed(2);
+        }
+        path.setAttribute('d', d);
+      }
+      if (visible && !reduce) raf = requestAnimationFrame(draw);
+    };
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting; cancelAnimationFrame(raf);
+      if (visible) { t0 = performance.now(); raf = requestAnimationFrame(draw); } else draw(performance.now());
+    }).observe(svg);
+    addEventListener('resize', () => draw(performance.now()));
+    draw(performance.now());
+  })();
 </script>
 </body>
 </html>
