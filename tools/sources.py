@@ -1,135 +1,144 @@
-"""Six minimal line icons of the noise sources, drawn for the frequency ruler.
+"""Noise-source icons for the frequency ruler, drawn as technical line schematics.
 
-All share a 40 x 34 viewBox, 1.25 stroke, currentColor, round caps. Animated parts
-carry classes that the page's CSS animates (.spin, .prop, .ring, .wheel, .wind,
-.note, .head)."""
+All share a 40 x 34 viewBox with a thin uniform stroke in currentColor, so they read
+like figures in a paper rather than cartoons. Animated parts carry classes that the
+page's CSS animates: .spin (rotate about a hub), .wheel, .wind (dashed flow),
+.down (downwash), .srot (rotor seen edge-on), .lift (rotor disc in perspective),
+.pushprop, .cargo (sway), .pulse (sound pulse), .note and .head.
 
-COMMON = 'viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible"'
+Placement on the ruler: x = log2(Hz / 63) / 8 across 63 Hz to 16 kHz."""
 
-
-def rotor(cx, cy, r, ring=None, cls="prop"):
-    """Two-blade rotor seen from above, spinning about its hub, with an optional air ring."""
-    ring_svg = (f'<circle class="ring" cx="{cx}" cy="{cy}" r="{ring}" stroke-width="0.6" stroke-dasharray="1 1.8" '
-                f'style="transform-origin:{cx}px {cy}px"/>') if ring else ''
-    return (f'{ring_svg}<g class="{cls}" style="transform-origin:{cx}px {cy}px">'
-            f'<path d="M{cx - r} {cy}H{cx + r}"/></g>'
-            f'<circle cx="{cx}" cy="{cy}" r="0.9" fill="currentColor" stroke="none"/>')
+COMMON = ('viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" '
+          'stroke-linecap="round" stroke-linejoin="round" overflow="visible"')
 
 
-def wheel(cx, cy, r):
-    s = r * 0.866
-    return (f'<g class="wheel" style="transform-origin:{cx}px {cy}px">'
-            f'<circle cx="{cx}" cy="{cy}" r="{r}"/>'
-            f'<path d="M{cx} {cy - r}V{cy + r}M{cx - s:.2f} {cy - r / 2:.2f}L{cx + s:.2f} {cy + r / 2:.2f}'
-            f'M{cx - s:.2f} {cy + r / 2:.2f}L{cx + s:.2f} {cy - r / 2:.2f}" stroke-width="0.9"/></g>')
+def wheel(cx, cy, r, spokes=5):
+    import math
+    pts = ''.join(f'M{cx} {cy}L{cx + r * 0.78 * math.cos(2 * math.pi * k / spokes - math.pi / 2):.2f} '
+                  f'{cy + r * 0.78 * math.sin(2 * math.pi * k / spokes - math.pi / 2):.2f}' for k in range(spokes))
+    return (f'<circle cx="{cx}" cy="{cy}" r="{r}"/>'
+            f'<g class="wheel" style="transform-origin:{cx}px {cy}px">'
+            f'<circle cx="{cx}" cy="{cy}" r="{r * 0.78:.2f}" stroke-width="0.5"/>'
+            f'<path d="{pts}" stroke-width="0.5"/></g>'
+            f'<circle cx="{cx}" cy="{cy}" r="0.55" fill="currentColor" stroke="none"/>')
+
+
+def pulse(x, y):
+    """Sound pulse: three arcs rippling forward from a point."""
+    arcs = ''.join(f'<path class="pulse p{i}" d="M{x + 1.4} {y - 3}A3.4 3.4 0 0 1 {x + 1.4} {y + 3}" '
+                   f'style="transform-origin:{x}px {y}px"/>' for i in (1, 2, 3))
+    return f'<g stroke-width="0.6">{arcs}</g>'
 
 
 def turbine():
-    blade = 'M20 12C21.3 9 21.1 4.2 20 1C19.1 4.2 18.9 9 20 12Z'
+    blade = 'M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z'
     return (f'<svg {COMMON}><title>Next-generation wind turbine</title>'
-            '<path class="wind" d="M1 7H7M0 13H6M1 19H7M33 7H39M34 13H40M33 19H39" stroke-width="1" stroke-dasharray="2 3"/>'
-            '<path d="M19.3 33L19.8 13.5M20.7 33L20.2 13.5M16 33H24"/>'
+            '<path class="wind" d="M1 8H7.5M0 13H6.5M1 18H7.5M32.5 8H39M33.5 13H40M32.5 18H39" '
+            'stroke-width="0.5" stroke-dasharray="1.6 2.4"/>'
+            '<path d="M19.35 33L19.75 13H20.25L20.65 33Z"/>'                                     # tapered tower
+            '<path d="M15.5 33H24.5" stroke-width="0.6"/>'                                        # ground
             f'<g class="spin" style="transform-origin:20px 12px"><path d="{blade}"/>'
             f'<path d="{blade}" transform="rotate(120 20 12)"/><path d="{blade}" transform="rotate(240 20 12)"/></g>'
-            '<circle cx="20" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>')
+            '<circle cx="20" cy="12" r="1.05" fill="var(--paper)"/></svg>')
 
 
 def ashp():
-    fan = ''.join(f'<path d="M13.5 23.5L13.5 19" transform="rotate({a} 13.5 23.5)"/>' for a in (0, 120, 240))
-    note = lambda x, y, cls: (f'<g class="note {cls}"><ellipse cx="{x}" cy="{y}" rx="1.25" ry="0.95" '
+    fins = ''.join(f'M{x:.1f} 17V29.5' for x in [24 + 1.15 * i for i in range(7)])
+    blade = 'M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z'
+    note = lambda x, y, cls: (f'<g class="note {cls}" stroke-width="0.6"><ellipse cx="{x}" cy="{y}" rx="0.95" ry="0.7" '
                               f'transform="rotate(-20 {x} {y})" fill="currentColor" stroke="none"/>'
-                              f'<path d="M{x + 1.1} {y - 0.3}V{y - 4.6}L{x + 2.8} {y - 3.7}" stroke-width="1"/></g>')
+                              f'<path d="M{x + 0.85} {y - 0.2}V{y - 3.8}L{x + 2.2} {y - 3.1}"/></g>')
     return (f'<svg {COMMON}><title>Air-source heat pump</title>'
-            '<rect x="4" y="15" width="30" height="17" rx="1.5"/>'
-            '<circle cx="13.5" cy="23.5" r="6"/>'
-            f'<g class="spin fast" style="transform-origin:13.5px 23.5px">{fan}</g>'
-            '<path d="M23.5 19.5H30.5M23.5 22.5H30.5M23.5 25.5H30.5M23.5 28.5H30.5" stroke-width="1"/>'
-            '<path d="M7.5 32V33.6M30.5 32V33.6"/>'
-            # Songbird perched on the top edge
-            '<g class="bird">'
-            '<path d="M24.2 11.2L21.8 9.4"/>'                                   # tail
-            '<ellipse cx="27.2" cy="11.8" rx="3.3" ry="2.4"/>'                    # body
-            '<path d="M25.6 11.6Q27.2 10.6 28.7 12" stroke-width="1"/>'           # wing
-            '<path d="M26.4 14.1V15M28.1 14.1V15" stroke-width="1"/>'             # legs
-            '<g class="head" style="transform-origin:29.6px 10.6px">'
-            '<circle cx="30.4" cy="9.3" r="1.75"/>'
-            '<path d="M32.1 8.9L34 9.3L32.1 9.8"/>'
-            '<circle cx="30.9" cy="8.9" r="0.35" fill="currentColor" stroke="none"/></g>'
+            '<rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/>'
+            '<circle cx="13.5" cy="23.25" r="6.4"/>'
+            '<circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.45"/>'
+            '<path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.45"/>'                    # fan guard
+            f'<g class="spin fast" style="transform-origin:13.5px 23.5px" stroke-width="0.6"><path d="{blade}"/>'
+            f'<path d="{blade}" transform="rotate(120 13.5 23.5)"/><path d="{blade}" transform="rotate(240 13.5 23.5)"/></g>'
+            f'<path d="{fins}" stroke-width="0.45"/>'
+            '<path d="M7 32V33.5M31 32V33.5"/>'
+            # Small songbird perched on the casing, drawn as a plain silhouette outline
+            '<g class="bird" stroke-width="0.7">'
+            '<path d="M24.6 11.6L21.6 10.6L24.4 12.6"/>'                                          # tail
+            '<path d="M24.4 12.6Q26.4 14.4 29.2 13.2Q30.6 12.4 30.4 10.8"/>'                      # belly
+            '<path d="M24.6 11.6Q26.6 10.2 29 10.2"/>'                                            # back
+            '<path d="M26.6 14.1L26.4 14.5M28 13.8L28 14.5" stroke-width="0.5"/>'                # legs
+            '<g class="head" style="transform-origin:29.4px 10.8px">'
+            '<path d="M29 10.2Q29.6 8.2 31.2 8.4Q32.4 8.7 32.3 9.9L33.8 10.2L32 10.6Q31.4 11.4 30.4 10.8"/>'
+            '<circle cx="31.2" cy="9.3" r="0.28" fill="currentColor" stroke="none"/></g>'
             '</g>'
-            f'{note(35.5, 6, "n1")}{note(33.5, 4, "n2")}'
+            f'{note(35, 7, "n1")}{note(33.4, 5, "n2")}'
             '</svg>')
-
-
-
-
-
-
-
-def pulse(x, y, cls="pulse"):
-    """Sound pulse: three arcs rippling out from a point (the vehicle's warning sound)."""
-    arcs = ''.join(f'<path class="{cls} p{i}" d="M{x + 1.4} {y - 3}A3.4 3.4 0 0 1 {x + 1.4} {y + 3}" '
-                   f'style="transform-origin:{x}px {y}px"/>' for i in (1, 2, 3))
-    return f'<g stroke-width="0.9">{arcs}</g>'
 
 
 def evtol():
-    """Fixed-wing eVTOL in side view, facing right: high wing, V-tail, pusher propeller."""
-    fuselage = ('M37 17.2Q36 14.2 31.4 13.5L22 12.9Q15 12.7 9.2 14.3L5.6 15.6Q4.6 16.3 5.6 16.9L9.4 17.8'
-                'Q16.4 19.8 24 20.3L31.4 20.1Q36.1 19.5 37 17.2Z')
+    """Fixed-wing eVTOL: side view rolled 45 degrees toward the viewer, so the top of the
+    high wing faces us. Booms on the wing carry four lift rotors (horizontal discs seen in
+    perspective); a pusher propeller sits at the tail."""
+    # Geometry: fuselage axis tail (6, 13.5) -> nose (34, 18.3); wing root C = (20.6, 16);
+    # half-span vector w = (-4.43, 10.6) (near tip down-left, far tip up-right).
+    def lift(cx, cy):
+        return (f'<ellipse cx="{cx}" cy="{cy}" rx="3" ry="1.9" stroke-width="0.4" stroke-dasharray="0.7 0.9"/>'
+                f'<g transform="translate({cx} {cy}) scale(1 0.63)"><g class="lift">'
+                f'<path d="M-2.8 0H2.8" stroke-width="0.75"/></g></g>'
+                f'<circle cx="{cx}" cy="{cy}" r="0.45" fill="currentColor" stroke="none"/>')
+    fuselage = ('M6.2 12.7Q11 11.6 21 13.2L31.8 15.6Q35.4 16.6 35 18.4Q34.4 19.9 30.6 19.6'
+                'L19.8 18.6Q10.4 17.4 6.2 14.6Q5.2 13.7 6.2 12.7Z')
+    wing = 'M22.3 16.3L17.2 26.8L15.2 26.4L18.9 15.7L24 5.2L26 5.6Z'
     return (f'<svg {COMMON}><title>Fixed-wing eVTOL aircraft</title>'
-            '<path class="wind" d="M-4 14.4H1M-5 16.4H1.4M-4 18.4H1" stroke-width="0.9" stroke-dasharray="1.6 2.4"/>'
-            f'<path d="{fuselage}"/>'
-            '<path d="M29 13.4Q31.8 13.5 33.6 15.2L28.6 15.3Z" stroke-width="0.9"/>'               # canopy
-            '<path d="M13 12.3Q20.5 10.6 29 11.5Q20.5 11.6 13 12.3Z" stroke-width="0.9"/>'           # high wing
-            '<path d="M9.4 14.2L5 5.6L6.9 5.4L12.2 13.6"/>'                                          # V-tail
-            '<path d="M10.8 13.8L8.6 8.4" stroke-width="0.9"/>'
-            '<path d="M16.8 20.1V21.4M31.6 20.1V21.4" stroke-width="0.9"/>'                          # gear struts
-            '<ellipse cx="16.8" cy="22.2" rx="2.4" ry="0.95"/><ellipse cx="31.6" cy="22.2" rx="2" ry="0.9"/>'
-            '<path d="M5.2 16.3L3.6 16.3" stroke-width="1.2"/>'                                       # spinner
-            '<g class="pushprop" style="transform-origin:3.4px 16.3px"><path d="M3.4 11.6V21" stroke-width="1.2"/></g>'
+            '<path class="wind" d="M4.4 12H0.2M4.6 13.6H0M4.4 15.2H0.6" stroke-width="0.45" stroke-dasharray="1.2 1.8"/>'
+            f'<path d="{fuselage}" fill="var(--paper)"/>'
+            '<path d="M29.4 15.2Q32.6 15.6 34.4 17.2" stroke-width="0.5"/>'                       # canopy
+            '<path d="M9.2 13.1L5.4 6.6L6.6 6.3L11 13.3M10.6 13.4L9.6 8.4L10.6 8.2L12.2 13.6" stroke-width="0.65"/>'  # V-tail
+            f'<path d="{wing}" fill="var(--paper)"/>'                                               # high wing over fuselage
+            '<path d="M13.7 21.1L22.7 22.6M18.5 9.4L27.5 10.9" stroke-width="0.7"/>'               # booms
+            + lift(13.7, 21.1) + lift(22.7, 22.6) + lift(18.5, 9.4) + lift(27.5, 10.9) +
+            '<g class="pushprop" style="transform-origin:5.6px 13.6px"><path d="M6.1 10L5.1 17.2" stroke-width="0.8"/></g>'
             '</svg>')
+
+def ev():
+    """Modern electric fastback in side view, facing right."""
+    body = ('M3.6 23.6V21.2Q3.8 19.4 5.6 18.9L9.6 17.9Q13.8 12.6 19.4 12.4Q23.4 12.4 26.6 15.2L29 17.1'
+            'Q34.6 17.7 36 19.2Q36.6 20.2 36.5 23.6H33.6A3.8 3.8 0 0 0 26.2 23.6H14.6A3.8 3.8 0 0 0 7.2 23.6Z')
+    return (f'<svg {COMMON}><title>Electric car</title>'
+            f'<path d="{body}"/>'
+            '<path d="M11.4 17.7Q14.8 13.6 19.4 13.5Q22.8 13.5 25.4 15.6L26.8 17.1Z" stroke-width="0.55"/>'   # glasshouse
+            '<path d="M19.2 13.6V17.4M19.2 17.4V22.8" stroke-width="0.45"/>'                        # B-pillar, door
+            '<path d="M34.2 19.4H36" stroke-width="0.5"/>'                                          # light
+            '<path d="M22.6 18.6L21.6 20.3H22.9L21.9 22" stroke-width="0.55"/>'                     # small bolt
+            f'{wheel(10.9, 23.6, 3.2)}{wheel(29.9, 23.6, 3.2)}{pulse(37.2, 20.6)}</svg>')
 
 
 def drone():
     """Heavy-lift quadcopter in side view (T150-style) carrying a cargo box."""
     return (f'<svg {COMMON}><title>Cargo drone</title>'
-            '<path class="down" d="M2.5 11.5V17M7.5 11.5V17M32.5 11.5V17M37.5 11.5V17" stroke-width="0.8" stroke-dasharray="1.6 2"/>'
-            '<g class="srot" style="transform-origin:5px 6.4px"><path d="M0.4 6.4H9.6" stroke-width="1.1"/></g>'
-            '<g class="srot" style="transform-origin:35px 6.4px"><path d="M30.4 6.4H39.6" stroke-width="1.1"/></g>'
-            '<path d="M5 7V9M35 7V9"/>'                                                               # rotor masts
-            '<rect x="3.4" y="9" width="3.2" height="2" rx="0.6"/><rect x="33.4" y="9" width="3.2" height="2" rx="0.6"/>'
-            '<path d="M6.6 10H14M26 10H33.4"/>'                                                        # arms
-            '<rect x="14" y="7.8" width="12" height="5" rx="2"/>'                                      # body
-            '<path d="M16 12.8L13.4 18.2M24 12.8L26.6 18.2M11.6 18.2H15.4M24.6 18.2H28.4"/>'           # legs, skids
-            '<g class="cargo" style="transform-origin:20px 12.8px">'
-            '<path d="M18 12.8L16.4 21M22 12.8L23.6 21" stroke-width="0.8"/>'                          # slings
-            '<rect x="14.4" y="21" width="11.2" height="9" rx="1"/>'
-            '<path class="sym-med" d="M20 23.2V27.8M17.7 25.5H22.3" stroke-width="1.4"/>'
-            '<path class="sym-food" d="M17.9 23.1V27.9M17.1 23.1V24.5Q17.1 25.4 17.9 25.4Q18.7 25.4 18.7 24.5V23.1'
-            'M22.1 27.9V23.1Q23.4 24.1 22.6 26" stroke-width="0.85"/>'
+            '<path class="down" d="M2.5 11.5V17M7.5 11.5V17M32.5 11.5V17M37.5 11.5V17" stroke-width="0.45" stroke-dasharray="1.2 1.6"/>'
+            '<g class="srot" style="transform-origin:5px 6.6px"><path d="M0.4 6.6H9.6" stroke-width="0.8"/></g>'
+            '<g class="srot" style="transform-origin:35px 6.6px"><path d="M30.4 6.6H39.6" stroke-width="0.8"/></g>'
+            '<path d="M5 7V9.2M35 7V9.2" stroke-width="0.6"/>'
+            '<rect x="3.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><rect x="33.6" y="9.2" width="2.8" height="1.8" rx="0.4"/>'
+            '<path d="M6.4 10.1H14.2M25.8 10.1H33.6" stroke-width="0.7"/>'                          # arms
+            '<rect x="14.2" y="8" width="11.6" height="4.6" rx="1.6"/>'                             # body
+            '<path d="M16.2 12.6L13.6 18M23.8 12.6L26.4 18M11.8 18H15.4M24.6 18H28.2" stroke-width="0.7"/>'
+            '<g class="cargo" style="transform-origin:20px 12.6px">'
+            '<path d="M18 12.6L16.4 21M22 12.6L23.6 21" stroke-width="0.5"/>'
+            '<rect x="14.6" y="21" width="10.8" height="8.6" rx="0.6"/>'
+            '<path class="sym-med" d="M20 23.1V27.5M17.8 25.3H22.2" stroke-width="1.1"/>'
+            '<path class="sym-food" d="M18 23.1V27.6M17.3 23.1V24.4Q17.3 25.2 18 25.2Q18.7 25.2 18.7 24.4V23.1'
+            'M22 27.6V23.1Q23.2 24 22.5 25.8" stroke-width="0.6"/>'
             '</g></svg>')
-
-
-def ev():
-    body = ('M3.5 24V20Q3.8 17.8 8 17.2L12.4 12.8Q13.8 11.6 16 11.6H25Q27.2 11.6 28.9 13.2L33 17.1'
-            'Q36.2 17.6 36.5 20V24H33.4A4 4 0 0 0 25.6 24H14.9A4 4 0 0 0 7.1 24Z')
-    return (f'<svg {COMMON}><title>Electric car</title>'
-            f'<path d="{body}"/>'
-            '<path d="M13.6 16.9L16.4 13.6H24.6L27.6 16.9ZM20.4 13.6V16.9" stroke-width="1"/>'
-            '<path d="M21.6 18.8L20.3 21H21.9L20.6 23.2" stroke-width="0.9"/>'
-            f'{wheel(11, 24, 3.2)}{wheel(29.5, 24, 3.2)}{pulse(37.2, 20.2)}</svg>')
 
 
 def scooter():
     """E-scooter with a chunky battery deck."""
     return (f'<svg {COMMON}><title>E-scooter</title>'
-            '<path class="wind" d="M-2 17H2M-1 20.5H2.5" stroke-width="1" stroke-dasharray="2 2.5"/>'
-            '<path d="M3.2 25.4A4.8 4.8 0 0 1 11.6 23.6"/>'                                           # rear fender
-            '<rect x="11.6" y="23" width="16.8" height="4.2" rx="1.6"/>'                               # battery deck
-            '<path d="M20.6 23.6L19.4 25.2H21.2L20 26.7" stroke-width="0.9"/>'                         # bolt
-            '<path d="M31.9 27.4L27.8 7.6L29.5 7.3L33.6 27.1Z"/>'                                     # stem
-            '<path d="M28.4 25L30.9 24.8"/>'                                                           # deck to stem
-            '<path d="M24.8 7.3H32.4" stroke-width="1.5"/>'                                           # handlebar
+            '<path class="wind" d="M-2 17H2M-1 20.5H2.5" stroke-width="0.5" stroke-dasharray="1.6 2"/>'
+            '<path d="M3.2 25.4A4.8 4.8 0 0 1 11.6 23.6" stroke-width="0.7"/>'                       # rear fender
+            '<rect x="11.6" y="23" width="16.8" height="4.2" rx="1"/>'                               # battery deck
+            '<path d="M20.6 23.7L19.6 25.1H21L20 26.5" stroke-width="0.55"/>'                        # bolt
+            '<path d="M32 27.4L27.9 7.6L29.4 7.3L33.5 27.1Z"/>'                                     # stem
+            '<path d="M28.4 25L31 24.8" stroke-width="0.7"/>'
+            '<path d="M24.8 7.3H32.4" stroke-width="1.1"/>'                                         # handlebar
             f'{wheel(8, 27.4, 3.6)}{wheel(32.6, 27.4, 3.6)}{pulse(36.4, 17)}</svg>')
 
 
