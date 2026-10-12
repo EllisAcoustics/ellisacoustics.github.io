@@ -17,6 +17,9 @@
       t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', t);
+    // Fly-past intro on every visit, unless reduced motion or arriving at a section
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!location.hash && !reduce) document.documentElement.classList.add('intro');
   })();
 </script>
 <style>
@@ -147,9 +150,29 @@
   .route.primary span { color: var(--paper); opacity: 0.8; }
   .note { max-width: 60ch; color: var(--ink-2); font-size: 15px; line-height: 22px; }
   .foot { border-top: 1px solid var(--rule); padding: calc(var(--u) * 3) 0 calc(var(--u) * 6); font-family: var(--mono); font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u); }
+  /* ---------- Fly-past intro ---------- */
+  #intro { display: none; }
+  html.intro #intro {
+    display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden;
+    animation: intro-failsafe 0s linear 2.4s forwards;
+  }
+  @keyframes intro-failsafe { to { visibility: hidden; } }
+  #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
+  #intro .craft { position: absolute; left: 0; top: 0; color: var(--ink); }
+  #intro .craft svg { display: block; width: 100%; height: auto; overflow: visible; }
+  #intro .rotor { transform-box: fill-box; transform-origin: center; animation: blade-x 0.12s linear infinite; }
+  #intro .prop { transform-box: fill-box; transform-origin: center; animation: blade-y 0.1s linear infinite; }
+  @keyframes blade-x { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.15); } }
+  @keyframes blade-y { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.15); } }
+  @media print { #intro { display: none !important; } }
 </style>
 </head>
 <body>
+<div id="intro" aria-hidden="true">
+  <span class="line"></span>
+  <span class="craft drone"><svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path class="rotor" d="M0.5 3H9.5"/><path class="rotor" d="M30.5 3H39.5"/><path d="M5 3.4V5.6M35 3.4V5.6" stroke-width="0.8"/><rect x="3.6" y="5.6" width="2.8" height="1.8" rx="0.4"/><rect x="33.6" y="5.6" width="2.8" height="1.8" rx="0.4"/><path d="M6.4 6.5H14.2M25.8 6.5H33.6"/><rect x="14.2" y="4.4" width="11.6" height="4.6" rx="1.6"/><path d="M16.2 9L13.6 14.4M23.8 9L26.4 14.4M11.8 14.4H15.4M24.6 14.4H28.2"/><rect x="16.4" y="10.6" width="7.2" height="5.4" rx="0.6"/></svg></span>
+  <span class="craft evtol"><svg viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14.2Q4 11.4 8.6 10.8L18 10.3Q26 10.1 32.6 11.8L37.4 13.2Q38.4 13.8 37.4 14.4L32.8 15.4Q24.6 17.2 16 17.4L8.6 17.2Q3.9 16.7 3 14.2Z"/><path d="M8.6 10.9Q6.4 11.2 5 12.6L10.4 12.6Z" stroke-width="0.8"/><path d="M14 9.6Q23 8.2 32 9.4" stroke-width="1.2"/><path d="M32.6 11.6L37.6 3.8L39.2 4L35.2 12.2"/><path d="M38.6 13.8H40.2"/><path class="prop" d="M40.6 9.6V18" stroke-width="1.1"/><path d="M16 9.2V7M28 9V7" stroke-width="0.7"/><path class="rotor" d="M12.4 6.6H19.6"/><path class="rotor" d="M24.4 6.6H31.6"/><path d="M13 17.4V19M28 16.6V19" stroke-width="0.8"/><ellipse cx="13" cy="19.6" rx="1.9" ry="0.8"/><ellipse cx="28" cy="19.6" rx="1.6" ry="0.7"/></svg></span>
+</div>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
     <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="0 0 48 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><path d="M32.6 25V28.6" stroke-width="0.8"/><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><path d="M1 30H47"/></svg><span class="home-label" aria-hidden="true">Max Ellis</span></a>
@@ -209,6 +232,50 @@
   <div class="foot"><span>© 2026 Max Ellis</span><a href="./">maxellis01.github.io</a></div>
 </footer>
 
+<script>
+(() => {
+  // Fly-past intro: a line draws out, a drone crosses left to right and an eVTOL right to left,
+  // then the line settles onto the first divider as the page fades in. About 1.7 s.
+  const root = document.documentElement;
+  const el = document.getElementById('intro');
+  if (!el) return;
+  if (!root.classList.contains('intro')) { el.remove(); return; }
+  const line = el.querySelector('.line'), drone = el.querySelector('.drone'), evtol = el.querySelector('.evtol');
+  const target = document.querySelector('main .section');
+  window.scrollTo(0, 0);
+  let done = false;
+  const finish = () => {
+    if (done) return; done = true;
+    root.classList.remove('intro'); el.remove();
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, finish));
+  };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, finish, { passive: true }));
+
+  requestAnimationFrame(() => {
+    const r = target ? target.getBoundingClientRect() : { left: innerWidth * 0.1, width: innerWidth * 0.8, top: innerHeight * 0.4 };
+    const W = innerWidth, H = innerHeight, y0 = H / 2, y1 = r.top;
+    const dw = Math.max(56, Math.min(92, W * 0.075)), ew = dw * 1.3;
+    Object.assign(line.style, { left: r.left + 'px', width: r.width + 'px', top: y0 + 'px' });
+    drone.style.width = dw + 'px'; evtol.style.width = ew + 'px';
+
+    const DRAW = 320, FLY = 900, SETTLE = 480;
+    line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+                 { duration: DRAW, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
+    const fly = (node, from, to, y, bob) => node.animate([
+      { transform: `translate(${from}px, ${y}px)` },
+      { transform: `translate(${(from + to) / 2}px, ${y - bob}px)`, offset: 0.5 },
+      { transform: `translate(${to}px, ${y}px)` }
+    ], { duration: FLY, delay: DRAW - 120, easing: 'cubic-bezier(.45,.05,.55,.95)', fill: 'both' });
+    fly(drone, -dw - 20, W + 20, y0 - dw * 0.62 - 18, 6);
+    fly(evtol, W + 20, -ew - 20, y0 - ew * 0.5 - 4, -4);
+    const settle = line.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${y1 - y0}px)`, opacity: 0.9 }],
+                                { duration: SETTLE, delay: DRAW + FLY - 160, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards', composite: 'add' });
+    el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
+               { duration: SETTLE, delay: DRAW + FLY - 160, easing: 'ease', fill: 'forwards' });
+    settle.onfinish = finish;
+  });
+})();
+</script>
 <script>
 (() => {
   const root = document.documentElement;
