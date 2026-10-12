@@ -882,6 +882,7 @@
   if (!dot || !root.classList.contains('awaiting-dot')) return;
   const drone = document.createElement('div');
   drone.className = 'courier';
+  drone.style.visibility = 'hidden';   // stays hidden until its flight path is applied
   drone.setAttribute('aria-hidden', 'true');
   drone.innerHTML = '<svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">'
     + '<g class="srot" style="transform-origin:5px 6.6px"><path d="M0.4 6.6H9.6"/></g>'
@@ -916,6 +917,7 @@
       { transform: at(W - 48, scrollY + innerHeight + 120, 2), offset: 1 }
     ];
     const anim = drone.animate(path, { duration: 3400, easing: 'linear', fill: 'forwards' });
+    drone.style.visibility = 'visible';
     // release the dot during the hover over the i
     setTimeout(() => {
       drone.querySelector('.carried').style.opacity = '0';
