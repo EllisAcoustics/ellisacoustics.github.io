@@ -212,16 +212,15 @@
   .timeline .detail li { padding: 0 0 0 calc(var(--u) * 2); }
   .timeline .detail li::before { content: "–"; border: 0; background: none; width: auto; height: auto; left: 0; top: 0; }
 
-  /* ---------- Software and interests ---------- */
+  /* ---------- Software ---------- */
   .icon-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: calc(var(--u) * 4) calc(var(--u) * 2);
-    max-width: 720px;
+    max-width: 760px;
   }
   .icon-tile { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
   .icon-tile img { display: block; width: auto; height: 40px; max-width: 96px; object-fit: contain; }
-  .icon-name { font-family: var(--mono); font-size: 13px; line-height: 16px; color: var(--ink); }
 
   /* ---------- Footer ---------- */
   .foot {
@@ -487,9 +486,14 @@
       <h3 class="tl-head">Certificates</h3>
       <ol class="timeline">
         <li><span class="date">2025</span><h4>Digital Signal Processing</h4><p class="where">EPFL</p></li>
+        <li><span class="date">2025</span><h4>Trustworthy Generative AI</h4><p class="where">Vanderbilt University</p></li>
+        <li><span class="date">2025</span><h4>Transformer Models and BERT Model</h4><p class="where">Google</p></li>
         <li><span class="date">2025</span><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
         <li><span class="date">2025</span><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p></li>
+        <li><span class="date">2024</span><h4>Advanced Prompt Engineering</h4><p class="where">Vanderbilt University</p></li>
         <li><span class="date">2024</span><h4>PgCert AI for Noise Pollution Control</h4><p class="where">London School of International Business</p></li>
+        <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
+        <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
       </ol>
     </div>
   </section>
@@ -497,28 +501,17 @@
   <section class="section" id="software" aria-labelledby="software-h">
     <h2 id="software-h">Software</h2>
     <ul class="icon-grid" aria-label="Software">
-        <li class="icon-tile"><img src="software/python.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Python</span></li>
-        <li class="icon-tile"><img src="software/r.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">R</span></li>
-        <li class="icon-tile"><img src="software/matlab.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">MATLAB</span></li>
-        <li class="icon-tile"><img src="software/max.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Max/MSP</span></li>
-        <li class="icon-tile"><img src="software/artemis.png" width="39" height="40" alt="" decoding="async"><span class="icon-name">ArtemiS SUITE</span></li>
-        <li class="icon-tile"><img src="software/qgis.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">QGIS</span></li>
-        <li class="icon-tile"><img src="software/fme.png" width="80" height="26" style="height:26px;margin:7px 0" alt="" decoding="async"><span class="icon-name">FME</span></li>
-        <li class="icon-tile"><img src="software/reaper.png" width="38" height="40" alt="" decoding="async"><span class="icon-name">REAPER</span></li>
+        <li class="icon-tile"><img src="software/python.svg" width="40" height="40" alt="Python" decoding="async"></li>
+        <li class="icon-tile"><img src="software/r.svg" width="40" height="40" alt="R" decoding="async"></li>
+        <li class="icon-tile"><img src="software/matlab.svg" width="40" height="40" alt="MATLAB" decoding="async"></li>
+        <li class="icon-tile"><img src="software/max.svg" width="40" height="40" alt="Max/MSP" decoding="async"></li>
+        <li class="icon-tile"><img src="software/artemis.png" width="39" height="40" alt="ArtemiS SUITE" decoding="async"></li>
+        <li class="icon-tile"><img src="software/qgis.svg" width="40" height="40" alt="QGIS" decoding="async"></li>
+        <li class="icon-tile"><img src="software/fme.png" width="80" height="26" style="height:26px;margin:7px 0" alt="FME" decoding="async"></li>
+        <li class="icon-tile"><img src="software/reaper.png" width="38" height="40" alt="REAPER" decoding="async"></li>
     </ul>
   </section>
 
-  <section class="section" id="interests" aria-labelledby="interests-h">
-    <h2 id="interests-h">Interests</h2>
-    <ul class="icon-grid" aria-label="Interests">
-        <li class="icon-tile"><img src="interests/chess.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Chess</span></li>
-        <li class="icon-tile"><img src="interests/gym.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Gym</span></li>
-        <li class="icon-tile"><img src="interests/djing.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">DJing</span></li>
-        <li class="icon-tile"><img src="interests/film-photography.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Film Photography</span></li>
-        <li class="icon-tile"><img src="interests/piano.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Piano</span></li>
-        <li class="icon-tile"><img src="interests/spanish.svg" width="40" height="40" alt="" decoding="async"><span class="icon-name">Learning Spanish</span></li>
-    </ul>
-  </section>
 
 </main>
 
@@ -528,7 +521,7 @@
       <span>© 2026 Max Ellis</span>
       <span>Updated October 2026</span>
     </div>
-    <p class="credits">Logos are trademarks of their owners and are used only to name the organisations and software listed. Icons from Simple Icons, Devicon and Lucide. R logo © The R Foundation, CC BY-SA 4.0.</p>
+    <p class="credits">Logos are trademarks of their owners and are used only to name the organisations and software listed. Icons from Simple Icons and Devicon. R logo © The R Foundation, CC BY-SA 4.0.</p>
   </div>
 </footer>
 
