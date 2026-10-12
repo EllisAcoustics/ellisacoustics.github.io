@@ -17,6 +17,9 @@
       t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', t);
+    // Bird intro on every visit, unless reduced motion or arriving at a section
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!location.hash && !reduce) document.documentElement.classList.add('intro');
   })();
 </script>
 <style>
@@ -162,9 +165,32 @@
   .btn:hover { background: var(--accent); color: var(--paper); }
   .btn-quiet { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
   .btn-quiet:hover { background: transparent; color: var(--accent); border-color: var(--ink); }
+  /* ---------- Bird intro ---------- */
+  #intro { display: none; }
+  html.intro #intro {
+    display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden;
+    animation: intro-failsafe 0s linear 4.8s forwards;
+  }
+  @keyframes intro-failsafe { to { visibility: hidden; } }
+  #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
+  #intro .piece { position: absolute; left: 0; top: 0; color: var(--ink); }
+  #intro .piece svg { display: block; width: 100%; height: auto; overflow: visible; }
+  #intro .fan { transform-box: view-box; transform-origin: 34px 38px; animation: fan 0.9s linear infinite; }
+  @keyframes fan { to { transform: rotate(360deg); } }
+  #intro .jaw, #intro .head, #intro .wing { transform-box: view-box; }
+  #intro .jaw { transform-origin: 31.4px 10.4px; }
+  #intro .head { transform-origin: 26px 13px; }
+  #intro .wing { transform-origin: 18px 16px; }
+  @media print { #intro { display: none !important; } }
 </style>
 </head>
 <body>
+<div id="intro" aria-hidden="true">
+  <span class="line"></span>
+  <span class="piece hp"><svg viewBox="0 0 110 72" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="106" height="64" rx="3"/><circle cx="34" cy="38" r="23"/><circle cx="34" cy="38" r="16" stroke-width="0.7"/><path d="M11 38H57M34 15V61" stroke-width="0.6"/><g class="fan" stroke-width="1"><path d="M34 38C38 34 41 28 39 21C35 24 33 30 34 38Z"/><path d="M34 38C38 34 41 28 39 21C35 24 33 30 34 38Z" transform="rotate(120 34 38)"/><path d="M34 38C38 34 41 28 39 21C35 24 33 30 34 38Z" transform="rotate(240 34 38)"/></g><circle cx="34" cy="38" r="2.2" fill="currentColor" stroke="none"/><path d="M66 12V64M70 12V64M74 12V64M78 12V64M82 12V64M86 12V64M90 12V64M94 12V64M98 12V64M102 12V64" stroke-width="0.7"/><path d="M12 66V71M98 66V71"/></svg></span>
+  <span class="piece bird"><svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17L3 13.6L5 18.6L10 20"/><path d="M10 19.6Q12 25.4 19.4 25Q26.4 24.4 27.6 17.6"/><path d="M10.6 17Q13.6 12.4 21.6 12.8"/><path d="M16.4 24.8V28.6M20.4 24.6V28.6M15.2 28.6H17.6M19.2 28.6H21.6" stroke-width="1"/><g class="wing"><path d="M12.6 17.6Q17.4 13.2 24.2 15.6Q19.4 21 12.6 17.6Z" fill="var(--paper)"/></g><g class="head"><path d="M21.6 12.8Q22.6 6.4 27.6 6.4Q32 6.6 31.4 10.6Q30.6 15.6 27.6 17.6"/><circle cx="28" cy="9.6" r="0.9" fill="currentColor" stroke="none"/><path d="M31.2 9.2L35.6 10.2L31.4 10.6"/><path class="jaw" d="M31.4 10.6L35 11.2L31 12" stroke-width="1"/></g></svg></span>
+  <template id="note-tpl"><span class="piece note"><svg viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.6" cy="12.6" rx="2.6" ry="2" transform="rotate(-20 3.6 12.6)" fill="currentColor" stroke="none"/><path d="M6 12V2L10.6 4"/></svg></span></template>
+</div>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
     <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><path d="M32.6 25V28.6" stroke-width="0.8"/><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
@@ -223,6 +249,86 @@
   <div class="foot"><span>© 2026 Max Ellis</span><a href="./">maxellis01.github.io</a></div>
 </footer>
 
+<script>
+(() => {
+  // Bird intro: a bird on a heat pump chirps three times, notes float from its beak,
+  // it flies off, then the ground line settles onto the first divider. About 3.5 s.
+  const root = document.documentElement;
+  const el = document.getElementById('intro');
+  if (!el) return;
+  if (!root.classList.contains('intro')) { el.remove(); return; }
+  const line = el.querySelector('.line'), hp = el.querySelector('.hp'), bird = el.querySelector('.bird');
+  const jaw = bird.querySelector('.jaw'), head = bird.querySelector('.head'), wing = bird.querySelector('.wing');
+  const tpl = document.getElementById('note-tpl');
+  const target = document.querySelector('main .section');
+  window.scrollTo(0, 0);
+  let done = false;
+  const timers = [];
+  const finish = () => {
+    if (done) return; done = true;
+    timers.forEach(clearTimeout);
+    root.classList.remove('intro'); el.remove();
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, finish));
+  };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, finish, { passive: true }));
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+
+  requestAnimationFrame(() => {
+    const r = target ? target.getBoundingClientRect() : { left: innerWidth * 0.1, width: innerWidth * 0.8, top: innerHeight * 0.4 };
+    const W = innerWidth, H = innerHeight;
+    const ground = Math.round(H * 0.62);
+    const hpW = Math.max(150, Math.min(260, W * 0.42)), hpH = hpW * 72 / 110;
+    const hpX = W / 2 - hpW / 2, hpY = ground - hpH;
+    const bW = hpW * 0.34, bH = bW * 30 / 40;
+    const bX = hpX + hpW * 0.6, bY = hpY - bH * (28.6 / 30) + hpW * (2 / 110);
+    Object.assign(line.style, { left: r.left + 'px', width: r.width + 'px', top: ground + 'px' });
+    Object.assign(hp.style, { width: hpW + 'px', transform: `translate(${hpX}px, ${hpY}px)`, opacity: 0 });
+    Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px)`, opacity: 0 });
+
+    // 1. ground draws, heat pump and bird appear
+    line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
+    [hp, bird].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, delay: 200, fill: 'forwards' }));
+
+    // 2. three chirps, each with a note from the beak
+    const beakX = bX + bW * (35.4 / 40), beakY = bY + bH * (10.6 / 30);
+    const chirp = (i) => {
+      head.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-10deg)' }, { transform: 'rotate(0)' }], { duration: 300, easing: 'ease-out' });
+      jaw.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(26deg)' }, { transform: 'rotate(0)' }], { duration: 260, easing: 'ease-out' });
+      const n = tpl.content.firstElementChild.cloneNode(true);
+      const nw = bW * 0.32;
+      n.style.width = nw + 'px';
+      el.appendChild(n);
+      const dx = 18 + i * 10, dy = -46 - i * 8, rot = i % 2 ? 12 : -10;
+      n.animate([
+        { transform: `translate(${beakX}px, ${beakY - nw}px) scale(0.5) rotate(0)`, opacity: 0 },
+        { transform: `translate(${beakX + dx * 0.3}px, ${beakY - nw + dy * 0.3}px) scale(1) rotate(${rot / 2}deg)`, opacity: 1, offset: 0.25 },
+        { transform: `translate(${beakX + dx}px, ${beakY - nw + dy}px) scale(1) rotate(${rot}deg)`, opacity: 0 }
+      ], { duration: 1100, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' }).onfinish = () => n.remove();
+    };
+    at(650, () => chirp(0)); at(1150, () => chirp(1)); at(1650, () => chirp(2));
+
+    // 3. take off: wings flap, bird arcs up and away to the right
+    at(2250, () => {
+      wing.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(-1.3)' }, { transform: 'scaleY(1)' }],
+                   { duration: 150, iterations: 7, easing: 'ease-in-out' });
+      bird.animate([
+        { transform: `translate(${bX}px, ${bY}px) rotate(0)` },
+        { transform: `translate(${bX + W * 0.18}px, ${bY - H * 0.18}px) rotate(-12deg)`, offset: 0.4 },
+        { transform: `translate(${W + bW}px, ${-bH * 2}px) rotate(-18deg)` }
+      ], { duration: 950, easing: 'cubic-bezier(.4,0,.8,.6)', fill: 'forwards' });
+    });
+
+    // 4. heat pump fades, ground line settles onto the first divider, page appears
+    at(2850, () => {
+      hp.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' });
+      line.animate([{ transform: 'scaleX(1) translateY(0)' }, { transform: `scaleX(1) translateY(${r.top - ground}px)` }],
+                   { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
+      el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
+                 { duration: 650, easing: 'ease', fill: 'forwards' }).onfinish = finish;
+    });
+  });
+})();
+</script>
 <script>
 (() => {
   const root = document.documentElement;
