@@ -239,10 +239,8 @@
   #intro .piece { position: absolute; left: 0; top: 0; }
   #intro .piece svg { display: block; width: 100%; height: auto; overflow: visible; }
   #intro .turbine { color: var(--ink); }
-  #intro .turbine .blades { color: #8A8C90; transform-box: view-box; transform-origin: 30px 26px; animation: t-spin 2.4s linear infinite; }
+  #intro .turbine .blades { color: #F2C200; transform-box: view-box; transform-origin: 30px 26px; animation: t-spin 2.4s linear infinite; }
   @keyframes t-spin { to { transform: rotate(360deg); } }
-  /* a faint yellow after-image just ahead of each blade, like the heat pump fan's */
-  #intro .turbine .blades.ghost { color: #F2C200; opacity: 0.4; animation-delay: -0.1s; }
   #intro .turbine .bolt { color: #3FAE3A; animation: t-bolt 0.9s steps(1) infinite; }
   @keyframes t-bolt { 0%, 100% { opacity: 1; } 40% { opacity: 0.15; } 55% { opacity: 1; } 70% { opacity: 0.25; } }
   #intro .turbine .ring { fill: none; stroke: #3FAE3A; stroke-width: 0.35; opacity: 0; transform-box: view-box; transform-origin: 30px 26px; animation: t-ring 2.1s ease-out infinite; }
@@ -252,7 +250,7 @@
   #intro .gust { stroke-dasharray: 5 4; animation: gust 0.7s linear infinite; }
   #intro .gust.g2 { animation-duration: 0.55s; } #intro .gust.g3 { animation-duration: 0.8s; }
   @keyframes gust { to { stroke-dashoffset: -9; } }
-  #intro .far { color: var(--ink-2); opacity: 0.55; }
+  #intro .far { color: var(--ink-2); opacity: 0.75; }
   #intro .leaf { color: #3FAE3A; }
   @media print { #intro { display: none !important; } }
   /* every control is a preview for now: it shakes and says so */
@@ -315,7 +313,6 @@
     <path d="M25.5 99.5H34.5"/>
     <path class="bolt" d="M30.7 57.8L29.0 62.4H30.1L29.4 66.6L31.1 61.4H30.0Z" fill="currentColor" stroke="none"/>
     <rect x="28.4" y="24.4" width="7.4" height="3.6" rx="1.2" fill="var(--paper)"/>
-    <g class="blades ghost" stroke-width="0.6"><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(120 30 26)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(240 30 26)"/></g>
     <g class="blades" stroke-width="0.6"><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(120 30 26)" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(240 30 26)" fill="var(--paper)"/><circle cx="30" cy="26" r="1.6" fill="var(--paper)"/></g>
   </svg></span>
   <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
@@ -468,9 +465,13 @@
       const t = tb.cloneNode(true); t.classList.add('side');
       const k = W < 600 ? 0.6 : 0.7, w = tW * k, h = tH * k, cx = W / 2 + d * Math.min(W * 0.34, tW * 1.35);
       Object.assign(t.style, { width: w + 'px', transform: `translate(${cx - w / 2}px, ${ground - h * 0.995}px)`, opacity: 0 });
-      t.querySelectorAll('.blades').forEach((g) => { g.style.animationDelay = (i ? -0.9 : -1.7) - (g.classList.contains('ghost') ? 0.11 : 0) + 's'; g.style.animationDuration = (i ? 2.7 : 2.9) + 's'; });
+      t.querySelectorAll('.blades').forEach((g) => { g.style.animationDelay = (i ? -0.9 : -1.7) + 's'; g.style.animationDuration = (i ? 2.7 : 2.9) + 's'; });
       t.querySelector('.bolt').style.animationDelay = (i ? -0.3 : -0.6) + 's';
-      el.insertBefore(t, tb); return t;
+      el.insertBefore(t, tb);
+      const wd = windEl.cloneNode(true), ww = Math.max(40, w * 0.5);
+      Object.assign(wd.style, { width: ww + 'px', transform: `translate(${cx - w / 2 - ww * 0.55}px, ${ground - h * 0.995 + h * 0.26 - ww * 11 / 34}px)`, opacity: 0 });
+      el.insertBefore(wd, tb); t._wind = wd;
+      return t;
     });
     const wW = Math.max(60, tW * 0.5), wH = wW * 22 / 34;
     Object.assign(windEl.style, { width: wW + 'px', transform: `translate(${tX - wW * 0.55}px, ${hubY - wH / 2}px)`, opacity: 0 });
@@ -478,27 +479,20 @@
     // 1. ground draws, turbine and wind appear
     line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
     [tb, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 200, fill: 'forwards' }));
-    side.forEach((n) => n.animate([{ opacity: 0 }, { opacity: 0.8 }], { duration: 400, delay: 320, fill: 'forwards' }));
+    side.forEach((n) => [n, n._wind].forEach((m) => m.animate([{ opacity: 0 }, { opacity: 0.8 }], { duration: 400, delay: 320, fill: 'forwards' })));
 
-    // 2. a fleet of drones and air taxis crosses the far distance, small and faint
-    const fleet = [
-      ['d', 0.10, 1, 26], ['e', 0.16, -1, 34], ['d', 0.22, -1, 22], ['d', 0.29, 1, 24], ['e', 0.33, 1, 30],
-      ['d', 0.38, -1, 20], ['e', 0.43, -1, 28], ['d', 0.47, 1, 18], ['d', 0.14, -1, 21]
-    ];
-    fleet.forEach(([kind, fy, dir, size], k) => {
-      const src = kind === 'd' ? droneSvg : evtolSvg; if (!src) return;
-      const s = document.createElement('span'); s.className = 'piece ico far';
-      const w = Math.max(14, size * Math.min(1, W / 900) * 1.1); s.style.width = w + 'px';
-      s.appendChild(src.cloneNode(true)); el.insertBefore(s, line);
-      const y = H * fy * (ground / H) , x0 = dir > 0 ? -w * 2 - k * 30 : W + w + k * 30, x1 = dir > 0 ? W + w * 2 : -w * 3;
-      const bob = (k % 3 + 1) * 3;
-      s.animate([
-        { transform: `translate(${x0}px, ${y}px)`, opacity: 0 },
-        { transform: `translate(${x0 + (x1 - x0) * 0.15}px, ${y - bob}px)`, opacity: 1, offset: 0.12 },
-        { transform: `translate(${x0 + (x1 - x0) * 0.6}px, ${y + bob}px)`, offset: 0.6 },
-        { transform: `translate(${x1}px, ${y}px)`, opacity: 1 }
-      ], { duration: 3600 + (k % 4) * 500, delay: 150 + (k % 5) * 120, easing: 'linear', fill: 'both' });
-    });
+    // 2. a single medical delivery drone crosses high up
+    if (droneSvg) {
+      const d = document.createElement('span'); d.className = 'piece ico far';
+      const w = Math.max(26, Math.min(40, W * 0.035)); d.style.width = w + 'px';
+      d.appendChild(droneSvg.cloneNode(true)); el.insertBefore(d, line);
+      const y = Math.max(24, tY - w * 1.4);
+      d.animate([
+        { transform: `translate(${-w * 2}px, ${y}px)` },
+        { transform: `translate(${W * 0.5}px, ${y - 6}px)`, offset: 0.5 },
+        { transform: `translate(${W + w * 2}px, ${y}px)` }
+      ], { duration: 3300, delay: 150, easing: 'linear', fill: 'both' });
+    }
 
     // 3. a gust of leaves blows through past the turbine
     at(1150, () => {
