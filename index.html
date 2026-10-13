@@ -1288,7 +1288,17 @@
     const W = innerWidth, D = 3000;
     const fall = 9 * k * scale;                     // hover height: hatch sits just above the i
     const e1 = 'cubic-bezier(.25,.1,.25,1)', e2 = 'ease-in-out';
-    const path = [
+    // On narrow screens the navigation sits right above the name, so the drone comes in
+    // level from the left, delivers, and leaves the way it came, never crossing the menu.
+    const narrow = W < 700;
+    const path = narrow ? [
+      { transform: at(-90 + scrollX, ty - fall - 6, 8), offset: 0, easing: e1 },
+      { transform: at(tx - 16, ty - fall - 4, 3), offset: 0.3, easing: e2 },
+      { transform: at(tx, ty - fall, 0), offset: 0.39, easing: 'linear' },
+      { transform: at(tx, ty - fall, 0), offset: 0.6, easing: e2 },
+      { transform: at(tx - 10, ty - fall - 4, -4), offset: 0.7, easing: 'cubic-bezier(.5,0,.75,0)' },
+      { transform: at(-110 + scrollX, ty - fall - 8, -10), offset: 1 }
+    ] : [
       { transform: at(Math.min(tx + 320, W + 80), ty - fall - 240, -10), offset: 0, easing: e1 },
       { transform: at(tx + 14, ty - fall - 30, -3), offset: 0.28, easing: e2 },
       { transform: at(tx, ty - fall, 0), offset: 0.39, easing: 'linear' },
