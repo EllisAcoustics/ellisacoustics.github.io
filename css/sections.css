@@ -4,20 +4,9 @@
 .certs { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 1.5); max-width: 760px; }
 @media (min-width: 640px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .certs li { border: 1px solid var(--rule); border-radius: 10px; padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
-.certs h4 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
+.certs h3 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
 .certs .cred { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent); text-underline-offset: 3px; }
 .certs .where { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); margin: 2px 0 0; }
-
-
-/* ---------- Logo strips ---------- */
-.marquee {
-  min-width: 0;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
-}
-.marquee-track { display: flex; width: max-content; will-change: transform; }
-.marquee-list { display: flex; flex-shrink: 0; }
 .logo {
   position: relative;
   display: flex; align-items: center; justify-content: center;
@@ -91,7 +80,7 @@ img.colour { filter: none !important; }
   width: 9px; height: 9px; background: var(--paper); border: 1px solid var(--ink);
 }
 .timeline li.current::before { background: var(--deep-green); border-color: var(--deep-green); }
-.timeline h4 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
+.timeline h3 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
 .timeline .where { color: var(--ink); }
 .timeline .where.org { display: flex; align-items: center; gap: calc(var(--u) * 1.5); margin: calc(var(--u) * 2) 0; }
 .timeline .where.org + * { margin-top: 0 !important; }
@@ -113,7 +102,7 @@ img.on-dark { display: none !important; }
 .honour, .outputs .honour {
   display: block; width: max-content; max-width: 100%; margin-top: 0;
   font-weight: 700; font-size: 15px; line-height: 24px; letter-spacing: 0.01em;
-  background: linear-gradient(100deg, #8A6410 0%, #C9971C 22%, #7A560B 40%, #D9AE3A 58%, #94690F 76%, #8A6410 100%);
+  background: linear-gradient(100deg, #7E5A0C 0%, #8F6A12 22%, #6B4A08 40%, #8F6A12 58%, #7E5A0C 76%, #7E5A0C 100%);
   background-size: 250% 100%;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
@@ -144,10 +133,10 @@ img.on-dark { display: none !important; }
 .icon-tile .tip {
   position: absolute; top: calc(100% + 6px); left: 50%;
   font-family: var(--mono); font-size: 13px; line-height: 16px; white-space: nowrap; color: var(--ink-2);
-  opacity: 0; transform: translate(-50%, 4px); transition: opacity 400ms ease, transform 400ms ease;
+  opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), 4px); transition: opacity 400ms ease, transform 400ms ease;
   pointer-events: none;
 }
-.icon-tile:hover .tip { opacity: 1; transform: translate(-50%, 0); }
+.icon-tile:hover .tip, .icon-tile:focus-within .tip, .icon-tile.is-active .tip { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
 @media (prefers-reduced-motion: reduce) { .icon-tile .tip { transition: none; } }
 .icon-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
 .icon-tile .fme-mark { display: block; color: var(--ink); }
@@ -161,8 +150,8 @@ img.on-dark { display: none !important; }
 .org-tile .caption {
   position: absolute; top: calc(100% + 2px); bottom: auto; left: 50%; right: auto; z-index: 5;
   width: max-content; max-width: 240px; padding: 6px 10px; background: var(--paper); border-radius: 2px;
-  transform: translate(-50%, 4px); opacity: 0; pointer-events: none;
+  transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none;
 }
-.org-tile:hover .caption, .org-tile:focus .caption, .org-tile.is-active .caption { opacity: 1; transform: translate(-50%, 0); }
+.org-tile:hover .caption, .org-tile:focus .caption, .org-tile.is-active .caption { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
 @media print { .org-grid { display: none; } }
 

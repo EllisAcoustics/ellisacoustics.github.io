@@ -18,6 +18,11 @@
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://ellisacoustics.github.io/about">
+<meta property="og:site_name" content="Max Ellis">
+<meta property="og:locale" content="en_GB">
+<meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161614" media="(prefers-color-scheme: dark)">
 <script>
   (function () {
     var mq = window.matchMedia && matchMedia('(prefers-color-scheme: dark)');
@@ -55,6 +60,9 @@
     --logo-filter: invert(1);
     color-scheme: dark;
   }
+  /* Light mode text green: the leaf green is too light for text on cream (2.6:1), this shade of it passes WCAG AA (4.9:1).
+     Graphics keep #3FAE3A; dark mode overrides these with higher-specificity rules. */
+  :root { --accent: #2C7A29; --deep-blue: #2C7A29; --deep-green: #2C7A29; }
   /* No JavaScript: follow the system setting */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) {
@@ -72,6 +80,7 @@
 
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body { overflow-x: clip; } /* nothing can ever cause sideways scrolling */
   body {
     margin: 0; background: var(--paper); color: var(--ink);
     font-family: var(--sans); font-size: 16px; line-height: 24px;
@@ -106,61 +115,13 @@
   .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
   .topnav .links a:hover, .topnav .links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
   .topnav .links a[aria-current="page"] { text-decoration-thickness: 2px; }
-  .topnav .theme-switch { position: static; }
   @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
   @media print { .topnav { display: none; } }
-
-  /* ---------- Theme switch ---------- */
-  .theme-switch {
-    position: absolute; top: calc(var(--u) * 3); right: var(--gutter);
-    display: flex; align-items: center; gap: var(--u);
-    color: var(--ink-2);
-  }
-  .theme-switch svg { display: block; width: 16px; height: 16px; transition: color 200ms ease; }
-  :root:not([data-theme="dark"]) .theme-switch .sun,
-  :root[data-theme="dark"] .theme-switch .moon { color: var(--ink); }
-  .theme-switch button {
-    position: relative;
-    width: 40px; height: 24px; padding: 0;
-    background: transparent; border: 1px solid var(--rule); border-radius: 12px;
-    cursor: pointer;
-  }
-  .theme-switch button::after {
-    content: ""; position: absolute; top: 3px; left: 3px;
-    width: 16px; height: 16px; border-radius: 50%;
-    background: var(--ink);
-    transition: transform 200ms ease;
-  }
-  .theme-switch button[aria-checked="true"]::after { transform: translateX(16px); }
-  .theme-switch button:hover { border-color: var(--ink); }
-  @media (prefers-reduced-motion: reduce) { .theme-switch button::after { transition: none; } }
-
-  .back { font-family: var(--mono); font-size: 14px; }
-  .back::before { content: "← "; }
   h1 { margin-top: calc(var(--u) * 4); font-size: clamp(40px, 7vw, 72px); line-height: 1.02; font-weight: 650; letter-spacing: -0.035em; }
   .lede { margin-top: calc(var(--u) * 3); max-width: 40ch; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; }
   .section { padding: calc(var(--u) * 5) 0 calc(var(--u) * 7); display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
   @media (min-width: 880px) { .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); } }
   .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
-  .open { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3) calc(var(--u) * 4); max-width: 820px; }
-  @media (min-width: 640px) { .open { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .open li { border-top: 1px solid var(--hairline); padding-top: calc(var(--u) * 1.5); }
-  .open h3 { font-size: 17px; line-height: 24px; font-weight: 600; }
-  .open p { margin-top: 4px; color: var(--ink-2); font-size: 15px; line-height: 22px; }
-  .topics { display: flex; flex-wrap: wrap; gap: var(--u) calc(var(--u) * 1.5); max-width: 820px; font-family: var(--mono); font-size: 14px; line-height: 24px; }
-  .topics li { border: 1px solid var(--rule); border-radius: 2px; padding: 2px 10px; }
-  .routes { display: grid; gap: calc(var(--u) * 1.5); max-width: 520px; }
-  .route {
-    display: flex; align-items: center; gap: calc(var(--u) * 2);
-    min-height: 56px; padding: 0 calc(var(--u) * 2);
-    border: 1px solid var(--rule); border-radius: 2px; color: var(--ink); text-decoration: none;
-  }
-  .route:hover { border-color: var(--ink); }
-  .route svg { width: 20px; height: 20px; flex: none; }
-  .route strong { font-weight: 600; }
-  .route span { margin-left: auto; font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
-  .route.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .route.primary span { color: var(--paper); opacity: 0.8; }
   .note { max-width: 60ch; color: var(--ink-2); font-size: 15px; line-height: 22px; }
   .foot { border-top: 1px solid var(--rule); padding: calc(var(--u) * 3) 0 calc(var(--u) * 6); font-family: var(--mono); font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u); }
   .about-body { max-width: 64ch; }
@@ -170,13 +131,6 @@
   .photo figcaption { margin-top: var(--u); font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); }
   .about-body p { font-size: 18px; line-height: 29px; }
   .about-body p + p { margin-top: calc(var(--u) * 2.5); }
-  .facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 2); max-width: 820px; }
-  @media (min-width: 640px) { .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .facts li { border-top: 1px solid var(--hairline); padding-top: calc(var(--u) * 1.5); }
-  .facts strong { display: block; font-weight: 600; }
-  .facts span a { color: inherit; text-underline-offset: 3px; }
-  .facts span a:hover { color: var(--accent); }
-  .facts span { display: block; color: var(--ink-2); font-size: 15px; line-height: 22px; margin-top: 2px; }
   .next { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 1.5); }
   .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 600; border-radius: 2px; }
   .btn:hover { background: var(--accent); color: var(--paper); }
@@ -224,12 +178,15 @@
   .vol-tile:hover img, .vol-tile:focus-visible img, .vol-tile.is-active img { transform: translateY(-4px); }
   .vol-tip { position: absolute; top: calc(100% + 2px); left: 50%; z-index: 5; width: max-content; max-width: 220px; text-align: center;
     display: flex; flex-direction: column; font-size: 14px; line-height: 20px; background: var(--paper);
-    transform: translate(-50%, 4px); opacity: 0; pointer-events: none; transition: opacity 250ms ease, transform 250ms ease; }
+    transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none; transition: opacity 250ms ease, transform 250ms ease; }
   .vol-tip span { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
-  .vol-tile:hover .vol-tip, .vol-tile:focus .vol-tip, .vol-tile.is-active .vol-tip { opacity: 1; transform: translate(-50%, 0); }
+  .vol-tile:hover .vol-tip, .vol-tile:focus .vol-tip, .vol-tile.is-active .vol-tip { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
   :root[data-theme="dark"] .vol-tile img[src*="yan"] { filter: brightness(1.6); }
   @media print { .vol-tile img { display: none; } .vol-tip { position: static; opacity: 1; transform: none; } .vol-tile { height: auto; } }
   .print-only { display: none; }
+  .skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
+  .skip:focus { top: var(--u); }
+  main:focus { outline: none; }
 </style>
 </head>
 <body>
@@ -242,6 +199,7 @@
   <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
   <template id="note-tpl"><span class="piece note"><svg viewBox="0 0 12 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="14.6" rx="2.7" ry="2" transform="rotate(-22 3.4 14.6)" fill="currentColor" stroke="none"/><path d="M5.9 13.8V1.6"/><path d="M5.9 1.6Q6.6 5 9.8 6.6Q11.6 8.4 10.4 11.2" stroke-width="1.1"/></svg></span></template><template id="note-tpl-2"><span class="piece note"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="15" rx="2.7" ry="2" transform="rotate(-22 3.4 15)" fill="currentColor" stroke="none"/><ellipse cx="13" cy="13" rx="2.7" ry="2" transform="rotate(-22 13 13)" fill="currentColor" stroke="none"/><path d="M5.9 14.2V3.4M15.5 12.2V1.6"/><path d="M5.9 3.4L15.5 1.6" stroke-width="2.4" stroke-linecap="butt"/></svg></span></template>
 </div>
+<a class="skip" href="#main">Skip to content</a>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
     <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><g class="mk-fan" style="transform-origin:29.6px 26.75px" stroke-width="0.7"><path d="M29.6 26.75V25.2M29.6 26.75L30.95 27.5M29.6 26.75L28.25 27.5"/></g><path d="M32.6 25V28.6" stroke-width="0.8"/><g stroke-width="0.6"><path d="M30.6 22.2Q31.4 23.4 32.8 22.9Q33.6 22.5 33.4 21.6"/><path d="M30.6 22.2Q31.6 21.3 33.1 21.4"/><path d="M30.6 22.2L29.5 21.7"/><path d="M33.1 21.4Q33.4 20.4 34.2 20.6Q34.8 20.8 34.6 21.4L35.4 21.5L34.5 21.8Q34.2 22.1 33.4 21.6"/><path d="M31.8 23.2V23.5M32.6 23.1V23.5" stroke-width="0.4"/></g><g class="mk-note" stroke-width="0.5"><ellipse cx="36.4" cy="18.6" rx="0.55" ry="0.4" fill="currentColor" stroke="none"/><path d="M36.9 18.5V16.4L37.7 16.8"/></g><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
@@ -255,7 +213,7 @@
   <p class="lede">Acoustician, educator and recovering studio engineer, based in Glasgow.</p>
 </header>
 
-<main class="wrap">
+<main id="main" class="wrap" tabindex="-1">
   <section class="section" aria-labelledby="story-h">
     <h2 id="story-h">My Story</h2>
     <div class="story">
@@ -265,7 +223,7 @@
       <p>Away from work you’ll find me at the chessboard, the piano or the decks, shooting on film, at the gym, or slowly improving my Spanish.</p>
     </div>
     <figure class="photo">
-      <img src="images/max-ellis-forum-acusticum-2025.jpg" srcset="images/max-ellis-forum-acusticum-2025-640.jpg 640w, images/max-ellis-forum-acusticum-2025.jpg 1070w" sizes="(min-width: 960px) 640px, 100vw" width="1070" height="740" alt="Max Ellis presenting his research from a lectern at a conference" loading="lazy" decoding="async">
+      <img src="images/max-ellis-forum-acusticum-2025.jpg" srcset="images/max-ellis-forum-acusticum-2025-640.jpg 640w, images/max-ellis-forum-acusticum-2025.jpg 1070w" sizes="(min-width: 960px) 640px, 100vw" width="1070" height="740" alt="Max Ellis presenting his research from a lectern at a conference" loading="eager" fetchpriority="high" decoding="async">
       <figcaption>Presenting at Forum Acusticum Euronoise 2025, Málaga</figcaption>
     </figure>
     </div>
@@ -277,8 +235,8 @@
       <ol class="timeline">
         <li>
           <span class="date">Aug 2027 – Oct 2027</span>
-          <h4>Research Engineer (PhD Placement)</h4>
-          <p class="where org"><img src="logos/orgs/dyson.png" width="80" height="30" alt="Dyson" title="Dyson" class="colour dark-ink" loading="lazy" decoding="async"><span class="print-only">Dyson</span></p>
+          <h3>Research Engineer (PhD Placement)</h3>
+          <p class="where org"><img src="logos/orgs/dyson.png?v=1" width="80" height="30" alt="Dyson" title="Dyson" class="colour dark-ink" loading="lazy" decoding="async"><span class="print-only">Dyson</span></p>
           <ul class="detail">
             <li>Assessing whether structural vibration can underpin sound quality metrics for product components, comparing vibration and sound quality data across anechoic, semi-reverberant and reverberant conditions.</li>
             <li>Applying transfer learning across sound quality metrics and jury test data from other products, to build machine learning models that predict listener response and satisfaction.</li>
@@ -287,8 +245,8 @@
         </li>
         <li data-complete>
           <span class="date">Aug 2026 – Oct 2026</span>
-          <h4>Specialist Consultant (PhD Placement)</h4>
-          <p class="where org"><img src="logos/orgs/noise-consultants-colour.png?v=1" width="168" height="27" alt="Noise Consultants Ltd. (part of Logika Group)" title="Noise Consultants Ltd. (part of Logika Group)" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/noise-consultants-colour-dark.png?v=1" width="168" height="27" alt="" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">Noise Consultants Ltd. (part of Logika Group)</span></p>
+          <h3>Specialist Consultant (PhD Placement)</h3>
+          <p class="where org"><img src="logos/orgs/noise-consultants-colour.png?v=2" width="168" height="27" alt="Noise Consultants Ltd. (part of Logika Group)" title="Noise Consultants Ltd. (part of Logika Group)" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/noise-consultants-colour-dark.png?v=2" width="168" height="27" alt="" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">Noise Consultants Ltd. (part of Logika Group)</span></p>
           <ul class="detail">
             <li>Validated open-source noise measurements against modelled Defra noise-mapping data for infrastructure assessment.</li>
             <li>Ran a field campaign on an airport expansion project comparing physical and perceptual dominance of aircraft noise.</li>
@@ -305,7 +263,7 @@
       <ol class="timeline">
         <li class="current">
           <span class="date">Sep 2026 – May 2027</span>
-          <h4>Visiting Lecturer in Music Technology</h4>
+          <h3>Visiting Lecturer in Music Technology</h3>
           <p class="where org"><img src="logos/orgs/uws.png?v=2" width="82" height="56" alt="University of the West of Scotland" title="University of the West of Scotland" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/uws-dark.png?v=2" width="82" height="56" alt="" title="University of the West of Scotland" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">University of the West of Scotland</span></p>
           <ul class="detail">
             <li>1st Supervisor on the Major Project (Dissertation) module for BSc (Hons) Music Technology students specialising in Acoustics and Environmental Noise.</li>
@@ -313,7 +271,7 @@
         </li>
         <li class="current">
           <span class="date">2026 – Present</span>
-          <h4>Associate Lecturer in Computer Science</h4>
+          <h3>Associate Lecturer in Computer Science</h3>
           <p class="where org"><img src="logos/orgs/st-marys.png?v=2" width="101" height="52" alt="St Mary’s University London" title="St Mary’s University London" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/st-marys-dark.png?v=2" width="101" height="52" alt="" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">St Mary’s University, Twickenham</span></p>
           <ul class="detail">
             <li>Teaching, marking and moderation across the online MSc Computer Science suite.</li>
@@ -322,7 +280,7 @@
         </li>
         <li class="current">
           <span class="date">2026 – Present</span>
-          <h4>Teaching Assistant in Applied Acoustics</h4>
+          <h3>Teaching Assistant in Applied Acoustics</h3>
           <p class="where org"><img src="logos/orgs/salford-acoustics.png?v=1" width="148" height="44" alt="University of Salford, Acoustics Innovation Institute" title="University of Salford, Acoustics Innovation Institute" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/salford-acoustics-dark.png?v=1" width="148" height="44" alt="" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">University of Salford</span></p>
           <ul class="detail">
             <li>Lab demonstrator for Environmental Noise Measurement and Modelling (BEng/MSc).</li>
@@ -340,38 +298,38 @@
       <ol class="timeline">
         <li class="current">
           <span class="date">2025 – 2028</span>
-          <h4>PhD Acoustics and Audio Engineering</h4>
+          <h3>PhD Acoustics and Audio Engineering</h3>
           <p class="where">University of Salford Acoustics Innovation Institute</p>
           <p class="grade">Year 2</p>
         </li>
         <li>
           <span class="date">2023 – 2024</span>
-          <h4>MSc Computer Science with Artificial Intelligence</h4>
+          <h3>MSc Computer Science with Artificial Intelligence</h3>
           <p class="where">Abertay University</p>
           <p class="grade">Distinction</p>
         </li>
         <li>
           <span class="date">2021 – 2023</span>
-          <h4>BDes (Hons) Sound for Moving Image</h4>
+          <h3>BDes (Hons) Sound for Moving Image</h3>
           <p class="where">University of Glasgow</p>
           <p class="grade">2nd Class Honours, Upper-Division (2:1)</p>
         </li>
         <li>
           <span class="date">2019 – 2021</span>
-          <h4>DipHE Music Technology</h4>
+          <h3>DipHE Music Technology</h3>
           <p class="where">University of the West of Scotland</p>
           <p class="grade">Distinction</p>
           <p class="honour">Awarded BSc Level 8 Court Medal</p>
         </li>
         <li>
           <span class="date">2019</span>
-          <h4>BTEC Level 3 Digital Synthesis and Sampling</h4>
+          <h3>BTEC Level 3 Digital Synthesis and Sampling</h3>
           <p class="where">Fife College</p>
           <p class="grade">Pass</p>
         </li>
         <li>
           <span class="date">2018 – 2019</span>
-          <h4>SCQF Level 6 Sound Production</h4>
+          <h3>SCQF Level 6 Sound Production</h3>
           <p class="where">Glasgow Clyde College Anniesland</p>
           <p class="grade">Pass</p>
         </li>
@@ -382,20 +340,20 @@
   <section class="section" id="software" aria-labelledby="software-h">
     <h2 id="software-h">Software Proficiencies</h2>
     <ul class="icon-grid" aria-label="Software">
-        <li class="icon-tile"><img src="software/colour/python.svg?v=2" class="colour" width="40" height="40" alt="Python" decoding="async"><span class="tip" aria-hidden="true">Python</span></li>
-        <li class="icon-tile"><img src="software/colour/r.svg?v=2" class="colour" width="40" height="40" alt="R" decoding="async"><span class="tip" aria-hidden="true">R</span></li>
-        <li class="icon-tile"><img src="software/colour/matlab.svg" class="colour" width="40" height="40" alt="MATLAB" decoding="async"><span class="tip" aria-hidden="true">MATLAB</span></li>
-        <li class="icon-tile"><img src="software/colour/max.svg?v=3" class="colour" width="40" height="40" alt="Max/MSP" decoding="async"><span class="tip" aria-hidden="true">Max/MSP</span></li>
-        <li class="icon-tile"><img src="software/colour/artemis.png" class="colour dark-ink" width="39" height="40" alt="ArtemiS SUITE" decoding="async"><span class="tip" aria-hidden="true">ArtemiS SUITE</span></li>
-        <li class="icon-tile"><img src="software/colour/qgis.svg?v=2" class="colour" width="40" height="40" alt="QGIS" decoding="async"><span class="tip" aria-hidden="true">QGIS</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/python.svg?v=2" class="colour" width="40" height="40" alt="Python" decoding="async"><span class="tip" aria-hidden="true">Python</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/r.svg?v=2" class="colour" width="40" height="40" alt="R" decoding="async"><span class="tip" aria-hidden="true">R</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/matlab.svg" class="colour" width="40" height="40" alt="MATLAB" decoding="async"><span class="tip" aria-hidden="true">MATLAB</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/max.svg?v=3" class="colour" width="40" height="40" alt="Max/MSP" decoding="async"><span class="tip" aria-hidden="true">Max/MSP</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/artemis.png?v=1" class="colour dark-ink" width="39" height="40" alt="ArtemiS SUITE" decoding="async"><span class="tip" aria-hidden="true">ArtemiS SUITE</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/qgis.svg?v=2" class="colour" width="40" height="40" alt="QGIS" decoding="async"><span class="tip" aria-hidden="true">QGIS</span></li>
         <li class="icon-tile"><svg class="fme-mark" style="height:26px;width:auto;margin:7px 0" viewBox="0 0 1260 425" role="img" aria-label="FME (Feature Manipulation Engine)" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="84" stroke-linejoin="round" stroke-linecap="round"><path d="M86 345V82H290M86 210H262"/><path d="M398 345V82L560 262L722 82V345"/><path d="M1044 82H836V345H1044M836 212H1010"/></g><circle cx="1174" cy="126" r="68" fill="#E0322A"/><circle cx="1174" cy="300" r="68" fill="#14B8B0"/></svg><span class="tip" aria-hidden="true">Feature Manipulation<br class="no-print"> Engine (FME)</span></li>
-        <li class="icon-tile"><img src="software/colour/reaper.svg?v=2" class="colour" width="37" height="40" alt="REAPER" decoding="async"><span class="tip" aria-hidden="true">REAPER</span></li>
-        <li class="icon-tile"><img src="software/colour/pytorch.svg" class="colour" width="34" height="40" alt="PyTorch" decoding="async"><span class="tip" aria-hidden="true">PyTorch</span></li>
-        <li class="icon-tile"><img src="software/colour/tensorflow.svg" class="colour" width="38" height="40" alt="TensorFlow" decoding="async"><span class="tip" aria-hidden="true">TensorFlow</span></li>
-        <li class="icon-tile"><img src="software/colour/unity.svg" class="colour dark-ink" width="36" height="40" alt="Unity" decoding="async"><span class="tip" aria-hidden="true">Unity</span></li>
-        <li class="icon-tile"><img src="software/colour/overleaf.svg" class="colour" width="36" height="40" alt="LaTeX (Overleaf)" decoding="async"><span class="tip" aria-hidden="true">LaTeX (Overleaf)</span></li>
-        <li class="icon-tile"><img src="software/colour/ableton.svg" class="colour dark-ink" width="48" height="23" style="height:23px;margin:8.5px 0" alt="Ableton Live" decoding="async"><span class="tip" aria-hidden="true">Ableton</span></li>
-        <li class="icon-tile"><img src="software/colour/cadnaa.svg" class="colour" width="21" height="40" alt="CadnaA" decoding="async"><span class="tip" aria-hidden="true">CadnaA</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/reaper.svg?v=2" class="colour" width="37" height="40" alt="REAPER" decoding="async"><span class="tip" aria-hidden="true">REAPER</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/pytorch.svg" class="colour" width="34" height="40" alt="PyTorch" decoding="async"><span class="tip" aria-hidden="true">PyTorch</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/tensorflow.svg" class="colour" width="38" height="40" alt="TensorFlow" decoding="async"><span class="tip" aria-hidden="true">TensorFlow</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/unity.svg" class="colour dark-ink" width="36" height="40" alt="Unity" decoding="async"><span class="tip" aria-hidden="true">Unity</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/overleaf.svg" class="colour" width="36" height="40" alt="LaTeX (Overleaf)" decoding="async"><span class="tip" aria-hidden="true">LaTeX (Overleaf)</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/ableton.svg" class="colour dark-ink" width="48" height="23" style="height:23px;margin:8.5px 0" alt="Ableton Live" decoding="async"><span class="tip" aria-hidden="true">Ableton</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/cadnaa.svg" class="colour" width="21" height="40" alt="CadnaA" decoding="async"><span class="tip" aria-hidden="true">CadnaA</span></li>
     </ul>
   </section>
 
@@ -407,9 +365,9 @@
       <li><strong>Institute of Acoustics</strong> Scottish Branch Committee — Member; Early Careers Group — Member</li>
     </ul>
     <ul class="org-grid" aria-label="Working groups and committees">
-      <li class="org-tile" tabindex="0"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-      <li class="org-tile" tabindex="0"><img src="logos/colour/noise-network-plus.png?v=3" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-      <li class="org-tile" tabindex="0"><img src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
+      <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/orgs/nasa.png?v=3" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
+      <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/noise-network-plus.png?v=4" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
+      <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
     </ul>
   
   </section>
@@ -417,25 +375,25 @@
   <section class="section" id="certificates" aria-labelledby="cert-h">
     <h2 id="cert-h">Certifications</h2>
     <ul class="certs">
-      <li><h4>Advanced Prompt Engineering</h4><p class="where">Vanderbilt University</p><a class="cred" href="https://coursera.org/verify/HZG8ASK3WT9J" target="_blank" rel="noopener">Show credential ↗</a></li>
-      <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
-      <li><h4>AI for Noise Pollution Control</h4><p class="where">LSIB</p></li>
-      <li><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
-      <li><h4>Auralization</h4><p class="where">Autumn School Series in Acoustics (ASSA) 2026</p></li>
-      <li><h4>Digital Signal Processing</h4><p class="where">EPFL</p><a class="cred" href="https://www.coursera.org/account/accomplishments/specialization/W1KKXJOZYH7B" target="_blank" rel="noopener">Show credential ↗</a></li>
-      <li><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p><a class="cred" href="https://coursera.org/verify/M70W08P4Y44D" target="_blank" rel="noopener">Show credential ↗</a></li>
-      <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
-      <li><h4>Transformer Models and BERT Model</h4><p class="where">Google</p></li>
-      <li><h4>Trustworthy Generative AI</h4><p class="where">Vanderbilt University</p><a class="cred" href="https://www.coursera.org/account/accomplishments/verify/5NAVIU4IMJIY" target="_blank" rel="noopener">Show credential ↗</a></li>
+      <li><h3>Advanced Prompt Engineering</h3><p class="where">Vanderbilt University</p><a class="cred" href="https://coursera.org/verify/HZG8ASK3WT9J" target="_blank" rel="noopener">Show credential ↗</a></li>
+      <li><h3>Advanced R Programming</h3><p class="where">Johns Hopkins University</p></li>
+      <li><h3>AI for Noise Pollution Control</h3><p class="where">LSIB</p></li>
+      <li><h3>Applications of AI in Acoustics</h3><p class="where">European Acoustics Association Summer School</p></li>
+      <li><h3>Auralization</h3><p class="where">Autumn School Series in Acoustics (ASSA) 2026</p></li>
+      <li><h3>Digital Signal Processing</h3><p class="where">EPFL</p><a class="cred" href="https://www.coursera.org/account/accomplishments/specialization/W1KKXJOZYH7B" target="_blank" rel="noopener">Show credential ↗</a></li>
+      <li><h3>Ethics of Artificial Intelligence</h3><p class="where">Politecnico di Milano</p><a class="cred" href="https://coursera.org/verify/M70W08P4Y44D" target="_blank" rel="noopener">Show credential ↗</a></li>
+      <li><h3>Responsible Research and Innovation</h3><p class="where">ORBITRRI</p></li>
+      <li><h3>Transformer Models and BERT Model</h3><p class="where">Google</p></li>
+      <li><h3>Trustworthy Generative AI</h3><p class="where">Vanderbilt University</p><a class="cred" href="https://www.coursera.org/account/accomplishments/verify/5NAVIU4IMJIY" target="_blank" rel="noopener">Show credential ↗</a></li>
     </ul>
   </section>
 
   <section class="section" id="volunteering" aria-labelledby="vol-h">
     <h2 id="vol-h">Volunteering</h2>
     <ul class="vol-grid">
-      <li class="vol-tile" tabindex="0"><img src="logos/vol/yan.svg" width="96" height="64" alt="Young Acousticians Network" decoding="async"><span class="vol-tip"><strong>Young Acousticians Network</strong><span>Committee Member</span></span></li>
-      <li class="vol-tile" tabindex="0"><img src="logos/vol/stem.svg" width="60" height="60" alt="STEM Ambassadors" decoding="async"><span class="vol-tip"><strong>STEM Ambassador</strong><span>Scotland</span></span></li>
-      <li class="vol-tile" tabindex="0"><img src="logos/vol/broadcasting-scotland.png?v=2" width="40" height="64" alt="Broadcasting Scotland" decoding="async"><span class="vol-tip"><strong>Broadcasting Scotland</strong><span>Live Sound Engineer, 2018</span></span></li>
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/yan.svg" width="96" height="64" alt="Young Acousticians Network" decoding="async"><span class="vol-tip"><strong>Young Acousticians Network</strong><span>Committee Member</span></span></li>
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/stem.svg" width="60" height="60" alt="STEM Ambassadors" decoding="async"><span class="vol-tip"><strong>STEM Ambassador</strong><span>Scotland</span></span></li>
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/broadcasting-scotland.png?v=3" width="40" height="64" alt="Broadcasting Scotland" decoding="async"><span class="vol-tip"><strong>Broadcasting Scotland</strong><span>Live Sound Engineer, 2018</span></span></li>
     </ul>
   </section>
 
@@ -637,6 +595,26 @@
       if (on) t.classList.add('is-active');
     }));
     document.addEventListener('click', (e) => { if (!e.target.closest('.org-tile')) tiles.forEach((o) => o.classList.remove('is-active')); });
+  })();
+</script>
+<script>
+  // Keep pop-up labels on screen: shift any label that would run off the edge of a narrow phone
+  (() => {
+    const SEL = '.org-tile .caption, .icon-tile .tip, .vol-tip';
+    const place = (p) => {
+      p.style.setProperty('--dx', '0px');
+      const r = p.getBoundingClientRect(), m = 12, W = document.documentElement.clientWidth;
+      const dx = r.left < m ? m - r.left : r.right > W - m ? W - m - r.right : 0;
+      p.style.setProperty('--dx', Math.round(dx) + 'px');
+    };
+    const all = () => document.querySelectorAll(SEL).forEach(place);
+    all(); addEventListener('resize', all);
+    // touch screens have no hover: tap a software logo to show its name
+    const tiles = document.querySelectorAll('.icon-tile');
+    tiles.forEach((t) => t.addEventListener('click', () => {
+      const on = !t.classList.contains('is-active');
+      tiles.forEach((o) => o.classList.remove('is-active')); if (on) t.classList.add('is-active');
+    }));
   })();
 </script>
 </body>
