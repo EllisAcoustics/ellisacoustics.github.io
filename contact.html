@@ -112,6 +112,7 @@
   }
   .itile:hover .pop, .itile:focus .pop, .itile.is-active .pop { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
   .pop-t { display: block; font-weight: 600; font-size: 14px; line-height: 20px; }
+  .pop:not(:has(.pop-d)) { max-width: calc(100vw - 24px); white-space: nowrap; }   /* a title alone stays on one line, so the box fits it */
   .pop-d { display: block; margin-top: 4px; color: var(--ink-2); font-size: 13px; line-height: 19px; }
   /* ---------- Looping icon animations ---------- */
   .itile svg { overflow: visible; }
