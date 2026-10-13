@@ -192,8 +192,10 @@
   #intro .piece { position: absolute; left: 0; top: 0; color: var(--ink); }
   #intro .piece svg { display: block; width: 100%; height: auto; overflow: visible; }
   #intro .hp { color: #8A8C90; }
-  #intro .hp .fan { color: #E8B400; }
-  #intro .bird { color: #2F7FE0; }
+  #intro .hp .fan { color: var(--ink); }
+  #intro .bird { color: #FFFFFF; }
+  :root[data-theme="light"] #intro .bird { color: var(--ink); }
+  #intro .piece.note { color: #F2C200; }
   #intro .leaf { color: #3FAE3A; }
   #intro .fan { transform-box: view-box; transform-origin: 13.5px 23.25px; animation: fan 0.9s linear infinite; }
   @keyframes fan { to { transform: rotate(360deg); } }

@@ -37,11 +37,21 @@ def pulse_left(x, y):
     return f'<g stroke-width="0.6">{arcs}</g>'
 
 
+def gust(d, delay=0.0, w=0.5, dur=None):
+    """A gust of moving air: a short dash travels along a curling path and loops without a seam
+    (pathLength is 100 and the dash pattern repeats every 100)."""
+    st = f'animation-delay:{delay:.2f}s' + (f';animation-duration:{dur}s' if dur else '')
+    return f'<path class="gust" d="{d}" pathLength="100" stroke-width="{w}" style="{st}"/>'
+
+
 def turbine():
     blade = 'M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z'
     return (f'<svg {COMMON}><title>Next-generation wind turbine</title>'
-            '<path class="wind" d="M1 8H7.5M0 13H6.5M1 18H7.5M32.5 8H39M33.5 13H40M32.5 18H39" '
-            'stroke-width="0.5" stroke-dasharray="1.6 2.4"/>'
+            + gust('M-1 8C3 7.2 6 8.8 9 8C11 7.4 11.4 5.8 10 5.6C8.8 5.5 8.8 7 10.2 7.2', 0)
+            + gust('M-2 13C2 12.2 5 13.8 8.5 13C10.6 12.5 11 10.9 9.6 10.7C8.4 10.6 8.4 12.1 9.8 12.3', 0.6)
+            + gust('M-1 18C3 17.2 6 18.8 9 18C11 17.4 11.4 15.8 10 15.6C8.8 15.5 8.8 17 10.2 17.2', 1.2)
+            + gust('M30 10C33 9.4 35 11.2 38 10.4C40 9.8 40.4 8.2 39 8.1', 0.3)
+            + gust('M30.5 16C33.5 15.4 35.5 17.2 38.5 16.4C40.5 15.8 40.9 14.2 39.5 14.1', 0.9) +
             '<path d="M19.35 33L19.75 13H20.25L20.65 33Z"/>'                                     # tapered tower
             '<path d="M15.5 33H24.5" stroke-width="0.6"/>'                                        # ground
             f'<g class="spin" style="transform-origin:20px 12px"><path d="{blade}"/>'
@@ -79,23 +89,28 @@ def ashp():
 
 
 def evtol():
-    """Joby-style tilt-rotor eVTOL in side view, hovering: rotors on nacelles above the wing
-    and on the tip of the V-tail, a teardrop cabin and short landing gear."""
-    def rotor(cx, cy, r):
-        return (f'<g class="srot" style="transform-origin:{cx}px {cy}px"><path d="M{cx - r} {cy}H{cx + r}" stroke-width="0.85"/></g>'
-                f'<circle cx="{cx}" cy="{cy}" r="0.55" fill="currentColor" stroke="none"/>')
-    cabin = ('M5.5 18.6Q8 16.4 16 16.2L27 16.2Q33.5 16.4 36.2 19.4Q37 20.6 35.6 21.6Q33.6 23 27.6 23.2'
-             'L15 23.2Q8.4 22.8 5.5 20.4Q4.8 19.5 5.5 18.6Z')
-    return (f'<svg {COMMON}><title>Tilt-rotor eVTOL aircraft</title>'
-            '<path class="down" d="M14 11.5V15M26 11.5V15M2.5 8.5V12M8.5 8.5V12" stroke-width="0.45" stroke-dasharray="1.6 2.4"/>'
+    """Passenger multicopter eVTOL in side view: an egg-shaped two-seat cabin with a wrap-around
+    windscreen, four raised arms ending in motor pods and rotors (far pair drawn lighter), skid
+    landing gear, and rotor downwash curling away underneath."""
+    def rotor(cx, cy, r, far=False):
+        o = ' opacity="0.45"' if far else ''
+        return (f'<g{o}><ellipse cx="{cx}" cy="{cy}" rx="{r}" ry="{r * 0.18:.2f}" stroke-width="0.35" stroke-dasharray="0.8 0.8"/>'
+                f'<g class="srot" style="transform-origin:{cx}px {cy}px"><path d="M{cx - r} {cy}H{cx + r}" stroke-width="0.7"/></g>'
+                f'<rect x="{cx - 0.9}" y="{cy + 0.25}" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g>')
+    cabin = 'M12.6 20.4C12.6 15.6 15.8 12.9 20.6 12.9C25.6 12.9 28.6 15.8 28.6 20.2C28.6 23.7 26.1 25.3 20.6 25.3C15.1 25.3 12.6 23.8 12.6 20.4Z'
+    return (f'<svg {COMMON}><title>Passenger multicopter eVTOL</title>'
+            + gust('M5 12.5C4.6 15 5.4 17 4.4 19C3.8 20.2 2.4 20 2.6 18.8', 0)
+            + gust('M35 12.5C35.4 15 34.6 17 35.6 19C36.2 20.2 37.6 20 37.4 18.8', 0.4)
+            + rotor(9, 8.6, 4.6, True) + rotor(31, 8.6, 4.6, True) +
+            '<path d="M15.6 14.6L9 10.4M25.6 14.6L31 10.4" stroke-width="0.6" opacity="0.45"/>'      # far arms
             f'<path d="{cabin}" fill="var(--paper)"/>'
-            '<path d="M27.4 16.6Q32.4 16.8 35 19.6" stroke-width="0.5"/>'                          # windscreen
-            '<path d="M18 17.4H24.6V20.6H18Z" stroke-width="0.45"/>'                               # cabin window
-            '<path d="M9 17.4L5.5 9.2M10.6 17L9.6 10.6" stroke-width="0.7"/>'                      # V-tail
-            '<path d="M13 16.6L27 15.8" stroke-width="1.1"/>'                                       # wing, near edge-on
-            '<path d="M14 16.4V9.8M26 15.9V9.8M5.5 9.2V7.4" stroke-width="0.7"/>'                  # tilted nacelles
-            + rotor(14, 9.4, 5) + rotor(26, 9.4, 5) + rotor(5.5, 7, 4) +
-            '<path d="M14 23.2L13 25.6M28 23.2L29 25.6M11.6 25.6H14.4M27.6 25.6H30.4" stroke-width="0.6"/>'  # gear
+            '<path d="M21.4 13.7C25.2 14 27.4 16.6 27.7 19.9H21.4Z" stroke-width="0.5"/>'          # windscreen
+            '<path d="M22.6 14.9C24.4 15.3 25.6 16.6 26 18.2" stroke-width="0.35" opacity="0.6"/>'  # glint
+            '<path d="M17.4 13.6V24.8M13.2 21.6H28.2" stroke-width="0.4"/>'                          # door, belt line
+            '<path d="M14.4 16L5 11.6M26.8 16L35 11.6" stroke-width="0.8"/>'                        # near arms
+            + rotor(5, 9.6, 4.8) + rotor(35, 9.6, 4.8) +
+            '<path d="M16.2 25L14.8 29.4M25 25L26.4 29.4" stroke-width="0.6"/>'                      # struts
+            '<path d="M11.2 29.4H19.4M22.2 29.4H30.4" stroke-width="0.8"/>'                          # skids
             '</svg>')
 
 def ev():
@@ -114,7 +129,10 @@ def ev():
 def drone():
     """Heavy-lift quadcopter in side view (T150-style) carrying a cargo box."""
     return (f'<svg {COMMON}><title>Cargo drone</title>'
-            '<path class="down" d="M2.5 11.5V17M7.5 11.5V17M32.5 11.5V17M37.5 11.5V17" stroke-width="0.45" stroke-dasharray="1.6 2.4"/>'
+            + gust('M3 11.5C2.6 14 3.4 16 2.4 18C1.8 19.2 0.4 19 0.6 17.8', 0)
+            + gust('M7 11.5C7.4 14 6.6 16 7.6 18C8.2 19.2 9.6 19 9.4 17.8', 0.5)
+            + gust('M33 11.5C32.6 14 33.4 16 32.4 18C31.8 19.2 30.4 19 30.6 17.8', 0.25)
+            + gust('M37 11.5C37.4 14 36.6 16 37.6 18C38.2 19.2 39.6 19 39.4 17.8', 0.75) +
             '<g class="srot" style="transform-origin:5px 6.6px"><path d="M0.4 6.6H9.6" stroke-width="0.8"/></g>'
             '<g class="srot" style="transform-origin:35px 6.6px"><path d="M30.4 6.6H39.6" stroke-width="0.8"/></g>'
             '<path d="M5 7V9.2M35 7V9.2" stroke-width="0.6"/>'
@@ -147,7 +165,7 @@ def scooter():
 SOURCES = [
     ('Next-generation wind turbine', 100, turbine),
     ('Air-source heat pump', 200, ashp),
-    ('Tilt-rotor eVTOL aircraft', 400, evtol),
+    ('Passenger multicopter eVTOL', 400, evtol),
     ('Electric car', 1000, ev),
     ('Cargo drone', 2500, drone),
     ('E-scooter', 5000, scooter),
