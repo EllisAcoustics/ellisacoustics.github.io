@@ -33,7 +33,7 @@ async def main():
         await pg.pdf(path='cv/Max-Ellis-CV.pdf', format='A4', print_background=True,
                      prefer_css_page_size=True, display_header_footer=True,
                      header_template='<span></span>',
-                     footer_template='<div style="width:100%;font:8px ui-monospace,monospace;color:#6B6A64;padding:0 14mm;display:flex;justify-content:space-between">'
+                     footer_template='<div style="width:100%;font:8px ui-monospace,monospace;color:#6E6E73;padding:0 14mm;display:flex;justify-content:space-between">'
                                      '<span>Max Ellis — CV</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>')
         await b.close()
 

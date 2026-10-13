@@ -22,14 +22,17 @@
 <link rel="canonical" href="https://ellisacoustics.github.io/">
 <meta property="og:site_name" content="Max Ellis">
 <meta property="og:locale" content="en_GB">
-<meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#161614" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
 <script>
   (function () {
     var mq = window.matchMedia && matchMedia('(prefers-color-scheme: dark)');
-    var setT = function () { document.documentElement.setAttribute('data-theme', mq && mq.matches ? 'dark' : 'light'); };
-    setT(); if (mq && mq.addEventListener) mq.addEventListener('change', setT);
-    try { localStorage.removeItem('theme'); } catch (e) {}
+    // Theme: the visitor's own choice (from the switch) wins, otherwise follow the system setting
+    var saved = null; try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved !== 'light' && saved !== 'dark') saved = null;
+    var setT = function () { document.documentElement.setAttribute('data-theme', saved || (mq && mq.matches ? 'dark' : 'light')); };
+    setT(); if (mq && mq.addEventListener) mq.addEventListener('change', function () { if (!saved) setT(); });
+    window.__setTheme = function (t) { saved = t; try { localStorage.setItem('theme', t); } catch (e) {} setT(); };
 
     // Intro: plays on first visit and on refresh (refresh always starts at the top).
     // Skipped for reduced motion and for links straight to a section.
@@ -102,43 +105,40 @@
   .pubs .authors strong { font-weight: 700; }
   .pubs h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0; font-size: 18px; line-height: 25px; }
   :root {
-    --paper: #F6F5F1;
-    --ink: #1A1A18;
-    --ink-2: #45443F;
-    --rule: #6B6A64;
-    --hairline: #CFCDC6;
-    --accent: #3FAE3A;
+    --paper: #FFFFFF;
+    --ink: #0B0B0C;
+    --ink-2: #4A4A4F;
+    --rule: #6E6E73;
+    --hairline: #DCDCDF;
+    --accent: var(--ink);
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     --u: 8px;
     --measure: 68ch;
     --gutter: 16px;
   }
-  :root { --logo-filter: none; color-scheme: light; --f0: #3FAE3A; --f1: #3FAE3A; --f2: #3FAE3A; --f3: #3FAE3A; --f4: #3FAE3A; --f5: #3FAE3A; --v0: #8A8B8E; --v1: #8A8B8E; --v2: #8A8B8E; --v3: #8A8B8E; --v4: #8A8B8E; --v5: #8A8B8E; --deep-blue: #3FAE3A; --deep-green: #3FAE3A; --neon: #3FAE3A; --neon-ink: #3FAE3A; }
+  :root { --logo-filter: none; color-scheme: light; --f0: var(--ink); --f1: var(--ink); --f2: var(--ink); --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #8A8B8E; --v1: #8A8B8E; --v2: #8A8B8E; --v3: #8A8B8E; --v4: #8A8B8E; --v5: #8A8B8E; --deep-blue: var(--ink); --deep-green: var(--ink); --neon: var(--rule); --neon-ink: var(--ink); }
   :root[data-theme="dark"] {
-    --paper: #161614;
-    --ink: #ECEAE4;
-    --ink-2: #B9B6AD;
-    --rule: #8C8980;
-    --hairline: #3A3935;
-    --accent: #3FAE3A;
+    --paper: #0B0B0C;
+    --ink: #F2F2F3;
+    --ink-2: #A8A8AD;
+    --rule: #8E8E93;
+    --hairline: #2C2C2F;
+    --accent: var(--ink);
     --logo-filter: invert(1);
-    color-scheme: dark; --f0: #3FAE3A; --f1: #3FAE3A; --f2: #3FAE3A; --f3: #3FAE3A; --f4: #3FAE3A; --f5: #3FAE3A; --v0: #7A7B7E; --v1: #7A7B7E; --v2: #7A7B7E; --v3: #7A7B7E; --v4: #7A7B7E; --v5: #7A7B7E; --deep-blue: #3FAE3A; --deep-green: #3FAE3A; --neon: #3FAE3A; --neon-ink: #3FAE3A;
+    color-scheme: dark; --f0: var(--ink); --f1: var(--ink); --f2: var(--ink); --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #7A7B7E; --v1: #7A7B7E; --v2: #7A7B7E; --v3: #7A7B7E; --v4: #7A7B7E; --v5: #7A7B7E; --deep-blue: var(--ink); --deep-green: var(--ink); --neon: var(--rule); --neon-ink: var(--ink);
   }
-  /* Light mode text green: the leaf green is too light for text on cream (2.6:1), this shade of it passes WCAG AA (4.9:1).
-     Graphics keep #3FAE3A; dark mode overrides these with higher-specificity rules. */
-  :root { --accent: #2C7A29; --deep-blue: #2C7A29; --deep-green: #2C7A29; }
   /* No JavaScript: follow the system setting */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) {
-      --paper: #161614;
-      --ink: #ECEAE4;
-      --ink-2: #B9B6AD;
-      --rule: #8C8980;
-      --hairline: #3A3935;
-      --accent: #3FAE3A;
+      --paper: #0B0B0C;
+      --ink: #F2F2F3;
+      --ink-2: #A8A8AD;
+      --rule: #8E8E93;
+      --hairline: #2C2C2F;
+      --accent: var(--ink);
       --logo-filter: invert(1);
-      color-scheme: dark; --f0: #3FAE3A; --f1: #3FAE3A; --f2: #3FAE3A; --f3: #3FAE3A; --f4: #3FAE3A; --f5: #3FAE3A; --v0: #7A7B7E; --v1: #7A7B7E; --v2: #7A7B7E; --v3: #7A7B7E; --v4: #7A7B7E; --v5: #7A7B7E; --deep-blue: #3FAE3A; --deep-green: #3FAE3A; --neon: #3FAE3A; --neon-ink: #3FAE3A;
+      color-scheme: dark; --f0: var(--ink); --f1: var(--ink); --f2: var(--ink); --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #7A7B7E; --v1: #7A7B7E; --v2: #7A7B7E; --v3: #7A7B7E; --v4: #7A7B7E; --v5: #7A7B7E; --deep-blue: var(--ink); --deep-green: var(--ink); --neon: var(--rule); --neon-ink: var(--ink);
     }
   }
   @media (min-width: 720px) { :root { --gutter: 40px; } }
@@ -586,6 +586,15 @@
   .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
   @media print { .foot-line { display: none; } }
 
+  /* ---------- Light / dark switch ---------- */
+  .theme-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
+  .theme-toggle:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+  .theme-toggle svg { width: 20px; height: 20px; display: block; }
+  .theme-toggle .sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .moon { display: none; }
+  @media print { .theme-toggle { display: none; } }
+  @media (max-width: 379px) { .topnav .links { gap: 12px; } .topnav .home svg { width: 54px; } .topnav .links a { font-size: 14px; } .theme-toggle { width: 40px; margin-right: -10px; } }
 </style>
 </head>
 <body>
@@ -598,6 +607,7 @@
       <a href="about">About</a>
       <a href="listen">Listen</a>
       <a href="contact">Contact</a>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch light or dark mode"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7Z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>
     </div>
   </nav>
   <h1><span class="name"><span class="visually-hidden">Max Ellis</span><span aria-hidden="true">Max Ell<span class="i-wrap"><span class="bl"></span>ı<span class="tittle"></span></span>s</span></span> <span class="postnominals">BDes MSc AFHEA</span></h1>
@@ -1423,6 +1433,16 @@
       const on = !t.classList.contains('is-active');
       tiles.forEach((o) => o.classList.remove('is-active')); if (on) t.classList.add('is-active');
     }));
+  })();
+</script>
+<script>
+  // Light / dark switch: remembers the choice on this device
+  (() => {
+    const b = document.querySelector('.theme-toggle'); if (!b) return;
+    const root = document.documentElement;
+    const sync = () => { const dark = root.getAttribute('data-theme') === 'dark'; b.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode'); };
+    b.addEventListener('click', () => { window.__setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); sync(); });
+    new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] }); sync();
   })();
 </script>
 </body>
