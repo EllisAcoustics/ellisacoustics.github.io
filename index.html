@@ -102,6 +102,7 @@
   :root { --serif: "Sourcerer", "Source Serif 4", Georgia, "Times New Roman", serif; }
   .hero-sub { font-family: var(--serif); font-weight: 400; letter-spacing: 0; }
   .pubs .authors, .pubs .venue { font-family: var(--serif); letter-spacing: 0; font-size: 16.5px; }
+  .pubs .venue { font-size: 14.5px; line-height: 21px; }
   .pubs .authors strong { font-weight: 700; }
   .pubs h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0; font-size: 18px; line-height: 25px; }
   :root {
@@ -357,8 +358,8 @@
   .err-legend { display: flex; flex-wrap: wrap; gap: 4px calc(var(--u) * 2.5); font-size: 14px; line-height: 20px; color: var(--ink-2); margin-bottom: var(--u); }
   .err-legend span { display: inline-flex; align-items: center; gap: 8px; }
   .k { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--ink-2); }
-  .err { --c-air: #1FA39A; --c-road: #D9716B; --c-rail: #A87BD0; }
-  .k-wt { border-top: 3px dashed var(--neon-ink); }
+  .err { --c-wt: #3FAE3A; --c-air: #1FA39A; --c-road: #D9716B; --c-rail: #A87BD0; }
+  .k-wt { border-top: 3px dashed var(--c-wt); }
   .k-air { border-top: 3px dotted var(--c-air); }
   .k-road { border-top-color: var(--c-road); }
   .k-rail { border-top: 2px dashed var(--c-rail); }
@@ -369,7 +370,7 @@
   .err svg .tick { fill: var(--ink-2); font-family: var(--mono); font-size: 12px; }
   .err svg .atitle { fill: var(--ink-2); font-size: 13px; }
   .err svg .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .err svg .ln.wt { stroke: var(--neon-ink); stroke-width: 2.5; stroke-dasharray: 8 5; }
+  .err svg .ln.wt { stroke: var(--c-wt); stroke-width: 2.5; stroke-dasharray: 8 5; }
   .err svg .ln.air { stroke: var(--c-air); stroke-dasharray: 0.1 5; stroke-width: 3; }
   .err svg .ln.road { stroke: var(--c-road); stroke-width: 2.5; }
   .err svg .ln.rail { stroke: var(--c-rail); stroke-width: 2.5; stroke-dasharray: 9 4 1 4; }
@@ -1328,8 +1329,10 @@
       if (text != null) n.textContent = text;
       (parent || svg).appendChild(n); return n;
     };
+    // the turbine's blades turn slowly unless the visitor prefers reduced motion
+    const SPIN = reduce ? '' : '<animateTransform attributeName="transform" type="rotate" from="0 12 8.6" to="360 12 8.6" dur="4s" repeatCount="indefinite"/>';
     const ICON = {
-      wt: '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 22.5V9.5M8.5 22.5H15.5"/><path d="M12 9.5L12.7 1.5M12 9.5L19 13.4M12 9.5L5 13.4" stroke-width="1.9"/></g><circle cx="12" cy="9.5" r="1.5" fill="currentColor"/>',
+      wt: '<path d="M11.35 23.6L11.8 9.4H12.2L12.65 23.6Z" fill="currentColor"/><path d="M9.6 23.6H14.4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><rect x="11.3" y="8" width="2.6" height="1.4" rx="0.5" fill="currentColor"/><g fill="currentColor"><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z"/><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z" transform="rotate(120 12 8.6)"/><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z" transform="rotate(240 12 8.6)"/>' + SPIN + '</g><circle cx="12" cy="8.6" r="1.05" fill="var(--paper)" stroke="currentColor" stroke-width="0.7"/>',
       air: '<path transform="rotate(90 12 12)" d="M12 1.8c.9 0 1.5 1.1 1.5 2.4v5.1l8 4.6v2.2l-8-2.4v5l2.4 1.8v1.7L12 21.3l-3.9.9v-1.7l2.4-1.8v-5l-8 2.4v-2.2l8-4.6V4.2c0-1.3.6-2.4 1.5-2.4z" fill="currentColor"/>',
       road: '<path d="M2.2 16.2v-3.4c0-1 .7-1.8 1.6-2l2.5-.6 2.4-3.4c.4-.6 1.1-.9 1.8-.9h4.6c.7 0 1.4.3 1.8 1l2.2 3.3 1.8.4c1 .2 1.7 1.1 1.7 2.1v3.5z" fill="currentColor"/><path d="M8.3 10.3l1.7-2.5h3.5v2.5zM15 7.8h.6c.4 0 .8.2 1 .5l1.3 2H15z" fill="var(--paper)"/><circle cx="7" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/>',
       rail: '<path d="M2.6 16.8V7.2h7.2v3.4h8.6c1.2 0 2.1.9 2.1 2.1v2.6l1.8 1.5z" fill="currentColor"/><rect x="14.6" y="6.6" width="2.4" height="4.2" fill="currentColor"/><path d="M1.8 7.2h8.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="4.3" y="8.6" width="3.6" height="2.8" rx="0.4" fill="var(--paper)"/><g fill="var(--paper)" stroke="currentColor" stroke-width="1.5"><circle cx="6.2" cy="18.3" r="2.3"/><circle cx="11.6" cy="18.8" r="1.7"/><circle cx="16.2" cy="18.8" r="1.7"/></g><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="16.4" cy="3.9" r="1.4"/><circle cx="19.7" cy="2.6" r="1.1"/></g>'
@@ -1367,16 +1370,16 @@
         for (let L = s.from; L <= s.to + 1e-9; L += 0.25) d += (d ? 'L' : 'M') + X(L).toFixed(1) + ' ' + Y(s.f(L)).toFixed(1);
         const p = el('path', { class: 'ln ' + s.id, d, style: `--n:${n}` });
         // an icon for each source at the end of its curve, in the curve's colour
-        const v = s.f(s.to), sz = narrow ? 26 : 38;
+        const v = s.f(s.to), sz = (narrow ? 26 : 38) * (s.id === 'wt' ? 1.3 : 1);
         let iy = Y(v) - sz / 2;
         if (s.id === 'air') iy -= sz * 0.45;
         if (s.id === 'road') iy += sz * 0.3;
-        const ig = el('g', { class: 'lab', style: `--n:${n};color:var(${s.id === 'wt' ? '--neon-ink' : '--c-' + s.id})`,
+        const ig = el('g', { class: 'lab', style: `--n:${n};color:var(--c-${s.id})`,
           transform: `translate(${X(s.to) + 6} ${iy}) scale(${sz / 24})` });
         ig.innerHTML = ICON[s.id];
       });
       geo.xhair = el('line', { class: 'xhair', y1: m.t, y2: m.t + ph, opacity: 0 });
-      geo.dots = S.map((s) => el('circle', { class: 'dot', r: 5, fill: s.id === 'wt' ? 'var(--neon-ink)' : `var(--c-${s.id})`, opacity: 0 }));
+      geo.dots = S.map((s) => el('circle', { class: 'dot', r: 5, fill: `var(--c-${s.id})`, opacity: 0 }));
     };
     const hover = (cx) => {
       const r = svg.getBoundingClientRect(), { X, Y, m, pw, W } = geo;

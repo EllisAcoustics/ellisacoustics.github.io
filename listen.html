@@ -201,7 +201,7 @@
   #intro .gust.g2 { animation-duration: 0.55s; } #intro .gust.g3 { animation-duration: 0.8s; }
   @keyframes gust { to { stroke-dashoffset: -9; } }
   #intro .far { color: var(--ink-2); opacity: 0.75; }
-  #intro .leaf { color: var(--rule); }
+  #intro .leaf { color: #3FAE3A; }
   @media print { #intro { display: none !important; } }
   /* every control is a preview for now: it shakes and says so */
   .shake { animation: shake 420ms cubic-bezier(.36,.07,.19,.97); }
@@ -275,7 +275,7 @@
     <path d="M25.5 99.5H34.5"/>
     <path class="bolt" d="M30.7 57.8L29.0 62.4H30.1L29.4 66.6L31.1 61.4H30.0Z" fill="currentColor" stroke="none"/>
     <rect x="28.4" y="24.4" width="7.4" height="3.6" rx="1.2" fill="var(--paper)"/>
-    <g class="blades" stroke-width="0.6"><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(120 30 26)" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(240 30 26)" fill="var(--paper)"/><circle cx="30" cy="26" r="1.6" fill="var(--paper)"/></g>
+    <g class="blades" stroke-width="0.6"><path d="M30 26C32.1 21 32.3 11.5 30.9 1.2C29.6 9.5 28.5 19.5 28.9 23.4Z" fill="var(--paper)"/><path d="M30 26C32.1 21 32.3 11.5 30.9 1.2C29.6 9.5 28.5 19.5 28.9 23.4Z" transform="rotate(120 30 26)" fill="var(--paper)"/><path d="M30 26C32.1 21 32.3 11.5 30.9 1.2C29.6 9.5 28.5 19.5 28.9 23.4Z" transform="rotate(240 30 26)" fill="var(--paper)"/><circle cx="30" cy="26" r="1.6" fill="var(--paper)"/></g>
   </svg></span>
   <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
 </div>

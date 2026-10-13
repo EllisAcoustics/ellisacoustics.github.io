@@ -151,9 +151,11 @@
   #intro .bird { color: #FFFFFF; }
   :root[data-theme="light"] #intro .bird { color: var(--ink); }
   #intro .piece.note { color: #F2C200; }
-  #intro .leaf { color: var(--rule); }
+  #intro .leaf { color: #3FAE3A; }
+  /* heat: small embers glow and drift up through the vents */
+  #intro .ember { fill: #E8452C; stroke: none; opacity: 0; transform-box: fill-box; transform-origin: center; animation: ember 1.8s ease-out infinite; }
+  @keyframes ember { 0% { opacity: 0; transform: translateY(0) scale(0.6); } 20% { opacity: 1; transform: translateY(-0.6px) scale(1); } 60% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(-4px) scale(0.4); } }
   #intro .wind { color: #3D8FE0; }
-  #intro .noise { color: #F28C28; }
   #intro .fan { transform-box: view-box; transform-origin: 13.5px 23.25px; animation: fan 0.9s linear infinite; }
   @keyframes fan { to { transform: rotate(360deg); } }
   #intro .jaw, #intro .head, #intro .wing { transform-box: view-box; }
@@ -164,8 +166,6 @@
   #intro .gust.g2 { animation-duration: 0.55s; }
   #intro .gust.g3 { animation-duration: 0.8s; }
   @keyframes gust { to { stroke-dashoffset: -9; } }
-  #intro .arc { opacity: 0; transform-box: view-box; transform-origin: 0 15px; animation: arc 1.2s ease-out infinite; }
-  #intro .arc.a2 { animation-delay: 0.4s; } #intro .arc.a3 { animation-delay: 0.8s; }
   @keyframes arc { 0% { opacity: 0; transform: scale(0.7); } 25% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
   @media print { #intro { display: none !important; } }
   .foot { border-top: 0 !important; position: relative; }
@@ -201,10 +201,9 @@
 <body>
 <div id="intro" aria-hidden="true">
   <span class="line"></span>
-  <span class="piece hp"><svg viewBox="3 14 32 20.5" fill="none" stroke="currentColor" stroke-width="0.55" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.3"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.3"/><g class="fan" stroke-width="0.4"><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(120 13.5 23.25)"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(240 13.5 23.25)"/></g><circle cx="13.5" cy="23.25" r="0.6" fill="currentColor" stroke="none"/><path d="M24.00 17V29.5M25.15 17V29.5M26.30 17V29.5M27.45 17V29.5M28.60 17V29.5M29.75 17V29.5M30.90 17V29.5" stroke-width="0.3"/><path d="M7 32V33.5M31 32V33.5"/></svg></span>
+  <span class="piece hp"><svg viewBox="3 14 32 20.5" fill="none" stroke="currentColor" stroke-width="0.55" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.3"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.3"/><g class="fan" stroke-width="0.4"><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(120 13.5 23.25)"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(240 13.5 23.25)"/></g><circle cx="13.5" cy="23.25" r="0.6" fill="currentColor" stroke="none"/><path d="M24.00 17V29.5M25.15 17V29.5M26.30 17V29.5M27.45 17V29.5M28.60 17V29.5M29.75 17V29.5M30.90 17V29.5" stroke-width="0.3"/><path d="M7 32V33.5M31 32V33.5"/><g class="embers"><circle class="ember" cx="24.6" cy="28" r="0.42" style="animation-delay:0s"/><circle class="ember" cx="26.3" cy="25.5" r="0.36" style="animation-delay:0.5s"/><circle class="ember" cx="28" cy="29" r="0.45" style="animation-delay:0.9s"/><circle class="ember" cx="29.7" cy="26.5" r="0.38" style="animation-delay:0.25s"/><circle class="ember" cx="25.4" cy="22.5" r="0.32" style="animation-delay:1.2s"/><circle class="ember" cx="27.4" cy="21" r="0.4" style="animation-delay:0.7s"/><circle class="ember" cx="30.4" cy="23.5" r="0.34" style="animation-delay:1.5s"/><circle class="ember" cx="28.6" cy="18.5" r="0.3" style="animation-delay:1.05s"/></g></svg></span>
   <span class="piece bird"><svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17L3 13.6L5 18.6L10 20"/><path d="M10 19.6Q12 25.4 19.4 25Q26.4 24.4 27.6 17.6"/><path d="M10.6 17Q13.6 12.4 21.6 12.8"/><path d="M16.4 24.8V28.6M20.4 24.6V28.6M15.2 28.6H17.6M19.2 28.6H21.6" stroke-width="1"/><g class="wing"><path d="M22.6 15.6Q16 10.8 8.4 13.2Q12.6 20.6 22.6 18.2Z" fill="var(--paper)"/><path d="M11.6 15.2L17.4 15.9M12.6 17.2L18.4 17.3" stroke-width="0.7"/></g><g class="head"><path d="M21.6 12.8Q22.6 6.4 27.6 6.4Q32 6.6 31.4 10.6Q30.6 15.6 27.6 17.6"/><circle cx="28" cy="9.6" r="0.9" fill="currentColor" stroke="none"/><path d="M31.2 9.2L35.6 10.2L31.4 10.6"/><path class="jaw" d="M31.4 10.6L35 11.2L31 12" stroke-width="1"/></g></svg></span>
-  <span class="piece wind"><svg viewBox="0 0 34 22" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><path class="gust" d="M1 6Q12 3.6 22 6.4T33 7"/><path class="gust g2" d="M3 11H33"/><path class="gust g3" d="M1 16Q12 18.4 22 15.6T33 15"/></svg></span>
-  <span class="piece noise"><svg viewBox="0 0 24 30" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path class="arc a1" d="M3 8Q8 15 3 22"/><path class="arc a2" d="M9 4.6Q16 15 9 25.4"/><path class="arc a3" d="M15 1.4Q24 15 15 28.6"/></svg></span>
+  <span class="piece wind"><svg viewBox="0 0 30 34" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"><path class="gust" d="M2 33.5C2 21 10 9 30 6"/><path class="gust g2" d="M8.5 33.5C8.5 23 15 13.5 30 10"/><path class="gust g3" d="M15 33.5C15 25.5 19.5 17.5 30 14"/></svg></span>
   <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
   <template id="note-tpl"><span class="piece note"><svg viewBox="0 0 12 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="14.6" rx="2.7" ry="2" transform="rotate(-22 3.4 14.6)" fill="currentColor" stroke="none"/><path d="M5.9 13.8V1.6"/><path d="M5.9 1.6Q6.6 5 9.8 6.6Q11.6 8.4 10.4 11.2" stroke-width="1.1"/></svg></span></template><template id="note-tpl-2"><span class="piece note"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="15" rx="2.7" ry="2" transform="rotate(-22 3.4 15)" fill="currentColor" stroke="none"/><ellipse cx="13" cy="13" rx="2.7" ry="2" transform="rotate(-22 13 13)" fill="currentColor" stroke="none"/><path d="M5.9 14.2V3.4M15.5 12.2V1.6"/><path d="M5.9 3.4L15.5 1.6" stroke-width="2.4" stroke-linecap="butt"/></svg></span></template>
 </div>
@@ -347,39 +346,48 @@
     </div>
   </section>
 
-  <section class="section" id="software" aria-labelledby="software-h">
-    <h2 id="software-h">Software Proficiencies</h2>
-    <ul class="icon-grid" aria-label="Software">
-        <li class="icon-tile"><img loading="lazy" src="software/colour/python.svg?v=2" class="colour" width="40" height="40" alt="Python" decoding="async"><span class="tip" aria-hidden="true">Python</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/r.svg?v=2" class="colour" width="40" height="40" alt="R" decoding="async"><span class="tip" aria-hidden="true">R</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/matlab.svg" class="colour" width="40" height="40" alt="MATLAB" decoding="async"><span class="tip" aria-hidden="true">MATLAB</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/max.svg?v=3" class="colour" width="40" height="40" alt="Max/MSP" decoding="async"><span class="tip" aria-hidden="true">Max/MSP</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/artemis.png?v=1" class="colour dark-ink" width="39" height="40" alt="ArtemiS SUITE" decoding="async"><span class="tip" aria-hidden="true">ArtemiS SUITE</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/qgis.svg?v=2" class="colour" width="40" height="40" alt="QGIS" decoding="async"><span class="tip" aria-hidden="true">QGIS</span></li>
-        <li class="icon-tile"><svg class="fme-mark" style="height:26px;width:auto;margin:7px 0" viewBox="0 0 1260 425" role="img" aria-label="FME (Feature Manipulation Engine)" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="84" stroke-linejoin="round" stroke-linecap="round"><path d="M86 345V82H290M86 210H262"/><path d="M398 345V82L560 262L722 82V345"/><path d="M1044 82H836V345H1044M836 212H1010"/></g><circle cx="1174" cy="126" r="68" fill="#E0322A"/><circle cx="1174" cy="300" r="68" fill="#14B8B0"/></svg><span class="tip" aria-hidden="true">Feature Manipulation<br class="no-print"> Engine (FME)</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/reaper.svg?v=2" class="colour" width="37" height="40" alt="REAPER" decoding="async"><span class="tip" aria-hidden="true">REAPER</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/pytorch.svg" class="colour" width="34" height="40" alt="PyTorch" decoding="async"><span class="tip" aria-hidden="true">PyTorch</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/tensorflow.svg" class="colour" width="38" height="40" alt="TensorFlow" decoding="async"><span class="tip" aria-hidden="true">TensorFlow</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/unity.svg" class="colour dark-ink" width="36" height="40" alt="Unity" decoding="async"><span class="tip" aria-hidden="true">Unity</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/overleaf.svg" class="colour" width="36" height="40" alt="LaTeX (Overleaf)" decoding="async"><span class="tip" aria-hidden="true">LaTeX (Overleaf)</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/ableton.svg" class="colour dark-ink" width="48" height="23" style="height:23px;margin:8.5px 0" alt="Ableton Live" decoding="async"><span class="tip" aria-hidden="true">Ableton</span></li>
-        <li class="icon-tile"><img loading="lazy" src="software/colour/cadnaa.svg" class="colour" width="21" height="40" alt="CadnaA" decoding="async"><span class="tip" aria-hidden="true">CadnaA</span></li>
-    </ul>
-  </section>
-
   <section class="section" id="memberships" aria-labelledby="groups-h">
     <h2 id="groups-h">Working Groups and Committees</h2>
     <ul class="print-only print-list">
+      <li><strong>Institute of Acoustics</strong> Scottish Branch Committee — Member; Early Careers Group — Member</li>
       <li><strong>NASA</strong> Unmanned Aircraft Systems Noise Working Group (UNWG) — Member</li>
       <li><strong>Noise Network Plus</strong> A.I. and Digital Working Group — Member</li>
-      <li><strong>Institute of Acoustics</strong> Scottish Branch Committee — Member; Early Careers Group — Member</li>
     </ul>
     <ul class="org-grid" aria-label="Working groups and committees">
+      <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
       <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/orgs/nasa.png?v=3" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
       <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/noise-network-plus.png?v=4" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-      <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
     </ul>
   
+  </section>
+
+  <section class="section" id="volunteering" aria-labelledby="vol-h">
+    <h2 id="vol-h">Volunteering</h2>
+    <ul class="vol-grid">
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/broadcasting-scotland.png?v=3" width="40" height="64" alt="Broadcasting Scotland" decoding="async"><span class="vol-tip"><strong>Broadcasting Scotland</strong><span>Live Sound Engineer, 2018</span></span></li>
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/yan.svg?v=2" width="106" height="64" alt="Young Acousticians Network" decoding="async"><span class="vol-tip"><strong>Young Acousticians Network</strong><span>Committee Member</span></span></li>
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/stem.svg" width="60" height="60" alt="STEM Ambassadors" decoding="async"><span class="vol-tip"><strong>STEM Ambassador</strong><span>Scotland</span></span></li>
+    </ul>
+  </section>
+
+  <section class="section" id="software" aria-labelledby="software-h">
+    <h2 id="software-h">Software Proficiencies</h2>
+    <ul class="icon-grid" aria-label="Software">
+        <li class="icon-tile"><img loading="lazy" src="software/colour/max.svg?v=3" class="colour" width="40" height="40" alt="Max/MSP" decoding="async"><span class="tip" aria-hidden="true">Max/MSP</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/unity.svg" class="colour dark-ink" width="36" height="40" alt="Unity" decoding="async"><span class="tip" aria-hidden="true">Unity</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/ableton.svg" class="colour dark-ink" width="48" height="23" style="height:23px;margin:8.5px 0" alt="Ableton Live" decoding="async"><span class="tip" aria-hidden="true">Ableton</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/artemis.png?v=1" class="colour dark-ink" width="39" height="40" alt="ArtemiS SUITE" decoding="async"><span class="tip" aria-hidden="true">ArtemiS SUITE</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/cadnaa.svg" class="colour" width="21" height="40" alt="CadnaA" decoding="async"><span class="tip" aria-hidden="true">CadnaA</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/r.svg?v=2" class="colour" width="40" height="40" alt="R" decoding="async"><span class="tip" aria-hidden="true">R</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/python.svg?v=2" class="colour" width="40" height="40" alt="Python" decoding="async"><span class="tip" aria-hidden="true">Python</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/qgis.svg?v=2" class="colour" width="40" height="40" alt="QGIS" decoding="async"><span class="tip" aria-hidden="true">QGIS</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/overleaf.svg" class="colour" width="36" height="40" alt="LaTeX (Overleaf)" decoding="async"><span class="tip" aria-hidden="true">LaTeX (Overleaf)</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/reaper.svg?v=2" class="colour" width="37" height="40" alt="REAPER" decoding="async"><span class="tip" aria-hidden="true">REAPER</span></li>
+        <li class="icon-tile"><svg class="fme-mark" style="height:40px;width:auto" viewBox="1094 46 160 334" role="img" aria-label="Feature Manipulation Engine (FME)" xmlns="http://www.w3.org/2000/svg"><circle cx="1174" cy="126" r="68" fill="#E0322A"/><circle cx="1174" cy="300" r="68" fill="#14B8B0"/></svg><span class="tip" aria-hidden="true">Feature Manipulation<br class="no-print"> Engine (FME)</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/pytorch.svg" class="colour" width="34" height="40" alt="PyTorch" decoding="async"><span class="tip" aria-hidden="true">PyTorch</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/tensorflow.svg" class="colour" width="38" height="40" alt="TensorFlow" decoding="async"><span class="tip" aria-hidden="true">TensorFlow</span></li>
+        <li class="icon-tile"><img loading="lazy" src="software/colour/matlab.svg" class="colour" width="40" height="40" alt="MATLAB" decoding="async"><span class="tip" aria-hidden="true">MATLAB</span></li>
+    </ul>
   </section>
 
   <section class="section" id="certificates" aria-labelledby="cert-h">
@@ -395,15 +403,6 @@
       <li><h3>Responsible Research and Innovation</h3><p class="where">ORBITRRI</p></li>
       <li><h3>Transformer Models and BERT Model</h3><p class="where">Google</p></li>
       <li><h3>Trustworthy Generative AI</h3><p class="where">Vanderbilt University</p><a class="cred" href="https://www.coursera.org/account/accomplishments/verify/5NAVIU4IMJIY" target="_blank" rel="noopener">Show credential ↗</a></li>
-    </ul>
-  </section>
-
-  <section class="section" id="volunteering" aria-labelledby="vol-h">
-    <h2 id="vol-h">Volunteering</h2>
-    <ul class="vol-grid">
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/yan.svg" width="96" height="64" alt="Young Acousticians Network" decoding="async"><span class="vol-tip"><strong>Young Acousticians Network</strong><span>Committee Member</span></span></li>
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/stem.svg" width="60" height="60" alt="STEM Ambassadors" decoding="async"><span class="vol-tip"><strong>STEM Ambassador</strong><span>Scotland</span></span></li>
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/broadcasting-scotland.png?v=3" width="40" height="64" alt="Broadcasting Scotland" decoding="async"><span class="vol-tip"><strong>Broadcasting Scotland</strong><span>Live Sound Engineer, 2018</span></span></li>
     </ul>
   </section>
 
@@ -433,7 +432,7 @@
   const jaw = bird.querySelector('.jaw'), head = bird.querySelector('.head'), wing = bird.querySelector('.wing');
   const tpls = [document.getElementById('note-tpl'), document.getElementById('note-tpl-2')];
   const leafTpl = document.getElementById('leaf-tpl');
-  const windEl = el.querySelector('.wind'), noiseEl = el.querySelector('.noise');
+  const windEl = el.querySelector('.wind');
   const target = document.querySelector('main .section');
   window.scrollTo(0, 0);
   let done = false;
@@ -460,12 +459,13 @@
     Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px)`, opacity: 0 });
     const fanY = hpY + hpH * (9.25 / 20.5);
     const wW = hpW * 0.34, wH = wW * 22 / 34, nW = hpW * 0.2, nH = nW * 30 / 24;
-    Object.assign(windEl.style, { width: wW + 'px', transform: `translate(${hpX - wW - hpW * 0.04}px, ${fanY - wH / 2}px)`, opacity: 0 });
-    Object.assign(noiseEl.style, { width: nW + 'px', transform: `translate(${hpX + hpW + hpW * 0.03}px, ${fanY - nH / 2}px)`, opacity: 0 });
+    // air is drawn up from the ground and into the fan: the streams end at the fan's left edge
+    const awW = hpW * 0.44, awH = awW * 34 / 30, fanL = hpX + hpW * ((13.5 - 6.4 - 3) / 32);
+    Object.assign(windEl.style, { width: awW + 'px', transform: `translate(${fanL - awW}px, ${fanY - awH * (10 / 34)}px)`, opacity: 0 });
 
     // 1. ground draws, heat pump and bird appear
     line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
-    [hp, bird, windEl, noiseEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, delay: 200, fill: 'forwards' }));
+    [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, delay: 200, fill: 'forwards' }));
 
     // 2. three chirps, each with a note from the beak
     const beakX = bX + bW * (35.4 / 40), beakY = bY + bH * (10.6 / 30);
@@ -511,7 +511,7 @@
 
     // 4. heat pump fades, ground line settles onto the first divider, page appears
     at(3000, () => {
-      [hp, bird, windEl, noiseEl].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
+      [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
       line.animate([{ transform: 'scaleX(1) translateY(0)', opacity: 1 }, { transform: `scaleX(1) translateY(${r.top - ground}px)`, opacity: 0 }],
                    { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
       el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],

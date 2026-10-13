@@ -18,7 +18,7 @@ async def main():
         ab = await ctx.new_page()
         await ab.goto('http://localhost:8765/about.html')
         await ab.wait_for_timeout(300)
-        parts = await ab.evaluate("""['software','experience','academic','education','memberships','certificates']
+        parts = await ab.evaluate("""['experience','academic','education','memberships','software','certificates']
             .map((id) => document.getElementById(id).outerHTML)""")
         await ab.close()
         pg = await ctx.new_page()

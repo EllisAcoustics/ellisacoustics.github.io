@@ -3,7 +3,7 @@
 /* ---------- Certifications ---------- */
 .certs { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 1.5); max-width: 760px; }
 @media (min-width: 640px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.certs li { border: 1px solid var(--rule); border-radius: 10px; padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
+.certs li { border: 1px solid var(--rule); border-radius: 0; padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
 .certs h3 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
 .certs .cred { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent); text-underline-offset: 3px; }
 .certs .where { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); margin: 2px 0 0; }
@@ -48,7 +48,6 @@ img.colour { filter: none !important; }
 .outputs li {
   display: grid; gap: var(--u) calc(var(--u) * 3);
   padding: calc(var(--u) * 3) 0;
-  border-bottom: 1px solid var(--hairline);
 }
 .outputs li:first-child { padding-top: 0; }
 @media (min-width: 600px) { .outputs li { grid-template-columns: 112px minmax(0, 1fr); } }
@@ -61,8 +60,10 @@ img.colour { filter: none !important; }
   font-family: var(--mono); font-size: 13px; line-height: 24px;
 }
 .tag { border: 1px solid var(--rule); padding: 0 var(--u); border-radius: 2px; color: var(--ink); }
-.outputs .tag, #experience .tag, #academic .tag { border-color: var(--neon-ink); background: color-mix(in srgb, var(--neon) 22%, transparent); }
-:root[data-theme="dark"] .outputs .tag, :root[data-theme="dark"] #experience .tag, :root[data-theme="dark"] #academic .tag { background: color-mix(in srgb, var(--neon) 10%, transparent); }
+/* Papers and experience: labels as plain text, no boxes */
+.outputs .tag, #experience .tag, #academic .tag { border: 0; background: none; padding: 0; color: var(--ink-2); }
+.outputs .meta, #experience .meta { gap: 4px 0; }
+.outputs .meta > * + *::before, #experience .meta > * + *::before { content: "·"; display: inline-block; margin: 0 10px; color: var(--rule); text-decoration: none; }
 .outputs .authors { color: var(--ink); }
 .outputs .authors strong { font-weight: 600; }
 .outputs .venue { margin-top: 0; font-style: italic; }
