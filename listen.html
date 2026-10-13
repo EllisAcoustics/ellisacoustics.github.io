@@ -1,4 +1,10 @@
 <!doctype html>
+<!--
+  ellisacoustics.github.io · Max Ellis, psychoacoustics
+  Hand-built HTML, CSS and JavaScript: no frameworks, no trackers, no cookies.
+  Shared tokens: css/site.css · CV components: css/sections.css · Shared behaviour: js/site.js
+  The CV PDF is printed from these pages by tools/make_cv.py.
+-->
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
@@ -14,7 +20,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="color-scheme" content="light dark">
@@ -37,46 +44,13 @@
     if (!location.hash && !reduce) document.documentElement.classList.add('intro');
   })();
 </script>
+<link rel="stylesheet" href="css/site.css">
 <style>
   @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
-  :root {
-    --paper: #FFFFFF;
-    --ink: #0B0B0C;
-    --ink-2: #4A4A4F;
-    --rule: #6E6E73;
-    --hairline: #DCDCDF;
-    --accent: var(--ink); --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: var(--ink); --v5: var(--ink); --deep-blue: var(--ink); --deep-green: var(--ink); --neon: var(--rule); --neon-ink: var(--ink);
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    --u: 8px;
-    --measure: 68ch;
-    --gutter: 16px;
-  }
-  :root { --logo-filter: none; color-scheme: light; }
-  :root[data-theme="dark"] {
-    --paper: #0B0B0C;
-    --ink: #F2F2F3;
-    --ink-2: #A8A8AD;
-    --rule: #8E8E93;
-    --hairline: #2C2C2F;
-    --accent: var(--ink); --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); --deep-blue: var(--ink); --deep-green: var(--ink); --neon: var(--rule); --neon-ink: var(--ink);
-    --logo-filter: invert(1);
-    color-scheme: dark;
-  }
-  /* No JavaScript: follow the system setting */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) {
-      --paper: #0B0B0C;
-      --ink: #F2F2F3;
-      --ink-2: #A8A8AD;
-      --rule: #8E8E93;
-      --hairline: #2C2C2F;
-      --accent: var(--ink); --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); --deep-blue: var(--ink); --deep-green: var(--ink); --neon: var(--rule); --neon-ink: var(--ink);
-      --logo-filter: invert(1);
-      color-scheme: dark;
-    }
-  }
-  @media (min-width: 720px) { :root { --gutter: 40px; } }
+  /* Colours for this page's drawings (shared tokens live in css/site.css) */
+  :root { --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: var(--ink); --v5: var(--ink); }
+  :root[data-theme="dark"] { --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme]) { --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); } }
 
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -167,7 +141,7 @@
   input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; margin-top: -8px; border-radius: 50%; background: var(--neon-ink); border: 3px solid var(--paper); box-shadow: 0 0 0 1px var(--neon-ink); }
   input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--neon-ink); border: 3px solid var(--paper); box-shadow: 0 0 0 1px var(--neon-ink); }
   .sw { position: relative; width: 46px; height: 28px; flex: none; padding: 0; border: 1px solid var(--rule); border-radius: 14px; background: transparent; cursor: pointer; }
-  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink-2); transition: transform 200ms ease; }
+  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--ink-2); transition: transform var(--dur-2) var(--ease); }
   .sw[aria-checked="true"] { background: var(--neon-ink); border-color: var(--neon-ink); }
   .sw[aria-checked="true"]::after { transform: translateX(18px); background: var(--paper); }
   .player { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; max-width: 820px; padding: 18px; border: 1px solid var(--rule); border-radius: 12px; }
@@ -206,7 +180,7 @@
   /* every control is a preview for now: it shakes and says so */
   .shake { animation: shake 420ms cubic-bezier(.36,.07,.19,.97); }
   @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(3px); } 30%, 50%, 70% { transform: translateX(-5px); } 40%, 60% { transform: translateX(5px); } }
-  .toast { position: fixed; z-index: 60; left: 0; top: 0; pointer-events: none; opacity: 0; transform: translate(-50%, 6px); transition: opacity 180ms ease, transform 180ms ease;
+  .toast { position: fixed; z-index: 60; left: 0; top: 0; pointer-events: none; opacity: 0; transform: translate(-50%, 6px); transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
     padding: 8px 14px; border-radius: 999px; background: var(--ink); color: var(--paper); font-weight: 600; font-size: 14px; white-space: nowrap; }
   .toast.on { opacity: 1; transform: translate(-50%, 0); }
   @media (prefers-reduced-motion: reduce) { .shake { animation: none; outline: 2px dashed var(--neon-ink); outline-offset: 3px; } .sw::after { transition: none; } }
@@ -254,21 +228,6 @@
   .skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
   .skip:focus { top: var(--u); }
   main:focus { outline: none; }
-  /* ---------- Light / dark switch: a sliding toggle, orange sun (light) and blue crescent (dark) ---------- */
-  .theme-toggle { position: relative; flex: none; width: 52px; height: 28px; padding: 0; margin-left: 4px; border: 1px solid var(--hairline); border-radius: 14px; background: #ECECEE; cursor: pointer; }
-  .theme-toggle::before { content: ""; position: absolute; inset: -8px -2px; }   /* 44px tap target */
-  :root[data-theme="dark"] .theme-toggle { background: #26262A; }
-  .theme-toggle .tt-knob { position: absolute; top: 2px; left: 2px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 250ms cubic-bezier(.4,0,.2,1); }
-  :root[data-theme="dark"] .theme-toggle .tt-knob { transform: translateX(24px); background: #0B0B0C; box-shadow: 0 0 0 1px #3A3A3F; }
-  .theme-toggle svg { position: absolute; width: 15px; height: 15px; transition: opacity 200ms ease, transform 250ms ease; }
-  .theme-toggle .sun { color: #F28C28; }
-  .theme-toggle .moon { color: #4C8BF5; opacity: 0; transform: rotate(-40deg); }
-  :root[data-theme="dark"] .theme-toggle .sun { opacity: 0; transform: rotate(40deg); }
-  :root[data-theme="dark"] .theme-toggle .moon { opacity: 1; transform: none; }
-  .theme-toggle:hover { border-color: var(--rule); }
-  @media (prefers-reduced-motion: reduce) { .theme-toggle .tt-knob, .theme-toggle svg { transition: none; } }
-  @media print { .theme-toggle { display: none; } }
-  @media (max-width: 379px) { .topnav .links { gap: 12px; } .topnav .home svg { width: 54px; } .topnav .links a { font-size: 14px; } .theme-toggle { width: 46px; } :root[data-theme="dark"] .theme-toggle .tt-knob { transform: translateX(18px); } }
   /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
   @media (max-width: 879px) {
     .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
@@ -286,7 +245,7 @@
   @media (min-width: 880px) and (min-height: 760px) { .console .player { position: sticky; top: 12px; z-index: 20; } }
   .player { display: grid; gap: 14px; padding: 16px; border: 1px solid var(--rule); border-radius: 12px; background: var(--paper); box-shadow: 0 10px 30px -18px rgba(0,0,0,0.35); }
   .p-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
-  .play { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--ink); color: var(--paper); cursor: pointer; transition: transform 150ms ease; }
+  .play { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--ink); color: var(--paper); cursor: pointer; transition: transform var(--dur-1) var(--ease); }
   .play:active { transform: scale(0.95); }
   .play svg { width: 26px; height: 26px; }
   .play .i-pause { display: none; }
@@ -299,7 +258,7 @@
   .spec { display: block; width: 100%; height: 100%; }
   .spec-hz { position: absolute; inset: 0 auto 0 8px; pointer-events: none; font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.55); }
   .spec-hz span { position: absolute; top: calc(var(--y) * 100%); transform: translateY(-50%); }
-  .spec-idle { position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; text-align: center; color: rgba(255,255,255,0.7); font-size: 15px; transition: opacity 400ms ease; }
+  .spec-idle { position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; text-align: center; color: rgba(255,255,255,0.7); font-size: 15px; transition: opacity var(--dur-3) var(--ease); }
   .player.live .spec-idle { opacity: 0; }
   .readout { display: flex; flex-wrap: wrap; gap: 6px 24px; font-family: var(--mono); font-size: 13px; color: var(--ink-2); margin: 0; }
   .readout b { color: var(--ink); font-weight: 400; font-variant-numeric: tabular-nums; }
@@ -839,15 +798,6 @@
   }
 })();
 </script>
-<script>
-  // Light / dark switch: remembers the choice on this device
-  (() => {
-    const b = document.querySelector('.theme-toggle'); if (!b) return;
-    const root = document.documentElement;
-    const sync = () => { b.setAttribute('aria-checked', root.getAttribute('data-theme') === 'dark' ? 'true' : 'false'); };
-    b.addEventListener('click', () => { window.__setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); sync(); });
-    new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] }); sync();
-  })();
-</script>
+<script src="js/site.js" defer></script>
 </body>
 </html>
