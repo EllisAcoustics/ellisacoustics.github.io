@@ -263,6 +263,18 @@
   :root[data-theme="dark"] .theme-toggle .moon { display: none; }
   @media print { .theme-toggle { display: none; } }
   @media (max-width: 379px) { .topnav .links { gap: 12px; } .topnav .home svg { width: 54px; } .topnav .links a { font-size: 14px; } .theme-toggle { width: 40px; margin-right: -10px; } }
+  /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
+  @media (max-width: 879px) {
+    .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
+    .org-grid, .vol-grid { padding-bottom: calc(var(--u) * 3); }
+    .org-tile { height: 72px; }
+    .itiles { row-gap: calc(var(--u) * 3); }
+    .steps { gap: calc(var(--u) * 3); }
+    .outputs li { padding: calc(var(--u) * 2) 0; }
+    .timeline li { padding-bottom: calc(var(--u) * 3); }
+    .hero-why { font-size: 17px; line-height: 26px; }
+    .gap-lede { font-size: 17px; line-height: 26px; }
+  }
 </style>
 </head>
 <body>
@@ -468,10 +480,10 @@
         const y = ground - tH * 0.85 + ((k * 53) % 100) / 100 * tH * 0.8;
         const wob = 18 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (360 + k * 40);
         leafEl.animate([
-          { transform: `translate(${W + size * 2}px, ${y}px) scaleX(-1) rotate(0)` },
-          { transform: `translate(${W * 0.65}px, ${y - wob}px) scaleX(-1) rotate(${spin * 0.35}deg)`, offset: 0.35 },
-          { transform: `translate(${W * 0.3}px, ${y + wob}px) scaleX(-1) rotate(${spin * 0.7}deg)`, offset: 0.7 },
-          { transform: `translate(${-size * 2}px, ${y - wob / 2}px) scaleX(-1) rotate(${spin}deg)` }
+          { transform: `translate(${-size * 2}px, ${y}px) rotate(0)` },
+          { transform: `translate(${W * 0.35}px, ${y - wob}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
+          { transform: `translate(${W * 0.7}px, ${y + wob}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
+          { transform: `translate(${W + size * 2}px, ${y - wob / 2}px) rotate(${spin}deg)` }
         ], { duration: 1050 + (k % 4) * 100, delay: k * 55, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
       }
     });

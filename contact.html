@@ -243,6 +243,18 @@
   :root[data-theme="dark"] .theme-toggle .moon { display: none; }
   @media print { .theme-toggle { display: none; } }
   @media (max-width: 379px) { .topnav .links { gap: 12px; } .topnav .home svg { width: 54px; } .topnav .links a { font-size: 14px; } .theme-toggle { width: 40px; margin-right: -10px; } }
+  /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
+  @media (max-width: 879px) {
+    .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
+    .org-grid, .vol-grid { padding-bottom: calc(var(--u) * 3); }
+    .org-tile { height: 72px; }
+    .itiles { row-gap: calc(var(--u) * 3); }
+    .steps { gap: calc(var(--u) * 3); }
+    .outputs li { padding: calc(var(--u) * 2) 0; }
+    .timeline li { padding-bottom: calc(var(--u) * 3); }
+    .hero-why { font-size: 17px; line-height: 26px; }
+    .gap-lede { font-size: 17px; line-height: 26px; }
+  }
 </style>
 </head>
 <body>

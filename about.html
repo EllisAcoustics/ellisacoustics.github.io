@@ -140,7 +140,7 @@
   #intro { display: none; }
   html.intro #intro {
     display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden;
-    animation: intro-failsafe 0s linear 5.2s forwards;
+    animation: intro-failsafe 0s linear 5.5s forwards;
   }
   @keyframes intro-failsafe { to { visibility: hidden; } }
   #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
@@ -156,6 +156,7 @@
   #intro .ember { fill: #E8452C; stroke: none; opacity: 0; transform-box: fill-box; transform-origin: center; animation: ember 1.8s ease-out infinite; }
   @keyframes ember { 0% { opacity: 0; transform: translateY(0) scale(0.6); } 20% { opacity: 1; transform: translateY(-0.6px) scale(1); } 60% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(-4px) scale(0.4); } }
   #intro .wind { color: #3D8FE0; }
+  #intro .pulse path { fill: none; stroke: var(--ink); stroke-width: 1; vector-effect: non-scaling-stroke; }
   #intro .fan { transform-box: view-box; transform-origin: 13.5px 23.25px; animation: fan 0.9s linear infinite; }
   @keyframes fan { to { transform: rotate(360deg); } }
   #intro .jaw, #intro .head, #intro .wing { transform-box: view-box; }
@@ -196,6 +197,18 @@
   :root[data-theme="dark"] .theme-toggle .moon { display: none; }
   @media print { .theme-toggle { display: none; } }
   @media (max-width: 379px) { .topnav .links { gap: 12px; } .topnav .home svg { width: 54px; } .topnav .links a { font-size: 14px; } .theme-toggle { width: 40px; margin-right: -10px; } }
+  /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
+  @media (max-width: 879px) {
+    .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
+    .org-grid, .vol-grid { padding-bottom: calc(var(--u) * 3); }
+    .org-tile { height: 72px; }
+    .itiles { row-gap: calc(var(--u) * 3); }
+    .steps { gap: calc(var(--u) * 3); }
+    .outputs li { padding: calc(var(--u) * 2) 0; }
+    .timeline li { padding-bottom: calc(var(--u) * 3); }
+    .hero-why { font-size: 17px; line-height: 26px; }
+    .gap-lede { font-size: 17px; line-height: 26px; }
+  }
 </style>
 </head>
 <body>
@@ -203,7 +216,7 @@
   <span class="line"></span>
   <span class="piece hp"><svg viewBox="3 14 32 20.5" fill="none" stroke="currentColor" stroke-width="0.55" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.3"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.3"/><g class="fan" stroke-width="0.4"><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(120 13.5 23.25)"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(240 13.5 23.25)"/></g><circle cx="13.5" cy="23.25" r="0.6" fill="currentColor" stroke="none"/><path d="M24.00 17V29.5M25.15 17V29.5M26.30 17V29.5M27.45 17V29.5M28.60 17V29.5M29.75 17V29.5M30.90 17V29.5" stroke-width="0.3"/><path d="M7 32V33.5M31 32V33.5"/><g class="embers"><circle class="ember" cx="24.6" cy="28" r="0.42" style="animation-delay:0s"/><circle class="ember" cx="26.3" cy="25.5" r="0.36" style="animation-delay:0.5s"/><circle class="ember" cx="28" cy="29" r="0.45" style="animation-delay:0.9s"/><circle class="ember" cx="29.7" cy="26.5" r="0.38" style="animation-delay:0.25s"/><circle class="ember" cx="25.4" cy="22.5" r="0.32" style="animation-delay:1.2s"/><circle class="ember" cx="27.4" cy="21" r="0.4" style="animation-delay:0.7s"/><circle class="ember" cx="30.4" cy="23.5" r="0.34" style="animation-delay:1.5s"/><circle class="ember" cx="28.6" cy="18.5" r="0.3" style="animation-delay:1.05s"/></g></svg></span>
   <span class="piece bird"><svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17L3 13.6L5 18.6L10 20"/><path d="M10 19.6Q12 25.4 19.4 25Q26.4 24.4 27.6 17.6"/><path d="M10.6 17Q13.6 12.4 21.6 12.8"/><path d="M16.4 24.8V28.6M20.4 24.6V28.6M15.2 28.6H17.6M19.2 28.6H21.6" stroke-width="1"/><g class="wing"><path d="M22.6 15.6Q16 10.8 8.4 13.2Q12.6 20.6 22.6 18.2Z" fill="var(--paper)"/><path d="M11.6 15.2L17.4 15.9M12.6 17.2L18.4 17.3" stroke-width="0.7"/></g><g class="head"><path d="M21.6 12.8Q22.6 6.4 27.6 6.4Q32 6.6 31.4 10.6Q30.6 15.6 27.6 17.6"/><circle cx="28" cy="9.6" r="0.9" fill="currentColor" stroke="none"/><path d="M31.2 9.2L35.6 10.2L31.4 10.6"/><path class="jaw" d="M31.4 10.6L35 11.2L31 12" stroke-width="1"/></g></svg></span>
-  <span class="piece wind"><svg viewBox="0 0 30 34" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"><path class="gust" d="M2 33.5C2 21 10 9 30 6"/><path class="gust g2" d="M8.5 33.5C8.5 23 15 13.5 30 10"/><path class="gust g3" d="M15 33.5C15 25.5 19.5 17.5 30 14"/></svg></span>
+  <span class="piece wind"><svg viewBox="0 0 22 30" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"><path class="gust" d="M5 30C3.6 22 6.4 16 5 8C4.4 5 5 2.5 6 0.5"/><path class="gust g2" d="M11 30C12.4 22 9.6 15 11 8C11.6 5 11 2.5 11 0.5"/><path class="gust g3" d="M17 30C18.4 22 15.6 16 17 8C17.6 5 17 2.5 16 0.5"/></svg></span>
   <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
   <template id="note-tpl"><span class="piece note"><svg viewBox="0 0 12 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="14.6" rx="2.7" ry="2" transform="rotate(-22 3.4 14.6)" fill="currentColor" stroke="none"/><path d="M5.9 13.8V1.6"/><path d="M5.9 1.6Q6.6 5 9.8 6.6Q11.6 8.4 10.4 11.2" stroke-width="1.1"/></svg></span></template><template id="note-tpl-2"><span class="piece note"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="15" rx="2.7" ry="2" transform="rotate(-22 3.4 15)" fill="currentColor" stroke="none"/><ellipse cx="13" cy="13" rx="2.7" ry="2" transform="rotate(-22 13 13)" fill="currentColor" stroke="none"/><path d="M5.9 14.2V3.4M15.5 12.2V1.6"/><path d="M5.9 3.4L15.5 1.6" stroke-width="2.4" stroke-linecap="butt"/></svg></span></template>
 </div>
@@ -250,7 +263,6 @@
             <li>Assessing whether structural vibration can underpin sound quality metrics for product components, comparing vibration and sound quality data across anechoic, semi-reverberant and reverberant conditions.</li>
             <li>Applying transfer learning across sound quality metrics and jury test data from other products, to build machine learning models that predict listener response and satisfaction.</li>
           </ul>
-          <div class="meta"><span class="tag">Machine Learning</span><span class="tag">Psychoacoustics</span><span class="tag">Vibroacoustics</span><span class="tag">DSP</span></div>
         </li>
         <li data-complete>
           <span class="date">Aug 2026 – Oct 2026</span>
@@ -260,7 +272,6 @@
             <li>Validated open-source noise measurements against modelled Defra noise-mapping data for infrastructure assessment.</li>
             <li>Ran a field campaign on an airport expansion project comparing physical and perceptual dominance of aircraft noise.</li>
           </ul>
-          <div class="meta"><span class="tag">Field Measurements</span><span class="tag">Statistical Modelling</span><span class="tag">Data Visualisation</span><span class="tag">Technical Report Writing</span></div>
         </li>
       </ol>
     </div>
@@ -422,8 +433,8 @@
 
 <script>
 (() => {
-  // Bird intro: wind blows into a heat pump, sound pulses from it, a bird on top sings six notes,
-  // a gust of leaves blows across, then the ground line settles onto the first divider. About 3.7 s.
+  // Heat pump intro: a small pulse marks where a heat pump appears, floating, with air rising into its fan and embers
+  // in its vents; a bird beside it sings six notes, warm air lifts a flurry of leaves upwards, then the page appears. About 4 s.
   const root = document.documentElement;
   const el = document.getElementById('intro');
   if (!el) return;
@@ -447,27 +458,45 @@
   const at = (ms, fn) => timers.push(setTimeout(fn, ms));
 
   requestAnimationFrame(() => {
-    const r = target ? target.getBoundingClientRect() : { left: innerWidth * 0.1, width: innerWidth * 0.8, top: innerHeight * 0.4 };
     const W = innerWidth, H = innerHeight;
-    const ground = Math.round(H * 0.62);
-    const hpW = Math.max(160, Math.min(280, W * 0.44)), hpH = hpW * 20.5 / 32;
-    const hpX = W / 2 - hpW / 2, hpY = ground - hpH;
+    const base = Math.round(H * 0.6);                                   // where the heat pump floats
+    const hpW = Math.max(150, Math.min(260, W * 0.4)), hpH = hpW * 20.5 / 32;
+    const hpX = W / 2 - hpW / 2 + hpW * 0.12, hpY = base - hpH;
     const bW = hpW * 0.3, bH = bW * 30 / 40;
-    const bX = hpX + hpW * 0.6, bY = hpY + hpW * (0.5 / 32) - bH * (28.6 / 30);
-    Object.assign(line.style, { left: r.left + 'px', width: r.width + 'px', top: ground + 'px' });
+    const bX = hpX - bW * 1.15, bY = base - bH * (28.6 / 30);            // the bird sits beside it, not on the warm top
+    line.remove();
     Object.assign(hp.style, { width: hpW + 'px', transform: `translate(${hpX}px, ${hpY}px)`, opacity: 0 });
     Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px)`, opacity: 0 });
-    const fanY = hpY + hpH * (9.25 / 20.5);
-    const wW = hpW * 0.34, wH = wW * 22 / 34, nW = hpW * 0.2, nH = nW * 30 / 24;
-    // air is drawn up from the ground and into the fan: the streams end at the fan's left edge
-    const awW = hpW * 0.44, awH = awW * 34 / 30, fanL = hpX + hpW * ((13.5 - 6.4 - 3) / 32);
-    Object.assign(windEl.style, { width: awW + 'px', transform: `translate(${fanL - awW}px, ${fanY - awH * (10 / 34)}px)`, opacity: 0 });
+    // air rises from below, straight up into the fan
+    const fanX = hpX + hpW * ((13.5 - 3) / 32), awW = hpW * 0.34, awH = awW * 30 / 22;
+    Object.assign(windEl.style, { width: awW + 'px', transform: `translate(${fanX - awW / 2}px, ${base - hpH * 0.02}px)`, opacity: 0 });
 
-    // 1. ground draws, heat pump and bird appear
-    line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
-    [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, delay: 200, fill: 'forwards' }));
+    // 1. a small pulse ripples out along where the heat pump will sit, then fades
+    const NS = 'http://www.w3.org/2000/svg', pw = Math.min(W - 32, hpW * 1.9);
+    const ps = document.createElementNS(NS, 'svg'), pp = document.createElementNS(NS, 'path');
+    ps.setAttribute('class', 'pulse'); ps.setAttribute('viewBox', `0 -12 ${pw} 24`); ps.appendChild(pp);
+    Object.assign(ps.style, { position: 'absolute', left: (W / 2 - pw / 2) + 'px', top: (base - 12) + 'px', width: pw + 'px', height: '24px', overflow: 'visible' });
+    el.appendChild(ps);
+    const t0 = performance.now(), DUR = 900;
+    const ripple = (now) => {
+      const tau = Math.min(1, (now - t0) / DUR), half = pw / 2;
+      const front = tau * half * 1.15, sigma = Math.max(12, half * 0.14), amp = 7 * Math.pow(1 - tau, 1.3), lambda = Math.max(10, half * 0.07);
+      let d = '';
+      for (let x = 0; x <= pw; x += 2) {
+        const dd = Math.abs(x - half) - front, env = Math.exp(-(dd * dd) / (2 * sigma * sigma));
+        d += (x ? 'L' : 'M') + x + ' ' + (-amp * env * Math.sin((2 * Math.PI * dd) / lambda)).toFixed(2);
+      }
+      pp.setAttribute('d', d);
+      if (tau < 1 && !done) requestAnimationFrame(ripple);
+    };
+    requestAnimationFrame(ripple);
+    ps.animate([{ opacity: 0, transform: 'scaleX(0.3)' }, { opacity: 1, transform: 'scaleX(1)', offset: 0.25 }, { opacity: 1, offset: 0.7 }, { opacity: 0 }],
+               { duration: DUR, easing: 'ease-out', fill: 'forwards' });
 
-    // 2. three chirps, each with a note from the beak
+    // 2. the heat pump fades in where the pulse was, with the bird beside it and air rising into the fan
+    [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 650, fill: 'forwards' }));
+
+    // 3. six chirps, each with a note from the beak
     const beakX = bX + bW * (35.4 / 40), beakY = bY + bH * (10.6 / 30);
     const chirp = (i) => {
       head.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-10deg)' }, { transform: 'rotate(0)' }], { duration: 300, easing: 'ease-out' });
@@ -476,46 +505,43 @@
       const nw = bW * (i % 2 ? 0.46 : 0.3);
       n.style.width = nw + 'px';
       el.appendChild(n);
-      const dx = 14 + (i % 3) * 12, dy = -42 - (i % 3) * 10, rot = i % 2 ? 12 : -10;
+      const dx = 10 + (i % 3) * 8, dy = -46 - (i % 3) * 10, rot = i % 2 ? 12 : -10;
       n.animate([
         { transform: `translate(${beakX}px, ${beakY - nw}px) scale(0.5) rotate(0)`, opacity: 0 },
         { transform: `translate(${beakX + dx * 0.3}px, ${beakY - nw + dy * 0.3}px) scale(1) rotate(${rot / 2}deg)`, opacity: 1, offset: 0.25 },
         { transform: `translate(${beakX + dx}px, ${beakY - nw + dy}px) scale(1) rotate(${rot}deg)`, opacity: 0 }
       ], { duration: 1100, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' }).onfinish = () => n.remove();
     };
-    [600, 850, 1100, 1350, 1600, 1850].forEach((t, i) => at(t, () => chirp(i)));
+    [1000, 1250, 1500, 1750, 2000, 2250].forEach((t, i) => at(t, () => chirp(i)));
 
-    // 3. take off: wings flap, bird arcs up and away to the right
     const beat = (count, period, up, down) => wing.animate(
       [{ transform: 'rotate(0)' }, { transform: `rotate(${up}deg)` }, { transform: `rotate(${down}deg)` }, { transform: 'rotate(0)' }],
       { duration: period, iterations: count, easing: 'ease-in-out' });
-    // 3. a gust of leaves blows across the scene; the bird ruffles its wing as they pass
-    at(2150, () => {
-      const lw = Math.max(18, hpW * 0.11);
+    // 4. warm air lifts a flurry of leaves upwards past the heat pump; the bird ruffles its wing
+    at(2050, () => {
+      const lw = Math.max(16, hpW * 0.1);
       for (let k = 0; k < 9; k++) {
         const leafEl = leafTpl.content.firstElementChild.cloneNode(true);
         const size = lw * (0.75 + ((k * 37) % 10) / 20);
         leafEl.style.width = size + 'px';
         el.appendChild(leafEl);
-        const y = ground - hpH * 1.6 + ((k * 53) % 100) / 100 * hpH * 1.9;
-        const wob = 18 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (360 + k * 40);
+        const x = hpX - hpW * 0.4 + ((k * 53) % 100) / 100 * hpW * 1.8;
+        const wob = 16 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (300 + k * 40);
         leafEl.animate([
-          { transform: `translate(${-size * 2}px, ${y}px) rotate(0)` },
-          { transform: `translate(${W * 0.35}px, ${y - wob}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
-          { transform: `translate(${W * 0.7}px, ${y + wob}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
-          { transform: `translate(${W + size * 2}px, ${y - wob / 2}px) rotate(${spin}deg)` }
-        ], { duration: 1100 + (k % 4) * 120, delay: k * 70, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
+          { transform: `translate(${x}px, ${H + size * 2}px) rotate(0)` },
+          { transform: `translate(${x - wob}px, ${H * 0.62}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
+          { transform: `translate(${x + wob}px, ${H * 0.3}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
+          { transform: `translate(${x - wob / 2}px, ${-size * 3}px) rotate(${spin}deg)` }
+        ], { duration: 1000 + (k % 4) * 110, delay: k * 60, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
       }
-      at(2450, () => beat(3, 170, 40, -16));
+      at(2300, () => beat(3, 170, 40, -16));
     });
 
-    // 4. heat pump fades, ground line settles onto the first divider, page appears
-    at(3000, () => {
+    // 5. everything fades as the last leaves leave, and the page appears
+    at(3350, () => {
       [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
-      line.animate([{ transform: 'scaleX(1) translateY(0)', opacity: 1 }, { transform: `scaleX(1) translateY(${r.top - ground}px)`, opacity: 0 }],
-                   { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
       el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
-                 { duration: 650, easing: 'ease', fill: 'forwards' }).onfinish = finish;
+                 { duration: 600, easing: 'ease', fill: 'forwards' }).onfinish = finish;
     });
   });
 })();
