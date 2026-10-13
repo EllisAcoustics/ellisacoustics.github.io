@@ -93,7 +93,7 @@ p, li, figcaption { text-wrap: pretty; }                  /* no single word left
 @media print { .theme-toggle { display: none; } }
 @media (max-width: 379px) {   /* nav.topnav: wins over each page's own nav rules */
   nav.topnav .links { gap: 12px; }
-  nav.topnav .home svg { width: 54px; }
+  nav.topnav .home svg { width: 47px; }
   nav.topnav .links a { font-size: 14px; }
   .theme-toggle { width: 46px; }
   :root[data-theme="dark"] .theme-toggle .tt-knob { transform: translateX(18px); }
