@@ -276,6 +276,10 @@
     .src .gust { stroke-dasharray: none; }
   }
 
+  /* Ruler icons: a touch of colour on what each source does */
+  .src .gust { color: #3D8FE0; }                 /* moving air: turbine, air taxi, drone */
+  .src .pulse { color: #E8452C; }                /* AVAS warning sound: car, e-scooter */
+  .src .bird, .src .note, .src .spin.fast { color: #E0A800; }   /* heat pump: bird song and fan */
   /* ---------- Research method figure ---------- */
   .method { min-width: 0; }
   @media (min-width: 880px) {
@@ -374,8 +378,8 @@
   .err svg .ln.air { stroke: var(--c-air); stroke-dasharray: 0.1 5; stroke-width: 3; }
   .err svg .ln.road { stroke: var(--c-road); stroke-width: 2.5; }
   .err svg .ln.rail { stroke: var(--c-rail); stroke-width: 2.5; stroke-dasharray: 9 4 1 4; }
-  .err svg .unknown text { fill: var(--ink-2); font-size: 13px; }
-  .err svg .unknown .q { fill: var(--accent); font-family: var(--serif); font-size: 44px; font-weight: 700; }
+  .err svg .unknown text { fill: var(--ink-2); font-size: 13px; paint-order: stroke; stroke: var(--paper); stroke-width: 5px; stroke-linejoin: round; }
+  .err svg .unknown .q { fill: var(--accent); font-family: var(--sans); font-size: 34px; font-weight: 300; letter-spacing: 0; }
   .err svg .unknown .q-ring { fill: none; stroke: var(--neon-ink); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: q-ring 2.4s ease-out infinite; }
   @keyframes q-ring { 0% { opacity: 0.8; transform: scale(0.6); } 100% { opacity: 0; transform: scale(1.5); } }
   .err svg .xhair { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
@@ -1374,7 +1378,7 @@
       const g = el('g', { class: 'unknown', style: '--n:4' });
       const qx = X(narrow ? 33 : 34), qy = Y(narrow ? 51 : 50);
       el('circle', { class: 'q-ring', cx: qx, cy: qy - 15, r: 22 }, g);
-      el('text', { class: 'q', x: qx, y: qy, 'text-anchor': 'middle' }, g, '?');
+      el('text', { class: 'q', x: qx, y: qy - 15, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, g, '?');
       const lines = narrow ? ['Drones, air taxis,', 'heat pumps,', 'e-scooters'] : ['Drones, air taxis,', 'heat pumps, e-scooters:', 'no agreed curves yet'];
       lines.forEach((t, i) => el('text', { x: qx + 30, y: qy - 30 + i * 17 }, g, t));
       S.forEach((s, n) => {
