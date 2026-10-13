@@ -157,3 +157,14 @@ img.on-dark { display: none !important; }
 .org-tile:hover .caption, .org-tile:focus .caption, .org-tile.is-active .caption { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
 @media print { .org-grid { display: none; } }
 
+
+/* Profile colours: ORCID green and Google Scholar blue, matching their icons.
+   On the light page each uses a deeper shade of its brand colour so the text stays readable. */
+.c-orcid, .c-orcid span, .more-pubs a.c-orcid { color: #5F7F14 !important; }
+.c-scholar, .c-scholar span, .more-pubs a.c-scholar { color: #1A5FE0 !important; }
+:root[data-theme="dark"] .c-orcid, :root[data-theme="dark"] .c-orcid span, :root[data-theme="dark"] .more-pubs a.c-orcid { color: #A6CE39 !important; }
+:root[data-theme="dark"] .c-scholar, :root[data-theme="dark"] .c-scholar span, :root[data-theme="dark"] .more-pubs a.c-scholar { color: #5B95F5 !important; }
+/* Grades in green */
+.timeline .grade { color: #2C7A29; }
+:root[data-theme="dark"] .timeline .grade { color: #3FAE3A; }
+@media print { .c-orcid, .c-scholar { color: inherit !important; } }

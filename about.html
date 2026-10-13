@@ -189,15 +189,21 @@
   .skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
   .skip:focus { top: var(--u); }
   main:focus { outline: none; }
-  /* ---------- Light / dark switch ---------- */
-  .theme-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
-  .theme-toggle:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
-  .theme-toggle svg { width: 20px; height: 20px; display: block; }
-  .theme-toggle .sun { display: none; }
-  :root[data-theme="dark"] .theme-toggle .sun { display: block; }
-  :root[data-theme="dark"] .theme-toggle .moon { display: none; }
+  /* ---------- Light / dark switch: a sliding toggle, orange sun (light) and blue crescent (dark) ---------- */
+  .theme-toggle { position: relative; flex: none; width: 52px; height: 28px; padding: 0; margin-left: 4px; border: 1px solid var(--hairline); border-radius: 14px; background: #ECECEE; cursor: pointer; }
+  .theme-toggle::before { content: ""; position: absolute; inset: -8px -2px; }   /* 44px tap target */
+  :root[data-theme="dark"] .theme-toggle { background: #26262A; }
+  .theme-toggle .tt-knob { position: absolute; top: 2px; left: 2px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 250ms cubic-bezier(.4,0,.2,1); }
+  :root[data-theme="dark"] .theme-toggle .tt-knob { transform: translateX(24px); background: #0B0B0C; box-shadow: 0 0 0 1px #3A3A3F; }
+  .theme-toggle svg { position: absolute; width: 15px; height: 15px; transition: opacity 200ms ease, transform 250ms ease; }
+  .theme-toggle .sun { color: #F28C28; }
+  .theme-toggle .moon { color: #4C8BF5; opacity: 0; transform: rotate(-40deg); }
+  :root[data-theme="dark"] .theme-toggle .sun { opacity: 0; transform: rotate(40deg); }
+  :root[data-theme="dark"] .theme-toggle .moon { opacity: 1; transform: none; }
+  .theme-toggle:hover { border-color: var(--rule); }
+  @media (prefers-reduced-motion: reduce) { .theme-toggle .tt-knob, .theme-toggle svg { transition: none; } }
   @media print { .theme-toggle { display: none; } }
-  @media (max-width: 379px) { .topnav .links { gap: 12px; } .topnav .home svg { width: 54px; } .topnav .links a { font-size: 14px; } .theme-toggle { width: 40px; margin-right: -10px; } }
+  @media (max-width: 379px) { .topnav .links { gap: 12px; } .topnav .home svg { width: 54px; } .topnav .links a { font-size: 14px; } .theme-toggle { width: 46px; } :root[data-theme="dark"] .theme-toggle .tt-knob { transform: translateX(18px); } }
   /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
   @media (max-width: 879px) {
     .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
@@ -229,7 +235,7 @@
       <a href="about" aria-current="page">About</a>
       <a href="listen">Listen</a>
       <a href="contact">Contact</a>
-      <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch light or dark mode"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7Z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>
+      <button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Light or dark mode"><span class="tt-knob" aria-hidden="true"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" focusable="false"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M5.1 18.9l1.7-1.7M17.2 6.8l1.7-1.7"/></svg><svg class="moon" viewBox="0 0 24 24" focusable="false"><path d="M20.4 14.6A8.6 8.6 0 1 1 9.4 3.6a7 7 0 0 0 11 11Z" fill="currentColor"/></svg></span></button>
     </div>
   </nav>
   <h1>About Me</h1>
@@ -659,7 +665,7 @@
   (() => {
     const b = document.querySelector('.theme-toggle'); if (!b) return;
     const root = document.documentElement;
-    const sync = () => { const dark = root.getAttribute('data-theme') === 'dark'; b.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode'); };
+    const sync = () => { b.setAttribute('aria-checked', root.getAttribute('data-theme') === 'dark' ? 'true' : 'false'); };
     b.addEventListener('click', () => { window.__setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); sync(); });
     new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] }); sync();
   })();
