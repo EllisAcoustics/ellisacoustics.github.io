@@ -1,0 +1,12 @@
+<svg role="img" viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg"><title>Young Acousticians Network</title>
+<defs><linearGradient id="yan-g" x1="0" x2="1"><stop offset="0" stop-color="#0E9C9C"/><stop offset="1" stop-color="#36D8A0"/></linearGradient></defs>
+<g fill="none" stroke="url(#yan-g)" stroke-linecap="round">
+<path d="M32 6A44 44 0 0 0 32 94" stroke-width="7"/>
+<path d="M38 18A32 32 0 0 0 38 82" stroke-width="5.5"/>
+<path d="M44 30A20 20 0 0 0 44 70" stroke-width="4"/>
+</g>
+<g fill="none" stroke="#0E4A5C" stroke-width="7.5" stroke-linecap="square" stroke-linejoin="miter">
+<path d="M56 30V48Q56 56 66 56Q76 56 76 48V30M66 56V78"/>
+<path d="M86 78V44Q86 30 98 30Q110 30 110 44V78M86 58H110"/>
+<path d="M122 78V44Q122 30 134 30Q146 30 146 44V78"/>
+</g></svg>

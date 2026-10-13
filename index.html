@@ -661,6 +661,19 @@
   .foot-line { position: absolute; left: 0; top: -16px; width: 100%; height: 32px; display: block; overflow: visible; pointer-events: none; }
   .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
   @media print { .foot-line { display: none; } }
+
+  /* ---------- Organisation grids (collaborations, working groups) ---------- */
+  .org-grid { list-style: none; margin: 0; padding: 0 0 calc(var(--u) * 6); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); max-width: 760px; }
+  .org-tile { position: relative; display: flex; align-items: center; justify-content: center; height: 88px; outline-offset: 4px; }
+  .org-tile img { display: block; max-width: 100%; height: auto; max-height: 64px; width: auto; transition: transform 300ms ease; }
+  .org-tile:hover img, .org-tile:focus-visible img, .org-tile.is-active img { transform: translateY(-4px); }
+  .org-tile .caption {
+    position: absolute; top: calc(100% + 2px); bottom: auto; left: 50%; right: auto; z-index: 5;
+    width: max-content; max-width: 240px; padding: 6px 10px; background: var(--paper); border-radius: 2px;
+    transform: translate(-50%, 4px); opacity: 0; pointer-events: none;
+  }
+  .org-tile:hover .caption, .org-tile:focus .caption, .org-tile.is-active .caption { opacity: 1; transform: translate(-50%, 0); }
+  @media print { .org-grid { display: none; } }
 </style>
 </head>
 <body>
@@ -786,26 +799,12 @@
       <li><strong>HEAD Acoustics GmbH</strong> — Journal Paper</li>
       <li><strong>Joby Aviation Ltd.</strong> — Journal Paper</li>
     </ul>
-    <div class="marquee" data-speed="47" data-direction="-1">
-      <div class="marquee-track">
-        <ul class="marquee-list" aria-label="Research collaborators">
-          <li class="logo"><img src="logos/colour/defra.png?v=2" class="colour dark-ink" width="125" height="64" alt="Defra" decoding="async"><span class="caption"><span>PhD Sponsor</span></span></li>
-          <li class="logo"><img class="colour on-light" src="logos/colour/head-acoustics.png?v=2"  width="120" height="64" alt="HEAD Acoustics GmbH" decoding="async"><img class="colour on-dark" src="logos/colour/head-acoustics-dark.png?v=1"  width="120" height="64" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-          <li class="logo"><img class="colour on-light" src="logos/joby-aviation.png?v=2" width="169" height="60" alt="Joby Aviation Ltd." decoding="async"><img class="colour on-dark" src="logos/joby-aviation-dark.png?v=1" width="169" height="60" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/defra.png?v=2" class="colour dark-ink" width="125" height="64" alt="" decoding="async"><span class="caption"><span>PhD Sponsor</span></span></li>
-          <li class="logo" aria-hidden="true"><img class="colour on-light" src="logos/colour/head-acoustics.png?v=2"  width="120" height="64" alt="" decoding="async"><img class="colour on-dark" src="logos/colour/head-acoustics-dark.png?v=1"  width="120" height="64" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-          <li class="logo" aria-hidden="true"><img class="colour on-light" src="logos/joby-aviation.png?v=2" width="169" height="60" alt="" decoding="async"><img class="colour on-dark" src="logos/joby-aviation-dark.png?v=1" width="169" height="60" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-        </ul>
-        <ul class="marquee-list" aria-hidden="true">
-          <li class="logo" aria-hidden="true"><img src="logos/colour/defra.png?v=2" class="colour dark-ink" width="125" height="64" alt="" decoding="async"><span class="caption"><span>PhD Sponsor</span></span></li>
-          <li class="logo" aria-hidden="true"><img class="colour on-light" src="logos/colour/head-acoustics.png?v=2"  width="120" height="64" alt="" decoding="async"><img class="colour on-dark" src="logos/colour/head-acoustics-dark.png?v=1"  width="120" height="64" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-          <li class="logo" aria-hidden="true"><img class="colour on-light" src="logos/joby-aviation.png?v=2" width="169" height="60" alt="" decoding="async"><img class="colour on-dark" src="logos/joby-aviation-dark.png?v=1" width="169" height="60" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/defra.png?v=2" class="colour dark-ink" width="125" height="64" alt="" decoding="async"><span class="caption"><span>PhD Sponsor</span></span></li>
-          <li class="logo" aria-hidden="true"><img class="colour on-light" src="logos/colour/head-acoustics.png?v=2"  width="120" height="64" alt="" decoding="async"><img class="colour on-dark" src="logos/colour/head-acoustics-dark.png?v=1"  width="120" height="64" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-          <li class="logo" aria-hidden="true"><img class="colour on-light" src="logos/joby-aviation.png?v=2" width="169" height="60" alt="" decoding="async"><img class="colour on-dark" src="logos/joby-aviation-dark.png?v=1" width="169" height="60" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
-        </ul>
-      </div>
-    </div>
+    <ul class="org-grid" aria-label="Research collaborators">
+      <li class="org-tile" tabindex="0"><img src="logos/colour/defra.png?v=2" class="colour dark-ink" width="125" height="64" alt="Defra" decoding="async"><span class="caption"><span>PhD Sponsor</span></span></li>
+      <li class="org-tile" tabindex="0"><img class="colour on-light" src="logos/colour/head-acoustics.png?v=2"  width="120" height="64" alt="HEAD Acoustics GmbH" decoding="async"><img class="colour on-dark" src="logos/colour/head-acoustics-dark.png?v=1"  width="120" height="64" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
+      <li class="org-tile" tabindex="0"><img class="colour on-light" src="logos/joby-aviation.png?v=2" width="169" height="60" alt="Joby Aviation Ltd." decoding="async"><img class="colour on-dark" src="logos/joby-aviation-dark.png?v=1" width="169" height="60" alt="" decoding="async"><span class="caption"><span>Journal Paper</span></span></li>
+    </ul>
+  
   </section>
 
   <section class="section" id="publications" aria-labelledby="pubs-h">
@@ -998,26 +997,12 @@
       <li><strong>Noise Network Plus</strong> A.I. and Digital Working Group — Member</li>
       <li><strong>Institute of Acoustics</strong> Scottish Branch Committee — Member; Early Careers Group — Member</li>
     </ul>
-    <div class="marquee" data-speed="46" data-direction="1">
-      <div class="marquee-track">
-        <ul class="marquee-list" aria-label="Working groups and committees">
-          <li class="logo"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-          <li class="logo"><img src="logos/colour/noise-network-plus.png?v=3" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo"><img src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/noise-network-plus.png?v=3" class="colour dark-ink" width="129" height="57" alt="" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
-        </ul>
-        <ul class="marquee-list" aria-hidden="true">
-          <li class="logo" aria-hidden="true"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/noise-network-plus.png?v=3" class="colour dark-ink" width="129" height="57" alt="" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/noise-network-plus.png?v=3" class="colour dark-ink" width="129" height="57" alt="" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-          <li class="logo" aria-hidden="true"><img src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
-        </ul>
-      </div>
-    </div>
+    <ul class="org-grid" aria-label="Working groups and committees">
+      <li class="org-tile" tabindex="0"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
+      <li class="org-tile" tabindex="0"><img src="logos/colour/noise-network-plus.png?v=3" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
+      <li class="org-tile" tabindex="0"><img src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
+    </ul>
+  
   </section>
 
   <section class="section" id="certificates" aria-labelledby="cert-h">
@@ -1538,6 +1523,18 @@
       if (t) addEventListener('load', () => t.scrollIntoView({ block: 'start' }));
     }
     if (el) addEventListener('load', () => el.scrollIntoView({ block: 'start' }));
+  })();
+</script>
+<script>
+  // Tap a collaborator or working-group logo to show its role (touch screens have no hover)
+  (() => {
+    const tiles = document.querySelectorAll('.org-tile');
+    tiles.forEach((t) => t.addEventListener('click', () => {
+      const on = !t.classList.contains('is-active');
+      tiles.forEach((o) => o.classList.remove('is-active'));
+      if (on) t.classList.add('is-active');
+    }));
+    document.addEventListener('click', (e) => { if (!e.target.closest('.org-tile')) tiles.forEach((o) => o.classList.remove('is-active')); });
   })();
 </script>
 </body>
