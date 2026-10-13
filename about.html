@@ -10,11 +10,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About — Max Ellis, Psychoacoustician</title>
-<meta name="description" content="About Max Ellis: Glasgow-based acoustician and PhD candidate in psychoacoustics, from recording bands to teaching machines to hear the way people do.">
+<meta name="description" content="About Max Ellis: educator, acoustician and researcher, born in Glasgow and based in Manchester, from recording bands to training machines to predict how people respond to sound.">
 <meta property="og:title" content="About — Max Ellis, Psychoacoustician">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ellisacoustics.github.io/about">
-<meta property="og:description" content="About Max Ellis: Glasgow-based acoustician and PhD candidate in psychoacoustics, from recording bands to teaching machines to hear the way people do.">
+<meta property="og:description" content="About Max Ellis: educator, acoustician and researcher, born in Glasgow and based in Manchester, from recording bands to training machines to predict how people respond to sound.">
 <meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -95,6 +95,10 @@
   @media print { .topnav { display: none; } }
   h1 { margin-top: calc(var(--u) * 4); font-size: clamp(40px, 7vw, 72px); line-height: 1.02; font-weight: 650; letter-spacing: -0.035em; }
   .lede { margin-top: calc(var(--u) * 3); max-width: 40ch; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; }
+  /* EAR: the initials carry the word, the rest steps back */
+  .lede .ear { display: block; color: var(--ink-2); }
+  .lede .ear b { color: var(--ink); font-weight: 700; }
+  .lede .home-town { display: block; margin-top: 6px; font-size: 0.72em; color: var(--ink-2); }
   .section { padding: calc(var(--u) * 5) 0 calc(var(--u) * 7); display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
   @media (min-width: 880px) { .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); } }
   .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
@@ -212,7 +216,7 @@
     </div>
   </nav>
   <h1>About Me</h1>
-  <p class="lede">Acoustician, educator and recovering studio engineer, based in Glasgow.</p>
+  <p class="lede"><span class="ear"><b>E</b>ducator. <b>A</b>coustician. <b>R</b>esearcher.</span><span class="home-town">Born in Glasgow. Based in Manchester.</span></p>
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
@@ -220,7 +224,7 @@
     <h2 id="story-h">My Story</h2>
     <div class="story">
     <div class="about-body">
-      <p>I’m a Glasgow-based acoustician who came to research through music. I started out recording and mixing local bands at The Audio Lounge in Maryhill, studied music technology and sound for film, then moved into computer science and artificial intelligence, which is how I ended up teaching machines to hear the way people do.</p>
+      <p>I’m a Scottish novice psychoacoustician who came into research through music. I started out recording, mixing, mastering and producing for local bands in Glasgow. Whilst studying audio formally at undergraduate level, I became interested in A.I. through large language models: how they work, why they work, and why they sometimes don’t. Now I train machines to predict how humans will respond to sound environments of the present and future.</p>
       <p>That mix of studio ears and data science shapes how I work: I care about how something actually sounds to the person standing there, not just what a meter says. Alongside my PhD I teach, supervise dissertations and volunteer as a STEM Ambassador in Scotland.</p>
       <p>Away from work you’ll find me at the chessboard, the piano or the decks, shooting on film, at the gym, or slowly improving my Spanish.</p>
     </div>
