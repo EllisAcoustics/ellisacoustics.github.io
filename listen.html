@@ -24,6 +24,9 @@
     var setT = function () { document.documentElement.setAttribute('data-theme', mq && mq.matches ? 'dark' : 'light'); };
     setT(); if (mq && mq.addEventListener) mq.addEventListener('change', setT);
     try { localStorage.removeItem('theme'); } catch (e) {}
+    // Turbine intro on every visit, unless reduced motion or arriving at a section
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!location.hash && !reduce) document.documentElement.classList.add('intro');
   })();
 </script>
 <style>
@@ -228,6 +231,28 @@
   .readout { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 6px 24px; font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
   .readout b { color: var(--ink); font-weight: 400; }
   .note { margin-top: calc(var(--u) * 2); }
+  /* ---------- Turbine intro ---------- */
+  #intro { display: none; }
+  html.intro #intro { display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden; animation: intro-failsafe 0s linear 6s forwards; }
+  @keyframes intro-failsafe { to { visibility: hidden; } }
+  #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
+  #intro .piece { position: absolute; left: 0; top: 0; }
+  #intro .piece svg { display: block; width: 100%; height: auto; overflow: visible; }
+  #intro .turbine { color: var(--ink); }
+  #intro .turbine .blades { color: #8A8C90; transform-box: view-box; transform-origin: 30px 26px; animation: t-spin 2.4s linear infinite; }
+  @keyframes t-spin { to { transform: rotate(360deg); } }
+  #intro .turbine .bolt { color: #3FAE3A; animation: t-bolt 0.9s steps(1) infinite; }
+  @keyframes t-bolt { 0%, 100% { opacity: 1; } 40% { opacity: 0.15; } 55% { opacity: 1; } 70% { opacity: 0.25; } }
+  #intro .turbine .ring { fill: none; stroke: #3FAE3A; stroke-width: 0.35; opacity: 0; transform-box: view-box; transform-origin: 30px 26px; animation: t-ring 2.1s ease-out infinite; }
+  #intro .turbine .ring.r2 { animation-delay: 0.7s; } #intro .turbine .ring.r3 { animation-delay: 1.4s; }
+  @keyframes t-ring { 0% { opacity: 0; transform: scale(0.35); } 15% { opacity: 0.85; } 100% { opacity: 0; transform: scale(1.25); } }
+  #intro .wind { color: var(--ink-2); }
+  #intro .gust { stroke-dasharray: 5 4; animation: gust 0.7s linear infinite; }
+  #intro .gust.g2 { animation-duration: 0.55s; } #intro .gust.g3 { animation-duration: 0.8s; }
+  @keyframes gust { to { stroke-dashoffset: -9; } }
+  #intro .far { color: var(--ink-2); opacity: 0.55; }
+  #intro .leaf { color: #3FAE3A; }
+  @media print { #intro { display: none !important; } }
   /* every control is a preview for now: it shakes and says so */
   .shake { animation: shake 420ms cubic-bezier(.36,.07,.19,.97); }
   @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(3px); } 30%, 50%, 70% { transform: translateX(-5px); } 40%, 60% { transform: translateX(5px); } }
@@ -279,6 +304,19 @@
 </style>
 </head>
 <body>
+<div id="intro" aria-hidden="true">
+  <span class="line"></span>
+  <span class="piece wind"><svg viewBox="0 0 34 22" fill="none" stroke="currentColor" stroke-width="0.45" stroke-linecap="round"><path class="gust" d="M1 6Q12 3.6 22 6.4T33 7"/><path class="gust g2" d="M3 11H33"/><path class="gust g3" d="M1 16Q12 18.4 22 15.6T33 15"/></svg></span>
+  <span class="piece turbine"><svg viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
+    <circle class="ring" cx="30" cy="26" r="24"/><circle class="ring r2" cx="30" cy="26" r="24"/><circle class="ring r3" cx="30" cy="26" r="24"/>
+    <path d="M27.5 99.5L29.1 29H30.9L32.5 99.5Z" fill="var(--paper)"/>
+    <path d="M25.5 99.5H34.5"/>
+    <path class="bolt" d="M30.7 57.8L29.0 62.4H30.1L29.4 66.6L31.1 61.4H30.0Z" fill="currentColor" stroke="none"/>
+    <rect x="28.4" y="24.4" width="7.4" height="3.6" rx="1.2" fill="var(--paper)"/>
+    <g class="blades" stroke-width="0.6"><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(120 30 26)" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(240 30 26)" fill="var(--paper)"/><circle cx="30" cy="26" r="1.6" fill="var(--paper)"/></g>
+  </svg></span>
+  <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
+</div>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
     <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><g class="mk-fan" style="transform-origin:29.6px 26.75px" stroke-width="0.7"><path d="M29.6 26.75V25.2M29.6 26.75L30.95 27.5M29.6 26.75L28.25 27.5"/></g><path d="M32.6 25V28.6" stroke-width="0.8"/><g stroke-width="0.6"><path d="M30.6 22.2Q31.4 23.4 32.8 22.9Q33.6 22.5 33.4 21.6"/><path d="M30.6 22.2Q31.6 21.3 33.1 21.4"/><path d="M30.6 22.2L29.5 21.7"/><path d="M33.1 21.4Q33.4 20.4 34.2 20.6Q34.8 20.8 34.6 21.4L35.4 21.5L34.5 21.8Q34.2 22.1 33.4 21.6"/><path d="M31.8 23.2V23.5M32.6 23.1V23.5" stroke-width="0.4"/></g><g class="mk-note" stroke-width="0.5"><ellipse cx="36.4" cy="18.6" rx="0.55" ry="0.4" fill="currentColor" stroke="none"/><path d="M36.9 18.5V16.4L37.7 16.8"/></g><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
@@ -393,6 +431,91 @@
     addEventListener('resize', () => draw(performance.now()));
     draw(performance.now());
   })();
+</script>
+<script>
+(() => {
+  // Turbine intro: wind drives a next-generation turbine that hums out sound, drones and air taxis
+  // cross the far distance, a gust of leaves blows through, then the ground line settles onto the
+  // first divider. About 4 s; any input skips it.
+  const root = document.documentElement, el = document.getElementById('intro');
+  if (!el) return;
+  if (!root.classList.contains('intro')) { el.remove(); return; }
+  const line = el.querySelector('.line'), tb = el.querySelector('.turbine'), windEl = el.querySelector('.wind');
+  const leafTpl = document.getElementById('leaf-tpl');
+  const icons = [...document.querySelectorAll('.card .ico svg')];
+  const droneSvg = icons[0], evtolSvg = icons[1];
+  const target = document.querySelector('main .section');
+  window.scrollTo(0, 0);
+  let done = false; const timers = [];
+  const finish = () => {
+    if (done) return; done = true; timers.forEach(clearTimeout);
+    root.classList.remove('intro'); el.remove();
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, finish));
+  };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, finish, { passive: true }));
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  requestAnimationFrame(() => {
+    const r = target ? target.getBoundingClientRect() : { left: innerWidth * 0.1, width: innerWidth * 0.8, top: innerHeight * 0.4 };
+    const W = innerWidth, H = innerHeight, ground = Math.round(H * 0.68);
+    const tH = Math.min(H * 0.52, 380), tW = tH * 0.6, tX = W / 2 - tW / 2, tY = ground - tH * 0.995;
+    const hubY = tY + tH * 0.26;
+    Object.assign(line.style, { left: r.left + 'px', width: r.width + 'px', top: ground + 'px' });
+    Object.assign(tb.style, { width: tW + 'px', transform: `translate(${tX}px, ${tY}px)`, opacity: 0 });
+    const wW = Math.max(60, tW * 0.5), wH = wW * 22 / 34;
+    Object.assign(windEl.style, { width: wW + 'px', transform: `translate(${tX - wW * 0.55}px, ${hubY - wH / 2}px)`, opacity: 0 });
+
+    // 1. ground draws, turbine and wind appear
+    line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
+    [tb, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 200, fill: 'forwards' }));
+
+    // 2. a fleet of drones and air taxis crosses the far distance, small and faint
+    const fleet = [
+      ['d', 0.10, 1, 26], ['e', 0.16, -1, 34], ['d', 0.22, -1, 22], ['d', 0.29, 1, 24], ['e', 0.33, 1, 30],
+      ['d', 0.38, -1, 20], ['e', 0.43, -1, 28], ['d', 0.47, 1, 18], ['d', 0.14, -1, 21]
+    ];
+    fleet.forEach(([kind, fy, dir, size], k) => {
+      const src = kind === 'd' ? droneSvg : evtolSvg; if (!src) return;
+      const s = document.createElement('span'); s.className = 'piece ico far';
+      const w = Math.max(14, size * Math.min(1, W / 900) * 1.1); s.style.width = w + 'px';
+      s.appendChild(src.cloneNode(true)); el.insertBefore(s, line);
+      const y = H * fy * (ground / H) , x0 = dir > 0 ? -w * 2 - k * 30 : W + w + k * 30, x1 = dir > 0 ? W + w * 2 : -w * 3;
+      const bob = (k % 3 + 1) * 3;
+      s.animate([
+        { transform: `translate(${x0}px, ${y}px)`, opacity: 0 },
+        { transform: `translate(${x0 + (x1 - x0) * 0.15}px, ${y - bob}px)`, opacity: 1, offset: 0.12 },
+        { transform: `translate(${x0 + (x1 - x0) * 0.6}px, ${y + bob}px)`, offset: 0.6 },
+        { transform: `translate(${x1}px, ${y}px)`, opacity: 1 }
+      ], { duration: 3600 + (k % 4) * 500, delay: 150 + (k % 5) * 120, easing: 'linear', fill: 'both' });
+    });
+
+    // 3. a gust of leaves blows through past the turbine
+    at(1700, () => {
+      const lw = Math.max(16, tW * 0.12);
+      for (let k = 0; k < 10; k++) {
+        const leafEl = leafTpl.content.firstElementChild.cloneNode(true);
+        const size = lw * (0.75 + ((k * 37) % 10) / 20);
+        leafEl.style.width = size + 'px'; el.appendChild(leafEl);
+        const y = ground - tH * 0.85 + ((k * 53) % 100) / 100 * tH * 0.8;
+        const wob = 18 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (360 + k * 40);
+        leafEl.animate([
+          { transform: `translate(${-size * 2}px, ${y}px) rotate(0)` },
+          { transform: `translate(${W * 0.35}px, ${y - wob}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
+          { transform: `translate(${W * 0.7}px, ${y + wob}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
+          { transform: `translate(${W + size * 2}px, ${y - wob / 2}px) rotate(${spin}deg)` }
+        ], { duration: 1100 + (k % 4) * 120, delay: k * 70, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
+      }
+    });
+
+    // 4. everything fades, the ground line settles onto the first divider, the page appears
+    at(3500, () => {
+      el.querySelectorAll('.piece').forEach((n) => n.animate([{ opacity: getComputedStyle(n).opacity }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
+      line.animate([{ transform: 'scaleX(1) translateY(0)', opacity: 1 }, { transform: `scaleX(1) translateY(${r.top - ground}px)`, opacity: 0 }],
+                   { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
+      el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
+                 { duration: 650, easing: 'ease', fill: 'forwards' }).onfinish = finish;
+    });
+  });
+})();
 </script>
 <script>
   // Preview only: every control shakes, buzzes on phones that allow it, and says it's coming soon.
