@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://ellisacoustics.github.io/">
 <meta name="description" content="Max Ellis is a Defra-funded PhD candidate in psychoacoustics at the University of Salford, researching how people perceive drones, eVTOL aircraft, heat pumps and electric-vehicle warning sounds in complex soundscapes.">
 <meta property="og:description" content="Max Ellis is a Defra-funded PhD candidate in psychoacoustics at the University of Salford, researching how people perceive drones, eVTOL aircraft, heat pumps and electric-vehicle warning sounds in complex soundscapes.">
-<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=2">
+<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
@@ -61,7 +61,7 @@
  "url": "https://ellisacoustics.github.io/",
  "image": "https://ellisacoustics.github.io/images/max-ellis-portrait.jpg",
  "jobTitle": "PhD Candidate in Psychoacoustics",
- "honorificSuffix": "BDes MSc AFHEA",
+ "honorificSuffix": "BDes (Hons) MSc AFHEA",
  "affiliation": {
   "@type": "CollegeOrUniversity",
   "name": "University of Salford"
@@ -491,12 +491,12 @@
   .courier .door { transform-box: fill-box; }
   .courier .door-l { transform-origin: 0% 50%; }
   .courier .door-r { transform-origin: 100% 50%; }
-  /* Post-nominals in true small capitals from the serif (its own smcp/c2sc glyphs, not shrunk capitals) */
+  /* Post-nominals: small italic beside the name. inline-block keeps the selection highlight to the text itself */
   .postnominals {
-    font-family: var(--serif); font-size: 17px; line-height: 1; font-style: normal; font-weight: 400;
-    font-variant-caps: all-small-caps; font-feature-settings: "c2sc", "smcp", "lnum";
-    letter-spacing: 0.08em; color: var(--ink-2); white-space: nowrap;
-    margin-left: 0.3em;
+    display: inline-block; vertical-align: baseline;
+    font-size: 13px; line-height: 1.2; font-style: italic; font-weight: 400;
+    letter-spacing: 0.02em; color: var(--ink-2); white-space: nowrap;
+    margin-left: 0.15em;
   }
 
   .scale {
@@ -616,7 +616,7 @@
       <button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Light or dark mode"><span class="tt-knob" aria-hidden="true"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" focusable="false"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M5.1 18.9l1.7-1.7M17.2 6.8l1.7-1.7"/></svg><svg class="moon" viewBox="0 0 24 24" focusable="false"><path d="M20.4 14.6A8.6 8.6 0 1 1 9.4 3.6a7 7 0 0 0 11 11Z" fill="currentColor"/></svg></span></button>
     </div>
   </nav>
-  <h1><span class="name"><span class="visually-hidden">Max Ellis</span><span aria-hidden="true">Max Ell<span class="i-wrap"><span class="bl"></span>ı<span class="tittle"></span></span>s</span></span> <span class="postnominals">BDes MSc AFHEA</span></h1>
+  <h1><span class="name"><span class="visually-hidden">Max Ellis</span><span aria-hidden="true">Max Ell<span class="i-wrap"><span class="bl"></span>ı<span class="tittle"></span></span>s</span></span> <span class="postnominals">BDes (Hons) MSc AFHEA</span></h1>
   <p class="role">PhD Candidate in Psychoacoustics</p>
   <p class="affil thesis-title">Psychoacoustic Assessment and Machine Learning-Based Modelling of Novel Noise Source Perception in Complex Soundscapes</p>
   <p class="print-only">ellisacoustics.github.io · linkedin.com/in/psychoacoustic · github.com/ellisacoustics · orcid.org/0009-0007-5909-854X</p>
