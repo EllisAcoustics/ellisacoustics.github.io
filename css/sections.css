@@ -170,9 +170,8 @@ img.on-dark { display: none !important; }
 .c-scholar, .c-scholar span, .more-pubs a.c-scholar { color: #1A5FE0 !important; }
 :root[data-theme="dark"] .c-orcid, :root[data-theme="dark"] .c-orcid span, :root[data-theme="dark"] .more-pubs a.c-orcid { color: #A6CE39 !important; }
 :root[data-theme="dark"] .c-scholar, :root[data-theme="dark"] .c-scholar span, :root[data-theme="dark"] .more-pubs a.c-scholar { color: #5B95F5 !important; }
-/* Grades: heat-pump fan gold (deeper on white so it stays readable) */
-.timeline .grade { color: #8A6500; }
-:root[data-theme="dark"] .timeline .grade { color: #E0A800; }
+/* Grades: the same grey as the detail lines */
+.timeline .grade { color: var(--ink-2); }
 @media print { .c-orcid, .c-scholar { color: inherit !important; } }
 
 /* Awarded: the same gold as the grades, still and solid */
