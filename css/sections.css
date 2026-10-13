@@ -76,7 +76,11 @@ img.colour { filter: none !important; }
 /* ---------- Timeline ---------- */
 .timeline + h3 { margin-top: calc(var(--u) * 6); }
 .tl-head { font-size: 16px; line-height: 24px; font-weight: 600; margin-bottom: calc(var(--u) * 2); }
-.timeline { border-left: 1px solid var(--rule); margin-left: 4px; }
+.timeline { margin-left: 4px; }
+/* The timeline line runs from each square's centre to the next one's, so it never pokes out past
+   the first or last square, and the solid squares sit on top of it */
+.timeline > li:not(:last-child)::after { content: ""; position: absolute; left: -1px; top: 12.5px; width: 1px; height: 100%; background: var(--rule); }
+.timeline > li::before { z-index: 1; }
 .timeline li { position: relative; padding: 0 0 calc(var(--u) * 4) calc(var(--u) * 3); }
 .timeline li:last-child { padding-bottom: 0; }
 .timeline li::before {

@@ -19,6 +19,10 @@
   --rule: #6E6E73;
   --hairline: #DCDCDF;
   --accent: var(--ink);
+  --deep-blue: var(--ink);   /* older names still used by some components: all monochrome now */
+  --deep-green: var(--ink);
+  --neon-ink: var(--ink);
+  --neon: var(--rule);
   --logo-filter: none;
   color-scheme: light;
 
