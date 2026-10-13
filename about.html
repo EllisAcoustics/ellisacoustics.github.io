@@ -111,7 +111,8 @@
   .photo figcaption { margin-top: var(--u); font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); }
   .about-body p { font-size: 18px; line-height: 29px; }
   /* ---------- More about Max: a hidden drawer of interests ---------- */
-  .more-wrap { margin-top: calc(var(--u) * 2); }
+  .more-wrap { margin: 0; }
+  .more-row { padding: 0 0 calc(var(--u) * 2); }
   .story-sec { padding-bottom: 0; }
   .photo-row { padding-top: calc(var(--u) * 4); }
   .reveal .section { padding-bottom: calc(var(--u) * 2); }
@@ -143,15 +144,15 @@
   @keyframes i-pawn { 0%, 70%, 100% { transform: none; } 78% { transform: translateY(-3px); } 86% { transform: none; } }
   .int-spanish .i-bubble { transform-origin: 11px 30px; animation: i-bubble 3.2s var(--ease-in-out) infinite; }
   @keyframes i-bubble { 0%, 100% { transform: none; } 50% { transform: rotate(-3deg); } }
-  .int-chess svg { color: #3FAE3A; }
+  .int-chess svg { color: #58B80A; }
   .int-spanish .i-bub { fill: #58B80A; }   /* that owl-green, behind the flag */
-  .int-weights svg { color: #F28C28; }
+  .int-weights .i-grip { color: #F28C28; }
   .int-film .i-glass { fill: #8E4FD8; opacity: 0.85; }
   .int-film .i-flash { color: #8E4FD8; opacity: 0; animation: i-flash 4s linear infinite; }
   @keyframes i-flash { 0%, 80% { opacity: 0; } 82% { opacity: 1; } 92%, 100% { opacity: 0; } }
-  .int-dj svg { color: #E8452C; }
+  .int-dj .i-red { color: #E8452C; }
   .int-dj .i-platter { animation: i-spin 1.8s linear infinite; }   /* 33 rpm */
-  .int-dj .i-mark, .int-dj .i-fader { color: var(--ink); }
+  .int-dj .i-fader { color: var(--ink); }
   .int-dj .i-fader { animation: i-fade 3s var(--ease-in-out) infinite; }
   @keyframes i-spin { to { transform: rotate(360deg); } }
   @keyframes i-fade { 0%, 100% { transform: none; } 50% { transform: translateY(-3px); } }
@@ -289,26 +290,10 @@
       <p>I’m a Scottish novice psychoacoustician who came into research through music. I started out recording, mixing, mastering and producing for local bands in Glasgow. Whilst studying audio formally at undergraduate level, I became interested in A.I. through large language models: how they work, why they work, and why they sometimes don’t. Now I train machines to predict how humans will respond to sound environments of the present and future.</p>
       <p>That mix of studio ears and data science shapes how I work: I care about how something actually sounds to the person hearing, in context, not just what a meter says. Once I can gather that information, tools can be built and policy can be informed to form a more positive sounding future for all of us.</p>
       <p>Alongside my research, I teach and supervise students at both undergraduate and postgraduate level. My passion for acoustics and Scotland led me to join the Institute of Acoustics Scotland Branch as a Committee Member (co-opt) and Early Careers rep. I also sit on the NASA Unmanned Aircraft System Noise Working Group, and Noise Network Plus A.I. and Digital Working Group.</p>
-      <p class="more-wrap"><button class="more-btn" type="button" aria-expanded="false" aria-controls="interests"><span class="more-l">More about Max</span><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5L6 8L9.5 4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
     </div>
     </div>
   </section>
 
-  <div class="reveal" id="interests" inert>
-    <div class="reveal-in">
-  <section class="section" aria-labelledby="interests-h">
-    <h2 id="interests-h">Interests</h2>
-      <ul class="ints">
-        <li class="int int-chess" style="--i:0"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><g class="i-pawn"><circle cx="20" cy="8.4" r="3.9"/><path d="M14.8 15.2Q20 13.4 25.2 15.2"/><path d="M16.6 15.6Q17.2 22.6 13.6 26.8H26.4Q22.8 22.6 23.4 15.6"/><rect x="11" y="26.8" width="18" height="3.6" rx="1.2"/></g><path d="M6 31.6H34" stroke-width="0.7" opacity="0.5"/></svg><span class="int-n">Chess</span><a class="int-s" href="https://www.chess.com/member/max3llis">1800+ Elo</a></li>
-        <li class="int int-spanish" tabindex="0" style="--i:1"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><g class="i-bubble"><path class="i-bub" d="M7 2.6H33Q36.4 2.6 36.4 6V21.4Q36.4 24.8 33 24.8H17.6L11.2 30.4V24.8H7Q3.6 24.8 3.6 21.4V6Q3.6 2.6 7 2.6Z"/><rect x="9" y="7" width="22" height="13.4" rx="2.6" fill="#E8452C" stroke="none"/><rect x="9" y="10.35" width="22" height="6.7" fill="#F2C200" stroke="none"/><rect x="9" y="7" width="22" height="13.4" rx="2.6" stroke-width="0.7"/></g></svg><span class="int-n">Learning Spanish</span><span class="int-s">(poorly…)</span></li>
-        <li class="int int-weights" style="--i:2"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><g transform="translate(21 12) rotate(-30) translate(-20 0)"><path d="M6 0H34" stroke-width="1.8"/><rect x="8" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="12" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/><rect x="28" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="25.2" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/></g><g class="i-lift"><g transform="translate(0 24)"><path d="M6 0H34" stroke-width="1.8"/><rect x="8" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="12" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/><rect x="28" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="25.2" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/></g></g></svg><span class="int-n">Weightlifting</span></li>
-        <li class="int int-film" style="--i:3"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><path d="M4.6 10.4H13L15.6 6H24.4L27 10.4H35.4Q37.2 10.4 37.2 12.2V27.4Q37.2 29.2 35.4 29.2H4.6Q2.8 29.2 2.8 27.4V12.2Q2.8 10.4 4.6 10.4Z"/><path d="M2.8 14.6H12.6M27.4 14.6H37.2M2.8 25.4H12.4M27.6 25.4H37.2" stroke-width="0.6" opacity="0.6"/><rect x="28.6" y="8" width="3.4" height="2.4" rx="0.6" stroke-width="0.8"/><rect x="6" y="8.4" width="4.2" height="2" rx="0.6" stroke-width="0.8"/><circle cx="20" cy="20" r="7.4" fill="var(--paper)"/><circle cx="20" cy="20" r="5.4" stroke-width="0.8"/><circle class="i-glass" cx="20" cy="20" r="3.2" stroke="none"/><path class="i-glint" d="M18 18.4A2.4 2.4 0 0 1 20.6 17.4" stroke-width="0.8"/><g class="i-flash" stroke-width="0.8"><path d="M20 3.6V1.4M23.2 4.4L24.6 2.8M16.8 4.4L15.4 2.8"/></g></svg><span class="int-n">Film Photography</span></li>
-        <li class="int int-dj" style="--i:4"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><rect x="1" y="6" width="15" height="22" rx="1.2"/><circle cx="3.6" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle cx="6.2" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle cx="8.8" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle cx="8" cy="18" r="5.3"/><circle cx="8" cy="18" r="1.5" stroke-width="0.7"/><g class="i-platter" style="transform-origin:8px 18px"><path d="M8 14.9V12.9" stroke-width="1.1" class="i-mark"/></g><path d="M14.4 13V22.4" stroke-width="0.6"/><path d="M13.6 18.6H15.2" stroke-width="1"/><path d="M3.4 25.6H6M9 25.6H12.6" stroke-width="0.7"/><rect x="24" y="6" width="15" height="22" rx="1.2"/><circle cx="26.6" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle cx="29.2" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle cx="31.8" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle cx="31" cy="18" r="5.3"/><circle cx="31" cy="18" r="1.5" stroke-width="0.7"/><g class="i-platter" style="transform-origin:31px 18px"><path d="M31 14.9V12.9" stroke-width="1.1" class="i-mark"/></g><path d="M37.4 13V22.4" stroke-width="0.6"/><path d="M36.6 18.6H38.2" stroke-width="1"/><path d="M26.4 25.6H29M32 25.6H35.6" stroke-width="0.7"/><rect x="17.6" y="6" width="4.8" height="22" rx="1"/><circle cx="20" cy="9.6" r="1.1" stroke-width="0.7"/><circle cx="20" cy="13.4" r="1.1" stroke-width="0.7"/><path d="M18.9 18V25.4M21.1 18V25.4" stroke-width="0.5"/><path class="i-fader" d="M18.2 21H19.6M20.4 23H21.8" stroke-width="1.1"/></svg><span class="int-n">DJing</span></li>
-        <li class="int int-production" style="--i:5"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><path d="M9 23V18.6A11 11 0 0 1 31 18.6V23"/><rect x="6" y="20.6" width="6" height="9.4" rx="2"/><rect x="28" y="20.6" width="6" height="9.4" rx="2"/><g class="i-note n1" stroke-width="0.8"><ellipse cx="16.6" cy="20.4" rx="1.25" ry="0.9" fill="currentColor" stroke="none"/><path d="M17.8 20.2V15.4L19.8 16.4"/></g><g class="i-note n2" stroke-width="0.8"><ellipse cx="22.6" cy="21.6" rx="1.25" ry="0.9" fill="currentColor" stroke="none"/><path d="M23.8 21.4V16.8"/></g><g class="i-note n3" stroke-width="0.8"><ellipse cx="18.2" cy="22.4" rx="1.1" ry="0.8" fill="currentColor" stroke="none"/><ellipse cx="22" cy="21.6" rx="1.1" ry="0.8" fill="currentColor" stroke="none"/><path d="M19.3 22.2V17.6L23.1 16.8V21.4"/><path d="M19.3 17.6L23.1 16.8" stroke-width="1.3"/></g></svg><span class="int-n">Music Production</span></li>
-      </ul>
-  </section>
-    </div>
-  </div>
 
   <div class="section photo-row">
     <div aria-hidden="true"></div>
@@ -482,8 +467,29 @@
     </ul>
   </section>
 
+  <div class="section more-row">
+    <div aria-hidden="true"></div>
+    <p class="more-wrap"><button class="more-btn" type="button" aria-expanded="false" aria-controls="interests"><span class="more-l">More about Max</span><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5L6 8L9.5 4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
+  </div>
+
+  <div class="reveal" id="interests" inert>
+    <div class="reveal-in">
+  <section class="section" aria-labelledby="interests-h">
+    <h2 id="interests-h">Interests</h2>
+      <ul class="ints">
+        <li class="int int-chess" style="--i:0"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><g class="i-pawn"><circle cx="20" cy="8.4" r="3.9"/><path d="M14.8 15.2Q20 13.4 25.2 15.2"/><path d="M16.6 15.6Q17.2 22.6 13.6 26.8H26.4Q22.8 22.6 23.4 15.6"/><rect x="11" y="26.8" width="18" height="3.6" rx="1.2"/></g></svg><span class="int-n">Chess</span><a class="int-s" href="https://www.chess.com/member/max3llis">1800+ Elo</a></li>
+        <li class="int int-spanish" tabindex="0" style="--i:1"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><g class="i-bubble"><path class="i-bub" d="M7 2.6H33Q36.4 2.6 36.4 6V21.4Q36.4 24.8 33 24.8H17.6L11.2 30.4V24.8H7Q3.6 24.8 3.6 21.4V6Q3.6 2.6 7 2.6Z"/><rect x="9" y="7" width="22" height="13.4" rx="2.6" fill="#E8452C" stroke="none"/><rect x="9" y="10.35" width="22" height="6.7" fill="#F2C200" stroke="none"/><rect x="9" y="7" width="22" height="13.4" rx="2.6" stroke-width="0.7"/></g></svg><span class="int-n">Learning Spanish</span><span class="int-s">(poorly…)</span></li>
+        <li class="int int-weights" style="--i:2"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><g transform="translate(21 12) rotate(-30) translate(-20 0)"><path class="i-grip" d="M6 0H34" stroke-width="1.8"/><rect x="8" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="12" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/><rect x="28" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="25.2" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/></g><g class="i-lift"><g transform="translate(0 24)"><path class="i-grip" d="M6 0H34" stroke-width="1.8"/><rect x="8" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="12" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/><rect x="28" y="-7" width="4" height="14" rx="1.3" fill="var(--paper)"/><rect x="25.2" y="-4.8" width="2.8" height="9.6" rx="0.9" fill="var(--paper)"/></g></g></svg><span class="int-n">Weightlifting</span></li>
+        <li class="int int-production" style="--i:3"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><path d="M9 23V18.6A11 11 0 0 1 31 18.6V23"/><rect x="6" y="20.6" width="6" height="9.4" rx="2"/><rect x="28" y="20.6" width="6" height="9.4" rx="2"/><g class="i-note n1" stroke-width="0.8"><ellipse cx="16.6" cy="20.4" rx="1.25" ry="0.9" fill="currentColor" stroke="none"/><path d="M17.8 20.2V15.4L19.8 16.4"/></g><g class="i-note n2" stroke-width="0.8"><ellipse cx="22.6" cy="21.6" rx="1.25" ry="0.9" fill="currentColor" stroke="none"/><path d="M23.8 21.4V16.8"/></g><g class="i-note n3" stroke-width="0.8"><ellipse cx="18.2" cy="22.4" rx="1.1" ry="0.8" fill="currentColor" stroke="none"/><ellipse cx="22" cy="21.6" rx="1.1" ry="0.8" fill="currentColor" stroke="none"/><path d="M19.3 22.2V17.6L23.1 16.8V21.4"/><path d="M19.3 17.6L23.1 16.8" stroke-width="1.3"/></g></svg><span class="int-n">Music Production</span></li>
+        <li class="int int-dj" style="--i:4"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><rect x="1" y="6" width="15" height="22" rx="1.2"/><circle class="i-red" cx="3.6" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle class="i-red" cx="6.2" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle class="i-red" cx="8.8" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle class="i-red" cx="8" cy="18" r="5.3"/><circle class="i-red" cx="8" cy="18" r="1.5" stroke-width="0.7"/><g class="i-platter" style="transform-origin:8px 18px"><path d="M8 14.9V12.9" stroke-width="1.1" class="i-mark i-red"/></g><path d="M14.4 13V22.4" stroke-width="0.6"/><path d="M13.6 18.6H15.2" stroke-width="1"/><path d="M3.4 25.6H6M9 25.6H12.6" stroke-width="0.7"/><rect x="24" y="6" width="15" height="22" rx="1.2"/><circle class="i-red" cx="26.6" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle class="i-red" cx="29.2" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle class="i-red" cx="31.8" cy="8.8" r="0.8" fill="currentColor" stroke="none"/><circle class="i-red" cx="31" cy="18" r="5.3"/><circle class="i-red" cx="31" cy="18" r="1.5" stroke-width="0.7"/><g class="i-platter" style="transform-origin:31px 18px"><path d="M31 14.9V12.9" stroke-width="1.1" class="i-mark i-red"/></g><path d="M37.4 13V22.4" stroke-width="0.6"/><path d="M36.6 18.6H38.2" stroke-width="1"/><path d="M26.4 25.6H29M32 25.6H35.6" stroke-width="0.7"/><rect x="17.6" y="6" width="4.8" height="22" rx="1"/><circle class="i-red" cx="20" cy="9.6" r="1.1" stroke-width="0.7"/><circle class="i-red" cx="20" cy="13.4" r="1.1" stroke-width="0.7"/><path d="M18.9 18V25.4M21.1 18V25.4" stroke-width="0.5"/><path class="i-fader" d="M18.2 21H19.6M20.4 23H21.8" stroke-width="1.1"/></svg><span class="int-n">DJing</span></li>
+        <li class="int int-film" style="--i:5"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><path d="M4.6 10.4H13L15.6 6H24.4L27 10.4H35.4Q37.2 10.4 37.2 12.2V27.4Q37.2 29.2 35.4 29.2H4.6Q2.8 29.2 2.8 27.4V12.2Q2.8 10.4 4.6 10.4Z"/><path d="M2.8 14.6H12.6M27.4 14.6H37.2M2.8 25.4H12.4M27.6 25.4H37.2" stroke-width="0.6" opacity="0.6"/><rect x="28.6" y="8" width="3.4" height="2.4" rx="0.6" stroke-width="0.8"/><rect x="6" y="8.4" width="4.2" height="2" rx="0.6" stroke-width="0.8"/><circle cx="20" cy="20" r="7.4" fill="var(--paper)"/><circle cx="20" cy="20" r="5.4" stroke-width="0.8"/><circle class="i-glass" cx="20" cy="20" r="3.2" stroke="none"/><path class="i-glint" d="M18 18.4A2.4 2.4 0 0 1 20.6 17.4" stroke-width="0.8"/><g class="i-flash" stroke-width="0.8"><path d="M20 3.6V1.4M23.2 4.4L24.6 2.8M16.8 4.4L15.4 2.8"/></g></svg><span class="int-n">Film Photography</span></li>
+      </ul>
+  </section>
+    </div>
+  </div>
+
   <section class="section" aria-labelledby="next-h">
-    <h2 id="next-h">Where Next</h2>
+    <h2 id="next-h">Where Next?</h2>
     <div class="next">
       <a class="btn" href="contact">Get in touch</a>
       <a class="btn btn-quiet" href="./#publications" data-section="publications">Read the research</a>

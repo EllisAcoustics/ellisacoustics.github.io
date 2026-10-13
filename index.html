@@ -300,7 +300,9 @@
   .steps.lit { --progress: 1; }
   @media print { .steps.armed .step { opacity: 1; } }
   /* ---------- Method icon colours: each animated part says what it is ---------- */
-  .si1 .m-rotor { color: #13B5CF; }                                         /* drone propellers: cyan */
+  .si1 .m-rotor { color: #13B5CF; }
+  .si1 .m-win { animation: m-roy 9.8s step-end infinite; }   /* apartment windows light up through the rainbow */
+  @media (prefers-reduced-motion: reduce) { .si1 .m-win { animation: none; } }                                         /* drone propellers: cyan */
   .si2 .m-wave { color: #6B33C4; }                                          /* auralisation: white speakers, purple sound */
   :root[data-theme="dark"] .si2 .m-wave { color: #A77BEA; }
   .si3 .m-emo.e1 { color: #E0A800; }                                        /* question: yellow */
@@ -715,7 +717,7 @@
       <ol class="steps">
         <li class="step" style="--n:0;--sc:var(--f0)">
           <span class="node" aria-hidden="true"></span>
-          <span class="step-icon si1"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 31V19H9V31M9 31V12H17V31M17 31V22H23V31M23 31V15H31V31M31 31V24H37V31M1 31H39"/><path d="M12 16H14M12 20H14M12 24H14M26 19H28M26 23H28" stroke-width="0.8"/><g class="m-hover"><g transform="translate(31 6.5) scale(1.25) translate(-31 -6.5)"><ellipse cx="26.6" cy="4.6" rx="2.6" ry="0.7" stroke-width="0.4" opacity="0.55"/><ellipse cx="35.4" cy="4.6" rx="2.6" ry="0.7" stroke-width="0.4" opacity="0.55"/><path class="m-rotor" d="M24.4 4.6H28.8" stroke-width="0.7"/><path class="m-rotor r2" d="M33.2 4.6H37.6" stroke-width="0.7"/><path d="M26.6 4.8V6.2M35.4 4.8V6.2M26.6 6.2H35.4" stroke-width="0.7"/><rect x="29.2" y="5.4" width="3.6" height="2.4" rx="0.9" stroke-width="0.7" fill="var(--paper)"/><path d="M29.6 7.8L28.8 9.2M32.4 7.8L33.2 9.2" stroke-width="0.6"/></g></g></svg></span>
+          <span class="step-icon si1"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 31V19H9V31M9 31V12H17V31M17 31V22H23V31M23 31V15H31V31M31 31V24H37V31M1 31H39"/><path class="m-win" d="M12 16H14" stroke-width="0.8" style="animation-delay:-0.0s"/><path class="m-win" d="M26 19H28" stroke-width="0.8" style="animation-delay:-1.4s"/><path class="m-win" d="M12 20H14" stroke-width="0.8" style="animation-delay:-2.8s"/><path class="m-win" d="M26 23H28" stroke-width="0.8" style="animation-delay:-4.2s"/><path class="m-win" d="M12 24H14" stroke-width="0.8" style="animation-delay:-5.6s"/><g class="m-hover"><g transform="translate(31 6.5) scale(1.25) translate(-31 -6.5)"><ellipse cx="26.6" cy="4.6" rx="2.6" ry="0.7" stroke-width="0.4" opacity="0.55"/><ellipse cx="35.4" cy="4.6" rx="2.6" ry="0.7" stroke-width="0.4" opacity="0.55"/><path class="m-rotor" d="M24.4 4.6H28.8" stroke-width="0.7"/><path class="m-rotor r2" d="M33.2 4.6H37.6" stroke-width="0.7"/><path d="M26.6 4.8V6.2M35.4 4.8V6.2M26.6 6.2H35.4" stroke-width="0.7"/><rect x="29.2" y="5.4" width="3.6" height="2.4" rx="0.9" stroke-width="0.7" fill="var(--paper)"/><path d="M29.6 7.8L28.8 9.2M32.4 7.8L33.2 9.2" stroke-width="0.6"/></g></g></svg></span>
           <span class="step-no">01</span>
           <h3>Soundscape</h3>
           <p>Real places are recorded, then drones, eVTOL aircraft, heat pumps and EVs are added at realistic levels.</p>
