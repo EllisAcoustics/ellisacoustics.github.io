@@ -233,7 +233,7 @@
   .note { margin-top: calc(var(--u) * 2); }
   /* ---------- Turbine intro ---------- */
   #intro { display: none; }
-  html.intro #intro { display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden; animation: intro-failsafe 0s linear 6s forwards; }
+  html.intro #intro { display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden; animation: intro-failsafe 0s linear 5s forwards; }
   @keyframes intro-failsafe { to { visibility: hidden; } }
   #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
   #intro .piece { position: absolute; left: 0; top: 0; }
@@ -241,6 +241,8 @@
   #intro .turbine { color: var(--ink); }
   #intro .turbine .blades { color: #8A8C90; transform-box: view-box; transform-origin: 30px 26px; animation: t-spin 2.4s linear infinite; }
   @keyframes t-spin { to { transform: rotate(360deg); } }
+  /* a faint yellow after-image just ahead of each blade, like the heat pump fan's */
+  #intro .turbine .blades.ghost { color: #F2C200; opacity: 0.4; animation-delay: -0.1s; }
   #intro .turbine .bolt { color: #3FAE3A; animation: t-bolt 0.9s steps(1) infinite; }
   @keyframes t-bolt { 0%, 100% { opacity: 1; } 40% { opacity: 0.15; } 55% { opacity: 1; } 70% { opacity: 0.25; } }
   #intro .turbine .ring { fill: none; stroke: #3FAE3A; stroke-width: 0.35; opacity: 0; transform-box: view-box; transform-origin: 30px 26px; animation: t-ring 2.1s ease-out infinite; }
@@ -313,6 +315,7 @@
     <path d="M25.5 99.5H34.5"/>
     <path class="bolt" d="M30.7 57.8L29.0 62.4H30.1L29.4 66.6L31.1 61.4H30.0Z" fill="currentColor" stroke="none"/>
     <rect x="28.4" y="24.4" width="7.4" height="3.6" rx="1.2" fill="var(--paper)"/>
+    <g class="blades ghost" stroke-width="0.6"><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(120 30 26)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(240 30 26)"/></g>
     <g class="blades" stroke-width="0.6"><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(120 30 26)" fill="var(--paper)"/><path d="M30 26L31.1 23L30.6 1.6H29.6L28.9 23Z" transform="rotate(240 30 26)" fill="var(--paper)"/><circle cx="30" cy="26" r="1.6" fill="var(--paper)"/></g>
   </svg></span>
   <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
@@ -457,16 +460,25 @@
   requestAnimationFrame(() => {
     const r = target ? target.getBoundingClientRect() : { left: innerWidth * 0.1, width: innerWidth * 0.8, top: innerHeight * 0.4 };
     const W = innerWidth, H = innerHeight, ground = Math.round(H * 0.68);
-    const tH = Math.min(H * 0.52, 380), tW = tH * 0.6, tX = W / 2 - tW / 2, tY = ground - tH * 0.995;
+    const tH = Math.min(H * 0.52, 380, W * 0.75), tW = tH * 0.6, tX = W / 2 - tW / 2, tY = ground - tH * 0.995;
     const hubY = tY + tH * 0.26;
     Object.assign(line.style, { left: r.left + 'px', width: r.width + 'px', top: ground + 'px' });
     Object.assign(tb.style, { width: tW + 'px', transform: `translate(${tX}px, ${tY}px)`, opacity: 0 });
+    const side = [-1, 1].map((d, i) => {
+      const t = tb.cloneNode(true); t.classList.add('side');
+      const k = W < 600 ? 0.6 : 0.7, w = tW * k, h = tH * k, cx = W / 2 + d * Math.min(W * 0.34, tW * 1.35);
+      Object.assign(t.style, { width: w + 'px', transform: `translate(${cx - w / 2}px, ${ground - h * 0.995}px)`, opacity: 0 });
+      t.querySelectorAll('.blades').forEach((g) => { g.style.animationDelay = (i ? -0.9 : -1.7) - (g.classList.contains('ghost') ? 0.11 : 0) + 's'; g.style.animationDuration = (i ? 2.7 : 2.9) + 's'; });
+      t.querySelector('.bolt').style.animationDelay = (i ? -0.3 : -0.6) + 's';
+      el.insertBefore(t, tb); return t;
+    });
     const wW = Math.max(60, tW * 0.5), wH = wW * 22 / 34;
     Object.assign(windEl.style, { width: wW + 'px', transform: `translate(${tX - wW * 0.55}px, ${hubY - wH / 2}px)`, opacity: 0 });
 
     // 1. ground draws, turbine and wind appear
     line.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 450, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
     [tb, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 200, fill: 'forwards' }));
+    side.forEach((n) => n.animate([{ opacity: 0 }, { opacity: 0.8 }], { duration: 400, delay: 320, fill: 'forwards' }));
 
     // 2. a fleet of drones and air taxis crosses the far distance, small and faint
     const fleet = [
@@ -489,7 +501,7 @@
     });
 
     // 3. a gust of leaves blows through past the turbine
-    at(1700, () => {
+    at(1150, () => {
       const lw = Math.max(16, tW * 0.12);
       for (let k = 0; k < 10; k++) {
         const leafEl = leafTpl.content.firstElementChild.cloneNode(true);
@@ -498,16 +510,16 @@
         const y = ground - tH * 0.85 + ((k * 53) % 100) / 100 * tH * 0.8;
         const wob = 18 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (360 + k * 40);
         leafEl.animate([
-          { transform: `translate(${-size * 2}px, ${y}px) rotate(0)` },
-          { transform: `translate(${W * 0.35}px, ${y - wob}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
-          { transform: `translate(${W * 0.7}px, ${y + wob}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
-          { transform: `translate(${W + size * 2}px, ${y - wob / 2}px) rotate(${spin}deg)` }
-        ], { duration: 1100 + (k % 4) * 120, delay: k * 70, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
+          { transform: `translate(${W + size * 2}px, ${y}px) scaleX(-1) rotate(0)` },
+          { transform: `translate(${W * 0.65}px, ${y - wob}px) scaleX(-1) rotate(${spin * 0.35}deg)`, offset: 0.35 },
+          { transform: `translate(${W * 0.3}px, ${y + wob}px) scaleX(-1) rotate(${spin * 0.7}deg)`, offset: 0.7 },
+          { transform: `translate(${-size * 2}px, ${y - wob / 2}px) scaleX(-1) rotate(${spin}deg)` }
+        ], { duration: 1050 + (k % 4) * 100, delay: k * 55, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
       }
     });
 
     // 4. everything fades, the ground line settles onto the first divider, the page appears
-    at(3500, () => {
+    at(2950, () => {
       el.querySelectorAll('.piece').forEach((n) => n.animate([{ opacity: getComputedStyle(n).opacity }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
       line.animate([{ transform: 'scaleX(1) translateY(0)', opacity: 1 }, { transform: `scaleX(1) translateY(${r.top - ground}px)`, opacity: 0 }],
                    { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
