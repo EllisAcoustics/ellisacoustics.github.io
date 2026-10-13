@@ -122,8 +122,9 @@
   @media (min-width: 880px) { .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); } }
   .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
   html, body { overflow-x: clip; }
-  .itiles { display: grid; grid-template-columns: repeat(3, 44px); justify-content: space-between; gap: calc(var(--u) * 4) 0; max-width: 300px; }
-  @media (min-width: 640px) { .itiles { grid-template-columns: repeat(6, 44px); gap: 0; max-width: 560px; } }
+  /* each icon sits in the middle of an equal-width column, so the white space either side is the same */
+  .itiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); justify-items: center; gap: calc(var(--u) * 4) 0; max-width: 760px; }
+  @media (min-width: 640px) { .itiles { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; } }
   .itile { position: relative; display: flex; justify-content: center; width: 44px; padding: 6px 0; outline-offset: 4px; cursor: default; }
   .itile svg { width: 44px; height: 44px; color: var(--c, var(--ink)); transition: transform 300ms ease; }
   .itile:hover svg, .itile:focus-visible svg, .itile.is-active svg { transform: translateY(-4px); }
@@ -400,14 +401,16 @@
   (() => {
     const tiles = document.querySelectorAll('.itile');
     const place = (t) => {
-      const p = t.querySelector('.pop'); p.style.setProperty('--dx', '0px');
-      const r = p.getBoundingClientRect(), m = 12;
+      // measure from the icon itself, not the label (the label may be mid-animation)
+      const p = t.querySelector('.pop'), tr = t.getBoundingClientRect(), w = p.offsetWidth, m = 12, W = document.documentElement.clientWidth;
+      const left = tr.left + tr.width / 2 - w / 2, right = left + w;
       let dx = 0;
-      if (r.left < m) dx = m - r.left; else if (r.right > innerWidth - m) dx = innerWidth - m - r.right;
+      if (left < m) dx = m - left; else if (right > W - m) dx = W - m - right;
       p.style.setProperty('--dx', dx + 'px');
     };
     tiles.forEach((t) => {
-      ['pointerenter', 'focus'].forEach((e) => t.addEventListener(e, () => place(t)));
+      ['pointerenter', 'pointerdown', 'focus'].forEach((e) => t.addEventListener(e, () => place(t)));
+      place(t);
       t.addEventListener('click', () => {
         const on = !t.classList.contains('is-active');
         tiles.forEach((o) => o.classList.remove('is-active'));

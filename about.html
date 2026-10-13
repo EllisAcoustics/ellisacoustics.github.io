@@ -464,11 +464,10 @@
     const hpW = Math.max(150, Math.min(260, W * 0.4)), hpH = hpW * 20.5 / 32;
     const hpX = W / 2 - hpW / 2 + hpW * 0.12, hpY = base - hpH;
     const bW = hpW * 0.3, bH = bW * 30 / 40;
-    const bX = hpX - bW * 1.15, bY = base - bH * (28.6 / 30);            // the bird sits beside it, not on the warm top
+    const bX = hpX - bW * 1.15 - hpW * 0.15, bY = base - bH * (28.6 / 30);            // the bird sits beside it, not on the warm top
     line.remove();
     Object.assign(hp.style, { width: hpW + 'px', transform: `translate(${hpX}px, ${hpY}px)`, opacity: 0 });
-    // the bird faces left, away from the heat pump
-    Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px) scaleX(-1)`, transformOrigin: '50% 50%', opacity: 0 });
+    Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px)`, opacity: 0 });
     // air rises from below, straight up into the fan
     const fanX = hpX + hpW * ((13.5 - 3) / 32), awW = hpW * 0.34, awH = awW * 30 / 22;
     Object.assign(windEl.style, { width: awW + 'px', transform: `translate(${fanX - awW / 2}px, ${base - hpH * 0.02}px)`, opacity: 0 });
@@ -499,7 +498,7 @@
     [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 650, fill: 'forwards' }));
 
     // 3. six chirps, each with a note from the beak
-    const beakX = bX + bW * (1 - 35.4 / 40), beakY = bY + bH * (10.6 / 30);
+    const beakX = bX + bW * (35.4 / 40), beakY = bY + bH * (10.6 / 30);
     const chirp = (i) => {
       head.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-10deg)' }, { transform: 'rotate(0)' }], { duration: 300, easing: 'ease-out' });
       jaw.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(26deg)' }, { transform: 'rotate(0)' }], { duration: 260, easing: 'ease-out' });
@@ -507,7 +506,7 @@
       const nw = bW * (i % 2 ? 0.46 : 0.3);
       n.style.width = nw + 'px';
       el.appendChild(n);
-      const dx = -(10 + (i % 3) * 8) - nw, dy = -46 - (i % 3) * 10, rot = i % 2 ? -12 : 10;
+      const dx = 10 + (i % 3) * 8, dy = -46 - (i % 3) * 10, rot = i % 2 ? 12 : -10;
       n.animate([
         { transform: `translate(${beakX}px, ${beakY - nw}px) scale(0.5) rotate(0)`, opacity: 0 },
         { transform: `translate(${beakX + dx * 0.3}px, ${beakY - nw + dy * 0.3}px) scale(1) rotate(${rot / 2}deg)`, opacity: 1, offset: 0.25 },
@@ -640,9 +639,9 @@
   (() => {
     const SEL = '.org-tile .caption, .icon-tile .tip, .vol-tip';
     const place = (p) => {
-      p.style.setProperty('--dx', '0px');
-      const r = p.getBoundingClientRect(), m = 12, W = document.documentElement.clientWidth;
-      const dx = r.left < m ? m - r.left : r.right > W - m ? W - m - r.right : 0;
+      const tr = p.parentElement.getBoundingClientRect(), w = p.offsetWidth, m = 12, W = document.documentElement.clientWidth;
+      const l = tr.left + tr.width / 2 - w / 2, r = l + w;
+      const dx = l < m ? m - l : r > W - m ? W - m - r : 0;
       p.style.setProperty('--dx', Math.round(dx) + 'px');
     };
     const all = () => document.querySelectorAll(SEL).forEach(place);

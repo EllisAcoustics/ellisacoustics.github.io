@@ -1435,9 +1435,9 @@
   (() => {
     const SEL = '.org-tile .caption, .icon-tile .tip, .vol-tip';
     const place = (p) => {
-      p.style.setProperty('--dx', '0px');
-      const r = p.getBoundingClientRect(), m = 12, W = document.documentElement.clientWidth;
-      const dx = r.left < m ? m - r.left : r.right > W - m ? W - m - r.right : 0;
+      const tr = p.parentElement.getBoundingClientRect(), w = p.offsetWidth, m = 12, W = document.documentElement.clientWidth;
+      const l = tr.left + tr.width / 2 - w / 2, r = l + w;
+      const dx = l < m ? m - l : r > W - m ? W - m - r : 0;
       p.style.setProperty('--dx', Math.round(dx) + 'px');
     };
     const all = () => document.querySelectorAll(SEL).forEach(place);
