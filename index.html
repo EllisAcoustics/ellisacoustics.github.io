@@ -297,9 +297,11 @@
   .err-legend { display: flex; flex-wrap: wrap; gap: 4px calc(var(--u) * 2.5); font-size: 14px; line-height: 20px; color: var(--ink-2); margin-bottom: var(--u); }
   .err-legend span { display: inline-flex; align-items: center; gap: 8px; }
   .k { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--ink-2); }
-  .k-wt { border-top: 3px solid var(--neon-ink); }
-  .k-air { border-top-style: dotted; border-top-width: 3px; }
-  .k-rail { border-top-style: dashed; }
+  .err { --c-air: #1FA39A; --c-road: #D9716B; --c-rail: #A87BD0; }
+  .k-wt { border-top: 3px dashed var(--neon-ink); }
+  .k-air { border-top: 3px dotted var(--c-air); }
+  .k-road { border-top-color: var(--c-road); }
+  .k-rail { border-top: 2px dashed var(--c-rail); }
   .err-plot { position: relative; }
   .err-plot svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--sans); touch-action: pan-y; }
   .err svg .grid { stroke: var(--hairline); stroke-width: 1; }
@@ -307,12 +309,10 @@
   .err svg .tick { fill: var(--ink-2); font-family: var(--mono); font-size: 12px; }
   .err svg .atitle { fill: var(--ink-2); font-size: 13px; }
   .err svg .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .err svg .ln.wt { stroke: var(--neon-ink); stroke-width: 3; }
-  .err svg .ln.air { stroke: var(--ink); stroke-dasharray: 0.1 5; stroke-width: 3; }
-  .err svg .ln.road { stroke: var(--ink-2); }
-  .err svg .ln.rail { stroke: var(--ink-2); stroke-dasharray: 7 5; }
-  .err svg .lab { fill: var(--ink); font-size: 13px; font-weight: 600; }
-  .err svg .lab.wt { fill: var(--neon-ink); }
+  .err svg .ln.wt { stroke: var(--neon-ink); stroke-width: 2.5; stroke-dasharray: 8 5; }
+  .err svg .ln.air { stroke: var(--c-air); stroke-dasharray: 0.1 5; stroke-width: 3; }
+  .err svg .ln.road { stroke: var(--c-road); stroke-width: 2.5; }
+  .err svg .ln.rail { stroke: var(--c-rail); stroke-width: 2.5; stroke-dasharray: 9 4 1 4; }
   .err svg .unknown text { fill: var(--ink-2); font-size: 13px; }
   .err svg .unknown .q { fill: var(--neon-ink); font-family: var(--serif); font-size: 44px; font-weight: 700; }
   .err svg .unknown .q-ring { fill: none; stroke: var(--neon-ink); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: q-ring 2.4s ease-out infinite; }
@@ -326,7 +326,8 @@
   .err-tip b { display: block; font-family: var(--mono); font-weight: 400; color: var(--ink-2); font-size: 12px; }
   .err-tip span { display: flex; justify-content: space-between; gap: 16px; }
   .err-tip em { font-style: normal; font-family: var(--mono); }
-  .err figcaption { margin-top: calc(var(--u) * 1.5); font-family: var(--mono); font-size: 12px; line-height: 18px; color: var(--ink-2); max-width: 80ch; }
+  .err-title { font-family: var(--serif); font-weight: 700; font-size: 18px; line-height: 26px; margin-bottom: 6px; }
+  .err figcaption { margin-top: calc(var(--u) * 1.5); font-family: var(--serif); font-size: 14px; line-height: 20px; color: var(--ink-2); max-width: 80ch; }
   /* reveal: hidden until the chart scrolls into view, then each curve draws in turn */
   .err.armed .ln { clip-path: inset(-4px 100% -4px -4px) stroke-box; }
   .err.armed .lab, .err.armed .unknown { opacity: 0; }
@@ -644,12 +645,13 @@
     <h2 id="gap-h">The Gap</h2>
     <div class="gap">
       <p class="gap-lede">At the same sound level, some sources annoy far more people than others. Wind turbines, the first Net Zero source studied at scale, sit well above road, rail and aircraft. Drones, air taxis, heat pumps and e-scooters have no agreed curves yet.</p>
-      <figure class="err" aria-labelledby="err-cap">
+      <figure class="err" aria-labelledby="err-title">
+        <p class="err-title" id="err-title">Exposure-response relationships</p>
         <div class="err-legend" aria-hidden="true">
-          <span><i class="k k-wt"></i>Wind turbines</span><span><i class="k k-air"></i>Aircraft</span><span><i class="k k-road"></i>Road</span><span><i class="k k-rail"></i>Rail</span>
+          <span><i class="k k-wt"></i>Wind turbines</span><span><i class="k k-air"></i>Aircraft</span><span><i class="k k-road"></i>Road</span><span><i class="k k-rail"></i>Railway</span>
         </div>
         <div class="err-plot"><svg role="img" aria-label="Line chart of the percentage of people highly annoyed against day-evening-night sound level, for wind turbines, aircraft, road and rail noise"></svg><div class="err-tip" aria-hidden="true"></div></div>
-        <figcaption id="err-cap">Percentage highly annoyed (%HA) against L<sub>den</sub>. Road, rail and aircraft: Miedema &amp; Oudshoorn (2001). Wind turbines: Janssen et al. (2011). As compared in Fredianelli et al. (2019).</figcaption>
+        <figcaption id="err-cap">Miedema &amp; Oudshoorn, 2001, and Janssen et al. 2011, as cited in Fredianelli et al., 2019.</figcaption>
         <table class="visually-hidden">
           <caption>Percentage highly annoyed by source and level</caption>
           <thead><tr><th scope="col">L<sub>den</sub> (dB)</th><th scope="col">Wind turbines</th><th scope="col">Aircraft</th><th scope="col">Road</th><th scope="col">Rail</th></tr></thead>
@@ -769,7 +771,7 @@
           <span class="date">2025</span>
           <div>
             <h3>Comparison of Deep Learning and Psychoacoustic Models to Predict UAV Noise Impact in Soundscapes</h3>
-            <p class="authors"><strong>M. W. Ellis</strong>, M. C. Green, M. J. B. Lotinga, A. J. Torija Martínez</p>
+            <p class="authors"><strong>M. W. Ellis</strong>, M. C. Green, M. J. B. Lotinga, A. J. Torija</p>
             <p class="venue">Forum Acusticum EuroNoise 2025, 11th Convention of the European Acoustics Association, Málaga, pp. 2121–2127.</p>
             <div class="meta"><a href="https://doi.org/10.61782/fa.2025.0235">doi:10.61782/fa.2025.0235</a><a href="https://dael.euracoustics.org/confs/fa2025/data/articles/000235.pdf">PDF</a><span class="tag">Conference Paper</span><span class="tag">Open Access</span></div>
           </div>
@@ -1303,6 +1305,12 @@
       if (text != null) n.textContent = text;
       (parent || svg).appendChild(n); return n;
     };
+    const ICON = {
+      wt: '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 22.5V9.5M8.5 22.5H15.5"/><path d="M12 9.5L12.7 1.5M12 9.5L19 13.4M12 9.5L5 13.4" stroke-width="1.9"/></g><circle cx="12" cy="9.5" r="1.5" fill="currentColor"/>',
+      air: '<path transform="rotate(90 12 12)" d="M12 1.8c.9 0 1.5 1.1 1.5 2.4v5.1l8 4.6v2.2l-8-2.4v5l2.4 1.8v1.7L12 21.3l-3.9.9v-1.7l2.4-1.8v-5l-8 2.4v-2.2l8-4.6V4.2c0-1.3.6-2.4 1.5-2.4z" fill="currentColor"/>',
+      road: '<path d="M2.2 16.2v-3.4c0-1 .7-1.8 1.6-2l2.5-.6 2.4-3.4c.4-.6 1.1-.9 1.8-.9h4.6c.7 0 1.4.3 1.8 1l2.2 3.3 1.8.4c1 .2 1.7 1.1 1.7 2.1v3.5z" fill="currentColor"/><path d="M8.3 10.3l1.7-2.5h3.5v2.5zM15 7.8h.6c.4 0 .8.2 1 .5l1.3 2H15z" fill="var(--paper)"/><circle cx="7" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/>',
+      rail: '<path d="M2.6 16.8V7.2h7.2v3.4h8.6c1.2 0 2.1.9 2.1 2.1v2.6l1.8 1.5z" fill="currentColor"/><rect x="14.6" y="6.6" width="2.4" height="4.2" fill="currentColor"/><path d="M1.8 7.2h8.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="4.3" y="8.6" width="3.6" height="2.8" rx="0.4" fill="var(--paper)"/><g fill="var(--paper)" stroke="currentColor" stroke-width="1.5"><circle cx="6.2" cy="18.3" r="2.3"/><circle cx="11.6" cy="18.8" r="1.7"/><circle cx="16.2" cy="18.8" r="1.7"/></g><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="16.4" cy="3.9" r="1.4"/><circle cx="19.7" cy="2.6" r="1.1"/></g>'
+    };
     let geo = null;
     const draw = () => {
       const W = Math.max(280, fig.clientWidth), narrow = W < 520;
@@ -1335,15 +1343,17 @@
         let d = '';
         for (let L = s.from; L <= s.to + 1e-9; L += 0.25) d += (d ? 'L' : 'M') + X(L).toFixed(1) + ' ' + Y(s.f(L)).toFixed(1);
         const p = el('path', { class: 'ln ' + s.id, d, style: `--n:${n}` });
-        const v = s.f(s.to);
-        let lx = X(s.to) + 8, ly = Y(v) + 4, anchor = 'start';
-        if (s.id === 'wt' && narrow) { lx = X(s.to) - 8; anchor = 'end'; }
-        if (s.id === 'air') ly -= 4;
-        if (s.id === 'road') ly += 6;
-        el('text', { class: 'lab ' + s.id, x: lx, y: ly, 'text-anchor': anchor, style: `--n:${n}` }, null, s.name);
+        // an icon for each source at the end of its curve, in the curve's colour
+        const v = s.f(s.to), sz = narrow ? 26 : 38;
+        let iy = Y(v) - sz / 2;
+        if (s.id === 'air') iy -= sz * 0.45;
+        if (s.id === 'road') iy += sz * 0.3;
+        const ig = el('g', { class: 'lab', style: `--n:${n};color:var(${s.id === 'wt' ? '--neon-ink' : '--c-' + s.id})`,
+          transform: `translate(${X(s.to) + 6} ${iy}) scale(${sz / 24})` });
+        ig.innerHTML = ICON[s.id];
       });
       geo.xhair = el('line', { class: 'xhair', y1: m.t, y2: m.t + ph, opacity: 0 });
-      geo.dots = S.map((s) => el('circle', { class: 'dot', r: 5, fill: s.id === 'wt' ? 'var(--neon-ink)' : s.id === 'air' ? 'var(--ink)' : 'var(--ink-2)', opacity: 0 }));
+      geo.dots = S.map((s) => el('circle', { class: 'dot', r: 5, fill: s.id === 'wt' ? 'var(--neon-ink)' : `var(--c-${s.id})`, opacity: 0 }));
     };
     const hover = (cx) => {
       const r = svg.getBoundingClientRect(), { X, Y, m, pw, W } = geo;
