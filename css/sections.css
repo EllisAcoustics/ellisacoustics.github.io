@@ -175,12 +175,11 @@ img.on-dark { display: none !important; }
 @media print { .c-orcid, .c-scholar { color: inherit !important; } }
 
 /* Awarded: a gold medal, then the words in the main text colour, still and solid */
-.honour, .outputs .honour { display: flex; align-items: center; gap: 7px; background: none !important; -webkit-text-fill-color: currentColor !important; color: var(--ink) !important; animation: none !important; }
-.honour .medal { flex: none; width: 15px; height: 19px; color: #A87A00; }
-.honour .medal .disc { fill: currentColor; }
-.honour .medal .rib { fill: #2F4FD8; }
-.honour .medal .rib.r2 { fill: #1E3AA8; }
+.honour, .outputs .honour { display: flex; align-items: center; gap: 7px; background: none !important; -webkit-text-fill-color: currentColor !important; color: var(--ink) !important; animation: none !important; font-weight: 400; }
+.honour .medal { flex: none; width: 13px; height: 17px; color: #A87A00; }
 :root[data-theme="dark"] .honour .medal { color: #E0A800; }
-:root[data-theme="dark"] .honour .medal .rib { fill: #4D6BE8; }
-:root[data-theme="dark"] .honour .medal .rib.r2 { fill: #2F4FD8; }
-@media (forced-colors: active) { .honour .medal .disc, .honour .medal .rib { fill: CanvasText; } }
+@media (forced-colors: active) { .honour .medal { color: CanvasText; } }
+
+/* Paper links (PDF, DOI): the same gold as the credential links */
+.outputs .meta a { color: #8A6500; text-underline-offset: 3px; }
+:root[data-theme="dark"] .outputs .meta a { color: #F2C200; }

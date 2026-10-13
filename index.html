@@ -52,8 +52,8 @@
     addEventListener('pagereveal', function (e) { if (e.viewTransition && document.documentElement.classList.contains('intro')) e.viewTransition.skipTransition(); });
   })();
 </script>
-<link rel="stylesheet" href="css/site.css?v=5">
-<link rel="stylesheet" href="css/sections.css?v=6">
+<link rel="stylesheet" href="css/site.css?v=6">
+<link rel="stylesheet" href="css/sections.css?v=7">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -301,20 +301,20 @@
   @media print { .steps.armed .step { opacity: 1; } }
   /* ---------- Method icon colours: each animated part says what it is ---------- */
   .si1 .m-rotor { color: #13B5CF; }                                         /* drone propellers: cyan */
-  .si2 rect, .si2 .m-wave { color: #5E2CA5; }                               /* auralisation speakers: deep purple */
-  :root[data-theme="dark"] .si2 rect, :root[data-theme="dark"] .si2 .m-wave { color: #9B6BE0; }
+  .si2 .m-wave { color: #6B33C4; }                                          /* auralisation: white speakers, purple sound */
+  :root[data-theme="dark"] .si2 .m-wave { color: #A77BEA; }
   .si3 .m-emo.e1 { color: #E0A800; }                                        /* question: yellow */
   .si3 .m-emo.e2 { color: #3FAE3A; }                                        /* happy: green */
   .si3 .m-emo.e3 { color: #2F6FE0; }                                        /* sad: blue */
   .si3 .m-emo.e4 { color: #E8452C; }                                        /* exclamation: red */
-  .si3 .m-wave { color: #E64C9C; }                                          /* listening panel headphones: pink */
+  .si3 .m-wave { animation: m-wave 1.8s ease-out infinite, m-roy 12.6s step-end infinite; }   /* listening panel headphones: a new rainbow colour each pulse */
+  @keyframes m-roy { 0% { color: #E8452C; } 14.28% { color: #F28C28; } 28.57% { color: #F2C200; } 42.85% { color: #3FAE3A; } 57.14% { color: #2F6FE0; } 71.42% { color: #4B3FD8; } 85.71% { color: #8E4FD8; } }
   /* machine learning: the travelling node turns pink, cyan then green at each layer; the output node pulses green */
   .si5 .m-dot:nth-of-type(6n+1) { color: #E8452C; } .si5 .m-dot:nth-of-type(6n+2) { color: #E0A800; }
   .si5 .m-dot:nth-of-type(6n+3) { color: #3FAE3A; } .si5 .m-dot:nth-of-type(6n+4) { color: #13B5CF; }
   .si5 .m-dot:nth-of-type(6n+5) { color: #2F6FE0; } .si5 .m-dot:nth-of-type(6n) { color: #E64C9C; }   /* prediction: all colours */
   .si6 .m-tick, .si6 .m-badge circle { color: #3FAE3A; }                    /* findings: green tick */
-  .si6 .m-l { color: #8B5A2B; }                                             /* paper lines: brown */
-  :root[data-theme="dark"] .si6 .m-l { color: #B07A45; }
+  .si6 .m-l { color: var(--ink); }                                          /* paper lines: white */
   /* ---------- Method icon animations ---------- */
   .step-icon svg { overflow: visible; }
   .step-icon svg * { transform-box: view-box; }
@@ -373,6 +373,7 @@
   .err svg .tick { fill: var(--ink-2); font-family: var(--mono); font-size: 12px; }
   .err svg .atitle { fill: var(--ink-2); font-size: 13px; }
   .err svg .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .err .wt-blades { fill: #A87A00; } :root[data-theme="dark"] .err .wt-blades { fill: #E0A800; }   /* gold blades on a white mast */
   .err svg .ln.wt { stroke: var(--c-wt); stroke-width: 2.5; stroke-dasharray: 8 5; }
   .err svg .ln.air { stroke: var(--c-air); stroke-dasharray: 0.1 5; stroke-width: 3; }
   .err svg .ln.road { stroke: var(--c-road); stroke-width: 2.5; }
@@ -391,6 +392,8 @@
   .err-tip span { display: flex; justify-content: space-between; gap: 16px; }
   .err-tip em { font-style: normal; font-family: var(--mono); }
   .err-title { font-family: var(--serif); font-weight: 700; font-size: 18px; line-height: 26px; margin-bottom: 6px; }
+  .err figcaption a { color: inherit; text-underline-offset: 3px; text-decoration-color: var(--rule); }
+  .err figcaption a:hover { color: var(--ink); text-decoration-color: currentColor; }
   .err figcaption { margin-top: calc(var(--u) * 1.5); font-family: var(--serif); font-size: 14px; line-height: 20px; color: var(--ink-2); max-width: 80ch; }
   /* reveal: hidden until the chart scrolls into view, then each curve draws in turn */
   .err.armed .ln { clip-path: inset(-4px 100% -4px -4px) stroke-box; }
@@ -408,7 +411,14 @@
   }
   .hero-sub { max-width: 33ch; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.22; }
   .hero-sub .g { color: var(--accent); }
-  .hero-sub span.g { color: #13794A; font-weight: 600; }   /* Net Zero: deep emerald, AA on white */
+  .hero-sub span.g { color: #13794A; font-weight: 600; }
+  /* the new technologies, each in its colour from the drawings; the sounds get a wave under them */
+  .hero-sub .t { font-weight: 600; }
+  .hero-sub .t-air { color: #4B3FD8; } .hero-sub .t-car { color: #1F5FCC; } .hero-sub .t-hp { color: #8A6500; } .hero-sub .t-drone { color: #0A7A8C; }
+  :root[data-theme="dark"] .hero-sub .t-air { color: #9188F2; } :root[data-theme="dark"] .hero-sub .t-car { color: #5B95F5; }
+  :root[data-theme="dark"] .hero-sub .t-hp { color: #E0A800; } :root[data-theme="dark"] .hero-sub .t-drone { color: #13B5CF; }
+  .hero-sub .snd { font-style: italic; text-decoration: underline wavy var(--ink-2); text-decoration-thickness: 1.5px; text-underline-offset: 0.22em; text-decoration-skip-ink: none; }
+  @media print { .hero-sub .snd { text-decoration: none; } }   /* Net Zero: deep emerald, AA on white */
   :root[data-theme="dark"] .hero-sub span.g { color: #4CC38A; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme]) .hero-sub span.g { color: #4CC38A; } }
   @media print { .hero-sub { font-size: 16pt; max-width: none; } }
@@ -671,7 +681,7 @@
   <p class="visually-hidden">Frequency scale from 63 Hz to 8 kHz, marking where the noise of the sources I study is concentrated: next-generation wind turbines around 100 Hz, air-source heat pumps around 200 Hz, passenger multicopter eVTOL aircraft around 400 Hz, the warning sounds of electric cars and e-scooters around 1 kHz, and drones around 2.5 kHz.</p>
 
   <div class="hero">
-    <p class="hero-sub"><span class="g">Net Zero</span> is bringing new technology into our towns and cities – air taxis, electric cars, heat pumps and delivery drones – with sounds we’ve never lived with before. I research the effect these noise sources have on us, <em class="g">before</em> they arrive.</p>
+    <p class="hero-sub"><span class="g">Net Zero</span> is bringing new technology into our towns and cities – <span class="t t-air">air taxis</span>, <span class="t t-car">electric cars</span>, <span class="t t-hp">heat pumps</span> and <span class="t t-drone">delivery drones</span> – with <span class="snd">sounds</span> we’ve never lived with before. I research the effect these <span class="snd">noise sources</span> have on us, <em class="g">before</em> they arrive.</p>
     <p class="hero-why">Noise is a “silent killer”, second only to air pollution in its burden on health in Europe<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe">WHO, 2011</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge<a class="cite" href="https://committees.parliament.uk/event/17423">House of Lords, 2023</a>: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft flying low over gardens. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere.</p>
     <div class="cta">
       <a class="btn" href="contact">Get in touch</a>
@@ -712,14 +722,14 @@
         </li>
         <li class="step" style="--n:1;--sc:var(--f1)">
           <span class="node" aria-hidden="true"></span>
-          <span class="step-icon si2"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="20" cy="16" r="3.2"/><path d="M14.5 29Q20 21.5 25.5 29"/><rect x="3" y="12" width="4" height="7" rx="0.8"/><rect x="33" y="12" width="4" height="7" rx="0.8"/><rect x="18" y="1" width="4" height="5" rx="0.8"/><path class="m-wave" d="M8.6 13.2Q10.2 15.5 8.6 17.8" stroke-width="0.8" style="transform-origin:7px 15.5px;animation-delay:0.0s"/><path class="m-wave" d="M8.6 13.2Q10.2 15.5 8.6 17.8" stroke-width="0.8" style="transform-origin:7px 15.5px;animation-delay:0.6s"/><path class="m-wave" d="M8.6 13.2Q10.2 15.5 8.6 17.8" stroke-width="0.8" style="transform-origin:7px 15.5px;animation-delay:1.2s"/><path class="m-wave" d="M31.4 13.2Q29.8 15.5 31.4 17.8" stroke-width="0.8" style="transform-origin:33px 15.5px;animation-delay:0.3s"/><path class="m-wave" d="M31.4 13.2Q29.8 15.5 31.4 17.8" stroke-width="0.8" style="transform-origin:33px 15.5px;animation-delay:0.9s"/><path class="m-wave" d="M31.4 13.2Q29.8 15.5 31.4 17.8" stroke-width="0.8" style="transform-origin:33px 15.5px;animation-delay:1.5s"/><path class="m-wave" d="M17.8 7.4Q20 8.9 22.2 7.4" stroke-width="0.8" style="transform-origin:20px 6px;animation-delay:0.1s"/><path class="m-wave" d="M17.8 7.4Q20 8.9 22.2 7.4" stroke-width="0.8" style="transform-origin:20px 6px;animation-delay:0.8s"/><path class="m-wave" d="M17.8 7.4Q20 8.9 22.2 7.4" stroke-width="0.8" style="transform-origin:20px 6px;animation-delay:1.3s"/></svg></span>
+          <span class="step-icon si2"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="20" cy="16" r="3.2"/><path d="M14.5 26.6Q20 17.2 25.5 26.6"/><rect x="3" y="12" width="4" height="7" rx="0.8"/><rect x="33" y="12" width="4" height="7" rx="0.8"/><rect x="18" y="1" width="4" height="5" rx="0.8"/><path class="m-wave" d="M8.6 13.2Q10.2 15.5 8.6 17.8" stroke-width="0.8" style="transform-origin:7px 15.5px;animation-delay:0.0s"/><path class="m-wave" d="M8.6 13.2Q10.2 15.5 8.6 17.8" stroke-width="0.8" style="transform-origin:7px 15.5px;animation-delay:0.6s"/><path class="m-wave" d="M8.6 13.2Q10.2 15.5 8.6 17.8" stroke-width="0.8" style="transform-origin:7px 15.5px;animation-delay:1.2s"/><path class="m-wave" d="M31.4 13.2Q29.8 15.5 31.4 17.8" stroke-width="0.8" style="transform-origin:33px 15.5px;animation-delay:0.3s"/><path class="m-wave" d="M31.4 13.2Q29.8 15.5 31.4 17.8" stroke-width="0.8" style="transform-origin:33px 15.5px;animation-delay:0.9s"/><path class="m-wave" d="M31.4 13.2Q29.8 15.5 31.4 17.8" stroke-width="0.8" style="transform-origin:33px 15.5px;animation-delay:1.5s"/><path class="m-wave" d="M17.8 7.4Q20 8.9 22.2 7.4" stroke-width="0.8" style="transform-origin:20px 6px;animation-delay:0.1s"/><path class="m-wave" d="M17.8 7.4Q20 8.9 22.2 7.4" stroke-width="0.8" style="transform-origin:20px 6px;animation-delay:0.8s"/><path class="m-wave" d="M17.8 7.4Q20 8.9 22.2 7.4" stroke-width="0.8" style="transform-origin:20px 6px;animation-delay:1.3s"/></svg></span>
           <span class="step-no">02</span>
           <h3>Auralisation</h3>
           <p>Each scene is rendered spatially, so listeners hear it as they would standing there.</p>
         </li>
         <li class="step" style="--n:2;--sc:var(--f2)">
           <span class="node" aria-hidden="true"></span>
-          <span class="step-icon si3"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 22V18A12 12 0 0 1 32 18V22"/><rect x="5" y="21" width="6" height="9" rx="2"/><rect x="29" y="21" width="6" height="9" rx="2"/><path d="M15 26H25M17 23H23M17 29H23" stroke-width="0.7" stroke-dasharray="1 1.4"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:1.2s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:1.2s"/><g class="m-emo e1"><path d="M3.2 6.2Q3.2 4 5 4Q6.8 4 6.8 5.6Q6.8 6.8 5 7.4V8.4" stroke-width="0.8"/><circle cx="5" cy="10" r="0.45" fill="currentColor" stroke="none"/></g><g class="m-emo e2"><circle cx="13" cy="3.4" r="2.6" stroke-width="0.7"/><circle cx="12.1" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><circle cx="13.9" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><path d="M11.8 4.1Q13 5.2 14.2 4.1" stroke-width="0.6"/></g><g class="m-emo e3"><circle cx="27" cy="3.4" r="2.6" stroke-width="0.7"/><circle cx="26.1" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><circle cx="27.9" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><path d="M25.8 4.9Q27 3.8 28.2 4.9" stroke-width="0.6"/></g><g class="m-emo e4"><path d="M35 4V8.2" stroke-width="0.9"/><circle cx="35" cy="10" r="0.45" fill="currentColor" stroke="none"/></g></svg></span>
+          <span class="step-icon si3"><svg viewBox="0 0 40 34" overflow="visible" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g transform="translate(0 2.4)"><path d="M8 22V18A12 12 0 0 1 32 18V22"/><rect x="5" y="21" width="6" height="9" rx="2"/><rect x="29" y="21" width="6" height="9" rx="2"/><path d="M15 26H25M17 23H23M17 29H23" stroke-width="0.7" stroke-dasharray="1 1.4"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:1.2s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:1.2s"/></g><g transform="translate(0 -1.2)"><g class="m-emo e1"><path d="M3.2 6.2Q3.2 4 5 4Q6.8 4 6.8 5.6Q6.8 6.8 5 7.4V8.4" stroke-width="0.8"/><circle cx="5" cy="10" r="0.45" fill="currentColor" stroke="none"/></g></g><g transform="translate(0 -1.2)"><g class="m-emo e2"><circle cx="13" cy="3.4" r="2.6" stroke-width="0.7"/><circle cx="12.1" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><circle cx="13.9" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><path d="M11.8 4.1Q13 5.2 14.2 4.1" stroke-width="0.6"/></g></g><g transform="translate(0 -1.2)"><g class="m-emo e3"><circle cx="27" cy="3.4" r="2.6" stroke-width="0.7"/><circle cx="26.1" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><circle cx="27.9" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><path d="M25.8 4.9Q27 3.8 28.2 4.9" stroke-width="0.6"/></g></g><g transform="translate(0 -1.2)"><g class="m-emo e4"><path d="M35 4V8.2" stroke-width="0.9"/><circle cx="35" cy="10" r="0.45" fill="currentColor" stroke="none"/></g></g></svg></span>
           <span class="step-no">03</span>
           <h3>Listening Panels</h3>
           <p>Participants rate annoyance in controlled jury tests, across different ambiences and contexts.</p>
@@ -759,7 +769,7 @@
           <span><i class="k k-wt"></i>Wind turbines</span><span><i class="k k-air"></i>Aircraft</span><span><i class="k k-road"></i>Road</span><span><i class="k k-rail"></i>Railway</span>
         </div>
         <div class="err-plot"><svg role="img" aria-label="Line chart of the percentage of people highly annoyed against day-evening-night sound level, for wind turbines, aircraft, road and rail noise"></svg><div class="err-tip" aria-hidden="true"></div></div>
-        <figcaption id="err-cap">Miedema &amp; Oudshoorn, 2001, and Janssen et al. 2011, as cited in Fredianelli et al., 2019.</figcaption>
+        <figcaption id="err-cap">Miedema &amp; Oudshoorn, 2001, and Janssen et al. 2011, as cited in <a href="https://doi.org/10.1016/j.scitotenv.2018.08.107">Fredianelli et al., 2019</a>.</figcaption>
         <div class="visually-hidden"><table>
           <caption>Percentage highly annoyed by source and level</caption>
           <thead><tr><th scope="col">L<sub>den</sub> (dB)</th><th scope="col">Wind turbines</th><th scope="col">Aircraft</th><th scope="col">Road</th><th scope="col">Rail</th></tr></thead>
@@ -802,7 +812,7 @@
             <h3>Psychoacoustic Assessment of UAV Noise in Varying Ambiences, Operational Conditions and Contexts</h3>
             <p class="authors"><strong>M. W. Ellis</strong>, Z. Podwińska, A. J. Torija</p>
             <p class="venue">Forum Acusticum 2027, Brussels.</p>
-            <p class="honour"><svg class="medal" viewBox="0 0 16 20" aria-hidden="true" focusable="false"><path class="rib" d="M3.4 1H7L9.6 7.6L7.2 8.6Z"/><path class="rib r2" d="M12.6 1H9L6.4 7.6L8.8 8.6Z"/><circle class="disc" cx="8" cy="13.2" r="5.6"/><circle cx="8" cy="13.2" r="4.3" fill="none" stroke="var(--paper)" stroke-width="0.6" opacity="0.55"/><path d="M8.00 10.50L8.65 12.31L10.57 12.37L9.05 13.54L9.59 15.38L8.00 14.30L6.41 15.38L6.95 13.54L5.43 12.37L7.35 12.31Z" fill="var(--paper)"/></svg>Awarded Best Student Paper</p>
+            <p class="honour"><svg class="medal" viewBox="0 0 16 20" aria-hidden="true" focusable="false"><path d="M5 1.5L8 8.2L11 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="13.4" r="5" fill="currentColor"/></svg>Awarded Best Student Paper</p>
           </div>
         </li>
         <li>
@@ -1347,14 +1357,14 @@
     const svg = fig.querySelector('svg'), tip = fig.querySelector('.err-tip');
     const NS = 'http://www.w3.org/2000/svg';
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Miedema & Oudshoorn (2001) polynomials, x = Lden - 42, zero below 42 dB
+    // Miedema & Oudshoorn (2001) polynomials, x = Lden - 42, drawn from 42 dB where they begin
     const mo = (a, b, c) => (L) => { const x = L - 42; return x <= 0 ? 0 : Math.max(0, a * x ** 3 + b * x ** 2 + c * x); };
     // Wind turbines (Janssen et al., 2011) — logistic fit to the published curve
     const wt = (L) => 100 / (1 + Math.exp(-(-11.01 + 0.2016 * L)));
     const S = [
-      { id: 'rail', name: 'Rail', f: mo(7.239e-4, -7.851e-3, 0.1695), from: 30, to: 80 },
-      { id: 'road', name: 'Road', f: mo(9.868e-4, -1.436e-2, 0.5118), from: 30, to: 80 },
-      { id: 'air', name: 'Aircraft', f: mo(-9.199e-5, 3.932e-2, 0.2939), from: 30, to: 78 },
+      { id: 'rail', name: 'Rail', f: mo(7.239e-4, -7.851e-3, 0.1695), from: 42, to: 80 },
+      { id: 'road', name: 'Road', f: mo(9.868e-4, -1.436e-2, 0.5118), from: 42, to: 80 },
+      { id: 'air', name: 'Aircraft', f: mo(-9.199e-5, 3.932e-2, 0.2939), from: 42, to: 78 },
       { id: 'wt', name: 'Wind turbines', f: wt, from: 30, to: 53 },
     ];
     // accessible table, 5 dB steps
@@ -1362,7 +1372,7 @@
     for (let L = 30; L <= 80; L += 5) {
       const tr = document.createElement('tr');
       tr.innerHTML = `<th scope="row">${L}</th>` + ['wt', 'air', 'road', 'rail'].map((id) => {
-        const s = S.find((q) => q.id === id); return `<td>${L <= s.to ? s.f(L).toFixed(1) + '%' : '—'}</td>`;
+        const s = S.find((q) => q.id === id); return `<td>${L >= s.from && L <= s.to ? s.f(L).toFixed(1) + '%' : '—'}</td>`;
       }).join('');
       tb.appendChild(tr);
     }
@@ -1374,11 +1384,16 @@
     };
     // the turbine's blades turn slowly unless the visitor prefers reduced motion
     const SPIN = reduce ? '' : '<animateTransform attributeName="transform" type="rotate" from="0 12 8.6" to="360 12 8.6" dur="4s" repeatCount="indefinite"/>';
+    const turn = (cx, cy, d) => reduce ? '' : `<animateTransform attributeName="transform" type="rotate" from="0 ${cx} ${cy}" to="360 ${cx} ${cy}" dur="${d}s" repeatCount="indefinite"/>`;
+    const wheel = (cx, cy, r, d) => `<g stroke="currentColor" stroke-width="0.7" stroke-linecap="round"><path d="M${cx - r} ${cy}H${cx + r}M${cx} ${cy - r}V${cy + r}"/>${turn(cx, cy, d)}</g>`;
+    // smoke rises and fades from the chimney; clouds drift in and out around the plane
+    const puff = (cx, cy, r, delay) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="currentColor" stroke-width="1.1"${reduce ? '/>' : ` opacity="0"><animate attributeName="cy" values="${cy + 2};${cy - 3}" dur="2.4s" begin="${delay}s" repeatCount="indefinite"/><animate attributeName="r" values="${r * 0.6};${r * 1.5}" dur="2.4s" begin="${delay}s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="2.4s" begin="${delay}s" repeatCount="indefinite"/></circle>`}`;
+    const cloud = (x, y, s, delay) => `<path transform="translate(${x} ${y}) scale(${s})" d="M-4 1.2H4.2A1.7 1.7 0 0 0 3.6 -2A2.4 2.4 0 0 0 -0.9 -2.6A1.9 1.9 0 0 0 -4.1 -0.9A1.1 1.1 0 0 0 -4 1.2Z" fill="#FFFFFF" stroke="var(--ink-2)" stroke-width="${0.5 / s}"${reduce ? ' opacity="0.8"/>' : ` opacity="0"><animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.25;0.7;1" dur="3.6s" begin="${delay}s" repeatCount="indefinite"/></path>`}`;
     const ICON = {
-      wt: '<path d="M11.35 23.6L11.8 9.4H12.2L12.65 23.6Z" fill="currentColor"/><path d="M9.6 23.6H14.4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><rect x="11.3" y="8" width="2.6" height="1.4" rx="0.5" fill="currentColor"/><g fill="currentColor"><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z"/><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z" transform="rotate(120 12 8.6)"/><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z" transform="rotate(240 12 8.6)"/>' + SPIN + '</g><circle cx="12" cy="8.6" r="1.05" fill="var(--paper)" stroke="currentColor" stroke-width="0.7"/>',
-      air: '<path transform="rotate(90 12 12)" d="M12 1.8c.9 0 1.5 1.1 1.5 2.4v5.1l8 4.6v2.2l-8-2.4v5l2.4 1.8v1.7L12 21.3l-3.9.9v-1.7l2.4-1.8v-5l-8 2.4v-2.2l8-4.6V4.2c0-1.3.6-2.4 1.5-2.4z" fill="currentColor"/>',
-      road: '<path d="M2.2 16.2v-3.4c0-1 .7-1.8 1.6-2l2.5-.6 2.4-3.4c.4-.6 1.1-.9 1.8-.9h4.6c.7 0 1.4.3 1.8 1l2.2 3.3 1.8.4c1 .2 1.7 1.1 1.7 2.1v3.5z" fill="currentColor"/><path d="M8.3 10.3l1.7-2.5h3.5v2.5zM15 7.8h.6c.4 0 .8.2 1 .5l1.3 2H15z" fill="var(--paper)"/><circle cx="7" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/>',
-      rail: '<path d="M2.6 16.8V7.2h7.2v3.4h8.6c1.2 0 2.1.9 2.1 2.1v2.6l1.8 1.5z" fill="currentColor"/><rect x="14.6" y="6.6" width="2.4" height="4.2" fill="currentColor"/><path d="M1.8 7.2h8.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="4.3" y="8.6" width="3.6" height="2.8" rx="0.4" fill="var(--paper)"/><g fill="var(--paper)" stroke="currentColor" stroke-width="1.5"><circle cx="6.2" cy="18.3" r="2.3"/><circle cx="11.6" cy="18.8" r="1.7"/><circle cx="16.2" cy="18.8" r="1.7"/></g><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="16.4" cy="3.9" r="1.4"/><circle cx="19.7" cy="2.6" r="1.1"/></g>'
+      wt: '<path d="M11.35 23.6L11.8 9.4H12.2L12.65 23.6Z" fill="var(--ink)"/><path d="M9.6 23.6H14.4" stroke="var(--ink)" stroke-width="1.1" stroke-linecap="round"/><rect x="11.3" y="8" width="2.6" height="1.4" rx="0.5" fill="var(--ink)"/><g class="wt-blades"><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z"/><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z" transform="rotate(120 12 8.6)"/><path d="M12 8.6C13.15 6.4 13.3 3.4 12.45 0.4C11.75 3 11.3 6 11.55 7.9Z" transform="rotate(240 12 8.6)"/>' + turn(12, 8.6, 4) + '</g><circle cx="12" cy="8.6" r="1.05" fill="var(--paper)" stroke="var(--ink)" stroke-width="0.7"/>',
+      air: cloud(2.6, 4.6, 1.0, 0) + cloud(20.6, 20.2, 0.85, 1.3) + cloud(4.2, 20.4, 0.7, 2.4) + '<path transform="rotate(90 12 12)" d="M12 1.8c.9 0 1.5 1.1 1.5 2.4v5.1l8 4.6v2.2l-8-2.4v5l2.4 1.8v1.7L12 21.3l-3.9.9v-1.7l2.4-1.8v-5l-8 2.4v-2.2l8-4.6V4.2c0-1.3.6-2.4 1.5-2.4z" fill="currentColor"/>',
+      road: '<path d="M2.2 16.2v-3.4c0-1 .7-1.8 1.6-2l2.5-.6 2.4-3.4c.4-.6 1.1-.9 1.8-.9h4.6c.7 0 1.4.3 1.8 1l2.2 3.3 1.8.4c1 .2 1.7 1.1 1.7 2.1v3.5z" fill="currentColor"/><path d="M8.3 10.3l1.7-2.5h3.5v2.5zM15 7.8h.6c.4 0 .8.2 1 .5l1.3 2H15z" fill="var(--paper)"/><circle cx="7" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="16.6" r="2.3" fill="var(--paper)" stroke="currentColor" stroke-width="1.7"/>' + wheel(7, 16.6, 1.45, 0.9) + wheel(17, 16.6, 1.45, 0.9),
+      rail: '<path d="M2.6 16.8V7.2h7.2v3.4h8.6c1.2 0 2.1.9 2.1 2.1v2.6l1.8 1.5z" fill="currentColor"/><rect x="14.6" y="6.6" width="2.4" height="4.2" fill="currentColor"/><path d="M1.8 7.2h8.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="4.3" y="8.6" width="3.6" height="2.8" rx="0.4" fill="var(--paper)"/><g fill="var(--paper)" stroke="currentColor" stroke-width="1.5"><circle cx="6.2" cy="18.3" r="2.3"/><circle cx="11.6" cy="18.8" r="1.7"/><circle cx="16.2" cy="18.8" r="1.7"/></g>' + wheel(6.2, 18.3, 1.5, 1.1) + wheel(11.6, 18.8, 0.95, 0.8) + wheel(16.2, 18.8, 0.95, 0.8) + puff(16.2, 3.4, 1.6, 0) + puff(18.6, 2.2, 1.35, 0.8) + puff(20.8, 0.8, 1.1, 1.6)
     };
     let geo = null;
     const draw = () => {
@@ -1433,7 +1448,7 @@
       let rows = '';
       ['wt', 'air', 'road', 'rail'].forEach((id) => {
         const i = S.findIndex((s) => s.id === id), s = S[i], dot = geo.dots[i];
-        if (L > s.to) { dot.setAttribute('opacity', 0); return; }
+        if (L > s.to || L < s.from) { dot.setAttribute('opacity', 0); return; }
         const v = s.f(L);
         dot.setAttribute('cx', X(L)); dot.setAttribute('cy', Y(v)); dot.setAttribute('opacity', 1);
         rows += `<span>${s.name}<em>${v.toFixed(1)}%</em></span>`;
