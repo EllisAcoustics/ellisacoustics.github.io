@@ -1,0 +1,231 @@
+<!doctype html>
+<!--
+  ellisacoustics.github.io · Max Ellis, psychoacoustics
+  Hand-built HTML, CSS and JavaScript: no frameworks, no trackers, no cookies.
+  Shared tokens: css/site.css · CV components: css/sections.css · Shared behaviour: js/site.js
+  The CV PDF is printed from these pages by tools/make_cv.py.
+-->
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image credits — Max Ellis</title>
+<meta name="description" content="Credits for the fonts, icons, logos, photographs and data used on ellisacoustics.github.io.">
+<meta property="og:title" content="Image credits — Max Ellis">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ellisacoustics.github.io/credits">
+<meta property="og:description" content="Credits for the fonts, icons, logos, photographs and data used on ellisacoustics.github.io.">
+<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://ellisacoustics.github.io/credits">
+<meta property="og:site_name" content="Max Ellis">
+<meta property="og:locale" content="en_GB">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
+<script>
+  (function () {
+    var mq = window.matchMedia && matchMedia('(prefers-color-scheme: dark)');
+    // Theme: the visitor's own choice (from the switch) wins, otherwise follow the system setting
+    var saved = null; try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved !== 'light' && saved !== 'dark') saved = null;
+    var setT = function () { document.documentElement.setAttribute('data-theme', saved || (mq && mq.matches ? 'dark' : 'light')); };
+    setT(); if (mq && mq.addEventListener) mq.addEventListener('change', function () { if (!saved) setT(); });
+    window.__setTheme = function (t) { saved = t; try { localStorage.setItem('theme', t); } catch (e) {} setT(); };
+  })();
+</script>
+<link rel="stylesheet" href="css/site.css">
+<style>
+  /* Colours for this page's drawings (shared tokens live in css/site.css) */
+  :root { --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: var(--ink); --v5: var(--ink); }
+  :root[data-theme="dark"] { --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme]) { --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); } }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body { overflow-x: clip; } /* nothing can ever cause sideways scrolling */
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p, ul, ol, figure { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; box-shadow: 0 0 0 6px var(--paper); border-radius: 1px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+  .masthead { position: relative; padding-top: calc(var(--u) * 10); padding-bottom: calc(var(--u) * 4); }
+  /* ---------- Site navigation ---------- */
+  .topnav {
+    position: absolute; top: calc(var(--u) * 2); left: var(--gutter); right: var(--gutter);
+    display: flex; align-items: center; justify-content: space-between; gap: calc(var(--u) * 2);
+    min-height: 44px;
+  }
+  .topnav .home { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; min-height: 44px; }
+  .topnav .home svg { display: block; }
+  .topnav .home svg { width: 68px; height: auto; }
+  .topnav .home .mk-spin { transform-box: view-box; animation: mk-spin 7s linear infinite; }
+  .topnav .home .mk-rotor { transform-box: fill-box; transform-origin: center; animation: mk-rotor 0.2s linear infinite; }
+  @keyframes mk-spin { to { transform: rotate(360deg); } }
+  .topnav .home .mk-fan { transform-box: view-box; animation: mk-spin 0.9s linear infinite; }
+  .topnav .home .mk-note { opacity: 0; transform-box: view-box; animation: mk-note 1.8s ease-out infinite; }
+  @keyframes mk-note { 0% { opacity: 0; transform: translate(-1px, 1.5px); } 15% { opacity: 1; } 70%, 100% { opacity: 0; transform: translate(1.2px, -3px); } }
+  @keyframes mk-rotor { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.55); } }
+  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-spin, .topnav .home .mk-rotor, .topnav .home .mk-fan, .topnav .home .mk-note { animation: none; } }
+  .topnav .home .home-label { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+  .topnav .links { display: flex; align-items: center; gap: calc(var(--u) * 3); }
+  .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
+  .topnav .links a:hover, .topnav .links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  .topnav .links a[aria-current="page"] { text-decoration-thickness: 2px; }
+  @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
+  @media print { .topnav { display: none; } }
+  h1 { margin-top: calc(var(--u) * 4); font-size: clamp(40px, 7vw, 72px); line-height: 1.02; font-weight: 650; letter-spacing: -0.035em; }
+  .lede { margin-top: calc(var(--u) * 3); max-width: 40ch; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; }
+  .section { padding: calc(var(--u) * 5) 0 calc(var(--u) * 7); display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
+  @media (min-width: 880px) { .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); } }
+  .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
+  .note { max-width: 60ch; color: var(--ink-2); font-size: 15px; line-height: 22px; }
+  .foot { border-top: 1px solid var(--rule); padding: calc(var(--u) * 3) 0 calc(var(--u) * 6); font-family: var(--mono); font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u); }
+  .btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 600; border-radius: 2px; }
+  .btn:hover { background: var(--accent); color: var(--paper); }
+  .btn-quiet { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+  .btn-quiet:hover { background: transparent; color: var(--accent); border-color: var(--ink); }
+  .foot { border-top: 0 !important; position: relative; }
+  .foot-line { position: absolute; left: 0; top: -16px; width: 100%; height: 32px; display: block; overflow: visible; pointer-events: none; }
+  .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  @media print { .foot-line { display: none; } }
+  /* same grid as Working Groups above, so the three columns line up */
+    display: flex; flex-direction: column; font-size: 14px; line-height: 20px; background: var(--paper);
+    transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none; transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
+  .print-only { display: none; }
+  .skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
+  .skip:focus { top: var(--u); }
+  main:focus { outline: none; }
+  /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
+  @media (max-width: 879px) {
+    .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
+    .org-tile { height: 72px; }
+    .itiles { row-gap: calc(var(--u) * 3); }
+    .steps { gap: calc(var(--u) * 3); }
+    .outputs li { padding: calc(var(--u) * 2) 0; }
+    .timeline li { padding-bottom: calc(var(--u) * 3); }
+    .hero-why { font-size: 17px; line-height: 26px; }
+    .gap-lede { font-size: 17px; line-height: 26px; }
+  }
+  /* ---------- Policy pages ---------- */
+  .prose { max-width: 64ch; }
+  .prose p, .prose li { font-size: 17px; line-height: 27px; color: var(--ink-2); }
+  .prose p + p, .prose p + ul, .prose ul + p { margin-top: calc(var(--u) * 1.5); }
+  .prose ul { padding-left: 1.1em; list-style: disc; }
+  .prose li + li { margin-top: 6px; }
+  .prose strong { color: var(--ink); font-weight: 600; }
+  .prose a { color: var(--ink); }
+  .prose code { font-family: var(--mono); font-size: 0.88em; }
+  .updated { margin: calc(var(--u) * 2) 0 calc(var(--u) * 6); font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="wrap masthead">
+  <nav class="topnav" aria-label="Site">
+    <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><g class="mk-fan" style="transform-origin:29.6px 26.75px" stroke-width="0.7"><path d="M29.6 26.75V25.2M29.6 26.75L30.95 27.5M29.6 26.75L28.25 27.5"/></g><path d="M32.6 25V28.6" stroke-width="0.8"/><g stroke-width="0.6"><path d="M30.6 22.2Q31.4 23.4 32.8 22.9Q33.6 22.5 33.4 21.6"/><path d="M30.6 22.2Q31.6 21.3 33.1 21.4"/><path d="M30.6 22.2L29.5 21.7"/><path d="M33.1 21.4Q33.4 20.4 34.2 20.6Q34.8 20.8 34.6 21.4L35.4 21.5L34.5 21.8Q34.2 22.1 33.4 21.6"/><path d="M31.8 23.2V23.5M32.6 23.1V23.5" stroke-width="0.4"/></g><g class="mk-note" stroke-width="0.5"><ellipse cx="36.4" cy="18.6" rx="0.55" ry="0.4" fill="currentColor" stroke="none"/><path d="M36.9 18.5V16.4L37.7 16.8"/></g><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
+    <div class="links">
+      <a href="about">About</a>
+      <a href="listen">Listen</a>
+      <a href="contact">Contact</a>
+      <button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Light or dark mode"><span class="tt-knob" aria-hidden="true"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" focusable="false"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M5.1 18.9l1.7-1.7M17.2 6.8l1.7-1.7"/></svg><svg class="moon" viewBox="0 0 24 24" focusable="false"><path d="M20.4 14.6A8.6 8.6 0 1 1 9.4 3.6a7 7 0 0 0 11 11Z" fill="currentColor"/></svg></span></button>
+    </div>
+  </nav>
+  <h1>Credits</h1>
+  <p class="lede">Who made what on this site, and the licences it uses.</p>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <section class="section" aria-labelledby="fonts-h">
+    <h2 id="fonts-h">Type</h2>
+    <div class="prose">
+      <p>Headings and body text use your device’s own system font. The serif is <strong>Sourcerer</strong> from Nico Verbruggen’s <a href="https://github.com/nicoverbruggen/ebook-fonts">ebook-fonts</a>, based on Source Serif by Frank Grießhammer for Adobe, under the SIL Open Font License 1.1.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="drawings-h">
+    <h2 id="drawings-h">Drawings and sound</h2>
+    <div class="prose">
+      <p>The noise-source drawings, intro animations, house logo and favicon were drawn for this site. Every sound on the Listen page is synthesised live in your browser.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="logos-h">
+    <h2 id="logos-h">Logos</h2>
+    <div class="prose">
+      <p>Organisation and software logos are trademarks of their owners and are shown only to identify the organisations I work with and the tools I use. Software icons come from <a href="https://simpleicons.org">Simple Icons</a> (CC0) and <a href="https://devicon.dev">Devicon</a> (MIT). The R logo is © The R Foundation, CC BY-SA 4.0.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="photos-h">
+    <h2 id="photos-h">Photographs</h2>
+    <div class="prose">
+      <p>Photographs of Max Ellis presenting at Forum Acusticum Euronoise 2025, Málaga, are from Max Ellis’s own collection.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="data-h">
+    <h2 id="data-h">Data</h2>
+    <div class="prose">
+      <p>The exposure-response curves on the home page follow Miedema &amp; Oudshoorn (2001) for road, rail and aircraft noise, and Janssen et al. (2011) for wind turbines, as compared in Fredianelli et al. (2019). The wind turbine curve is traced from that comparison.</p>
+    </div>
+  </section>
+
+  <p class="updated">Last updated 13 October 2026</p>
+</main>
+
+<footer class="wrap">
+  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a><nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><a href="accessibility">Accessibility</a><a href="credits" aria-current="page">Image credits</a></nav></div>
+</footer>
+
+<script>
+  /* Footer line: every few seconds a pulse leaves the centre and ripples out both ways, as in the opening */
+  (() => {
+    const svg = document.querySelector('.foot-line'); if (!svg) return;
+    const path = svg.querySelector('path');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, visible = false, raf = 0, t0 = performance.now();
+    const PERIOD = 4200, WAVE = 1600;
+    const draw = (now) => {
+      W = svg.clientWidth; svg.setAttribute('viewBox', `0 -16 ${W} 32`);
+      const t = (now - t0) % PERIOD;
+      if (reduce || t > WAVE) { path.setAttribute('d', `M0 0H${W}`); }
+      else {
+        const tau = t / WAVE, half = W / 2, cx = half;
+        const front = tau * half * 1.15, sigma = Math.max(20, half * 0.12);
+        const amp = 9 * Math.pow(1 - tau, 1.4), lambda = Math.max(16, half * 0.04);
+        let d = '';
+        for (let x = 0; x <= W; x += 2) {
+          const dd = Math.abs(x - cx) - front, env = Math.exp(-(dd * dd) / (2 * sigma * sigma));
+          const y = -amp * env * Math.sin((2 * Math.PI * dd) / lambda);
+          d += (x ? 'L' : 'M') + x + ' ' + y.toFixed(2);
+        }
+        path.setAttribute('d', d);
+      }
+      if (visible && !reduce) raf = requestAnimationFrame(draw);
+    };
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting; cancelAnimationFrame(raf);
+      if (visible) { t0 = performance.now(); raf = requestAnimationFrame(draw); } else draw(performance.now());
+    }).observe(svg);
+    addEventListener('resize', () => draw(performance.now()));
+    draw(performance.now());
+  })();
+</script>
+<script src="js/site.js" defer></script>
+</body>
+</html>
