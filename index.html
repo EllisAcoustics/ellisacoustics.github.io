@@ -48,10 +48,12 @@
     var go = null; try { go = sessionStorage.getItem('goto'); sessionStorage.removeItem('goto'); } catch (e) {}
     if (go) window.__goto = go;
     if (!location.hash && !go && !reduce) document.documentElement.classList.add('intro', 'awaiting-dot');
+    // When the intro is about to play, skip the page-change animation so the new page never shows before its intro
+    addEventListener('pagereveal', function (e) { if (e.viewTransition && document.documentElement.classList.contains('intro')) e.viewTransition.skipTransition(); });
   })();
 </script>
-<link rel="stylesheet" href="css/site.css">
-<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/site.css?v=3">
+<link rel="stylesheet" href="css/sections.css?v=3">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -407,6 +409,7 @@
   .hero-sub .g { color: var(--accent); }
   @media print { .hero-sub { font-size: 16pt; max-width: none; } }
   .cite {
+    color: var(--ink-2);
     font-family: var(--mono); font-size: 9.5px; line-height: 0; letter-spacing: 0;
     vertical-align: super; margin-left: 2px; white-space: nowrap;
   }
@@ -446,6 +449,13 @@
   @keyframes mk-spin { to { transform: rotate(360deg); } }
   @keyframes mk-rotor { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.55); } }
   @media (prefers-reduced-motion: reduce) { .topnav .home .mk-spin, .topnav .home .mk-rotor { animation: none; } }
+  .topnav .home .mk-fan { transform-box: view-box; animation: mk-spin 0.9s linear infinite; }
+  .topnav .home .mk-note { opacity: 0; transform-box: view-box; animation: mk-note 1.8s ease-out infinite; }
+  @keyframes mk-note { 0% { opacity: 0; transform: translate(-1px, 1.5px); } 15% { opacity: 1; } 70%, 100% { opacity: 0; transform: translate(1.2px, -3px); } }
+  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-fan, .topnav .home .mk-note { animation: none; } }
+  /* the logo's drone is away delivering the dot of the i, and lands back in the logo afterwards */
+  html.drone-away .topnav .home .mk-drone { opacity: 0; }
+  .topnav .home .mk-drone { transition: opacity var(--dur-2) var(--ease); }
   .topnav .home .home-label { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
   .topnav .links { margin-left: auto; display: flex; align-items: center; gap: calc(var(--u) * 3); }
   .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
@@ -453,6 +463,7 @@
   .topnav .links a[aria-current="page"] { text-decoration-thickness: 2px; }
   @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
   @media print { .topnav { display: none; } }
+  .masthead h1 .name { white-space: nowrap; }   /* the name never breaks inside, whatever the line balancing does */
   .masthead h1 {
     font-size: clamp(48px, 9vw, 96px);
     line-height: 1;
@@ -609,6 +620,7 @@
 
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
+    <a class="home" href="./" aria-label="Max Ellis, home" aria-current="page"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><g class="mk-fan" style="transform-origin:29.6px 26.75px" stroke-width="0.7"><path d="M29.6 26.75V25.2M29.6 26.75L30.95 27.5M29.6 26.75L28.25 27.5"/></g><path d="M32.6 25V28.6" stroke-width="0.8"/><g stroke-width="0.6"><path d="M30.6 22.2Q31.4 23.4 32.8 22.9Q33.6 22.5 33.4 21.6"/><path d="M30.6 22.2Q31.6 21.3 33.1 21.4"/><path d="M30.6 22.2L29.5 21.7"/><path d="M33.1 21.4Q33.4 20.4 34.2 20.6Q34.8 20.8 34.6 21.4L35.4 21.5L34.5 21.8Q34.2 22.1 33.4 21.6"/><path d="M31.8 23.2V23.5M32.6 23.1V23.5" stroke-width="0.4"/></g><g class="mk-note" stroke-width="0.5"><ellipse cx="36.4" cy="18.6" rx="0.55" ry="0.4" fill="currentColor" stroke="none"/><path d="M36.9 18.5V16.4L37.7 16.8"/></g><g class="mk-drone"><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/></g><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
     <div class="links">
       <a href="about">About</a>
       <a href="listen">Listen</a>
@@ -698,7 +710,7 @@
         </li>
         <li class="step" style="--n:3;--sc:var(--f3)">
           <span class="node" aria-hidden="true"></span>
-          <span class="step-icon si4"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9L20 6M7 9L20 17M7 9L20 28M7 25L20 6M7 25L20 17M7 25L20 28M20 6L33 17M20 17L33 17M20 28L33 17" stroke-width="0.6"/><circle cx="7" cy="9" r="2.4" fill="var(--paper)"/><circle cx="7" cy="25" r="2.4" fill="var(--paper)"/><circle cx="20" cy="6" r="2.4" fill="var(--paper)"/><circle cx="20" cy="17" r="2.4" fill="var(--paper)"/><circle cx="20" cy="28" r="2.4" fill="var(--paper)"/><circle cx="33" cy="17" r="2.8" fill="var(--paper)"/><circle class="m-ring" cx="33" cy="17" r="2.8" fill="none" stroke="#3FAE3A" stroke-width="0.8" opacity="0"><animate attributeName="r" begin="1.320s" dur="1.7917s" repeatCount="indefinite" keyTimes="0;0.35;1" values="2.8;7.5;7.5"/><animate attributeName="opacity" begin="1.320s" dur="1.7917s" repeatCount="indefinite" keyTimes="0;0.35;1" values="0.9;0;0"/></circle><circle cx="33" cy="17" r="2.8" fill="#3FAE3A" opacity="0" stroke="none"><animate attributeName="opacity" begin="1.320s" dur="1.7917s" repeatCount="indefinite" keyTimes="0;0.3;1" values="0.55;0;0"/></circle><circle class="m-token" cx="7" cy="9" r="2.4" fill="currentColor" stroke="none"><animate attributeName="cx" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33" calcMode="linear"/><animate attributeName="cy" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="9;9;9;6;6;17;17;17;25;25;25;17;17;17;17;17;9;9;9;28;28;17;17;17;25;25;25;6;6;17;17;17;9;9;9;17;17;17;17;17;25;25;25;28;28;17;17;17" calcMode="linear"/><animate attributeName="r" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0" calcMode="linear"/><animate attributeName="fill" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="#E64C9C;#E64C9C;#E64C9C;#13B5CF;#13B5CF;#3FAE3A;#3FAE3A;#3FAE3A;#E64C9C;#E64C9C;#E64C9C;#13B5CF;#13B5CF;#3FAE3A;#3FAE3A;#3FAE3A;#E64C9C;#E64C9C;#E64C9C;#13B5CF;#13B5CF;#3FAE3A;#3FAE3A;#3FAE3A;#E64C9C;#E64C9C;#E64C9C;#13B5CF;#13B5CF;#3FAE3A;#3FAE3A;#3FAE3A;#E64C9C;#E64C9C;#E64C9C;#13B5CF;#13B5CF;#3FAE3A;#3FAE3A;#3FAE3A;#E64C9C;#E64C9C;#E64C9C;#13B5CF;#13B5CF;#3FAE3A;#3FAE3A;#3FAE3A" calcMode="discrete"/></circle></svg></span>
+          <span class="step-icon si4"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9L20 6M7 9L20 17M7 9L20 28M7 25L20 6M7 25L20 17M7 25L20 28M20 6L33 17M20 17L33 17M20 28L33 17" stroke-width="0.6"/><circle cx="7" cy="9" r="2.4" fill="var(--paper)"/><circle cx="7" cy="25" r="2.4" fill="var(--paper)"/><circle cx="20" cy="6" r="2.4" fill="var(--paper)"/><circle cx="20" cy="17" r="2.4" fill="var(--paper)"/><circle cx="20" cy="28" r="2.4" fill="var(--paper)"/><circle cx="33" cy="17" r="2.8" fill="var(--paper)"/><circle class="m-ring" cx="33" cy="17" r="2.8" fill="none" stroke="#F2C200" stroke-width="0.8" opacity="0"><animate attributeName="r" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.1228;0.1811;0.2895;0.3478;0.4562;0.5145;0.6228;0.6811;0.7895;0.8478;0.9562;0.9999;1.0000" values="2.8;2.8;7.5;2.8;7.5;2.8;7.5;2.8;7.5;2.8;7.5;2.8;7.5;2.8"/><animate attributeName="opacity" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.1228;0.1811;0.2895;0.3478;0.4562;0.5145;0.6228;0.6811;0.7895;0.8478;0.9562;0.9999;1.0000" values="0;0.9;0;0.9;0;0.9;0;0.9;0;0.9;0;0.9;0;0"/><animate attributeName="stroke" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.1228;0.2895;0.4562;0.6228;0.7895;0.9562;1.0000" values="#F2C200;#F2C200;#4B3FD8;#F28C28;#2F6FE0;#E8452C;#3FAE3A;#3FAE3A" calcMode="discrete"/></circle><circle class="m-flash" cx="33" cy="17" r="2.8" fill="#F2C200" opacity="0" stroke="none"><animate attributeName="opacity" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.1228;0.1811;0.2895;0.3478;0.4562;0.5145;0.6228;0.6811;0.7895;0.8478;0.9562;0.9999;1.0000" values="0;0.55;0;0.55;0;0.55;0;0.55;0;0.55;0;0.55;0;0"/><animate attributeName="fill" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.1228;0.2895;0.4562;0.6228;0.7895;0.9562;1.0000" values="#F2C200;#F2C200;#4B3FD8;#F28C28;#2F6FE0;#E8452C;#3FAE3A;#3FAE3A" calcMode="discrete"/></circle><circle class="m-token" cx="7" cy="9" r="2.4" fill="currentColor" stroke="none"><animate attributeName="cx" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33;7;7;7;20;20;33;33;33" calcMode="linear"/><animate attributeName="cy" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="9;9;9;6;6;17;17;17;25;25;25;17;17;17;17;17;9;9;9;28;28;17;17;17;25;25;25;6;6;17;17;17;9;9;9;17;17;17;17;17;25;25;25;28;28;17;17;17" calcMode="linear"/><animate attributeName="r" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0;0;2.4;2.4;2.4;2.4;2.8;2.8;0" calcMode="linear"/><animate attributeName="fill" dur="10.75s" repeatCount="indefinite" keyTimes="0.0000;0.0112;0.0251;0.0670;0.0810;0.1228;0.1554;0.1666;0.1667;0.1778;0.1918;0.2337;0.2476;0.2895;0.3221;0.3332;0.3333;0.3445;0.3585;0.4003;0.4143;0.4562;0.4887;0.4999;0.5000;0.5112;0.5251;0.5670;0.5810;0.6228;0.6554;0.6666;0.6667;0.6778;0.6918;0.7337;0.7476;0.7895;0.8221;0.8332;0.8333;0.8445;0.8585;0.9003;0.9143;0.9562;0.9887;1" values="#E8452C;#E8452C;#E8452C;#F28C28;#F28C28;#F2C200;#F2C200;#F2C200;#3FAE3A;#3FAE3A;#3FAE3A;#2F6FE0;#2F6FE0;#4B3FD8;#4B3FD8;#4B3FD8;#8E4FD8;#8E4FD8;#8E4FD8;#E8452C;#E8452C;#F28C28;#F28C28;#F28C28;#F2C200;#F2C200;#F2C200;#3FAE3A;#3FAE3A;#2F6FE0;#2F6FE0;#2F6FE0;#4B3FD8;#4B3FD8;#4B3FD8;#8E4FD8;#8E4FD8;#E8452C;#E8452C;#E8452C;#F28C28;#F28C28;#F28C28;#F2C200;#F2C200;#3FAE3A;#3FAE3A;#3FAE3A" calcMode="discrete"/></circle></svg></span>
           <span class="step-no">04</span>
           <h3>Machine Learning</h3>
           <p>Models learn which acoustic, operational and contextual factors drive the ratings.</p>
@@ -817,7 +829,8 @@
       <span><a href="contact">Contact</a> · <a href="cv/Max-Ellis-CV.pdf" download>My CV (PDF)</a> · Updated October 2026</span>
     </div>
     <p class="credits">Logos are trademarks of their owners and are shown only to name the organisations and software listed.</p>
-  <nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><a href="accessibility">Accessibility</a><a href="credits">Image credits</a></nav></div>
+  </div>
+  <div class="subfoot"><nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><span aria-hidden="true">·</span><a href="accessibility">Accessibility</a><span aria-hidden="true">·</span><a href="credits">Image credits</a></nav></div>
 </footer>
 
 <script>
@@ -1018,10 +1031,11 @@
 </script>
 <script>
 (() => {
-  // A courier drone delivers the dot of the "i", then flies off down the screen.
+  // A courier drone delivers the dot of the "i", then flies back into the distance and lands in the house logo.
   const root = document.documentElement;
   const dot = document.querySelector('.tittle');
   if (!dot || !root.classList.contains('awaiting-dot')) return;
+  root.classList.add('drone-away');
   const drone = document.createElement('div');
   drone.className = 'courier';
   drone.style.visibility = 'hidden';   // stays hidden until its flight path is applied
@@ -1044,7 +1058,7 @@
 
   let gone = false;
   const finish = () => {
-    root.classList.remove('awaiting-dot'); drone.remove();
+    root.classList.remove('awaiting-dot', 'drone-away'); drone.remove();
     if (!gone) { gone = true; dispatchEvent(new Event('dot-delivered')); }
   };
   const fly = () => {
@@ -1055,8 +1069,13 @@
     const scale = Math.max(0.6, Math.min(1.6, r.width / (4 * k)));   // carried dot matches the real dot
     drone.style.transformOrigin = `${ox}px ${oy}px`;
     drone.querySelector('.carried').setAttribute('r', (r.width / 2) / (k * scale));
-    const at = (x, y, rot = 0) => `translate(${x - ox}px, ${y - oy}px) rotate(${rot}deg) scale(${scale})`;
-    const W = innerWidth, D = 3000;
+    const at = (x, y, rot = 0, s = scale) => `translate(${x - ox}px, ${y - oy}px) rotate(${rot}deg) scale(${s})`;
+    const W = innerWidth, D = 3800;
+    // home: the drone in the house logo. Match its size, and line the bodies up (the body sits 7.1 units above the dot)
+    const homeEl = document.querySelector('.topnav .home .mk-drone');
+    const hr = homeEl ? homeEl.getBoundingClientRect() : null;
+    const hs = hr ? hr.width / (39.2 * k) : 0.25;
+    const hx = hr ? hr.left + hr.width / 2 + scrollX : tx + 30, hy = hr ? hr.top + hr.height * 0.32 + scrollY + 7.1 * k * hs : scrollY - 140;
     const fall = 9 * k * scale;                     // hover height: hatch sits just above the i
     const e1 = 'cubic-bezier(.25,.1,.25,1)', e2 = 'ease-in-out';
     // On narrow screens the navigation sits right above the name, so the drone comes in
@@ -1067,17 +1086,22 @@
       { transform: at(tx - 16, ty - fall - 4, 3), offset: 0.3, easing: e2 },
       { transform: at(tx, ty - fall, 0), offset: 0.39, easing: 'linear' },
       { transform: at(tx, ty - fall, 0), offset: 0.6, easing: e2 },
-      { transform: at(tx - 10, ty - fall - 4, -4), offset: 0.7, easing: 'cubic-bezier(.5,0,.75,0)' },
-      { transform: at(-110 + scrollX, ty - fall - 8, -10), offset: 1 }
+      { transform: at(tx - 10, ty - fall - 6, -4), offset: 0.68, easing: 'cubic-bezier(.4,0,.2,1)' },
+      { transform: at(hx, ty - fall * 0.2, -6, (scale + hs) / 2), offset: 0.86, easing: 'cubic-bezier(.4,0,.2,1)' },   // across at name height, well below the menu
+      { transform: at(hx, hy, 0, hs), offset: 1 }
     ] : [
       { transform: at(Math.min(tx + 320, W + 80), ty - fall - 240, -10), offset: 0, easing: e1 },
       { transform: at(tx + 14, ty - fall - 30, -3), offset: 0.28, easing: e2 },
       { transform: at(tx, ty - fall, 0), offset: 0.39, easing: 'linear' },
       { transform: at(tx, ty - fall, 0), offset: 0.6, easing: e2 },
-      { transform: at(tx, ty - fall - 22, 0), offset: 0.68, easing: 'cubic-bezier(.5,0,.75,0)' },
-      { transform: at(tx + 30, scrollY - 140, 4), offset: 1 }
+      { transform: at(tx, ty - fall - 22, 0), offset: 0.66, easing: 'cubic-bezier(.4,0,.2,1)' },
+      { transform: at((tx + hx) / 2, Math.min(ty - fall - 60, hy + 60), -6, (scale + hs) / 2), offset: 0.84, easing: 'cubic-bezier(.4,0,.2,1)' },
+      { transform: at(hx, hy, 0, hs), offset: 1 }
     ];
     const anim = drone.animate(path, { duration: D, easing: 'linear', fill: 'forwards' });
+    // landing: the courier fades out as the logo's own drone fades back in
+    drone.animate([{ opacity: 1, offset: 0 }, { opacity: 1, offset: 0.9 }, { opacity: 0, offset: 1 }], { duration: D, fill: 'forwards' });
+    setTimeout(() => root.classList.remove('drone-away'), D * 0.9);
     drone.style.visibility = 'visible';
     const doorL = drone.querySelector('.door-l'), doorR = drone.querySelector('.door-r');
     const swing = (open) => [doorL, doorR].forEach((d, i) => d.animate(
@@ -1441,6 +1465,6 @@
     }));
   })();
 </script>
-<script src="js/site.js" defer></script>
+<script src="js/site.js?v=3" defer></script>
 </body>
 </html>

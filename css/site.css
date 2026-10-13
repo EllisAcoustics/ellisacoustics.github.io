@@ -127,9 +127,10 @@ p, li, figcaption { text-wrap: pretty; }                  /* no single word left
   :focus-visible { outline: 3px solid Highlight !important; }
 }
 
-/* ---------- Footer: privacy, accessibility and credits ---------- */
-.foot .legal { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 4px 0; margin-top: var(--u); font-family: var(--mono); font-size: 12px; line-height: 20px; }
-.foot .legal a { color: var(--ink-2); text-decoration: none; }
-.foot .legal a:hover, .foot .legal a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.foot .legal a + a::before { content: "·"; display: inline-block; margin: 0 10px; color: var(--rule); text-decoration: none; }
-@media print { .foot .legal { display: none; } }
+/* ---------- Sub-footer: privacy, accessibility and credits, under the main footer ---------- */
+.subfoot { margin-top: calc(var(--u) * -4); padding: calc(var(--u) * 1.5) 0 calc(var(--u) * 4); border-top: 1px solid var(--hairline); }
+.subfoot .legal { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-family: var(--mono); font-size: 12px; line-height: 20px; }
+.subfoot .legal a { color: var(--ink-2); text-decoration: none; }
+.subfoot .legal a:hover, .subfoot .legal a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.subfoot .legal span { color: var(--rule); }
+@media print { .subfoot { display: none; } }

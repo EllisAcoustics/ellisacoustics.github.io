@@ -42,9 +42,11 @@
     // Turbine intro on every visit, unless reduced motion or arriving at a section
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!location.hash && !reduce) document.documentElement.classList.add('intro');
+    // When the intro is about to play, skip the page-change animation so the new page never shows before its intro
+    addEventListener('pagereveal', function (e) { if (e.viewTransition && document.documentElement.classList.contains('intro')) e.viewTransition.skipTransition(); });
   })();
 </script>
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.css?v=3">
 <style>
   @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
   /* Colours for this page's drawings (shared tokens live in css/site.css) */
@@ -359,7 +361,8 @@
 </main>
 
 <footer class="wrap">
-  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a><nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><a href="accessibility">Accessibility</a><a href="credits">Image credits</a></nav></div>
+  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
+  <div class="subfoot"><nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><span aria-hidden="true">·</span><a href="accessibility">Accessibility</a><span aria-hidden="true">·</span><a href="credits">Image credits</a></nav></div>
 </footer>
 
 <script>
@@ -798,6 +801,6 @@
   }
 })();
 </script>
-<script src="js/site.js" defer></script>
+<script src="js/site.js?v=3" defer></script>
 </body>
 </html>

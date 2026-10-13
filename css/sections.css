@@ -7,7 +7,8 @@
 .certs h3 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
 .certs .cred { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 12px; color: #8A6500; text-underline-offset: 3px; }   /* bird-song gold (deeper on white so it stays readable) */
 :root[data-theme="dark"] .certs .cred { color: #F2C200; }
-.certs .cred-id { margin: 6px 0 0; font-family: var(--mono); font-size: 10.5px; line-height: 16px; color: var(--rule); }
+.certs .cred-id { margin: 6px 0 0; font-family: var(--mono); font-size: 12px; line-height: 18px; color: #8A6500; }
+:root[data-theme="dark"] .certs .cred-id { color: #F2C200; }
 .certs .where { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); margin: 2px 0 0; }
 .logo {
   position: relative;
@@ -165,7 +166,11 @@ img.on-dark { display: none !important; }
 .c-scholar, .c-scholar span, .more-pubs a.c-scholar { color: #1A5FE0 !important; }
 :root[data-theme="dark"] .c-orcid, :root[data-theme="dark"] .c-orcid span, :root[data-theme="dark"] .more-pubs a.c-orcid { color: #A6CE39 !important; }
 :root[data-theme="dark"] .c-scholar, :root[data-theme="dark"] .c-scholar span, :root[data-theme="dark"] .more-pubs a.c-scholar { color: #5B95F5 !important; }
-/* Grades in green */
-.timeline .grade { color: #2C7A29; }
-:root[data-theme="dark"] .timeline .grade { color: #3FAE3A; }
+/* Grades: heat-pump fan gold (deeper on white so it stays readable) */
+.timeline .grade { color: #8A6500; }
+:root[data-theme="dark"] .timeline .grade { color: #E0A800; }
 @media print { .c-orcid, .c-scholar { color: inherit !important; } }
+
+/* Awarded: the same gold as the grades, still and solid */
+.honour, .outputs .honour { background: none !important; -webkit-text-fill-color: currentColor !important; color: #8A6500 !important; animation: none !important; }
+:root[data-theme="dark"] .honour, :root[data-theme="dark"] .outputs .honour { color: #E0A800 !important; }

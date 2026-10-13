@@ -42,10 +42,12 @@
     // Bird intro on every visit, unless reduced motion or arriving at a section
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!location.hash && !reduce) document.documentElement.classList.add('intro');
+    // When the intro is about to play, skip the page-change animation so the new page never shows before its intro
+    addEventListener('pagereveal', function (e) { if (e.viewTransition && document.documentElement.classList.contains('intro')) e.viewTransition.skipTransition(); });
   })();
 </script>
-<link rel="stylesheet" href="css/site.css">
-<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/site.css?v=3">
+<link rel="stylesheet" href="css/sections.css?v=3">
 <style>
   /* Colours for this page's drawings (shared tokens live in css/site.css) */
   :root { --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: var(--ink); --v5: var(--ink); }
@@ -333,7 +335,7 @@
     <ul class="org-grid" aria-label="Working groups and committees">
       <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
       <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/orgs/nasa.png?v=3" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-      <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/noise-network-plus.png?v=4" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
+      <li class="org-tile" tabindex="0"><img loading="lazy" src="logos/colour/noise-network-plus.png?v=5" class="colour on-light" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><img loading="lazy" src="logos/colour/noise-network-plus-dark.png?v=1" class="colour on-dark" width="129" height="57" alt="" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
     </ul>
   
   </section>
@@ -392,7 +394,8 @@
 </main>
 
 <footer class="wrap">
-  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a><nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><a href="accessibility">Accessibility</a><a href="credits">Image credits</a></nav></div>
+  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
+  <div class="subfoot"><nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><span aria-hidden="true">·</span><a href="accessibility">Accessibility</a><span aria-hidden="true">·</span><a href="credits">Image credits</a></nav></div>
 </footer>
 
 <script>
@@ -617,6 +620,6 @@
     }));
   })();
 </script>
-<script src="js/site.js" defer></script>
+<script src="js/site.js?v=3" defer></script>
 </body>
 </html>
