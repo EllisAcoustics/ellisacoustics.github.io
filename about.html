@@ -20,12 +20,10 @@
 <meta name="color-scheme" content="light dark">
 <script>
   (function () {
-    var t = null;
-    try { t = localStorage.getItem('theme'); } catch (e) {}
-    if (t !== 'light' && t !== 'dark') {
-      t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    document.documentElement.setAttribute('data-theme', t);
+    var mq = window.matchMedia && matchMedia('(prefers-color-scheme: dark)');
+    var setT = function () { document.documentElement.setAttribute('data-theme', mq && mq.matches ? 'dark' : 'light'); };
+    setT(); if (mq && mq.addEventListener) mq.addEventListener('change', setT);
+    try { localStorage.removeItem('theme'); } catch (e) {}
     // Bird intro on every visit, unless reduced motion or arriving at a section
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!location.hash && !reduce) document.documentElement.classList.add('intro');
@@ -38,7 +36,7 @@
     --ink-2: #45443F;
     --rule: #6B6A64;
     --hairline: #CFCDC6;
-    --accent: #3B528B; --deep-blue: #3B528B; --deep-green: #187C6B;
+    --accent: #3D6B00; --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: #4A7A00; --f4: #437300; --f5: #3D6B00; --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: #B4EA00; --v5: #9BD400; --deep-blue: #3D6B00; --deep-green: #4A7A00; --neon: #C8FF00; --neon-ink: #3D6B00;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     --u: 8px;
@@ -52,7 +50,7 @@
     --ink-2: #B9B6AD;
     --rule: #8C8980;
     --hairline: #3A3935;
-    --accent: #8FA2D0; --deep-blue: #8FA2D0; --deep-green: #35B779;
+    --accent: #C8FF00; --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: #C8F25A; --f4: #CFFF3A; --f5: #D8FF1F; --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: #C8FF00; --v5: #DFFF33; --deep-blue: #C8FF00; --deep-green: #B4F000; --neon: #C8FF00; --neon-ink: #C8FF00;
     --logo-filter: invert(1);
     color-scheme: dark;
   }
@@ -64,7 +62,7 @@
       --ink-2: #B9B6AD;
       --rule: #8C8980;
       --hairline: #3A3935;
-      --accent: #8FA2D0; --deep-blue: #8FA2D0; --deep-green: #35B779;
+      --accent: #C8FF00; --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: #C8F25A; --f4: #CFFF3A; --f5: #D8FF1F; --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: #C8FF00; --v5: #DFFF33; --deep-blue: #C8FF00; --deep-green: #B4F000; --neon: #C8FF00; --neon-ink: #C8FF00;
       --logo-filter: invert(1);
       color-scheme: dark;
     }
@@ -97,8 +95,11 @@
   .topnav .home .mk-spin { transform-box: view-box; animation: mk-spin 7s linear infinite; }
   .topnav .home .mk-rotor { transform-box: fill-box; transform-origin: center; animation: mk-rotor 0.2s linear infinite; }
   @keyframes mk-spin { to { transform: rotate(360deg); } }
+  .topnav .home .mk-fan { transform-box: view-box; animation: mk-spin 0.9s linear infinite; }
+  .topnav .home .mk-note { opacity: 0; transform-box: view-box; animation: mk-note 1.8s ease-out infinite; }
+  @keyframes mk-note { 0% { opacity: 0; transform: translate(-1px, 1.5px); } 15% { opacity: 1; } 70%, 100% { opacity: 0; transform: translate(1.2px, -3px); } }
   @keyframes mk-rotor { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.55); } }
-  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-spin, .topnav .home .mk-rotor { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-spin, .topnav .home .mk-rotor, .topnav .home .mk-fan, .topnav .home .mk-note { animation: none; } }
   .topnav .home .home-label { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
   .topnav .links { display: flex; align-items: center; gap: calc(var(--u) * 3); }
   .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
@@ -190,6 +191,10 @@
   #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
   #intro .piece { position: absolute; left: 0; top: 0; color: var(--ink); }
   #intro .piece svg { display: block; width: 100%; height: auto; overflow: visible; }
+  #intro .hp { color: #8A8C90; }
+  #intro .hp .fan { color: #E8B400; }
+  #intro .bird { color: #2F7FE0; }
+  #intro .leaf { color: #3FAE3A; }
   #intro .fan { transform-box: view-box; transform-origin: 13.5px 23.25px; animation: fan 0.9s linear infinite; }
   @keyframes fan { to { transform: rotate(360deg); } }
   #intro .jaw, #intro .head, #intro .wing { transform-box: view-box; }
@@ -222,20 +227,10 @@
 </div>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
-    <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><path d="M32.6 25V28.6" stroke-width="0.8"/><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
+    <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 61 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.5" stroke-width="0.8"><path d="M36.5 22.4Q41.5 19.6 47 21.2"/><path d="M41.85 21L41.95 12H42.05L42.15 21Z"/><g class="mk-spin" style="transform-origin:42px 12px"><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(120 42 12)"/><path d="M42 12L42.4 10.4L42.1 7.8L41.7 10.4Z" transform="rotate(240 42 12)"/></g></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="17.6" y="20" width="3" height="3" stroke-width="0.9"/><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><g class="mk-fan" style="transform-origin:29.6px 26.75px" stroke-width="0.7"><path d="M29.6 26.75V25.2M29.6 26.75L30.95 27.5M29.6 26.75L28.25 27.5"/></g><path d="M32.6 25V28.6" stroke-width="0.8"/><g stroke-width="0.6"><path d="M30.6 22.2Q31.4 23.4 32.8 22.9Q33.6 22.5 33.4 21.6"/><path d="M30.6 22.2Q31.6 21.3 33.1 21.4"/><path d="M30.6 22.2L29.5 21.7"/><path d="M33.1 21.4Q33.4 20.4 34.2 20.6Q34.8 20.8 34.6 21.4L35.4 21.5L34.5 21.8Q34.2 22.1 33.4 21.6"/><path d="M31.8 23.2V23.5M32.6 23.1V23.5" stroke-width="0.4"/></g><g class="mk-note" stroke-width="0.5"><ellipse cx="36.4" cy="18.6" rx="0.55" ry="0.4" fill="currentColor" stroke="none"/><path d="M36.9 18.5V16.4L37.7 16.8"/></g><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.6" y="25.6" width="5.6" height="1.6" rx="0.6" stroke-width="1"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H47"/></svg></a>
     <div class="links">
       <a href="about" aria-current="page">About</a>
       <a href="contact">Contact</a>
-      <div class="theme-switch">
-        <svg class="sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
-          <circle cx="8" cy="8" r="3"/>
-          <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06"/>
-        </svg>
-        <button type="button" role="switch" aria-checked="false" aria-label="Dark mode" id="theme-toggle"></button>
-        <svg class="moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
-          <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
-        </svg>
-      </div>
     </div>
   </nav>
   <h1>About Me</h1>
@@ -369,27 +364,6 @@
       el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
                  { duration: 650, easing: 'ease', fill: 'forwards' }).onfinish = finish;
     });
-  });
-})();
-</script>
-<script>
-(() => {
-  const root = document.documentElement;
-  const btn = document.getElementById('theme-toggle');
-  const sync = () => btn.setAttribute('aria-checked', String(root.getAttribute('data-theme') === 'dark'));
-  sync();
-  btn.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
-    sync();
-  });
-  // Follow system changes until the visitor picks a theme themselves
-  const mq = window.matchMedia('(prefers-color-scheme: dark)');
-  mq.addEventListener && mq.addEventListener('change', (e) => {
-    let saved = null;
-    try { saved = localStorage.getItem('theme'); } catch (err) {}
-    if (!saved) { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); sync(); }
   });
 })();
 </script>

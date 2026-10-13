@@ -20,12 +20,10 @@
 <meta name="color-scheme" content="light dark">
 <script>
   (function () {
-    var t = null;
-    try { t = localStorage.getItem('theme'); } catch (e) {}
-    if (t !== 'light' && t !== 'dark') {
-      t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    document.documentElement.setAttribute('data-theme', t);
+    var mq = window.matchMedia && matchMedia('(prefers-color-scheme: dark)');
+    var setT = function () { document.documentElement.setAttribute('data-theme', mq && mq.matches ? 'dark' : 'light'); };
+    setT(); if (mq && mq.addEventListener) mq.addEventListener('change', setT);
+    try { localStorage.removeItem('theme'); } catch (e) {}
 
     // Intro: plays on first visit and on refresh (refresh always starts at the top).
     // Skipped for reduced motion and for links straight to a section.
@@ -43,23 +41,23 @@
     --ink-2: #45443F;
     --rule: #6B6A64;
     --hairline: #CFCDC6;
-    --accent: #3B528B;
+    --accent: #3D6B00;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     --u: 8px;
     --measure: 68ch;
     --gutter: 16px;
   }
-  :root { --logo-filter: none; color-scheme: light; --f0: #440154; --f1: #414487; --f2: #2A788E; --f3: #1F9978; --f4: #4C9928; --f5: #998A01; --v0: #440154; --v1: #414487; --v2: #2A788E; --v3: #22A884; --v4: #7AD151; --v5: #FDE725; --deep-blue: #3B528B; --deep-green: #187C6B; }
+  :root { --logo-filter: none; color-scheme: light; --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: #4A7A00; --f4: #437300; --f5: #3D6B00; --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: #B4EA00; --v5: #9BD400; --deep-blue: #3D6B00; --deep-green: #4A7A00; --neon: #C8FF00; --neon-ink: #3D6B00; }
   :root[data-theme="dark"] {
     --paper: #161614;
     --ink: #ECEAE4;
     --ink-2: #B9B6AD;
     --rule: #8C8980;
     --hairline: #3A3935;
-    --accent: #8FA2D0;
+    --accent: #C8FF00;
     --logo-filter: invert(1);
-    color-scheme: dark; --f0: #A88BE0; --f1: #8A8FD6; --f2: #3FA3BC; --f3: #22A884; --f4: #7AD151; --f5: #FDE725; --v0: #6A3D9A; --v1: #414487; --v2: #2A788E; --v3: #22A884; --v4: #7AD151; --v5: #FDE725; --deep-blue: #8FA2D0; --deep-green: #35B779;
+    color-scheme: dark; --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: #C8F25A; --f4: #CFFF3A; --f5: #D8FF1F; --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: #C8FF00; --v5: #DFFF33; --deep-blue: #C8FF00; --deep-green: #B4F000; --neon: #C8FF00; --neon-ink: #C8FF00;
   }
   /* No JavaScript: follow the system setting */
   @media (prefers-color-scheme: dark) {
@@ -69,9 +67,9 @@
       --ink-2: #B9B6AD;
       --rule: #8C8980;
       --hairline: #3A3935;
-      --accent: #8FA2D0;
+      --accent: #C8FF00;
       --logo-filter: invert(1);
-      color-scheme: dark; --f0: #A88BE0; --f1: #8A8FD6; --f2: #3FA3BC; --f3: #22A884; --f4: #7AD151; --f5: #FDE725; --v0: #6A3D9A; --v1: #414487; --v2: #2A788E; --v3: #22A884; --v4: #7AD151; --v5: #FDE725; --deep-blue: #8FA2D0; --deep-green: #35B779;
+      color-scheme: dark; --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: #C8F25A; --f4: #CFFF3A; --f5: #D8FF1F; --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: #C8FF00; --v5: #DFFF33; --deep-blue: #C8FF00; --deep-green: #B4F000; --neon: #C8FF00; --neon-ink: #C8FF00;
     }
   }
   @media (min-width: 720px) { :root { --gutter: 40px; } }
@@ -179,15 +177,15 @@
   .drone-cargo[data-cargo="food"] .sym-food { display: inline; }
   .drone-cargo[data-cargo="food"] .sym-med { display: none; }
   .src .wheel { animation: src-rot 1.2s linear infinite; }
-  .src[data-hz="5000"] .wheel { animation-duration: 0.8s; }
-  .src .wind { animation: src-flow 0.9s linear infinite; }
-  .src[data-hz="5000"] .wind, .src[data-hz="400"] .wind { animation-direction: reverse; }
+  
+  .src .wind { animation: src-flow 0.8s linear infinite; }
+  
   .src .head { animation: src-bob 0.9s ease-in-out infinite alternate; }
   .src .note { opacity: 0; animation: src-note 2.2s ease-out infinite; }
   .src .note.n2 { animation-delay: 1.1s; }
   @keyframes src-rot { to { transform: rotate(360deg); } }
-  @keyframes src-flow { to { stroke-dashoffset: -5; } }
-  @keyframes src-flow-down { to { stroke-dashoffset: -3.6; } }
+  @keyframes src-flow { to { stroke-dashoffset: -4; } }
+  @keyframes src-flow-down { to { stroke-dashoffset: -4; } }
   @keyframes src-blade-y { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.12); } }
   @keyframes src-blade-x { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.1); } }
   @keyframes src-sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
@@ -253,6 +251,9 @@
   .m-dot { opacity: 0; animation: m-dot 3.6s ease-in-out infinite; }
   @keyframes m-dot { 0% { opacity: 0; transform: scale(0.3); } 18% { opacity: 1; transform: scale(1); } 55% { opacity: 1; transform: scale(1); } 75%, 100% { opacity: 0; transform: scale(0.3); } }
   .m-dot { transform-box: fill-box; transform-origin: center; }
+  .m-emo { opacity: 0; transform-box: fill-box; transform-origin: center bottom; animation: m-emo 4.8s ease-out infinite; }
+  .m-emo.e2 { animation-delay: 1.2s; } .m-emo.e3 { animation-delay: 2.4s; } .m-emo.e4 { animation-delay: 3.6s; }
+  @keyframes m-emo { 0% { opacity: 0; transform: translateY(2px) scale(0.6); } 8% { opacity: 1; transform: none; } 22% { opacity: 1; transform: translateY(-1px); } 32%, 100% { opacity: 0; transform: translateY(-2.5px); } }
   .m-page { transform-origin: 10px 31px; animation: m-page 5.4s ease-in-out infinite; }
   @keyframes m-page {
     0%, 70% { transform: none; opacity: 1; }
@@ -271,7 +272,7 @@
   @keyframes m-tick { 0%, 42% { stroke-dashoffset: 8; } 52%, 80% { stroke-dashoffset: 0; } 81%, 100% { stroke-dashoffset: 8; } }
   @media (prefers-reduced-motion: reduce) {
     .step-icon svg * { animation: none !important; }
-    .m-wave { opacity: 0.6; } .m-dot { opacity: 1; }
+    .m-wave { opacity: 0.6; } .m-dot, .m-emo { opacity: 1; }
   }
   @media print { .step-icon svg * { animation: none !important; } .m-wave { opacity: 0.6; } .m-dot { opacity: 1; } }
 
@@ -288,7 +289,7 @@
     font-size: 18px; line-height: 28px; color: var(--ink-2);
   }
   .cite {
-    font-family: var(--mono); font-size: 12px; line-height: 0;
+    font-family: var(--mono); font-size: 9.5px; line-height: 0; letter-spacing: 0;
     vertical-align: super; margin-left: 2px; white-space: nowrap;
   }
   .proof {
@@ -344,70 +345,12 @@
   .topnav .theme-switch { position: static; }
   @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
   @media print { .topnav { display: none; } }
-  /* ---------- Certificates scroll ---------- */
-  .scroll { --sheet: #FBF8EE; max-width: 680px; }
-  :root[data-theme="dark"] .scroll { --sheet: #201F1B; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme]) .scroll { --sheet: #201F1B; } }
-  .scroll-toggle {
-    display: flex; align-items: center; gap: calc(var(--u) * 2); width: 100%;
-    background: none; border: 0; padding: 0 0 calc(var(--u) * 1.5); margin: 0; font: inherit; color: inherit; cursor: pointer; text-align: left;
-  }
-  .scroll-label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px calc(var(--u) * 1.5); }
-  .scroll-label strong { font-weight: 600; }
-  .scroll-hint { font-family: var(--mono); font-size: 13px; color: var(--deep-green); text-decoration: underline; text-underline-offset: 3px; }
-  .scroll-toggle:hover .scroll-hint { color: var(--accent); }
-  .scroll-body { position: relative; padding: 0 22px; cursor: default; }
-  .scroll[data-open="false"] .scroll-body { cursor: pointer; }
-  .scroll.floating .scroll-body { animation: scroll-drift 7s ease-in-out infinite alternate; }
-  @keyframes scroll-drift {
-    0% { transform: translate(-6px, 1px); }
-    50% { transform: translate(0, -2px); }
-    100% { transform: translate(6px, 1px); }
-  }
-  .rod {
-    position: relative; height: 18px; margin: 0 -12px; border: 1px solid var(--ink); border-radius: 9px;
-    background: var(--sheet) repeating-linear-gradient(180deg, transparent 0 5px, var(--hairline) 5px 6px);
-    background-position: 0 0; transition: background-position 1100ms cubic-bezier(.3,.7,.2,1);
-    z-index: 1;
-  }
-  .rod::before, .rod::after {
-    content: ""; position: absolute; top: 2px; width: 6px; height: 12px; border: 1px solid var(--ink); border-radius: 3px; background: var(--deep-green);
-  }
-  .rod::before { left: -9px; } .rod::after { right: -9px; }
-  .scroll[data-open="true"] .rod-bottom { background-position: 0 -132px; }
-  .ribbon {
-    position: absolute; left: 50%; top: -5px; width: 14px; height: 28px; margin-left: -7px; z-index: 2;
-    background: var(--deep-green); border: 1px solid var(--ink); border-radius: 2px;
-    transition: opacity 300ms ease, transform 300ms ease;
-  }
-  .ribbon::after { content: ""; position: absolute; left: 2px; bottom: -9px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 8px solid var(--deep-green); }
-  .scroll[data-open="true"] .ribbon { opacity: 0; transform: translateY(-8px); pointer-events: none; }
-  .scroll[data-open="false"] .scroll-body:hover .rod { border-color: var(--accent); }
-  .sheet {
-    display: grid; grid-template-rows: 1fr; margin: -9px 0;
-    background: var(--sheet); border-left: 1px solid var(--rule); border-right: 1px solid var(--rule);
-    transition: grid-template-rows 1100ms cubic-bezier(.3,.7,.2,1);
-  }
-  .scroll[data-open="false"] .sheet { grid-template-rows: 0fr; }
-  .sheet-inner { overflow: hidden; min-height: 0; }
-  .certs { list-style: none; padding: calc(var(--u) * 4) calc(var(--u) * 3); margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 2) calc(var(--u) * 4); }
+  /* ---------- Certifications ---------- */
+  .certs { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 1.5); max-width: 760px; }
   @media (min-width: 640px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .certs li { border-top: 1px solid var(--hairline); padding-top: var(--u); opacity: 1; transform: none; transition: opacity 500ms ease, transform 500ms ease; }
-  .scroll[data-open="false"] .certs li { opacity: 0; transform: translateY(-6px); }
-  .scroll[data-open="true"] .certs li { transition-delay: calc(250ms + var(--i, 0) * 60ms); }
+  .certs li { border: 1px solid var(--rule); border-radius: 10px; padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
   .certs h4 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
   .certs .where { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); margin: 2px 0 0; }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll.floating .scroll-body { animation: none; }
-    .sheet, .rod, .certs li { transition: none !important; }
-  }
-  @media print {
-    .scroll-toggle, .rod, .ribbon { display: none; }
-    .sheet { grid-template-rows: 1fr !important; border: 0; margin: 0; background: none; }
-    .scroll-body { padding: 0; animation: none !important; }
-    .certs { padding: 0; }
-    .certs li { opacity: 1 !important; transform: none !important; }
-  }
 
 
   /* ---------- Theme switch ---------- */
@@ -489,7 +432,7 @@
     position: relative; height: 16px; margin-top: var(--u);
     font-family: var(--mono); font-size: 12px; line-height: 16px; color: var(--ink-2);
   }
-  .freq-labels span { position: absolute; top: 0; left: calc(var(--i) * 12.5%); transform: translateX(-50%); white-space: nowrap; }
+  .freq-labels span { position: absolute; top: 0; left: calc(var(--i) * 100% / 7); transform: translateX(-50%); white-space: nowrap; }
   .freq-labels span:first-child { transform: none; }
   .freq-labels span:last-child { transform: translateX(-100%); }
   @media (max-width: 599px) { .freq-labels span:nth-child(even) { visibility: hidden; } }
@@ -584,6 +527,8 @@
     font-family: var(--mono); font-size: 13px; line-height: 24px;
   }
   .tag { border: 1px solid var(--rule); padding: 0 var(--u); border-radius: 2px; color: var(--ink); }
+  .outputs .tag, #experience .tag { border-color: var(--neon-ink); background: color-mix(in srgb, var(--neon) 22%, transparent); }
+  :root[data-theme="dark"] .outputs .tag, :root[data-theme="dark"] #experience .tag { background: color-mix(in srgb, var(--neon) 10%, transparent); }
   .outputs .authors { color: var(--ink); }
   .outputs .authors strong { font-weight: 600; }
   .outputs .venue { margin-top: 0; font-style: italic; }
@@ -622,14 +567,14 @@
   .honour {
     display: inline-block; margin-top: 4px;
     font-weight: 700; font-size: 15px; line-height: 22px; letter-spacing: 0.01em;
-    background: linear-gradient(100deg, #7A3E9D 0%, #1F6F8B 22%, #246640 40%, #7C5507 58%, #B0305C 76%, #7A3E9D 100%);
+    background: linear-gradient(100deg, #4B4F55 0%, #8A9097 22%, #5A5F66 40%, #9EA3AA 58%, #43474D 76%, #4B4F55 100%);
     background-size: 250% 100%;
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; color: transparent;
     animation: holo 6s linear infinite;
   }
   :root[data-theme="dark"] .honour {
-    background-image: linear-gradient(100deg, #E2B8FF 0%, #8FE3FF 22%, #A8F5C2 40%, #FFE29A 58%, #FFB3CF 76%, #E2B8FF 100%);
+    background-image: linear-gradient(100deg, #E5E4E2 0%, #FFFFFF 22%, #A9ADB3 40%, #F2F2F0 58%, #C9CCD0 76%, #E5E4E2 100%);
   }
   @keyframes holo { to { background-position: -250% 0; } }
   @media (prefers-reduced-motion: reduce) { .honour { animation: none; } }
@@ -646,6 +591,7 @@
     gap: calc(var(--u) * 4) calc(var(--u) * 2);
     max-width: 760px; padding-bottom: 24px;
   }
+  @media (min-width: 600px) { .icon-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); max-width: 820px; } }
   @media (max-width: 599px) {
     .icon-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(var(--u) * 4) var(--u); justify-items: center; max-width: none; }
   }
@@ -721,16 +667,6 @@
     <div class="links">
       <a href="about">About</a>
       <a href="contact">Contact</a>
-      <div class="theme-switch">
-        <svg class="sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
-          <circle cx="8" cy="8" r="3"/>
-          <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06"/>
-        </svg>
-        <button type="button" role="switch" aria-checked="false" aria-label="Dark mode" id="theme-toggle"></button>
-        <svg class="moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round">
-          <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>
-        </svg>
-      </div>
     </div>
   </nav>
   <h1><span class="name"><span class="visually-hidden">Max Ellis</span><span aria-hidden="true">Max Ell<span class="i-wrap"><span class="bl"></span>ı<span class="tittle"></span></span>s</span></span> <span class="postnominals">BDes MSc AFHEA</span></h1>
@@ -739,30 +675,25 @@
   <p class="print-only">ellisacoustics.github.io · linkedin.com/in/psychoacoustic · github.com/ellisacoustics · orcid.org/0009-0007-5909-854X</p>
 
   <figure class="freq" aria-hidden="true">
-  <!-- Noise sources placed at their characteristic frequency: x = log2(Hz / 63) / 8 -->
+  <!-- Noise sources placed at their characteristic frequency: x = log2(Hz / 63) / 7 (63 Hz to 8 kHz) -->
   <div class="sources">
-    <span class="src" style="--x:0.0833;--i:0;color:var(--f0)" data-hz="100"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Next-generation wind turbine</title><path class="wind" d="M1 8H7.5M0 13H6.5M1 18H7.5M32.5 8H39M33.5 13H40M32.5 18H39" stroke-width="0.5" stroke-dasharray="1.6 2.4"/><path d="M19.35 33L19.75 13H20.25L20.65 33Z"/><path d="M15.5 33H24.5" stroke-width="0.6"/><g class="spin" style="transform-origin:20px 12px"><path d="M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z"/><path d="M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z" transform="rotate(120 20 12)"/><path d="M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z" transform="rotate(240 20 12)"/></g><circle cx="20" cy="12" r="1.05" fill="var(--paper)"/></svg></span>
-    <span class="src" style="--x:0.2083;--i:1;color:var(--f1)" data-hz="200"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Air-source heat pump</title><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.45"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.45"/><g class="spin fast" style="transform-origin:13.5px 23.5px" stroke-width="0.6"><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(120 13.5 23.5)"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(240 13.5 23.5)"/></g><path d="M24.0 17V29.5M25.1 17V29.5M26.3 17V29.5M27.4 17V29.5M28.6 17V29.5M29.8 17V29.5M30.9 17V29.5" stroke-width="0.45"/><path d="M7 32V33.5M31 32V33.5"/><g class="bird" stroke-width="0.7"><path d="M24.6 11.6L21.6 10.6L24.4 12.6"/><path d="M24.4 12.6Q26.4 14.4 29.2 13.2Q30.6 12.4 30.4 10.8"/><path d="M24.6 11.6Q26.6 10.2 29 10.2"/><path d="M26.6 14.1L26.4 14.5M28 13.8L28 14.5" stroke-width="0.5"/><g class="head" style="transform-origin:29.4px 10.8px"><path d="M29 10.2Q29.6 8.2 31.2 8.4Q32.4 8.7 32.3 9.9L33.8 10.2L32 10.6Q31.4 11.4 30.4 10.8"/><circle cx="31.2" cy="9.3" r="0.28" fill="currentColor" stroke="none"/></g></g><g class="note n1" stroke-width="0.6"><ellipse cx="35" cy="7" rx="0.95" ry="0.7" transform="rotate(-20 35 7)" fill="currentColor" stroke="none"/><path d="M35.85 6.8V3.2L37.2 3.9"/></g><g class="note n2" stroke-width="0.6"><ellipse cx="33.4" cy="5" rx="0.95" ry="0.7" transform="rotate(-20 33.4 5)" fill="currentColor" stroke="none"/><path d="M34.25 4.8V1.2000000000000002L35.6 1.9"/></g></svg></span>
-    <span class="src" style="--x:0.3333;--i:2;color:var(--f2)" data-hz="400"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Fixed-wing eVTOL aircraft</title><path class="wind" d="M4.4 12H0.2M4.6 13.6H0M4.4 15.2H0.6" stroke-width="0.45" stroke-dasharray="1.2 1.8"/><path d="M6.2 12.7Q11 11.6 21 13.2L31.8 15.6Q35.4 16.6 35 18.4Q34.4 19.9 30.6 19.6L19.8 18.6Q10.4 17.4 6.2 14.6Q5.2 13.7 6.2 12.7Z" fill="var(--paper)"/><path d="M29.4 15.2Q32.6 15.6 34.4 17.2" stroke-width="0.5"/><path d="M9.2 13.1L5.4 6.6L6.6 6.3L11 13.3M10.6 13.4L9.6 8.4L10.6 8.2L12.2 13.6" stroke-width="0.65"/><path d="M22.3 16.3L17.2 26.8L15.2 26.4L18.9 15.7L24 5.2L26 5.6Z" fill="var(--paper)"/><path d="M13.7 21.1L22.7 22.6M18.5 9.4L27.5 10.9" stroke-width="0.7"/><ellipse cx="13.7" cy="21.1" rx="3" ry="1.9" stroke-width="0.4" stroke-dasharray="0.7 0.9"/><g transform="translate(13.7 21.1) scale(1 0.63)"><g class="lift"><path d="M-2.8 0H2.8" stroke-width="0.75"/></g></g><circle cx="13.7" cy="21.1" r="0.45" fill="currentColor" stroke="none"/><ellipse cx="22.7" cy="22.6" rx="3" ry="1.9" stroke-width="0.4" stroke-dasharray="0.7 0.9"/><g transform="translate(22.7 22.6) scale(1 0.63)"><g class="lift"><path d="M-2.8 0H2.8" stroke-width="0.75"/></g></g><circle cx="22.7" cy="22.6" r="0.45" fill="currentColor" stroke="none"/><ellipse cx="18.5" cy="9.4" rx="3" ry="1.9" stroke-width="0.4" stroke-dasharray="0.7 0.9"/><g transform="translate(18.5 9.4) scale(1 0.63)"><g class="lift"><path d="M-2.8 0H2.8" stroke-width="0.75"/></g></g><circle cx="18.5" cy="9.4" r="0.45" fill="currentColor" stroke="none"/><ellipse cx="27.5" cy="10.9" rx="3" ry="1.9" stroke-width="0.4" stroke-dasharray="0.7 0.9"/><g transform="translate(27.5 10.9) scale(1 0.63)"><g class="lift"><path d="M-2.8 0H2.8" stroke-width="0.75"/></g></g><circle cx="27.5" cy="10.9" r="0.45" fill="currentColor" stroke="none"/><g class="pushprop" style="transform-origin:5.6px 13.6px"><path d="M6.1 10L5.1 17.2" stroke-width="0.8"/></g></svg></span>
-    <span class="src" style="--x:0.4986;--i:3;color:var(--f3)" data-hz="1000"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Electric car</title><path d="M3.6 23.6V21.2Q3.8 19.4 5.6 18.9L9.6 17.9Q13.8 12.6 19.4 12.4Q23.4 12.4 26.6 15.2L29 17.1Q34.6 17.7 36 19.2Q36.6 20.2 36.5 23.6H33.6A3.8 3.8 0 0 0 26.2 23.6H14.6A3.8 3.8 0 0 0 7.2 23.6Z"/><path d="M11.4 17.7Q14.8 13.6 19.4 13.5Q22.8 13.5 25.4 15.6L26.8 17.1Z" stroke-width="0.55"/><path d="M19.2 13.6V17.4M19.2 17.4V22.8" stroke-width="0.45"/><path d="M34.2 19.4H36" stroke-width="0.5"/><path d="M22.6 18.6L21.6 20.3H22.9L21.9 22" stroke-width="0.55"/><circle cx="10.9" cy="23.6" r="3.2"/><g class="wheel" style="transform-origin:10.9px 23.6px"><circle cx="10.9" cy="23.6" r="2.50" stroke-width="0.5"/><path d="M10.9 23.6L10.90 21.10M10.9 23.6L13.27 22.83M10.9 23.6L12.37 25.62M10.9 23.6L9.43 25.62M10.9 23.6L8.53 22.83" stroke-width="0.5"/></g><circle cx="10.9" cy="23.6" r="0.55" fill="currentColor" stroke="none"/><circle cx="29.9" cy="23.6" r="3.2"/><g class="wheel" style="transform-origin:29.9px 23.6px"><circle cx="29.9" cy="23.6" r="2.50" stroke-width="0.5"/><path d="M29.9 23.6L29.90 21.10M29.9 23.6L32.27 22.83M29.9 23.6L31.37 25.62M29.9 23.6L28.43 25.62M29.9 23.6L27.53 22.83" stroke-width="0.5"/></g><circle cx="29.9" cy="23.6" r="0.55" fill="currentColor" stroke="none"/><g stroke-width="0.6"><path class="pulse p1" d="M38.6 17.6A3.4 3.4 0 0 1 38.6 23.6" style="transform-origin:37.2px 20.6px"/><path class="pulse p2" d="M38.6 17.6A3.4 3.4 0 0 1 38.6 23.6" style="transform-origin:37.2px 20.6px"/><path class="pulse p3" d="M38.6 17.6A3.4 3.4 0 0 1 38.6 23.6" style="transform-origin:37.2px 20.6px"/></g></svg></span>
-    <span class="src" style="--x:0.6638;--i:4;color:var(--f4)" data-hz="2500"><svg class="drone-cargo" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Cargo drone</title><path class="down" d="M2.5 11.5V17M7.5 11.5V17M32.5 11.5V17M37.5 11.5V17" stroke-width="0.45" stroke-dasharray="1.2 1.6"/><g class="srot" style="transform-origin:5px 6.6px"><path d="M0.4 6.6H9.6" stroke-width="0.8"/></g><g class="srot" style="transform-origin:35px 6.6px"><path d="M30.4 6.6H39.6" stroke-width="0.8"/></g><path d="M5 7V9.2M35 7V9.2" stroke-width="0.6"/><rect x="3.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><rect x="33.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><path d="M6.4 10.1H14.2M25.8 10.1H33.6" stroke-width="0.7"/><rect x="14.2" y="8" width="11.6" height="4.6" rx="1.6"/><path d="M16.2 12.6L13.6 18M23.8 12.6L26.4 18M11.8 18H15.4M24.6 18H28.2" stroke-width="0.7"/><g class="cargo" style="transform-origin:20px 12.6px"><path d="M18 12.6L16.4 21M22 12.6L23.6 21" stroke-width="0.5"/><rect x="14.6" y="21" width="10.8" height="8.6" rx="0.6"/><path class="sym-med" d="M20 23.1V27.5M17.8 25.3H22.2" stroke-width="1.1"/><path class="sym-food" d="M18 23.1V27.6M17.3 23.1V24.4Q17.3 25.2 18 25.2Q18.7 25.2 18.7 24.4V23.1M22 27.6V23.1Q23.2 24 22.5 25.8" stroke-width="0.6"/></g></svg></span>
-    <span class="src" style="--x:0.7888;--i:5;color:var(--f5)" data-hz="5000"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>E-scooter</title><path class="wind" d="M-2 17H2M-1 20.5H2.5" stroke-width="0.5" stroke-dasharray="1.6 2"/><path d="M3.2 25.4A4.8 4.8 0 0 1 11.6 23.6" stroke-width="0.7"/><rect x="11.6" y="23" width="16.8" height="4.2" rx="1"/><path d="M20.6 23.7L19.6 25.1H21L20 26.5" stroke-width="0.55"/><path d="M32 27.4L27.9 7.6L29.4 7.3L33.5 27.1Z"/><path d="M28.4 25L31 24.8" stroke-width="0.7"/><path d="M24.8 7.3H32.4" stroke-width="1.1"/><circle cx="8" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:8px 27.4px"><circle cx="8" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M8 27.4L8.00 24.59M8 27.4L10.67 26.53M8 27.4L9.65 29.67M8 27.4L6.35 29.67M8 27.4L5.33 26.53" stroke-width="0.5"/></g><circle cx="8" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><circle cx="32.6" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:32.6px 27.4px"><circle cx="32.6" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M32.6 27.4L32.60 24.59M32.6 27.4L35.27 26.53M32.6 27.4L34.25 29.67M32.6 27.4L30.95 29.67M32.6 27.4L29.93 26.53" stroke-width="0.5"/></g><circle cx="32.6" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><g stroke-width="0.6"><path class="pulse p1" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p2" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p3" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/></g></svg></span>
+    <span class="src" style="--x:0.0952;--i:0;color:var(--f0)" data-hz="100"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Next-generation wind turbine</title><path class="wind" d="M1 8H7.5M0 13H6.5M1 18H7.5M32.5 8H39M33.5 13H40M32.5 18H39" stroke-width="0.5" stroke-dasharray="1.6 2.4"/><path d="M19.35 33L19.75 13H20.25L20.65 33Z"/><path d="M15.5 33H24.5" stroke-width="0.6"/><g class="spin" style="transform-origin:20px 12px"><path d="M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z"/><path d="M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z" transform="rotate(120 20 12)"/><path d="M20 12L20.6 9.4L20.3 1L19.8 1L19.5 9.4Z" transform="rotate(240 20 12)"/></g><circle cx="20" cy="12" r="1.05" fill="var(--paper)"/></svg></span>
+    <span class="src" style="--x:0.2381;--i:1;color:var(--f1)" data-hz="200"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Air-source heat pump</title><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.45"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.45"/><g class="spin fast" style="transform-origin:13.5px 23.5px" stroke-width="0.6"><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(120 13.5 23.5)"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(240 13.5 23.5)"/></g><path d="M24.0 17V29.5M25.1 17V29.5M26.3 17V29.5M27.4 17V29.5M28.6 17V29.5M29.8 17V29.5M30.9 17V29.5" stroke-width="0.45"/><path d="M7 32V33.5M31 32V33.5"/><g class="bird" stroke-width="0.7"><path d="M24.6 11.6L21.6 10.6L24.4 12.6"/><path d="M24.4 12.6Q26.4 14.4 29.2 13.2Q30.6 12.4 30.4 10.8"/><path d="M24.6 11.6Q26.6 10.2 29 10.2"/><path d="M26.6 14.1L26.4 14.5M28 13.8L28 14.5" stroke-width="0.5"/><g class="head" style="transform-origin:29.4px 10.8px"><path d="M29 10.2Q29.6 8.2 31.2 8.4Q32.4 8.7 32.3 9.9L33.8 10.2L32 10.6Q31.4 11.4 30.4 10.8"/><circle cx="31.2" cy="9.3" r="0.28" fill="currentColor" stroke="none"/></g></g><g class="note n1" stroke-width="0.6"><ellipse cx="35" cy="7" rx="0.95" ry="0.7" transform="rotate(-20 35 7)" fill="currentColor" stroke="none"/><path d="M35.85 6.8V3.2L37.2 3.9"/></g><g class="note n2" stroke-width="0.6"><ellipse cx="33.4" cy="5" rx="0.95" ry="0.7" transform="rotate(-20 33.4 5)" fill="currentColor" stroke="none"/><path d="M34.25 4.8V1.2000000000000002L35.6 1.9"/></g></svg></span>
+    <span class="src" style="--x:0.3809;--i:2;color:var(--f2)" data-hz="400"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Tilt-rotor eVTOL aircraft</title><path class="down" d="M14 11.5V15M26 11.5V15M2.5 8.5V12M8.5 8.5V12" stroke-width="0.45" stroke-dasharray="1.6 2.4"/><path d="M5.5 18.6Q8 16.4 16 16.2L27 16.2Q33.5 16.4 36.2 19.4Q37 20.6 35.6 21.6Q33.6 23 27.6 23.2L15 23.2Q8.4 22.8 5.5 20.4Q4.8 19.5 5.5 18.6Z" fill="var(--paper)"/><path d="M27.4 16.6Q32.4 16.8 35 19.6" stroke-width="0.5"/><path d="M18 17.4H24.6V20.6H18Z" stroke-width="0.45"/><path d="M9 17.4L5.5 9.2M10.6 17L9.6 10.6" stroke-width="0.7"/><path d="M13 16.6L27 15.8" stroke-width="1.1"/><path d="M14 16.4V9.8M26 15.9V9.8M5.5 9.2V7.4" stroke-width="0.7"/><g class="srot" style="transform-origin:14px 9.4px"><path d="M9 9.4H19" stroke-width="0.85"/></g><circle cx="14" cy="9.4" r="0.55" fill="currentColor" stroke="none"/><g class="srot" style="transform-origin:26px 9.4px"><path d="M21 9.4H31" stroke-width="0.85"/></g><circle cx="26" cy="9.4" r="0.55" fill="currentColor" stroke="none"/><g class="srot" style="transform-origin:5.5px 7px"><path d="M1.5 7H9.5" stroke-width="0.85"/></g><circle cx="5.5" cy="7" r="0.55" fill="currentColor" stroke="none"/><path d="M14 23.2L13 25.6M28 23.2L29 25.6M11.6 25.6H14.4M27.6 25.6H30.4" stroke-width="0.6"/></svg></span>
+    <span class="src" style="--x:0.5020;--i:3;color:var(--f3)" data-hz="1000"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Electric car</title><path d="M3.6 23.6V21.2Q3.8 19.4 5.6 18.9L9.6 17.9Q13.8 12.6 19.4 12.4Q23.4 12.4 26.6 15.2L29 17.1Q34.6 17.7 36 19.2Q36.6 20.2 36.5 23.6H33.6A3.8 3.8 0 0 0 26.2 23.6H14.6A3.8 3.8 0 0 0 7.2 23.6Z"/><path d="M11.4 17.7Q14.8 13.6 19.4 13.5Q22.8 13.5 25.4 15.6L26.8 17.1Z" stroke-width="0.55"/><path d="M19.2 13.6V17.4M19.2 17.4V22.8" stroke-width="0.45"/><path d="M34.2 19.4H36" stroke-width="0.5"/><path d="M22.6 18.6L21.6 20.3H22.9L21.9 22" stroke-width="0.55"/><circle cx="10.9" cy="23.6" r="3.2"/><g class="wheel" style="transform-origin:10.9px 23.6px"><circle cx="10.9" cy="23.6" r="2.50" stroke-width="0.5"/><path d="M10.9 23.6L10.90 21.10M10.9 23.6L13.27 22.83M10.9 23.6L12.37 25.62M10.9 23.6L9.43 25.62M10.9 23.6L8.53 22.83" stroke-width="0.5"/></g><circle cx="10.9" cy="23.6" r="0.55" fill="currentColor" stroke="none"/><circle cx="29.9" cy="23.6" r="3.2"/><g class="wheel" style="transform-origin:29.9px 23.6px"><circle cx="29.9" cy="23.6" r="2.50" stroke-width="0.5"/><path d="M29.9 23.6L29.90 21.10M29.9 23.6L32.27 22.83M29.9 23.6L31.37 25.62M29.9 23.6L28.43 25.62M29.9 23.6L27.53 22.83" stroke-width="0.5"/></g><circle cx="29.9" cy="23.6" r="0.55" fill="currentColor" stroke="none"/><g stroke-width="0.6"><path class="pulse p1" d="M38.6 17.6A3.4 3.4 0 0 1 38.6 23.6" style="transform-origin:37.2px 20.6px"/><path class="pulse p2" d="M38.6 17.6A3.4 3.4 0 0 1 38.6 23.6" style="transform-origin:37.2px 20.6px"/><path class="pulse p3" d="M38.6 17.6A3.4 3.4 0 0 1 38.6 23.6" style="transform-origin:37.2px 20.6px"/></g><g stroke-width="0.6"><path class="pulse p1" d="M1.2000000000000002 17.6A3.4 3.4 0 0 0 1.2000000000000002 23.6" style="transform-origin:2.6px 20.6px"/><path class="pulse p2" d="M1.2000000000000002 17.6A3.4 3.4 0 0 0 1.2000000000000002 23.6" style="transform-origin:2.6px 20.6px"/><path class="pulse p3" d="M1.2000000000000002 17.6A3.4 3.4 0 0 0 1.2000000000000002 23.6" style="transform-origin:2.6px 20.6px"/></g></svg></span>
+    <span class="src" style="--x:0.6400;--i:4;color:var(--f4)" data-hz="1000"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>E-scooter</title><path d="M3.2 25.4A4.8 4.8 0 0 1 11.6 23.6" stroke-width="0.7"/><rect x="11.6" y="23" width="16.8" height="4.2" rx="1"/><path d="M20.6 23.7L19.6 25.1H21L20 26.5" stroke-width="0.55"/><path d="M32 27.4L27.9 7.6L29.4 7.3L33.5 27.1Z"/><path d="M28.4 25L31 24.8" stroke-width="0.7"/><path d="M24.8 7.3H32.4" stroke-width="1.1"/><circle cx="8" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:8px 27.4px"><circle cx="8" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M8 27.4L8.00 24.59M8 27.4L10.67 26.53M8 27.4L9.65 29.67M8 27.4L6.35 29.67M8 27.4L5.33 26.53" stroke-width="0.5"/></g><circle cx="8" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><circle cx="32.6" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:32.6px 27.4px"><circle cx="32.6" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M32.6 27.4L32.60 24.59M32.6 27.4L35.27 26.53M32.6 27.4L34.25 29.67M32.6 27.4L30.95 29.67M32.6 27.4L29.93 26.53" stroke-width="0.5"/></g><circle cx="32.6" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><g stroke-width="0.6"><path class="pulse p1" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p2" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p3" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/></g><g stroke-width="0.6"><path class="pulse p1" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/><path class="pulse p2" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/><path class="pulse p3" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/></g></svg></span>
+    <span class="src" style="--x:0.7586;--i:5;color:var(--f5)" data-hz="2500"><svg class="drone-cargo" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><title>Cargo drone</title><path class="down" d="M2.5 11.5V17M7.5 11.5V17M32.5 11.5V17M37.5 11.5V17" stroke-width="0.45" stroke-dasharray="1.6 2.4"/><g class="srot" style="transform-origin:5px 6.6px"><path d="M0.4 6.6H9.6" stroke-width="0.8"/></g><g class="srot" style="transform-origin:35px 6.6px"><path d="M30.4 6.6H39.6" stroke-width="0.8"/></g><path d="M5 7V9.2M35 7V9.2" stroke-width="0.6"/><rect x="3.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><rect x="33.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><path d="M6.4 10.1H14.2M25.8 10.1H33.6" stroke-width="0.7"/><rect x="14.2" y="8" width="11.6" height="4.6" rx="1.6"/><path d="M16.2 12.6L13.6 18M23.8 12.6L26.4 18M11.8 18H15.4M24.6 18H28.2" stroke-width="0.7"/><g class="cargo" style="transform-origin:20px 12.6px"><path d="M18 12.6L16.4 21M22 12.6L23.6 21" stroke-width="0.5"/><rect x="14.6" y="21" width="10.8" height="8.6" rx="0.6"/><path class="sym-med" d="M20 23.1V27.5M17.8 25.3H22.2" stroke-width="1.1"/><path class="sym-food" d="M18 23.1V27.6M17.3 23.1V24.4Q17.3 25.2 18 25.2Q18.7 25.2 18.7 24.4V23.1M22 27.6V23.1Q23.2 24 22.5 25.8" stroke-width="0.6"/></g></svg></span>
   </div>
   <svg class="scale" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
     <defs><linearGradient id="spectrum" gradientUnits="userSpaceOnUse" x1="0" x2="1000" y1="0" y2="0"><stop offset="0.00" style="stop-color:var(--v0)"/><stop offset="0.20" style="stop-color:var(--v1)"/><stop offset="0.40" style="stop-color:var(--v2)"/><stop offset="0.60" style="stop-color:var(--v3)"/><stop offset="0.80" style="stop-color:var(--v4)"/><stop offset="1.00" style="stop-color:var(--v5)"/></linearGradient></defs><line x1="0" y1="12" x2="1000" y2="12" stroke="url(#spectrum)" stroke-width="2" vector-effect="non-scaling-stroke"/>
     <g stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
-      <line x1="0" y1="4" x2="0" y2="20"/><line x1="125" y1="4" x2="125" y2="20"/><line x1="250" y1="4" x2="250" y2="20"/>
-      <line x1="375" y1="4" x2="375" y2="20"/><line x1="500" y1="4" x2="500" y2="20"/><line x1="625" y1="4" x2="625" y2="20"/>
-      <line x1="750" y1="4" x2="750" y2="20"/><line x1="875" y1="4" x2="875" y2="20"/><line x1="999" y1="4" x2="999" y2="20"/>
-      <line x1="41.6" y1="8" x2="41.6" y2="16"/><line x1="83.3" y1="8" x2="83.3" y2="16"/><line x1="166.6" y1="8" x2="166.6" y2="16"/><line x1="208.3" y1="8" x2="208.3" y2="16"/>
-      <line x1="291.6" y1="8" x2="291.6" y2="16"/><line x1="333.3" y1="8" x2="333.3" y2="16"/><line x1="416.6" y1="8" x2="416.6" y2="16"/><line x1="458.3" y1="8" x2="458.3" y2="16"/>
-      <line x1="541.6" y1="8" x2="541.6" y2="16"/><line x1="583.3" y1="8" x2="583.3" y2="16"/><line x1="666.6" y1="8" x2="666.6" y2="16"/><line x1="708.3" y1="8" x2="708.3" y2="16"/>
-      <line x1="791.6" y1="8" x2="791.6" y2="16"/><line x1="833.3" y1="8" x2="833.3" y2="16"/><line x1="916.6" y1="8" x2="916.6" y2="16"/><line x1="958.3" y1="8" x2="958.3" y2="16"/>
+      <line x1="0.0" y1="4" x2="0.0" y2="20"/><line x1="142.9" y1="4" x2="142.9" y2="20"/><line x1="285.7" y1="4" x2="285.7" y2="20"/><line x1="428.6" y1="4" x2="428.6" y2="20"/><line x1="571.4" y1="4" x2="571.4" y2="20"/><line x1="714.3" y1="4" x2="714.3" y2="20"/><line x1="857.1" y1="4" x2="857.1" y2="20"/><line x1="999" y1="4" x2="999" y2="20"/>
+      <line x1="47.6" y1="8" x2="47.6" y2="16"/><line x1="95.2" y1="8" x2="95.2" y2="16"/><line x1="190.5" y1="8" x2="190.5" y2="16"/><line x1="238.1" y1="8" x2="238.1" y2="16"/><line x1="333.3" y1="8" x2="333.3" y2="16"/><line x1="381.0" y1="8" x2="381.0" y2="16"/><line x1="476.2" y1="8" x2="476.2" y2="16"/><line x1="523.8" y1="8" x2="523.8" y2="16"/><line x1="619.0" y1="8" x2="619.0" y2="16"/><line x1="666.7" y1="8" x2="666.7" y2="16"/><line x1="761.9" y1="8" x2="761.9" y2="16"/><line x1="809.5" y1="8" x2="809.5" y2="16"/><line x1="904.8" y1="8" x2="904.8" y2="16"/><line x1="952.4" y1="8" x2="952.4" y2="16"/>
     </g>
   </svg>
-  <div class="freq-labels"><span style="--i:0">63 Hz</span><span style="--i:1">125 Hz</span><span style="--i:2">250 Hz</span><span style="--i:3">500 Hz</span><span style="--i:4">1 kHz</span><span style="--i:5">2 kHz</span><span style="--i:6">4 kHz</span><span style="--i:7">8 kHz</span><span style="--i:8">16 kHz</span></div>
+  <div class="freq-labels"><span style="--i:0">63 Hz</span><span style="--i:1">125 Hz</span><span style="--i:2">250 Hz</span><span style="--i:3">500 Hz</span><span style="--i:4">1 kHz</span><span style="--i:5">2 kHz</span><span style="--i:6">4 kHz</span><span style="--i:7">8 kHz</span></div>
   </figure>
-  <p class="visually-hidden">Frequency scale from 63 Hz to 16 kHz, marking where the noise of the sources I study is concentrated: next-generation wind turbines around 100 Hz, air-source heat pumps around 200 Hz, fixed-wing eVTOL aircraft around 400 Hz, electric cars around 1 kHz, drones around 2.5 kHz and e-scooters around 5 kHz.</p>
+  <p class="visually-hidden">Frequency scale from 63 Hz to 8 kHz, marking where the noise of the sources I study is concentrated: next-generation wind turbines around 100 Hz, air-source heat pumps around 200 Hz, tilt-rotor eVTOL aircraft around 400 Hz, the warning sounds of electric cars and e-scooters around 1 kHz, and drones around 2.5 kHz.</p>
 
   <div class="hero">
     <p class="hero-claim">Drones, air taxis and heat pumps are about to change how our towns and cities sound forever. I work out how people will perceive them — <em>before</em> they arrive.</p>
@@ -773,16 +704,16 @@
       <a class="btn btn-quiet" href="cv/Max-Ellis-CV.pdf" download>Download CV <span class="btn-meta">PDF</span></a>
       <div class="socials">
         <a class="social" href="https://www.linkedin.com/in/psychoacoustic/" rel="me" aria-label="LinkedIn profile" title="LinkedIn">
-          <svg viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path fill="currentColor" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z"/></svg>
+          <svg style="color:#0A66C2" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path fill="currentColor" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z"/></svg>
         </a>
         <a class="social" href="https://github.com/ellisacoustics" rel="me" aria-label="GitHub profile" title="GitHub">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg style="color:#2F81F7" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         </a>
         <a class="social" href="https://orcid.org/0009-0007-5909-854X" rel="me" aria-label="ORCID profile" title="ORCID">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg>
+          <svg style="color:#A6CE39" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg>
         </a>
         <a class="social" href="https://scholar.google.co.uk/citations?hl=en&amp;user=KxviwY4AAAAJ" rel="me" aria-label="Google Scholar profile" title="Google Scholar">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+          <svg style="color:#4285F4" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
         </a>
       </div>
     </div>
@@ -799,7 +730,7 @@
       <ol class="steps">
         <li class="step" style="--n:0;--sc:var(--f0)">
           <span class="node" aria-hidden="true"></span>
-          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 31V19H9V31M9 31V12H17V31M17 31V22H23V31M23 31V15H31V31M31 31V24H37V31M1 31H39"/><path d="M12 16H14M12 20H14M12 24H14M26 19H28M26 23H28" stroke-width="0.8"/><g class="m-hover"><g transform="translate(31 7) scale(1.4) translate(-31 -7)"><path class="m-rotor" d="M25.6 4.6H28.4" stroke-width="0.8"/><path class="m-rotor r2" d="M33.6 4.6H36.4" stroke-width="0.8"/><path d="M27 4.8V6.2M35 4.8V6.2M27 6.2H35" stroke-width="0.8"/><rect x="29.4" y="5.4" width="3.2" height="2.2" rx="0.8" stroke-width="0.8"/><path d="M29.8 7.6L29 9M32.2 7.6L33 9" stroke-width="0.7"/></g></g></svg></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 31V19H9V31M9 31V12H17V31M17 31V22H23V31M23 31V15H31V31M31 31V24H37V31M1 31H39"/><path d="M12 16H14M12 20H14M12 24H14M26 19H28M26 23H28" stroke-width="0.8"/><g class="m-hover"><g transform="translate(31 6.5) scale(1.25) translate(-31 -6.5)"><ellipse cx="26.6" cy="4.6" rx="2.6" ry="0.7" stroke-width="0.4" opacity="0.55"/><ellipse cx="35.4" cy="4.6" rx="2.6" ry="0.7" stroke-width="0.4" opacity="0.55"/><path class="m-rotor" d="M24.4 4.6H28.8" stroke-width="0.7"/><path class="m-rotor r2" d="M33.2 4.6H37.6" stroke-width="0.7"/><path d="M26.6 4.8V6.2M35.4 4.8V6.2M26.6 6.2H35.4" stroke-width="0.7"/><rect x="29.2" y="5.4" width="3.6" height="2.4" rx="0.9" stroke-width="0.7" fill="var(--paper)"/><path d="M29.6 7.8L28.8 9.2M32.4 7.8L33.2 9.2" stroke-width="0.6"/></g></g></svg></span>
           <span class="step-no">01</span>
           <h3>Soundscape</h3>
           <p>Real places are recorded, then drones, eVTOL aircraft, heat pumps and EVs are added at realistic levels.</p>
@@ -813,7 +744,7 @@
         </li>
         <li class="step" style="--n:2;--sc:var(--f2)">
           <span class="node" aria-hidden="true"></span>
-          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 22V18A12 12 0 0 1 32 18V22"/><rect x="5" y="21" width="6" height="9" rx="2"/><rect x="29" y="21" width="6" height="9" rx="2"/><path d="M15 26H25M17 23H23M17 29H23" stroke-width="0.7" stroke-dasharray="1 1.4"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:1.2s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:1.2s"/></svg></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 22V18A12 12 0 0 1 32 18V22"/><rect x="5" y="21" width="6" height="9" rx="2"/><rect x="29" y="21" width="6" height="9" rx="2"/><path d="M15 26H25M17 23H23M17 29H23" stroke-width="0.7" stroke-dasharray="1 1.4"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M3.4 22.8Q1.8 25.5 3.4 28.2" stroke-width="0.8" style="transform-origin:5px 25.5px;animation-delay:1.2s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.0s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:0.6s"/><path class="m-wave" d="M36.6 22.8Q38.2 25.5 36.6 28.2" stroke-width="0.8" style="transform-origin:35px 25.5px;animation-delay:1.2s"/><g class="m-emo e1"><path d="M3.2 6.2Q3.2 4 5 4Q6.8 4 6.8 5.6Q6.8 6.8 5 7.4V8.4" stroke-width="0.8"/><circle cx="5" cy="10" r="0.45" fill="currentColor" stroke="none"/></g><g class="m-emo e2"><circle cx="13" cy="3.4" r="2.6" stroke-width="0.7"/><circle cx="12.1" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><circle cx="13.9" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><path d="M11.8 4.1Q13 5.2 14.2 4.1" stroke-width="0.6"/></g><g class="m-emo e3"><circle cx="27" cy="3.4" r="2.6" stroke-width="0.7"/><circle cx="26.1" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><circle cx="27.9" cy="2.8" r="0.3" fill="currentColor" stroke="none"/><path d="M25.8 4.9Q27 3.8 28.2 4.9" stroke-width="0.6"/></g><g class="m-emo e4"><path d="M35 4V8.2" stroke-width="0.9"/><circle cx="35" cy="10" r="0.45" fill="currentColor" stroke="none"/></g></svg></span>
           <span class="step-no">03</span>
           <h3>Listening Panels</h3>
           <p>Participants rate annoyance in controlled jury tests, across different ambiences and contexts.</p>
@@ -827,7 +758,7 @@
         </li>
         <li class="step" style="--n:4;--sc:var(--f4)">
           <span class="node" aria-hidden="true"></span>
-          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 3V30H37"/><circle class="m-dot" cx="8.0" cy="28.4" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.00s"/><circle class="m-dot" cx="10.7" cy="24.1" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.37s"/><circle class="m-dot" cx="13.2" cy="26.6" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.74s"/><circle class="m-dot" cx="15.3" cy="21.6" r="0.85" fill="currentColor" stroke="none" style="animation-delay:1.11s"/><circle class="m-dot" cx="18.0" cy="21.5" r="0.85" fill="currentColor" stroke="none" style="animation-delay:1.48s"/><circle class="m-dot" cx="19.8" cy="15.7" r="0.85" fill="currentColor" stroke="none" style="animation-delay:1.85s"/><circle class="m-dot" cx="22.8" cy="14.4" r="0.85" fill="currentColor" stroke="none" style="animation-delay:2.22s"/><circle class="m-dot" cx="25.3" cy="9.0" r="0.85" fill="currentColor" stroke="none" style="animation-delay:2.59s"/><circle class="m-dot" cx="28.6" cy="9.6" r="0.85" fill="currentColor" stroke="none" style="animation-delay:2.96s"/><circle class="m-dot" cx="31.6" cy="4.9" r="0.85" fill="currentColor" stroke="none" style="animation-delay:3.33s"/><circle class="m-dot" cx="34.1" cy="6.8" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.10s"/><circle class="m-dot" cx="27.2" cy="6.8" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.47s"/><path d="M6 27C13 26 17 22 21 16S29 6 35 5" /></svg></span>
+          <span class="step-icon"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 3V30H37"/><circle class="m-dot" cx="8.0" cy="28.4" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.00s"/><circle class="m-dot" cx="10.7" cy="24.1" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.37s"/><circle class="m-dot" cx="13.2" cy="26.6" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.74s"/><circle class="m-dot" cx="15.3" cy="21.6" r="0.85" fill="currentColor" stroke="none" style="animation-delay:1.11s"/><circle class="m-dot" cx="18.0" cy="21.5" r="0.85" fill="currentColor" stroke="none" style="animation-delay:1.48s"/><circle class="m-dot" cx="19.8" cy="15.7" r="0.85" fill="currentColor" stroke="none" style="animation-delay:1.85s"/><circle class="m-dot" cx="22.8" cy="14.4" r="0.85" fill="currentColor" stroke="none" style="animation-delay:2.22s"/><circle class="m-dot" cx="25.3" cy="9.0" r="0.85" fill="currentColor" stroke="none" style="animation-delay:2.59s"/><circle class="m-dot" cx="28.6" cy="9.6" r="0.85" fill="currentColor" stroke="none" style="animation-delay:2.96s"/><circle class="m-dot" cx="31.6" cy="4.9" r="0.85" fill="currentColor" stroke="none" style="animation-delay:3.33s"/><circle class="m-dot" cx="34.1" cy="6.8" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.10s"/><circle class="m-dot" cx="27.2" cy="6.8" r="0.85" fill="currentColor" stroke="none" style="animation-delay:0.47s"/><path d="M24 30V12.6M4 12.6H24" stroke-width="0.6" stroke-dasharray="1.2 1.6"/><path d="M6 27C13 26 17 22 21 16S29 6 35 5" /><circle cx="24" cy="12.6" r="1.8" fill="currentColor" stroke="none"/></svg></span>
           <span class="step-no">05</span>
           <h3>Prediction</h3>
           <p>Annoyance can be estimated for scenarios that do not exist yet, giving regulators evidence and engineers a target.</p>
@@ -968,7 +899,6 @@
           <ul class="detail">
             <li>1st Supervisor on the Major Project (Dissertation) module for BSc (Hons) Music Technology students specialising in Acoustics and Environmental Noise.</li>
           </ul>
-          <div class="meta"><span class="tag">University Teaching</span></div>
         </li>
         <li data-complete>
           <span class="date">Aug 2026 – Oct 2026</span>
@@ -988,7 +918,6 @@
             <li>Teaching, marking and moderation across the online MSc Computer Science suite.</li>
             <li>Module reviewer and author.</li>
           </ul>
-          <div class="meta"><span class="tag">University Teaching</span></div>
         </li>
         <li class="current">
           <span class="date">2026 – Present</span>
@@ -998,7 +927,6 @@
             <li>Lab demonstrator for Environmental Noise Measurement and Modelling (BEng/MSc).</li>
             <li>Tutor for Immersive Sound Reproduction (MSc/PgDip).</li>
           </ul>
-          <div class="meta"><span class="tag">University Teaching</span><span class="tag">Field Measurements</span><span class="tag">Spatial Audio</span></div>
         </li>
       </ol>
     </div>
@@ -1013,23 +941,18 @@
           <h4>PhD Acoustics and Audio Engineering</h4>
           <p class="where">University of Salford Acoustics Innovation Institute</p>
           <p class="thesis"><span>Thesis</span>Psychoacoustic Assessment and Machine Learning-Based Modelling of Novel Noise Source Perception in Complex Soundscapes</p>
-          <div class="meta"><span class="tag">Psychoacoustics</span><span class="tag">Auralisation</span><span class="tag">Jury Testing</span><span class="tag">Machine Learning</span><span class="tag">Spatial Audio</span><span class="tag">DSP</span><span class="tag">Statistical Modelling</span><span class="tag">Data Visualisation</span></div>
         </li>
         <li>
           <span class="date">2023 – 2024</span>
           <h4>MSc Computer Science with Artificial Intelligence</h4>
           <p class="where">Abertay University</p>
-          <p class="thesis"><span>Dissertation</span>A Future Research Framework: Psychoacoustic Annoyance Models and Deep Learning for Prediction of UAV Noise Affect</p>
           <p class="grade">Distinction</p>
-          <div class="meta"><span class="tag">Machine Learning</span><span class="tag">Data Visualisation</span></div>
         </li>
         <li>
           <span class="date">2021 – 2023</span>
           <h4>BDes (Hons) Sound for Moving Image</h4>
           <p class="where">University of Glasgow</p>
-          <p class="thesis"><span>Dissertation</span>A Comparative Analysis of AI Tools for Electronic Music Production: Large Language Models, Generative-AI and Virtual Composers</p>
           <p class="grade">2:1</p>
-          <div class="meta"><span class="tag">Spatial Audio</span><span class="tag">Field Measurements</span></div>
         </li>
         <li>
           <span class="date">2019 – 2021</span>
@@ -1037,7 +960,6 @@
           <p class="where">University of the West of Scotland</p>
           <p class="grade">Distinction</p>
           <p class="honour">Awarded BSc Level 8 Court Medal</p>
-          <div class="meta"><span class="tag">DSP</span><span class="tag">Acoustical Engineering</span></div>
         </li>
         <li>
           <span class="date">2019</span>
@@ -1086,32 +1008,18 @@
 
   <section class="section" id="certificates" aria-labelledby="cert-h">
     <h2 id="cert-h">Certifications</h2>
-    <div class="scroll" data-open="true">
-      <button type="button" class="scroll-toggle" aria-expanded="true" aria-controls="cert-sheet">
-        <span class="scroll-label"><strong>10 certifications</strong><span class="scroll-hint">Roll up</span></span>
-      </button>
-      <div class="scroll-body">
-        <div class="ribbon" aria-hidden="true"></div>
-        <div class="rod rod-top" aria-hidden="true"></div>
-        <div class="sheet" id="cert-sheet">
-          <div class="sheet-inner">
-            <ul class="certs">
-              <li><h4>Advanced Prompt Engineering</h4><p class="where">Vanderbilt University</p></li>
-        <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
-        <li><h4>AI for Noise Pollution Control</h4><p class="where">LSIB</p></li>
-        <li><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
-              <li><h4>Auralization</h4><p class="where">Autumn School Series in Acoustics (ASSA) 2026</p></li>
-        <li><h4>Digital Signal Processing</h4><p class="where">EPFL</p></li>
-        <li><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p></li>
-        <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
-        <li><h4>Transformer Models and BERT Model</h4><p class="where">Google</p></li>
-        <li><h4>Trustworthy Generative AI</h4><p class="where">Vanderbilt University</p></li>
-            </ul>
-          </div>
-        </div>
-        <div class="rod rod-bottom" aria-hidden="true"></div>
-      </div>
-    </div>
+    <ul class="certs">
+      <li><h4>Advanced Prompt Engineering</h4><p class="where">Vanderbilt University</p></li>
+      <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
+      <li><h4>AI for Noise Pollution Control</h4><p class="where">LSIB</p></li>
+      <li><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
+      <li><h4>Auralization</h4><p class="where">Autumn School Series in Acoustics (ASSA) 2026</p></li>
+      <li><h4>Digital Signal Processing</h4><p class="where">EPFL</p></li>
+      <li><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p></li>
+      <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
+      <li><h4>Transformer Models and BERT Model</h4><p class="where">Google</p></li>
+      <li><h4>Trustworthy Generative AI</h4><p class="where">Vanderbilt University</p></li>
+    </ul>
   </section>
 
 
@@ -1428,27 +1336,6 @@
 </script>
 <script>
 (() => {
-  const root = document.documentElement;
-  const btn = document.getElementById('theme-toggle');
-  const sync = () => btn.setAttribute('aria-checked', String(root.getAttribute('data-theme') === 'dark'));
-  sync();
-  btn.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
-    sync();
-  });
-  // Follow system changes until the visitor picks a theme themselves
-  const mq = window.matchMedia('(prefers-color-scheme: dark)');
-  mq.addEventListener && mq.addEventListener('change', (e) => {
-    let saved = null;
-    try { saved = localStorage.getItem('theme'); } catch (err) {}
-    if (!saved) { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); sync(); }
-  });
-})();
-</script>
-<script>
-(() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (reduce.matches) return;
 
@@ -1524,26 +1411,6 @@
     });
   })();
 
-  /* Certificates scroll: unroll downwards, then drift gently */
-  (() => {
-    const scroll = document.querySelector('.scroll'); if (!scroll) return;
-    const btn = scroll.querySelector('.scroll-toggle'), hint = scroll.querySelector('.scroll-hint');
-    const sheet = scroll.querySelector('.sheet'), body = scroll.querySelector('.scroll-body');
-    scroll.querySelectorAll('.certs li').forEach((li, i) => li.style.setProperty('--i', i));
-    const set = (open) => {
-      scroll.dataset.open = open; btn.setAttribute('aria-expanded', open);
-      hint.textContent = open ? 'Roll up' : 'Unroll';
-      sheet.inert = !open;
-      if (!open) scroll.classList.remove('floating');
-    };
-    set(false);
-    sheet.addEventListener('transitionend', (e) => {
-      if (e.target === sheet && scroll.dataset.open === 'true') scroll.classList.add('floating');
-    });
-    btn.addEventListener('click', () => set(scroll.dataset.open !== 'true'));
-    body.addEventListener('click', () => { if (scroll.dataset.open !== 'true') set(true); });
-    window.addEventListener('beforeprint', () => { sheet.inert = false; });
-  })();
 </script>
 <script>
   /* Ruler icons: crop each drawing to its own outline, then size them all to one height on one centre line */
