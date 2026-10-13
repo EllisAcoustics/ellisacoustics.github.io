@@ -14,6 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Max Ellis, Psychoacoustician, with a frequency ruler and a portrait">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/sourcerer-regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -35,6 +36,12 @@
   })();
 </script>
 <style>
+  @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-bold.woff") format("woff"); font-weight: 700; font-style: normal; font-display: swap; }
+  :root { --serif: "Sourcerer", "Source Serif 4", Georgia, "Times New Roman", serif; }
+  .hero-q, .hero-sub { font-family: var(--serif); font-weight: 400; letter-spacing: 0; }
+  .pubs h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0; font-size: 18px; line-height: 25px; }
   :root {
     --paper: #F6F5F1;
     --ink: #1A1A18;
@@ -1038,7 +1045,7 @@
       <span>© 2026 Max Ellis</span>
       <span><a href="contact">Contact</a> · <a href="cv/Max-Ellis-CV.pdf" download>My CV (PDF)</a> · Updated October 2026</span>
     </div>
-    <p class="credits">Logos are trademarks of their owners and are used only to name the organisations and software listed. Icons from Simple Icons and Devicon. R logo © The R Foundation, CC BY-SA 4.0.</p>
+    <p class="credits">Logos are trademarks of their owners and are used only to name the organisations and software listed. Icons from Simple Icons and Devicon. R logo © The R Foundation, CC BY-SA 4.0. Serif type: Sourcerer (after Source Serif 4), SIL Open Font License.</p>
   </div>
 </footer>
 
