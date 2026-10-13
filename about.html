@@ -140,7 +140,7 @@
   #intro { display: none; }
   html.intro #intro {
     display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden;
-    animation: intro-failsafe 0s linear 5.5s forwards;
+    animation: intro-failsafe 0s linear 6.5s forwards;
   }
   @keyframes intro-failsafe { to { visibility: hidden; } }
   #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
@@ -376,9 +376,9 @@
   <section class="section" id="volunteering" aria-labelledby="vol-h">
     <h2 id="vol-h">Volunteering</h2>
     <ul class="vol-grid">
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/broadcasting-scotland.png?v=3" width="40" height="64" alt="Broadcasting Scotland" decoding="async"><span class="vol-tip"><strong>Broadcasting Scotland</strong><span>Live Sound Engineer, 2018</span></span></li>
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/broadcasting-scotland.png?v=3" width="52" height="84" style="height:84px" alt="Broadcasting Scotland" decoding="async"><span class="vol-tip"><strong>Broadcasting Scotland</strong><span>Live Sound Engineer, 2018</span></span></li>
       <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/yan.svg?v=2" width="106" height="64" alt="Young Acousticians Network" decoding="async"><span class="vol-tip"><strong>Young Acousticians Network</strong><span>Committee Member</span></span></li>
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/stem.svg" width="60" height="60" alt="STEM Ambassadors" decoding="async"><span class="vol-tip"><strong>STEM Ambassador</strong><span>Scotland</span></span></li>
+      <li class="vol-tile" tabindex="0"><img loading="lazy" src="logos/vol/stem.svg?v=2" width="60" height="60" alt="STEM Ambassadors" decoding="async"><span class="vol-tip"><strong>STEM Ambassador</strong><span>Scotland</span></span></li>
     </ul>
   </section>
 
@@ -407,13 +407,13 @@
     <ul class="certs">
       <li><h3>Advanced Prompt Engineering</h3><p class="where">Vanderbilt University</p><a class="cred" href="https://coursera.org/verify/HZG8ASK3WT9J" target="_blank" rel="noopener">Show credential ↗</a></li>
       <li><h3>Advanced R Programming</h3><p class="where">Johns Hopkins University</p></li>
-      <li><h3>AI for Noise Pollution Control</h3><p class="where">LSIB</p></li>
+      <li><h3>AI for Noise Pollution Control</h3><p class="where">LSIB</p><p class="cred-id">Credential ID 2245-32007-113</p></li>
       <li><h3>Applications of AI in Acoustics</h3><p class="where">European Acoustics Association Summer School</p></li>
       <li><h3>Auralization</h3><p class="where">Autumn School Series in Acoustics (ASSA) 2026</p></li>
       <li><h3>Digital Signal Processing</h3><p class="where">EPFL</p><a class="cred" href="https://www.coursera.org/account/accomplishments/specialization/W1KKXJOZYH7B" target="_blank" rel="noopener">Show credential ↗</a></li>
       <li><h3>Ethics of Artificial Intelligence</h3><p class="where">Politecnico di Milano</p><a class="cred" href="https://coursera.org/verify/M70W08P4Y44D" target="_blank" rel="noopener">Show credential ↗</a></li>
       <li><h3>Responsible Research and Innovation</h3><p class="where">ORBITRRI</p></li>
-      <li><h3>Transformer Models and BERT Model</h3><p class="where">Google</p></li>
+      <li class="has-badge"><div><h3>Transformer Models and BERT Model</h3><p class="where">Google</p></div><img class="badge" src="images/badges/google-transformer-bert.jpg" width="240" height="218" alt="Google Cloud completion badge: Transformer Models and BERT Model" loading="lazy" decoding="async"></li>
       <li><h3>Trustworthy Generative AI</h3><p class="where">Vanderbilt University</p><a class="cred" href="https://www.coursera.org/account/accomplishments/verify/5NAVIU4IMJIY" target="_blank" rel="noopener">Show credential ↗</a></li>
     </ul>
   </section>
@@ -467,7 +467,8 @@
     const bX = hpX - bW * 1.15, bY = base - bH * (28.6 / 30);            // the bird sits beside it, not on the warm top
     line.remove();
     Object.assign(hp.style, { width: hpW + 'px', transform: `translate(${hpX}px, ${hpY}px)`, opacity: 0 });
-    Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px)`, opacity: 0 });
+    // the bird faces left, away from the heat pump
+    Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px) scaleX(-1)`, transformOrigin: '50% 50%', opacity: 0 });
     // air rises from below, straight up into the fan
     const fanX = hpX + hpW * ((13.5 - 3) / 32), awW = hpW * 0.34, awH = awW * 30 / 22;
     Object.assign(windEl.style, { width: awW + 'px', transform: `translate(${fanX - awW / 2}px, ${base - hpH * 0.02}px)`, opacity: 0 });
@@ -498,7 +499,7 @@
     [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 650, fill: 'forwards' }));
 
     // 3. six chirps, each with a note from the beak
-    const beakX = bX + bW * (35.4 / 40), beakY = bY + bH * (10.6 / 30);
+    const beakX = bX + bW * (1 - 35.4 / 40), beakY = bY + bH * (10.6 / 30);
     const chirp = (i) => {
       head.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-10deg)' }, { transform: 'rotate(0)' }], { duration: 300, easing: 'ease-out' });
       jaw.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(26deg)' }, { transform: 'rotate(0)' }], { duration: 260, easing: 'ease-out' });
@@ -506,7 +507,7 @@
       const nw = bW * (i % 2 ? 0.46 : 0.3);
       n.style.width = nw + 'px';
       el.appendChild(n);
-      const dx = 10 + (i % 3) * 8, dy = -46 - (i % 3) * 10, rot = i % 2 ? 12 : -10;
+      const dx = -(10 + (i % 3) * 8) - nw, dy = -46 - (i % 3) * 10, rot = i % 2 ? -12 : 10;
       n.animate([
         { transform: `translate(${beakX}px, ${beakY - nw}px) scale(0.5) rotate(0)`, opacity: 0 },
         { transform: `translate(${beakX + dx * 0.3}px, ${beakY - nw + dy * 0.3}px) scale(1) rotate(${rot / 2}deg)`, opacity: 1, offset: 0.25 },
@@ -521,25 +522,25 @@
     // 4. warm air lifts a flurry of leaves upwards past the heat pump; the bird ruffles its wing
     at(2050, () => {
       const lw = Math.max(16, hpW * 0.1);
-      for (let k = 0; k < 9; k++) {
+      for (let k = 0; k < 14; k++) {
         const leafEl = leafTpl.content.firstElementChild.cloneNode(true);
         const size = lw * (0.75 + ((k * 37) % 10) / 20);
         leafEl.style.width = size + 'px';
         el.appendChild(leafEl);
-        const x = hpX - hpW * 0.4 + ((k * 53) % 100) / 100 * hpW * 1.8;
+        const x = hpX - hpW * 0.7 + ((k * 53) % 100) / 100 * hpW * 2.4;
         const wob = 16 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (300 + k * 40);
         leafEl.animate([
           { transform: `translate(${x}px, ${H + size * 2}px) rotate(0)` },
           { transform: `translate(${x - wob}px, ${H * 0.62}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
           { transform: `translate(${x + wob}px, ${H * 0.3}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
           { transform: `translate(${x - wob / 2}px, ${-size * 3}px) rotate(${spin}deg)` }
-        ], { duration: 1000 + (k % 4) * 110, delay: k * 60, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
+        ], { duration: 1050 + (k % 4) * 120, delay: k * 85, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
       }
       at(2300, () => beat(3, 170, 40, -16));
     });
 
     // 5. everything fades as the last leaves leave, and the page appears
-    at(3350, () => {
+    at(4100, () => {
       [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
       el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
                  { duration: 600, easing: 'ease', fill: 'forwards' }).onfinish = finish;

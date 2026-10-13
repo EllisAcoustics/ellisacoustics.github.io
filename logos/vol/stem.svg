@@ -1,6 +1,8 @@
 <svg role="img" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><title>STEM Ambassadors</title>
-<path fill="#7AB929" d="M8 6Q50 54 92 6Q50 36 8 6Z"/>
-<path fill="#E31B44" d="M6 8Q54 50 6 92Q36 50 6 8Z"/>
-<path fill="#FFC20E" d="M94 8Q46 50 94 92Q64 50 94 8Z"/>
-<path fill="#19A9E1" d="M8 94Q50 46 92 94Q50 64 8 94Z"/>
+<g stroke-linejoin="round" stroke-width="1.6">
+<path fill="#7AB929" stroke="#7AB929" d="M9 7C27 29 73 29 91 7C72 19 28 19 9 7Z"/>
+<path fill="#E31B44" stroke="#E31B44" d="M7 9C29 27 29 73 7 91C19 72 19 28 7 9Z"/>
+<path fill="#FFC20E" stroke="#FFC20E" d="M93 9C71 27 71 73 93 91C81 72 81 28 93 9Z"/>
+<path fill="#19A9E1" stroke="#19A9E1" d="M9 93C27 71 73 71 91 93C72 81 28 81 9 93Z"/>
+</g>
 </svg>
