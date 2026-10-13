@@ -9,10 +9,10 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ellisacoustics.github.io/listen">
 <meta property="og:description" content="Listen to the future: build a soundscape and hear how drones, air taxis, heat pumps and e-scooters change it. Coming soon.">
-<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png">
+<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Max Ellis, Psychoacoustician, with a frequency ruler and a portrait">
+<meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
@@ -281,6 +281,31 @@
     .hero-why { font-size: 17px; line-height: 26px; }
     .gap-lede { font-size: 17px; line-height: 26px; }
   }
+  /* ---------- Live console ---------- */
+  .console { padding: calc(var(--u) * 1) 0 calc(var(--u) * 5); max-width: 980px; }
+  @media (min-width: 880px) and (min-height: 760px) { .console .player { position: sticky; top: 12px; z-index: 20; } }
+  .player { display: grid; gap: 14px; padding: 16px; border: 1px solid var(--rule); border-radius: 12px; background: var(--paper); box-shadow: 0 10px 30px -18px rgba(0,0,0,0.35); }
+  .p-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+  .play { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--ink); color: var(--paper); cursor: pointer; transition: transform 150ms ease; }
+  .play:active { transform: scale(0.95); }
+  .play svg { width: 26px; height: 26px; }
+  .play .i-pause { display: none; }
+  .play[aria-pressed="true"] .i-play { display: none; }
+  .play[aria-pressed="true"] .i-pause { display: block; }
+  .play .i-play { margin-left: 3px; }
+  .vol { display: flex; align-items: center; gap: 8px; margin-left: auto; min-width: 150px; flex: 0 1 220px; color: var(--ink-2); }
+  .vol svg { width: 20px; height: 20px; flex: none; }
+  .spec-wrap { position: relative; height: clamp(150px, 26vw, 230px); border-radius: 8px; overflow: hidden; background: #08080A; }
+  .spec { display: block; width: 100%; height: 100%; }
+  .spec-hz { position: absolute; inset: 0 auto 0 8px; pointer-events: none; font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.55); }
+  .spec-hz span { position: absolute; top: calc(var(--y) * 100%); transform: translateY(-50%); }
+  .spec-idle { position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; text-align: center; color: rgba(255,255,255,0.7); font-size: 15px; transition: opacity 400ms ease; }
+  .player.live .spec-idle { opacity: 0; }
+  .readout { display: flex; flex-wrap: wrap; gap: 6px 24px; font-family: var(--mono); font-size: 13px; color: var(--ink-2); margin: 0; }
+  .readout b { color: var(--ink); font-weight: 400; font-variant-numeric: tabular-nums; }
+  .card.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .card:not(.on) .ctl { opacity: 0.55; }
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -309,72 +334,70 @@
     </div>
   </nav>
   <h1>Listen</h1>
-  <p class="lede">What does the future <em>sound</em> like? Build a scene, add a new sound, then switch between before and after.</p>
+  <p class="lede">What does the future <em>sound</em> like? Pick a place, add the new technology, then switch between before and after.</p>
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
-  <p class="wip-banner" role="note"><strong>Work in progress.</strong> The sound library and listening engine are being built. The controls below show what the page will do; they don’t make sound yet.</p>
+  <section class="console" aria-labelledby="play-h">
+    <h2 id="play-h" class="visually-hidden">Listen</h2>
+    <div class="player">
+      <div class="p-row">
+        <button class="play" type="button" aria-label="Play" aria-pressed="false"><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5V18.5L18.5 12Z" fill="currentColor"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5H10.5V18.5H7.5ZM13.5 5.5H16.5V18.5H13.5Z" fill="currentColor"/></svg></button>
+        <div class="ab" role="radiogroup" aria-label="Compare the scene before and after the new sounds arrive">
+          <button type="button" role="radio" aria-checked="false" data-ab="before">Before</button>
+          <button type="button" role="radio" aria-checked="true" data-ab="after">After</button>
+        </div>
+        <label class="vol"><span class="visually-hidden">Volume</span><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5H7.5L12 5.5V18.5L7.5 14.5H4Z" fill="currentColor"/><path d="M15.5 9Q17.5 12 15.5 15M18.3 6.6Q22 12 18.3 17.4"/></svg><input type="range" min="0" max="100" value="45" data-k="volume" aria-label="Volume"></label>
+      </div>
+      <div class="spec-wrap"><canvas class="spec" aria-label="Live spectrogram of the scene: time runs left to right, pitch runs bottom to top, brighter is louder" role="img"></canvas><div class="spec-hz" aria-hidden="true"><span style="--y:0.04">10k</span><span style="--y:0.28">2k</span><span style="--y:0.5">500</span><span style="--y:0.72">125</span><span style="--y:0.94">Hz</span></div><p class="spec-idle">Press play to hear the scene and watch its sound appear here.</p></div>
+      <p class="readout" aria-live="off"><span>Level <b data-r="level">—</b></span><span>Loudest pitch <b data-r="peak">—</b></span><span>Sounds on <b data-r="on">—</b></span></p>
+    </div>
+    <p class="note">Every sound here is synthesised live in your browser from the physics of each source: rotor blade-passing tones, compressor hum, warning-sound waveforms, distance, air absorption and the Doppler shift as things pass. It is a sketch, not a measurement; recordings from my listening experiments will replace it. Start with your volume low. Headphones recommended; on iPhone, turn off silent mode.</p>
+  </section>
 
   <section class="section" aria-labelledby="amb-h">
     <h2 id="amb-h"><span class="n">1</span> Pick a place</h2>
-    <div class="seg" role="radiogroup" aria-label="Ambience">
-      <button class="wip" role="radio" aria-checked="true">Busy street</button>
-      <button class="wip" role="radio" aria-checked="false">Suburban garden</button>
-      <button class="wip" role="radio" aria-checked="false">City park</button>
-      <button class="wip" role="radio" aria-checked="false">Rural village</button>
-      <button class="wip" role="radio" aria-checked="false">Quiet room, window open</button>
+    <div class="seg" role="radiogroup" aria-label="Ambience" data-group="amb">
+      <button type="button" role="radio" aria-checked="true" data-v="street">Busy street</button>
+      <button type="button" role="radio" aria-checked="false" data-v="garden">Suburban garden</button>
+      <button type="button" role="radio" aria-checked="false" data-v="park">City park</button>
+      <button type="button" role="radio" aria-checked="false" data-v="rural">Rural village</button>
+      <button type="button" role="radio" aria-checked="false" data-v="room">Quiet room, window open</button>
     </div>
   </section>
 
   <section class="section" aria-labelledby="src-h">
     <h2 id="src-h"><span class="n">2</span> Add a new sound</h2>
     <div class="cards">
-      <article class="card">
-        <header><span class="ico"><svg aria-hidden="true" focusable="false" class="drone-cargo" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path class="gust" d="M3 11.5C2.6 14 3.4 16 2.4 18C1.8 19.2 0.4 19 0.6 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.00s"/><path class="gust" d="M7 11.5C7.4 14 6.6 16 7.6 18C8.2 19.2 9.6 19 9.4 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.50s"/><path class="gust" d="M33 11.5C32.6 14 33.4 16 32.4 18C31.8 19.2 30.4 19 30.6 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.25s"/><path class="gust" d="M37 11.5C37.4 14 36.6 16 37.6 18C38.2 19.2 39.6 19 39.4 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.75s"/><g class="srot" style="transform-origin:5px 6.6px"><path d="M0.4 6.6H9.6" stroke-width="0.8"/></g><g class="srot" style="transform-origin:35px 6.6px"><path d="M30.4 6.6H39.6" stroke-width="0.8"/></g><path d="M5 7V9.2M35 7V9.2" stroke-width="0.6"/><rect x="3.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><rect x="33.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><path d="M6.4 10.1H14.2M25.8 10.1H33.6" stroke-width="0.7"/><rect x="14.2" y="8" width="11.6" height="4.6" rx="1.6"/><path d="M16.2 12.6L13.6 18M23.8 12.6L26.4 18M11.8 18H15.4M24.6 18H28.2" stroke-width="0.7"/><g class="cargo" style="transform-origin:20px 12.6px"><path d="M18 12.6L16.4 21M22 12.6L23.6 21" stroke-width="0.5"/><rect x="14.6" y="21" width="10.8" height="8.6" rx="0.6"/><path class="sym-med" d="M20 23.1V27.5M17.8 25.3H22.2" stroke-width="1.1"/><path class="sym-food" d="M18 23.1V27.6M17.3 23.1V24.4Q17.3 25.2 18 25.2Q18.7 25.2 18.7 24.4V23.1M22 27.6V23.1Q23.2 24 22.5 25.8" stroke-width="0.6"/></g></svg></span><h3>Delivery drone</h3><button class="sw wip" role="switch" aria-checked="true" aria-label="Include the delivery drone"></button></header>
-        <label class="ctl"><span>Height <output>40 m</output></span><input class="wip" aria-label="Delivery drone: height" type="range" min="15" max="120" value="40"></label>
-        <label class="ctl"><span>Payload <output>2.5 kg</output></span><input class="wip" aria-label="Delivery drone: payload" type="range" min="0" max="5" step="0.5" value="2.5"></label>
-        <label class="ctl"><span>Speed <output>12 m/s</output></span><input class="wip" aria-label="Delivery drone: speed" type="range" min="0" max="20" value="12"></label>
-        <div class="ctl"><span>Manoeuvre</span><div class="seg sm"><button class="wip" aria-pressed="true">Flyover</button><button class="wip" aria-pressed="false">Hover</button><button class="wip" aria-pressed="false">Delivery</button></div></div>
+      <article class="card" data-src="drone">
+        <header><span class="ico"><svg aria-hidden="true" focusable="false" class="drone-cargo" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path class="gust" d="M3 11.5C2.6 14 3.4 16 2.4 18C1.8 19.2 0.4 19 0.6 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.00s"/><path class="gust" d="M7 11.5C7.4 14 6.6 16 7.6 18C8.2 19.2 9.6 19 9.4 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.50s"/><path class="gust" d="M33 11.5C32.6 14 33.4 16 32.4 18C31.8 19.2 30.4 19 30.6 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.25s"/><path class="gust" d="M37 11.5C37.4 14 36.6 16 37.6 18C38.2 19.2 39.6 19 39.4 17.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.75s"/><g class="srot" style="transform-origin:5px 6.6px"><path d="M0.4 6.6H9.6" stroke-width="0.8"/></g><g class="srot" style="transform-origin:35px 6.6px"><path d="M30.4 6.6H39.6" stroke-width="0.8"/></g><path d="M5 7V9.2M35 7V9.2" stroke-width="0.6"/><rect x="3.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><rect x="33.6" y="9.2" width="2.8" height="1.8" rx="0.4"/><path d="M6.4 10.1H14.2M25.8 10.1H33.6" stroke-width="0.7"/><rect x="14.2" y="8" width="11.6" height="4.6" rx="1.6"/><path d="M16.2 12.6L13.6 18M23.8 12.6L26.4 18M11.8 18H15.4M24.6 18H28.2" stroke-width="0.7"/><g class="cargo" style="transform-origin:20px 12.6px"><path d="M18 12.6L16.4 21M22 12.6L23.6 21" stroke-width="0.5"/><rect x="14.6" y="21" width="10.8" height="8.6" rx="0.6"/><path class="sym-med" d="M20 23.1V27.5M17.8 25.3H22.2" stroke-width="1.1"/><path class="sym-food" d="M18 23.1V27.6M17.3 23.1V24.4Q17.3 25.2 18 25.2Q18.7 25.2 18.7 24.4V23.1M22 27.6V23.1Q23.2 24 22.5 25.8" stroke-width="0.6"/></g></svg></span><h3>Delivery drone</h3><button class="sw" type="button" role="switch" aria-checked="true" data-k="drone.on" aria-label="Include the delivery drone"></button></header>
+        <label class="ctl"><span>Height <output>40 m</output></span><input data-k="drone.height" data-u=" m" aria-label="Delivery drone: height" type="range" min="15" max="120" value="40"></label>
+        <label class="ctl"><span>Payload <output>2.5 kg</output></span><input data-k="drone.payload" data-u=" kg" aria-label="Delivery drone: payload" type="range" min="0" max="5" step="0.5" value="2.5"></label>
+        <label class="ctl"><span>Speed <output>12 m/s</output></span><input data-k="drone.speed" data-u=" m/s" aria-label="Delivery drone: speed" type="range" min="0" max="20" value="12"></label>
+        <div class="ctl"><span>Manoeuvre</span><div class="seg sm" role="radiogroup" aria-label="Drone manoeuvre" data-group="drone.mode"><button type="button" role="radio" aria-checked="true" data-v="flyover">Flyover</button><button type="button" role="radio" aria-checked="false" data-v="hover">Hover</button><button type="button" role="radio" aria-checked="false" data-v="delivery">Delivery</button></div></div>
       </article>
-      <article class="card">
-        <header><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path class="gust" d="M5 12.5C4.6 15 5.4 17 4.4 19C3.8 20.2 2.4 20 2.6 18.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.00s"/><path class="gust" d="M35 12.5C35.4 15 34.6 17 35.6 19C36.2 20.2 37.6 20 37.4 18.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.40s"/><g opacity="0.45"><ellipse cx="9" cy="8.6" rx="4.6" ry="0.83" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:9px 8.6px"><path d="M4.4 8.6H13.6" stroke-width="0.7"/></g><rect x="8.1" y="8.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><g opacity="0.45"><ellipse cx="31" cy="8.6" rx="4.6" ry="0.83" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:31px 8.6px"><path d="M26.4 8.6H35.6" stroke-width="0.7"/></g><rect x="30.1" y="8.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><path d="M15.6 14.6L9 10.4M25.6 14.6L31 10.4" stroke-width="0.6" opacity="0.45"/><path d="M12.6 20.4C12.6 15.6 15.8 12.9 20.6 12.9C25.6 12.9 28.6 15.8 28.6 20.2C28.6 23.7 26.1 25.3 20.6 25.3C15.1 25.3 12.6 23.8 12.6 20.4Z" fill="var(--paper)"/><path d="M21.4 13.7C25.2 14 27.4 16.6 27.7 19.9H21.4Z" stroke-width="0.5"/><path d="M22.6 14.9C24.4 15.3 25.6 16.6 26 18.2" stroke-width="0.35" opacity="0.6"/><path d="M17.4 13.6V24.8M13.2 21.6H28.2" stroke-width="0.4"/><path d="M14.4 16L5 11.6M26.8 16L35 11.6" stroke-width="0.8"/><g><ellipse cx="5" cy="9.6" rx="4.8" ry="0.86" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:5px 9.6px"><path d="M0.20000000000000018 9.6H9.8" stroke-width="0.7"/></g><rect x="4.1" y="9.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><g><ellipse cx="35" cy="9.6" rx="4.8" ry="0.86" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:35px 9.6px"><path d="M30.2 9.6H39.8" stroke-width="0.7"/></g><rect x="34.1" y="9.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><path d="M16.2 25L14.8 29.4M25 25L26.4 29.4" stroke-width="0.6"/><path d="M11.2 29.4H19.4M22.2 29.4H30.4" stroke-width="0.8"/></svg></span><h3>Air taxi (eVTOL)</h3><button class="sw wip" role="switch" aria-checked="false" aria-label="Include the air taxi"></button></header>
-        <label class="ctl"><span>Altitude <output>300 m</output></span><input class="wip" aria-label="Air taxi (eVTOL): altitude" type="range" min="150" max="600" step="10" value="300"></label>
-        <label class="ctl"><span>Speed <output>45 m/s</output></span><input class="wip" aria-label="Air taxi (eVTOL): speed" type="range" min="0" max="80" value="45"></label>
-        <div class="ctl"><span>Phase</span><div class="seg sm"><button class="wip" aria-pressed="true">Cruise</button><button class="wip" aria-pressed="false">Take-off</button><button class="wip" aria-pressed="false">Landing</button></div></div>
+      <article class="card" data-src="evtol">
+        <header><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path class="gust" d="M5 12.5C4.6 15 5.4 17 4.4 19C3.8 20.2 2.4 20 2.6 18.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.00s"/><path class="gust" d="M35 12.5C35.4 15 34.6 17 35.6 19C36.2 20.2 37.6 20 37.4 18.8" pathLength="100" stroke-width="0.5" style="animation-delay:0.40s"/><g opacity="0.45"><ellipse cx="9" cy="8.6" rx="4.6" ry="0.83" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:9px 8.6px"><path d="M4.4 8.6H13.6" stroke-width="0.7"/></g><rect x="8.1" y="8.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><g opacity="0.45"><ellipse cx="31" cy="8.6" rx="4.6" ry="0.83" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:31px 8.6px"><path d="M26.4 8.6H35.6" stroke-width="0.7"/></g><rect x="30.1" y="8.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><path d="M15.6 14.6L9 10.4M25.6 14.6L31 10.4" stroke-width="0.6" opacity="0.45"/><path d="M12.6 20.4C12.6 15.6 15.8 12.9 20.6 12.9C25.6 12.9 28.6 15.8 28.6 20.2C28.6 23.7 26.1 25.3 20.6 25.3C15.1 25.3 12.6 23.8 12.6 20.4Z" fill="var(--paper)"/><path d="M21.4 13.7C25.2 14 27.4 16.6 27.7 19.9H21.4Z" stroke-width="0.5"/><path d="M22.6 14.9C24.4 15.3 25.6 16.6 26 18.2" stroke-width="0.35" opacity="0.6"/><path d="M17.4 13.6V24.8M13.2 21.6H28.2" stroke-width="0.4"/><path d="M14.4 16L5 11.6M26.8 16L35 11.6" stroke-width="0.8"/><g><ellipse cx="5" cy="9.6" rx="4.8" ry="0.86" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:5px 9.6px"><path d="M0.20000000000000018 9.6H9.8" stroke-width="0.7"/></g><rect x="4.1" y="9.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><g><ellipse cx="35" cy="9.6" rx="4.8" ry="0.86" stroke-width="0.35" stroke-dasharray="0.8 0.8"/><g class="srot" style="transform-origin:35px 9.6px"><path d="M30.2 9.6H39.8" stroke-width="0.7"/></g><rect x="34.1" y="9.85" width="1.8" height="1.6" rx="0.45" stroke-width="0.55"/></g><path d="M16.2 25L14.8 29.4M25 25L26.4 29.4" stroke-width="0.6"/><path d="M11.2 29.4H19.4M22.2 29.4H30.4" stroke-width="0.8"/></svg></span><h3>Air taxi (eVTOL)</h3><button class="sw" type="button" role="switch" aria-checked="false" data-k="evtol.on" aria-label="Include the air taxi"></button></header>
+        <label class="ctl"><span>Altitude <output>300 m</output></span><input data-k="evtol.alt" data-u=" m" aria-label="Air taxi (eVTOL): altitude" type="range" min="150" max="600" step="10" value="300"></label>
+        <label class="ctl"><span>Speed <output>45 m/s</output></span><input data-k="evtol.speed" data-u=" m/s" aria-label="Air taxi (eVTOL): speed" type="range" min="10" max="80" value="45"></label>
+        <div class="ctl"><span>Phase</span><div class="seg sm" role="radiogroup" aria-label="Air taxi flight phase" data-group="evtol.mode"><button type="button" role="radio" aria-checked="true" data-v="cruise">Cruise</button><button type="button" role="radio" aria-checked="false" data-v="takeoff">Take-off</button><button type="button" role="radio" aria-checked="false" data-v="landing">Landing</button></div></div>
       </article>
-      <article class="card">
-        <header><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.45"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.45"/><g class="spin fast" style="transform-origin:13.5px 23.5px" stroke-width="0.6"><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(120 13.5 23.5)"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(240 13.5 23.5)"/></g><path d="M24.0 17V29.5M25.1 17V29.5M26.3 17V29.5M27.4 17V29.5M28.6 17V29.5M29.8 17V29.5M30.9 17V29.5" stroke-width="0.45"/><path d="M7 32V33.5M31 32V33.5"/><g class="bird" stroke-width="0.7"><path d="M24.6 11.6L21.6 10.6L24.4 12.6"/><path d="M24.4 12.6Q26.4 14.4 29.2 13.2Q30.6 12.4 30.4 10.8"/><path d="M24.6 11.6Q26.6 10.2 29 10.2"/><path d="M26.6 14.1L26.4 14.5M28 13.8L28 14.5" stroke-width="0.5"/><g class="head" style="transform-origin:29.4px 10.8px"><path d="M29 10.2Q29.6 8.2 31.2 8.4Q32.4 8.7 32.3 9.9L33.8 10.2L32 10.6Q31.4 11.4 30.4 10.8"/><circle cx="31.2" cy="9.3" r="0.28" fill="currentColor" stroke="none"/></g></g><g class="note n1" stroke-width="0.6"><ellipse cx="35" cy="7" rx="0.95" ry="0.7" transform="rotate(-20 35 7)" fill="currentColor" stroke="none"/><path d="M35.85 6.8V3.2L37.2 3.9"/></g><g class="note n2" stroke-width="0.6"><ellipse cx="33.4" cy="5" rx="0.95" ry="0.7" transform="rotate(-20 33.4 5)" fill="currentColor" stroke="none"/><path d="M34.25 4.8V1.2000000000000002L35.6 1.9"/></g></svg></span><h3>Air source heat pump</h3><button class="sw wip" role="switch" aria-checked="false" aria-label="Include the heat pump"></button></header>
-        <label class="ctl"><span>Distance <output>8 m</output></span><input class="wip" aria-label="Air source heat pump: distance" type="range" min="2" max="30" value="8"></label>
-        <label class="ctl"><span>Fan speed <output>70%</output></span><input class="wip" aria-label="Air source heat pump: fan speed" type="range" min="20" max="100" value="70"></label>
-        <div class="ctl row"><span>Acoustic cover</span><button class="sw wip" role="switch" aria-checked="false" aria-label="Acoustic cover"></button></div>
+      <article class="card" data-src="hp">
+        <header><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.45"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.45"/><g class="spin fast" style="transform-origin:13.5px 23.5px" stroke-width="0.6"><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(120 13.5 23.5)"/><path d="M13.5 23.5C14.6 22.2 15.6 20.6 15.1 18.4C14.2 19 13.6 21 13.5 23.5Z" transform="rotate(240 13.5 23.5)"/></g><path d="M24.0 17V29.5M25.1 17V29.5M26.3 17V29.5M27.4 17V29.5M28.6 17V29.5M29.8 17V29.5M30.9 17V29.5" stroke-width="0.45"/><path d="M7 32V33.5M31 32V33.5"/><g class="bird" stroke-width="0.7"><path d="M24.6 11.6L21.6 10.6L24.4 12.6"/><path d="M24.4 12.6Q26.4 14.4 29.2 13.2Q30.6 12.4 30.4 10.8"/><path d="M24.6 11.6Q26.6 10.2 29 10.2"/><path d="M26.6 14.1L26.4 14.5M28 13.8L28 14.5" stroke-width="0.5"/><g class="head" style="transform-origin:29.4px 10.8px"><path d="M29 10.2Q29.6 8.2 31.2 8.4Q32.4 8.7 32.3 9.9L33.8 10.2L32 10.6Q31.4 11.4 30.4 10.8"/><circle cx="31.2" cy="9.3" r="0.28" fill="currentColor" stroke="none"/></g></g><g class="note n1" stroke-width="0.6"><ellipse cx="35" cy="7" rx="0.95" ry="0.7" transform="rotate(-20 35 7)" fill="currentColor" stroke="none"/><path d="M35.85 6.8V3.2L37.2 3.9"/></g><g class="note n2" stroke-width="0.6"><ellipse cx="33.4" cy="5" rx="0.95" ry="0.7" transform="rotate(-20 33.4 5)" fill="currentColor" stroke="none"/><path d="M34.25 4.8V1.2000000000000002L35.6 1.9"/></g></svg></span><h3>Air source heat pump</h3><button class="sw" type="button" role="switch" aria-checked="false" data-k="hp.on" aria-label="Include the heat pump"></button></header>
+        <label class="ctl"><span>Distance <output>8 m</output></span><input data-k="hp.dist" data-u=" m" aria-label="Air source heat pump: distance" type="range" min="2" max="30" value="8"></label>
+        <label class="ctl"><span>Fan speed <output>70%</output></span><input data-k="hp.fan" data-u="%" aria-label="Air source heat pump: fan speed" type="range" min="20" max="100" value="70"></label>
+        <div class="ctl row"><span>Acoustic cover</span><button class="sw" type="button" role="switch" aria-checked="false" data-k="hp.cover" aria-label="Acoustic cover"></button></div>
       </article>
-      <article class="card">
-        <header><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path d="M3.2 25.4A4.8 4.8 0 0 1 11.6 23.6" stroke-width="0.7"/><rect x="11.6" y="23" width="16.8" height="4.2" rx="1"/><path d="M20.6 23.7L19.6 25.1H21L20 26.5" stroke-width="0.55"/><path d="M32 27.4L27.9 7.6L29.4 7.3L33.5 27.1Z"/><path d="M28.4 25L31 24.8" stroke-width="0.7"/><path d="M24.8 7.3H32.4" stroke-width="1.1"/><circle cx="8" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:8px 27.4px"><circle cx="8" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M8 27.4L8.00 24.59M8 27.4L10.67 26.53M8 27.4L9.65 29.67M8 27.4L6.35 29.67M8 27.4L5.33 26.53" stroke-width="0.5"/></g><circle cx="8" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><circle cx="32.6" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:32.6px 27.4px"><circle cx="32.6" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M32.6 27.4L32.60 24.59M32.6 27.4L35.27 26.53M32.6 27.4L34.25 29.67M32.6 27.4L30.95 29.67M32.6 27.4L29.93 26.53" stroke-width="0.5"/></g><circle cx="32.6" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><g stroke-width="0.6"><path class="pulse p1" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p2" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p3" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/></g><g stroke-width="0.6"><path class="pulse p1" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/><path class="pulse p2" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/><path class="pulse p3" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/></g></svg></span><h3>E-scooter</h3><button class="sw wip" role="switch" aria-checked="false" aria-label="Include the e-scooter"></button></header>
-        <label class="ctl"><span>Speed <output>15 km/h</output></span><input class="wip" aria-label="E-scooter: speed" type="range" min="5" max="25" value="15"></label>
-        <label class="ctl"><span>Distance <output>4 m</output></span><input class="wip" aria-label="E-scooter: distance" type="range" min="1" max="20" value="4"></label>
-        <div class="ctl"><span>Warning sound wave</span><div class="seg sm"><button class="wip" aria-pressed="true">Sine</button><button class="wip" aria-pressed="false">Square</button><button class="wip" aria-pressed="false">Sawtooth</button><button class="wip" aria-pressed="false">Noise</button></div></div>
-        <label class="ctl"><span>Warning sound pitch <output>800 Hz</output></span><input class="wip" aria-label="E-scooter: warning sound pitch" type="range" min="300" max="2000" step="50" value="800"></label>
+      <article class="card" data-src="scooter">
+        <header><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" overflow="visible"><path d="M3.2 25.4A4.8 4.8 0 0 1 11.6 23.6" stroke-width="0.7"/><rect x="11.6" y="23" width="16.8" height="4.2" rx="1"/><path d="M20.6 23.7L19.6 25.1H21L20 26.5" stroke-width="0.55"/><path d="M32 27.4L27.9 7.6L29.4 7.3L33.5 27.1Z"/><path d="M28.4 25L31 24.8" stroke-width="0.7"/><path d="M24.8 7.3H32.4" stroke-width="1.1"/><circle cx="8" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:8px 27.4px"><circle cx="8" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M8 27.4L8.00 24.59M8 27.4L10.67 26.53M8 27.4L9.65 29.67M8 27.4L6.35 29.67M8 27.4L5.33 26.53" stroke-width="0.5"/></g><circle cx="8" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><circle cx="32.6" cy="27.4" r="3.6"/><g class="wheel" style="transform-origin:32.6px 27.4px"><circle cx="32.6" cy="27.4" r="2.81" stroke-width="0.5"/><path d="M32.6 27.4L32.60 24.59M32.6 27.4L35.27 26.53M32.6 27.4L34.25 29.67M32.6 27.4L30.95 29.67M32.6 27.4L29.93 26.53" stroke-width="0.5"/></g><circle cx="32.6" cy="27.4" r="0.55" fill="currentColor" stroke="none"/><g stroke-width="0.6"><path class="pulse p1" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p2" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/><path class="pulse p3" d="M37.8 14A3.4 3.4 0 0 1 37.8 20" style="transform-origin:36.4px 17px"/></g><g stroke-width="0.6"><path class="pulse p1" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/><path class="pulse p2" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/><path class="pulse p3" d="M1.0 16A3.4 3.4 0 0 0 1.0 22" style="transform-origin:2.4px 19px"/></g></svg></span><h3>E-scooter</h3><button class="sw" type="button" role="switch" aria-checked="false" data-k="scooter.on" aria-label="Include the e-scooter"></button></header>
+        <label class="ctl"><span>Speed <output>15 km/h</output></span><input data-k="scooter.speed" data-u=" km/h" aria-label="E-scooter: speed" type="range" min="5" max="25" value="15"></label>
+        <label class="ctl"><span>Distance <output>4 m</output></span><input data-k="scooter.dist" data-u=" m" aria-label="E-scooter: distance" type="range" min="1" max="20" value="4"></label>
+        <div class="ctl"><span>Warning sound wave</span><div class="seg sm" role="radiogroup" aria-label="Warning sound waveform" data-group="scooter.wave"><button type="button" role="radio" aria-checked="true" data-v="sine">Sine</button><button type="button" role="radio" aria-checked="false" data-v="square">Square</button><button type="button" role="radio" aria-checked="false" data-v="sawtooth">Sawtooth</button><button type="button" role="radio" aria-checked="false" data-v="noise">Noise</button></div></div>
+        <label class="ctl"><span>Warning sound pitch <output>800 Hz</output></span><input data-k="scooter.pitch" data-u=" Hz" aria-label="E-scooter: warning sound pitch" type="range" min="300" max="2000" step="50" value="800"></label>
       </article>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="play-h">
-    <h2 id="play-h"><span class="n">3</span> Listen</h2>
-    <div>
-    <div class="player">
-      <div class="ab" role="radiogroup" aria-label="Compare">
-        <button class="wip" role="radio" aria-checked="true">Before</button>
-        <button class="wip" role="radio" aria-checked="false">After</button>
-      </div>
-      <button class="play wip" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5V18.5L18.5 12Z" fill="currentColor"/></svg></button>
-      <div class="wave" aria-hidden="true"></div>
-      <p class="readout"><span>L<sub>Aeq</sub> <b>— dB</b></span><span>Loudness <b>— sone</b></span><span>Predicted %HA <b>—</b></span></p>
-    </div>
-    <p class="note">Headphones recommended. Levels will be calibrated so the scene plays back at a realistic loudness, and every clip will come from the listening experiments in my research.</p>
     </div>
   </section>
 </main>
-<div class="toast" role="status" aria-live="polite"></div>
 
 <footer class="wrap">
   <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
@@ -506,37 +529,315 @@
 })();
 </script>
 <script>
-  // Preview only: every control shakes, buzzes on phones that allow it, and says it's coming soon.
-  (() => {
-    const toast = document.querySelector('.toast');
-    let hide = 0;
-    const say = (el) => {
-      el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
-      try { navigator.vibrate && navigator.vibrate([40, 30, 40]); } catch (e) {}
-      const r = el.getBoundingClientRect();
-      toast.textContent = 'Coming Soon (WIP!)';
-      const y = r.top > 60 ? r.top - 44 : r.bottom + 10;
-      toast.style.left = Math.min(innerWidth - 90, Math.max(90, r.left + r.width / 2)) + 'px';
-      toast.style.top = y + 'px';
-      toast.classList.add('on'); clearTimeout(hide); hide = setTimeout(() => toast.classList.remove('on'), 1400);
+/* Listen: a small soundscape synthesiser built on the Web Audio API.
+   Ambiences and new noise sources are generated live from simple physical models:
+   rotor blade-passing tones with beating between rotors, broadband rotor noise, compressor and fan tones,
+   AVAS warning-sound waveforms, inverse-distance spreading, air absorption (distance low-pass),
+   stereo position and Doppler shift for things that move. Nothing is a recording. */
+(() => {
+  const $ = (q, el = document) => el.querySelector(q), $$ = (q, el = document) => [...el.querySelectorAll(q)];
+  const player = $('.player'), playBtn = $('.play'), canvas = $('.spec');
+  const R = { level: $('[data-r="level"]'), peak: $('[data-r="peak"]'), on: $('[data-r="on"]') };
+
+  // ---------- state from the controls ----------
+  const S = {
+    volume: 45, amb: 'street', after: true,
+    drone: { on: true, height: 40, payload: 2.5, speed: 12, mode: 'flyover' },
+    evtol: { on: false, alt: 300, speed: 45, mode: 'cruise' },
+    hp: { on: false, dist: 8, fan: 70, cover: false },
+    scooter: { on: false, speed: 15, dist: 4, wave: 'sine', pitch: 800 }
+  };
+  const setPath = (k, v) => { const [a, b] = k.split('.'); if (b) S[a][b] = v; else S[a] = v; };
+
+  $$('input[data-k]').forEach((i) => {
+    const out = i.closest('.ctl') && i.closest('.ctl').querySelector('output');
+    const show = () => { if (out) out.textContent = i.value + (i.dataset.u || ''); };
+    i.addEventListener('input', () => { setPath(i.dataset.k, +i.value); show(); update(); });
+    show();
+  });
+  $$('.sw[data-k]').forEach((b) => b.addEventListener('click', () => {
+    const on = b.getAttribute('aria-checked') !== 'true';
+    b.setAttribute('aria-checked', on); setPath(b.dataset.k, on); syncCards(); update();
+  }));
+  $$('[data-group]').forEach((g) => {
+    const btns = $$('button', g);
+    const pick = (b, focus) => {
+      btns.forEach((o) => { o.setAttribute('aria-checked', o === b); o.tabIndex = o === b ? 0 : -1; });
+      if (focus) b.focus();
+      setPath(g.dataset.group, b.dataset.v);
+      if (g.dataset.group === 'amb') buildAmbience(); else update();
     };
-    document.querySelectorAll('button.wip').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); say(b); }));
-    document.querySelectorAll('input.wip').forEach((i) => {
-      const v = i.value;
-      const back = () => { i.value = v; };
-      i.addEventListener('input', back);
-      i.addEventListener('change', back);
-      i.addEventListener('pointerdown', () => say(i.closest('.ctl') || i));
-      i.addEventListener('keydown', (e) => { if (e.key.startsWith('Arrow') || e.key === 'Home' || e.key === 'End' || e.key.startsWith('Page')) { e.preventDefault(); say(i.closest('.ctl') || i); } });
+    btns.forEach((b, i) => {
+      b.tabIndex = b.getAttribute('aria-checked') === 'true' ? 0 : -1;
+      b.addEventListener('click', () => pick(b));
+      b.addEventListener('keydown', (e) => {           // arrow keys move through a radio group
+        const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (d) { e.preventDefault(); pick(btns[(i + d + btns.length) % btns.length], true); }
+      });
     });
-    // a still waveform for the player
-    const w = document.querySelector('.wave');
-    for (let k = 0; k < 90; k++) {
-      const h = 10 + 80 * Math.abs(Math.sin(k * 0.37) * Math.sin(k * 0.11 + 1)) ** 0.8;
-      const i = document.createElement('i'); i.style.height = h.toFixed(0) + '%'; w.appendChild(i);
+  });
+  $$('[data-ab]').forEach((b) => b.addEventListener('click', () => {
+    S.after = b.dataset.ab === 'after';
+    $$('[data-ab]').forEach((o) => o.setAttribute('aria-checked', o === b));
+    update();
+  }));
+  const syncCards = () => {
+    $$('.card[data-src]').forEach((c) => c.classList.toggle('on', !!S[c.dataset.src].on));
+    const names = { drone: 'drone', evtol: 'air taxi', hp: 'heat pump', scooter: 'e-scooter' };
+    const on = Object.keys(names).filter((k) => S[k].on).map((k) => names[k]);
+    R.on.textContent = on.length ? on.join(', ') : 'none';
+  };
+  syncCards();
+
+  // ---------- audio graph ----------
+  let ctx = null, master, comp, analyser, ambBus, srcBus, noiseBuf, pinkBuf, src = {}, amb = null, timer = 0, raf = 0;
+  const C = 343;                                           // speed of sound, m/s
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const now = () => ctx.currentTime;
+  const ramp = (p, v, t = 0.08) => p.setTargetAtTime(v, now(), t);
+
+  const makeNoise = (pink) => {
+    const len = ctx.sampleRate * 4, b = ctx.createBuffer(1, len, ctx.sampleRate), d = b.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      if (!pink) { d[i] = w * 0.5; continue; }
+      b0 = 0.99886 * b0 + w * 0.0555179; b1 = 0.99332 * b1 + w * 0.0750759; b2 = 0.969 * b2 + w * 0.153852;
+      b3 = 0.8665 * b3 + w * 0.3104856; b4 = 0.55 * b4 + w * 0.5329522; b5 = -0.7616 * b5 - w * 0.016898;
+      d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11; b6 = w * 0.115926;
     }
-    addEventListener('scroll', () => toast.classList.remove('on'), { passive: true });
-  })();
+    return b;
+  };
+  const noise = (pink = true) => { const n = ctx.createBufferSource(); n.buffer = pink ? pinkBuf : noiseBuf; n.loop = true; n.loopStart = Math.random() * 3; n.start(0, Math.random() * 3); return n; };
+  const filt = (type, f, q = 0.7) => { const b = ctx.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q; return b; };
+  const gain = (v = 0) => { const g = ctx.createGain(); g.gain.value = v; return g; };
+  const osc = (type, f) => { const o = ctx.createOscillator(); o.type = type; o.frequency.value = f; o.start(); return o; };
+  const chain = (...n) => { for (let i = 0; i < n.length - 1; i++) n[i].connect(n[i + 1]); return n[n.length - 1]; };
+
+  // A positioned voice: everything a moving source needs (air absorption, level, stereo position)
+  const voice = () => {
+    const input = gain(1), air = filt('lowpass', 16000, 0.5), lvl = gain(0), pan = ctx.createStereoPanner();
+    chain(input, air, lvl, pan, srcBus);
+    return {
+      input,
+      place(x, y, z, vx, refGain) {               // x along the street, y height, z distance to the side
+        const r = Math.max(1, Math.hypot(x, y, z));
+        ramp(lvl.gain, refGain / r, 0.05);
+        ramp(air.frequency, clamp(18000 * Math.exp(-r / 260), 900, 18000), 0.1);
+        ramp(pan.pan, clamp(x / (r * 0.9), -0.95, 0.95), 0.05);
+        const vr = -vx * x / r;                      // speed towards the listener
+        return 1200 * Math.log2(C / (C - clamp(vr, -150, 150)));   // Doppler, in cents
+      },
+      kill() { lvl.gain.cancelScheduledValues(now()); ramp(lvl.gain, 0, 0.1); }
+    };
+  };
+
+  // ---------- new noise sources ----------
+  const makeDrone = () => {
+    const v = voice(), rotors = [1, 1.013, 0.987, 1.021].map((k) => {
+      const o = osc('sawtooth', 160), g = gain(0.09); chain(o, g, v.input); return { o, k };
+    });
+    const hiss = chain(noise(false), filt('bandpass', 2600, 0.6), gain(0.5)); hiss.connect(v.input);
+    const whine = osc('sine', 2400), wg = gain(0.015); chain(whine, wg, v.input);
+    let x = -260, h = S.drone.height, phase = 0, t0 = 0;
+    return {
+      tick(dt, t) {
+        const P = S.drone; let vx = P.speed, y = P.height, climb = 0;
+        if (P.mode === 'flyover') { x += vx * dt; if (x > 260) x = -260; if (vx === 0) x = 0; }
+        if (P.mode === 'hover') { x = 6 * Math.sin(t * 0.3); vx = 1.8 * Math.cos(t * 0.3); }
+        if (P.mode === 'delivery') {                 // descend to a doorstep, hold, climb away
+          x = 4; vx = 0; phase = (t - t0) % 22;
+          y = phase < 8 ? P.height - (P.height - 6) * (phase / 8) : phase < 13 ? 6 : 6 + (P.height - 6) * ((phase - 13) / 9);
+          climb = phase < 8 ? -1 : phase < 13 ? 0 : 1;
+        }
+        h += (y - h) * Math.min(1, dt * 3);
+        const cents = v.place(x, h, 8, vx, 9 * (S.drone.on ? 1 : 0));
+        const f0 = 150 + P.payload * 16 + climb * 18;   // heavier payload or climbing: rotors spin faster
+        rotors.forEach((r) => { ramp(r.o.frequency, f0 * r.k, 0.15); r.o.detune.setTargetAtTime(cents, now(), 0.05); });
+        ramp(whine.frequency, f0 * 14.5, 0.2);
+      }, kill: v.kill
+    };
+  };
+  const makeEvtol = () => {
+    const v = voice(), rotors = [1, 1.009, 0.992, 1.016, 0.984, 1.006].map((k) => {
+      const o = osc('sawtooth', 70), g = gain(0.07); chain(o, g, v.input); return { o, k };
+    });
+    const broad = chain(noise(true), filt('bandpass', 700, 0.45), gain(1.6)); broad.connect(v.input);
+    let x = -1400, y = 0;
+    return {
+      tick(dt, t) {
+        const P = S.evtol; let vx = P.speed, ty = P.alt, f0 = 72;
+        if (P.mode === 'cruise') { x += vx * dt; if (x > 1400) x = -1400; }
+        if (P.mode === 'takeoff') { x += vx * 0.35 * dt; if (x > 700) x = -150; ty = clamp((x + 150) * 0.45, 2, P.alt); f0 = 84; vx *= 0.35; }
+        if (P.mode === 'landing') { x += vx * 0.35 * dt; if (x > 150) x = -700; ty = clamp((150 - x) * 0.45, 2, P.alt); f0 = 78; vx *= 0.35; }
+        y += (ty - y) * Math.min(1, dt * 2);
+        const cents = v.place(x, Math.max(2, y), 30, vx, 160 * (S.evtol.on ? 1 : 0));
+        rotors.forEach((r) => { ramp(r.o.frequency, f0 * r.k, 0.3); r.o.detune.setTargetAtTime(cents, now(), 0.05); });
+      }, kill: v.kill
+    };
+  };
+  const makeHeatPump = () => {
+    const v = voice(), body = gain(1);
+    const tones = [[98, 0.22], [196, 0.12], [294, 0.05], [392, 0.03]].map(([f, a]) => { const o = osc('sine', f), g = gain(a); chain(o, g, body); return o; });
+    const fanNoise = chain(noise(true), filt('lowpass', 500, 0.7)), fanG = gain(1.2); chain(fanNoise, fanG, body);
+    const blade = osc('sine', 45), bladeG = gain(0.18); chain(blade, bladeG, body);
+    const am = osc('sine', 15), amG = gain(0.25); chain(am, amG, fanG.gain);   // blade-passing flutter
+    const cover = filt('lowpass', 6000, 0.7); chain(body, cover, v.input);
+    return {
+      tick() {
+        const P = S.hp, f = P.fan / 100;
+        const bpf = 3 * (300 + 600 * f) / 60;          // 3 blades: blade-passing frequency 15–45 Hz
+        ramp(fanG.gain, 0.4 + 1.6 * f * f); ramp(blade.frequency, bpf * 4); ramp(am.frequency, bpf);
+        ramp(cover.frequency, P.cover ? 380 : 6000, 0.2);
+        v.place(P.dist * 0.6, 1, P.dist * 0.8, 0, (P.cover ? 0.45 : 1) * 1.6 * (P.on ? 1 : 0));
+      }, kill: v.kill
+    };
+  };
+  const makeScooter = () => {
+    const v = voice();
+    let avas = null, avasNoise = null; const avasG = gain(0.16), tremolo = osc('sine', 3.2), tremG = gain(0.05);
+    chain(tremolo, tremG, avasG.gain); avasG.connect(v.input);
+    const nb = filt('bandpass', 800, 4);
+    const setWave = (w, f) => {
+      if (avas) { avas.stop(); avas.disconnect(); avas = null; }
+      if (avasNoise) { avasNoise.stop(); avasNoise.disconnect(); avasNoise = null; }
+      if (w === 'noise') { avasNoise = noise(false); chain(avasNoise, nb, avasG); nb.frequency.value = f; }
+      else { avas = osc(w, f); avas.connect(avasG); }
+    };
+    let wave = S.scooter.wave; setWave(wave, S.scooter.pitch);
+    const motor = osc('sine', 600), mg = gain(0.02); chain(motor, mg, v.input);
+    const tyre = chain(noise(true), filt('bandpass', 1100, 0.8), gain(0.6)); tyre.connect(v.input);
+    let x = -60;
+    return {
+      tick(dt) {
+        const P = S.scooter, vx = P.speed / 3.6;
+        if (P.wave !== wave) { wave = P.wave; setWave(wave, P.pitch); }
+        x += vx * dt; if (x > 60) x = -60;
+        const cents = v.place(x, 1, P.dist, vx, 3.2 * (P.on ? 1 : 0));
+        if (avas) { ramp(avas.frequency, P.pitch, 0.05); avas.detune.setTargetAtTime(cents, now(), 0.03); }
+        nb.frequency.setTargetAtTime(P.pitch * Math.pow(2, cents / 1200), now(), 0.03);
+        ramp(motor.frequency, 200 + vx * 90); motor.detune.setTargetAtTime(cents, now(), 0.03);
+      }, kill: v.kill
+    };
+  };
+
+  // ---------- ambiences ----------
+  const bird = (out, x) => {                         // a short song of falling and rising chirps
+    const p = ctx.createStereoPanner(); p.pan.value = x; p.connect(out);
+    const g = gain(0); g.connect(p);
+    const o = osc('sine', 3000); o.connect(g);
+    let t = now() + 0.02; const notes = 3 + Math.floor(Math.random() * 5), base = 2600 + Math.random() * 2200;
+    for (let i = 0; i < notes; i++) {
+      const d = 0.06 + Math.random() * 0.09;
+      o.frequency.setValueAtTime(base * (1 + Math.random() * 0.3), t);
+      o.frequency.exponentialRampToValueAtTime(base * (0.7 + Math.random() * 0.25), t + d);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05, t + 0.01); g.gain.linearRampToValueAtTime(0, t + d);
+      t += d + 0.03 + Math.random() * 0.08;
+    }
+    o.stop(t + 0.1); o.onended = () => { g.disconnect(); p.disconnect(); };
+  };
+  const passby = (out, level, dur, fLo, fHi, muffle) => {   // a car passing: rising then falling noise band, panning across
+    const n = noise(true), bp = filt('bandpass', fLo, 0.8), lp = filt('lowpass', muffle || 5000), g = gain(0), p = ctx.createStereoPanner();
+    chain(n, bp, lp, g, p, out); const t = now(), dir = Math.random() < 0.5 ? 1 : -1;
+    p.pan.setValueAtTime(-0.9 * dir, t); p.pan.linearRampToValueAtTime(0.9 * dir, t + dur);
+    bp.frequency.setValueAtTime(fLo, t); bp.frequency.linearRampToValueAtTime(fHi, t + dur * 0.48); bp.frequency.linearRampToValueAtTime(fLo * 0.8, t + dur);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(level, t + dur * 0.5); g.gain.linearRampToValueAtTime(0, t + dur);
+    n.stop(t + dur + 0.1); n.onended = () => p.disconnect();
+  };
+  const AMB = {
+    street: { bed: [['lowpass', 700, 0.5]], events: [[2.2, 4.5, (o) => passby(o, 0.9, 3.5 + Math.random() * 2, 280, 700)], [5, 12, (o) => bird(o, Math.random() * 2 - 1)]] },
+    garden: { bed: [['lowpass', 2200, 0.06], ['lowpass', 300, 0.12]], events: [[0.6, 2.4, (o) => bird(o, Math.random() * 2 - 1)], [8, 16, (o) => passby(o, 0.2, 5, 200, 380, 800)]] },
+    park:   { bed: [['lowpass', 1200, 0.12], ['lowpass', 280, 0.2]], events: [[0.4, 1.6, (o) => bird(o, Math.random() * 2 - 1)], [6, 10, (o) => passby(o, 0.25, 6, 200, 400, 900)]] },
+    rural:  { bed: [['lowpass', 600, 0.05]], wind: true, events: [[1.2, 4, (o) => bird(o, Math.random() * 2 - 1)]] },
+    room:   { bed: [['lowpass', 320, 0.22]], events: [[3, 7, (o) => passby(o, 0.35, 5, 150, 260, 420)]] }
+  };
+  const buildAmbience = () => {
+    if (!ctx) return;
+    if (amb) { const old = amb; ramp(old.out.gain, 0, 0.25); old.timers.forEach(clearTimeout); setTimeout(() => { old.srcs.forEach((n) => n.stop()); old.out.disconnect(); }, 1500); }
+    const A = AMB[S.amb], out = gain(0), srcs = []; out.connect(ambBus); ramp(out.gain, 1, 0.4);
+    A.bed.forEach(([type, f, a]) => { const n = noise(true); srcs.push(n); chain(n, filt(type, f, 0.5), gain(a * 1.6), out); });
+    if (A.wind) { const n = noise(true), g = gain(0.08), lfo = osc('sine', 0.13), lg = gain(0.07); srcs.push(n, lfo); chain(n, filt('bandpass', 400, 0.4), g, out); chain(lfo, lg, g.gain); }
+    const timers = [];
+    A.events.forEach(([lo, hi, fn]) => { const loop = () => { fn(out); timers.push(setTimeout(loop, (lo + Math.random() * (hi - lo)) * 1000)); }; timers.push(setTimeout(loop, lo * 400)); });
+    amb = { out, timers, srcs };
+  };
+
+  // ---------- start, stop, update ----------
+  const start = async () => {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) { R.level.textContent = 'not supported'; return; }
+      ctx = new AC();
+      noiseBuf = makeNoise(false); pinkBuf = makeNoise(true);
+      master = gain(0); comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 4;
+      analyser = ctx.createAnalyser(); analyser.fftSize = 4096; analyser.smoothingTimeConstant = 0.6;
+      ambBus = gain(0.5); srcBus = gain(1);
+      ambBus.connect(master); srcBus.connect(master); chain(master, comp, analyser, ctx.destination);
+      src = { drone: makeDrone(), evtol: makeEvtol(), hp: makeHeatPump(), scooter: makeScooter() };
+      buildAmbience();
+    }
+    await ctx.resume();
+    update(); ramp(master.gain, volume(), 0.2);
+    let last = performance.now();
+    clearInterval(timer);
+    timer = setInterval(() => { const t = performance.now(), dt = Math.min(0.1, (t - last) / 1000); last = t; Object.values(src).forEach((s) => s.tick(dt, t / 1000)); }, 40);
+    player.classList.add('live'); playBtn.setAttribute('aria-pressed', 'true'); playBtn.setAttribute('aria-label', 'Pause');
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(draw);
+  };
+  const stop = () => {
+    if (!ctx) return;
+    ramp(master.gain, 0, 0.08); setTimeout(() => ctx.suspend(), 250); clearInterval(timer); cancelAnimationFrame(raf);
+    playBtn.setAttribute('aria-pressed', 'false'); playBtn.setAttribute('aria-label', 'Play');
+  };
+  const volume = () => Math.pow(S.volume / 100, 2) * 1.2;
+  function update() {
+    if (!ctx) return;
+    ramp(srcBus.gain, S.after ? 1 : 0, 0.12);
+    if (playBtn.getAttribute('aria-pressed') === 'true') ramp(master.gain, volume(), 0.1);
+  }
+  playBtn.addEventListener('click', () => (playBtn.getAttribute('aria-pressed') === 'true' ? stop() : start()));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+
+  // ---------- live spectrogram and readouts ----------
+  const g2 = canvas.getContext('2d');
+  let W = 0, H = 0, bins = null, colours = null;
+  const fit = () => {
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    W = canvas.width = Math.round(canvas.clientWidth * dpr); H = canvas.height = Math.round(canvas.clientHeight * dpr);
+    g2.fillStyle = '#08080A'; g2.fillRect(0, 0, W, H);
+  };
+  fit(); addEventListener('resize', fit);
+  // colour ramp: night, indigo, magenta, orange, gold, white
+  const stops = [[0, [8, 8, 10]], [0.25, [52, 32, 120]], [0.5, [190, 40, 130]], [0.72, [245, 110, 40]], [0.88, [250, 200, 60]], [1, [255, 255, 235]]];
+  colours = Array.from({ length: 256 }, (_, i) => {
+    const t = i / 255; let k = 0; while (k < stops.length - 2 && t > stops[k + 1][0]) k++;
+    const [t0, a] = stops[k], [t1, b] = stops[k + 1], u = (t - t0) / (t1 - t0);
+    return `rgb(${a.map((v, j) => Math.round(v + (b[j] - v) * u)).join(',')})`;
+  });
+  let frame = 0;
+  function draw() {
+    raf = requestAnimationFrame(draw);
+    if (!analyser) return;
+    if (!bins) bins = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(bins);
+    const step = Math.max(1, Math.round(W / 420));
+    g2.drawImage(canvas, step, 0, W - step, H, 0, 0, W - step, H);   // scroll left
+    const ny = ctx.sampleRate / 2, lo = Math.log(40), hi = Math.log(12000);
+    let peak = 0, peakF = 0;
+    for (let y = 0; y < H; y++) {
+      const f = Math.exp(hi - (y / H) * (hi - lo)), idx = Math.min(bins.length - 1, Math.round(f / ny * bins.length));
+      const v = bins[idx];
+      g2.fillStyle = colours[v]; g2.fillRect(W - step, y, step, 1);
+    }
+    for (let i = 2; i < bins.length; i++) if (bins[i] > peak) { peak = bins[i]; peakF = i * ny / bins.length; }
+    if (++frame % 12 === 0) {
+      const td = new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(td);
+      let s = 0; for (let i = 0; i < td.length; i++) s += td[i] * td[i];
+      const db = 10 * Math.log10(s / td.length + 1e-12);
+      R.level.textContent = (db < -90 ? '—' : db.toFixed(0) + ' dB') + ' (uncalibrated)';
+      R.peak.textContent = peak > 30 ? (peakF >= 1000 ? (peakF / 1000).toFixed(1) + ' kHz' : Math.round(peakF) + ' Hz') : '—';
+    }
+  }
+})();
 </script>
 <script>
   // Light / dark switch: remembers the choice on this device
