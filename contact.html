@@ -140,10 +140,9 @@
   @media (min-width: 880px) { .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); } }
   .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
   html, body { overflow-x: clip; }
-  .itiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); max-width: 640px; }
-  .open-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 520px; }
-  @media (min-width: 640px) { .itiles { grid-template-columns: repeat(6, minmax(0, 1fr)); max-width: 640px; } .open-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); max-width: 640px; } }
-  .itile { position: relative; display: flex; justify-content: center; padding: 6px 0; outline-offset: 4px; cursor: default; }
+  .itiles { display: grid; grid-template-columns: repeat(3, 44px); justify-content: space-between; gap: calc(var(--u) * 4) 0; max-width: 300px; }
+  @media (min-width: 640px) { .itiles { grid-template-columns: repeat(6, 44px); gap: 0; max-width: 560px; } }
+  .itile { position: relative; display: flex; justify-content: center; width: 44px; padding: 6px 0; outline-offset: 4px; cursor: default; }
   .itile svg { width: 44px; height: 44px; color: var(--c, var(--ink)); transition: transform 300ms ease; }
   .itile:hover svg, .itile:focus-visible svg, .itile.is-active svg { transform: translateY(-4px); }
   .pop {
