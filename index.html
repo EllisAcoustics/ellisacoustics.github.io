@@ -35,12 +35,15 @@
     if (!location.hash && !go && !reduce) document.documentElement.classList.add('intro', 'awaiting-dot');
   })();
 </script>
+<link rel="stylesheet" href="css/sections.css">
 <style>
   @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
   @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
   @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-bold.woff") format("woff"); font-weight: 700; font-style: normal; font-display: swap; }
   :root { --serif: "Sourcerer", "Source Serif 4", Georgia, "Times New Roman", serif; }
-  .hero-q, .hero-sub { font-family: var(--serif); font-weight: 400; letter-spacing: 0; }
+  .hero-sub { font-family: var(--serif); font-weight: 400; letter-spacing: 0; }
+  .pubs .authors, .pubs .venue { font-family: var(--serif); letter-spacing: 0; font-size: 16.5px; }
+  .pubs .authors strong { font-weight: 700; }
   .pubs h3 { font-family: var(--serif); font-weight: 700; letter-spacing: 0; font-size: 18px; line-height: 25px; }
   :root {
     --paper: #F6F5F1;
@@ -287,6 +290,50 @@
   }
   @media print { .step-icon svg * { animation: none !important; } .m-wave { opacity: 0.6; } .m-dot { opacity: 1; } }
 
+  /* ---------- The gap: exposure-response curves ---------- */
+  .gap { min-width: 0; max-width: 820px; }
+  .gap-lede { font-size: 18px; line-height: 28px; max-width: 60ch; }
+  .err { margin-top: calc(var(--u) * 3); }
+  .err-legend { display: flex; flex-wrap: wrap; gap: 4px calc(var(--u) * 2.5); font-size: 14px; line-height: 20px; color: var(--ink-2); margin-bottom: var(--u); }
+  .err-legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .k { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--ink-2); }
+  .k-wt { border-top: 3px solid var(--neon-ink); }
+  .k-air { border-top-style: dotted; border-top-width: 3px; }
+  .k-rail { border-top-style: dashed; }
+  .err-plot { position: relative; }
+  .err-plot svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--sans); touch-action: pan-y; }
+  .err svg .grid { stroke: var(--hairline); stroke-width: 1; }
+  .err svg .axis { stroke: var(--rule); stroke-width: 1; }
+  .err svg .tick { fill: var(--ink-2); font-family: var(--mono); font-size: 12px; }
+  .err svg .atitle { fill: var(--ink-2); font-size: 13px; }
+  .err svg .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .err svg .ln.wt { stroke: var(--neon-ink); stroke-width: 3; }
+  .err svg .ln.air { stroke: var(--ink); stroke-dasharray: 0.1 5; stroke-width: 3; }
+  .err svg .ln.road { stroke: var(--ink-2); }
+  .err svg .ln.rail { stroke: var(--ink-2); stroke-dasharray: 7 5; }
+  .err svg .lab { fill: var(--ink); font-size: 13px; font-weight: 600; }
+  .err svg .lab.wt { fill: var(--neon-ink); }
+  .err svg .unknown text { fill: var(--ink-2); font-size: 13px; }
+  .err svg .unknown .q { fill: var(--neon-ink); font-family: var(--serif); font-size: 44px; font-weight: 700; }
+  .err svg .unknown .q-ring { fill: none; stroke: var(--neon-ink); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: q-ring 2.4s ease-out infinite; }
+  @keyframes q-ring { 0% { opacity: 0.8; transform: scale(0.6); } 100% { opacity: 0; transform: scale(1.5); } }
+  .err svg .xhair { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
+  .err svg .dot { stroke: var(--paper); stroke-width: 2; }
+  .err-tip { position: absolute; top: 0; left: 0; pointer-events: none; opacity: 0; transition: opacity 150ms ease;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 10px;
+    font-size: 13px; line-height: 19px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .err-tip.on { opacity: 1; }
+  .err-tip b { display: block; font-family: var(--mono); font-weight: 400; color: var(--ink-2); font-size: 12px; }
+  .err-tip span { display: flex; justify-content: space-between; gap: 16px; }
+  .err-tip em { font-style: normal; font-family: var(--mono); }
+  .err figcaption { margin-top: calc(var(--u) * 1.5); font-family: var(--mono); font-size: 12px; line-height: 18px; color: var(--ink-2); max-width: 80ch; }
+  /* reveal: hidden until the chart scrolls into view, then each curve draws in turn */
+  .err.armed .ln { clip-path: inset(-4px 100% -4px -4px) stroke-box; }
+  .err.armed .lab, .err.armed .unknown { opacity: 0; }
+  .err.lit .ln { clip-path: inset(-4px -4px -4px -4px) stroke-box; transition: clip-path 1100ms cubic-bezier(.4,0,.2,1); transition-delay: calc(var(--n) * 450ms); }
+  .err.lit .lab, .err.lit .unknown { opacity: 1; transition: opacity 400ms ease; transition-delay: calc(var(--n) * 450ms + 900ms); }
+  @media (prefers-reduced-motion: reduce) { .err svg .unknown .q-ring { animation: none; opacity: 0; } }
+  @media print { #gap { display: none !important; } }
 
   /* ---------- Hero ---------- */
   .hero { margin-top: calc(var(--u) * 6); max-width: 820px; }
@@ -301,9 +348,9 @@
   }
   .hero-claim .q { color: var(--neon-ink); }
   .hero-q { color: var(--neon-ink); }
-  .hero-sub { margin-top: calc(var(--u) * 3); max-width: 34ch; font-size: clamp(21px, 2.4vw, 28px); line-height: 1.3; letter-spacing: -0.01em; }
+  .hero-sub { max-width: 33ch; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.22; }
   .hero-sub .g { color: var(--neon-ink); }
-  @media print { .hero-sub { font-size: 13pt; margin-top: 8px; } }
+  @media print { .hero-sub { font-size: 16pt; max-width: none; } }
   .cite {
     font-family: var(--mono); font-size: 9.5px; line-height: 0; letter-spacing: 0;
     vertical-align: super; margin-left: 2px; white-space: nowrap;
@@ -361,14 +408,6 @@
   .topnav .theme-switch { position: static; }
   @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
   @media print { .topnav { display: none; } }
-  /* ---------- Certifications ---------- */
-  .certs { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 1.5); max-width: 760px; }
-  @media (min-width: 640px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .certs li { border: 1px solid var(--rule); border-radius: 10px; padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
-  .certs h4 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
-  .certs .cred { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 12px; color: var(--accent); text-underline-offset: 3px; }
-  .certs .where { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); margin: 2px 0 0; }
-
 
   /* ---------- Theme switch ---------- */
   .theme-switch {
@@ -482,149 +521,6 @@
   .body p + p { margin-top: calc(var(--u) * 2); }
   .lede { font-size: 20px; line-height: 32px; }
 
-  /* ---------- Logo strips ---------- */
-  .marquee {
-    min-width: 0;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
-  }
-  .marquee-track { display: flex; width: max-content; will-change: transform; }
-  .marquee-list { display: flex; flex-shrink: 0; }
-  .logo {
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-    width: 240px; height: 160px; padding: 0 calc(var(--u) * 2);
-  }
-  .logo img { display: block; max-width: 100%; height: auto; filter: var(--logo-filter); }
-  img.colour { filter: none !important; }
-  :root[data-theme="dark"] img.colour.dark-ink { filter: invert(1) hue-rotate(180deg) !important; }
-  :root[data-theme="dark"] img.colour.dark-bright { filter: brightness(2.1) saturate(0.9) !important; }
-  .logo img { transition: transform 400ms ease; }
-  .logo:hover img, .logo.is-active img { transform: translateY(-14px); }
-  @media (prefers-reduced-motion: reduce) { .logo img { transition: none; } }
-  .caption {
-    position: absolute; left: 0; right: 0; bottom: var(--u);
-    display: flex; flex-direction: column; align-items: center;
-    font-family: var(--mono); font-size: 13px; line-height: 16px;
-    color: var(--ink-2); text-align: center;
-    opacity: 0; transform: translateY(4px);
-    transition: opacity 400ms ease, transform 400ms ease;
-    pointer-events: none;
-  }
-  .caption span.t + span + span.t { margin-top: 4px; }
-  .logo:has(.caption .t):hover img, .logo.is-active:has(.caption .t) img { transform: translateY(-30px); }
-  .caption span.t, .caption:not(.plain) span:first-child:not(:last-child) { color: var(--ink); font-family: var(--sans); font-weight: 600; font-size: 14px; }
-  .logo:hover .caption, .logo.is-active .caption { opacity: 1; transform: none; }
-
-  /* Reduced motion: no movement, every logo in a still grid, no fade */
-  @media (prefers-reduced-motion: reduce) {
-    .marquee { -webkit-mask-image: none; mask-image: none; }
-    .marquee-track { width: auto; transform: none !important; }
-    .marquee-list { flex-wrap: wrap; flex-shrink: 1; width: 100%; }
-    .marquee-list[aria-hidden="true"] { display: none; }
-    .logo { width: 50%; }
-    .caption { transition: none; }
-    @media (min-width: 720px) { .logo { width: 33.333%; } }
-  }
-
-  /* ---------- Outputs list ---------- */
-  .outputs li {
-    display: grid; gap: var(--u) calc(var(--u) * 3);
-    padding: calc(var(--u) * 3) 0;
-    border-bottom: 1px solid var(--hairline);
-  }
-  .outputs li:first-child { padding-top: 0; }
-  @media (min-width: 600px) { .outputs li { grid-template-columns: 112px minmax(0, 1fr); } }
-  .date { font-family: var(--mono); font-size: 13px; line-height: 24px; color: var(--ink-2); white-space: nowrap; }
-  .outputs h3 { font-size: 16px; line-height: 24px; font-weight: 600; }
-  .outputs p { color: var(--ink-2); margin-top: var(--u); }
-  .meta {
-    display: flex; flex-wrap: wrap; gap: var(--u) calc(var(--u) * 2);
-    margin-top: var(--u);
-    font-family: var(--mono); font-size: 13px; line-height: 24px;
-  }
-  .tag { border: 1px solid var(--rule); padding: 0 var(--u); border-radius: 2px; color: var(--ink); }
-  .outputs .tag, #experience .tag, #academic .tag { border-color: var(--neon-ink); background: color-mix(in srgb, var(--neon) 22%, transparent); }
-  :root[data-theme="dark"] .outputs .tag, :root[data-theme="dark"] #experience .tag, :root[data-theme="dark"] #academic .tag { background: color-mix(in srgb, var(--neon) 10%, transparent); }
-  .outputs .authors { color: var(--ink); }
-  .outputs .authors strong { font-weight: 600; }
-  .outputs .venue { margin-top: 0; font-style: italic; }
-  .outputs + .tl-head { margin-top: calc(var(--u) * 6); }
-  .note { margin-top: calc(var(--u) * 3); color: var(--ink-2); font-size: 14px; line-height: 24px; }
-
-  /* ---------- Timeline ---------- */
-  .timeline + h3 { margin-top: calc(var(--u) * 6); }
-  .tl-head { font-size: 16px; line-height: 24px; font-weight: 600; margin-bottom: calc(var(--u) * 2); }
-  .timeline { border-left: 1px solid var(--rule); margin-left: 4px; }
-  .timeline li { position: relative; padding: 0 0 calc(var(--u) * 4) calc(var(--u) * 3); }
-  .timeline li:last-child { padding-bottom: 0; }
-  .timeline li::before {
-    content: ""; position: absolute; left: -5px; top: 8px;
-    width: 9px; height: 9px; background: var(--paper); border: 1px solid var(--ink);
-  }
-  .timeline li.current::before { background: var(--deep-green); border-color: var(--deep-green); }
-  .timeline h4 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
-  .timeline .where { color: var(--ink); }
-  .timeline .where.org { display: flex; align-items: center; gap: calc(var(--u) * 1.5); margin: calc(var(--u) * 2) 0; }
-  .timeline .where.org + * { margin-top: 0 !important; }
-  .timeline .thesis { margin-top: 4px; max-width: var(--measure); color: var(--ink-2); font-style: italic; }
-  .timeline .thesis span { display: block; font-style: normal; font-family: var(--mono); font-size: 12px; line-height: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--deep-blue); }
-  .timeline .thesis + .grade { margin-top: 4px; }
-  .timeline .where.org img { display: block; width: auto; max-width: 180px; }
-  .org-sep { width: 1px; height: 24px; background: var(--hairline); }
-  img.on-dark { display: none !important; }
-  :root[data-theme="dark"] img.on-light { display: none !important; }
-  :root[data-theme="dark"] img.on-dark { display: block !important; }
-  .timeline .where.org img.on-dark { display: none; }
-  :root[data-theme="dark"] .timeline .where.org img.on-light { display: none; }
-  :root[data-theme="dark"] .timeline .where.org img.on-dark { display: block; }
-  @media print { .timeline .where.org img, .org-sep { display: none; } .timeline .where.org { display: block; margin: 0; } }
-  .sub-strip { margin-top: calc(var(--u) * 6); margin-bottom: calc(var(--u) * 2); }
-  .sub-strip + .tl-head { margin-top: calc(var(--u) * 4); }
-  .honour {
-    display: inline-block; margin-top: 4px;
-    font-weight: 700; font-size: 15px; line-height: 22px; letter-spacing: 0.01em;
-    background: linear-gradient(100deg, #8A6410 0%, #C9971C 22%, #7A560B 40%, #D9AE3A 58%, #94690F 76%, #8A6410 100%);
-    background-size: 250% 100%;
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent;
-    animation: holo 6s linear infinite;
-  }
-  :root[data-theme="dark"] .honour {
-    background-image: linear-gradient(100deg, #D4A53A 0%, #FFE08A 22%, #B8861E 40%, #FFD45C 58%, #C99A2E 76%, #D4A53A 100%);
-  }
-  @keyframes holo { to { background-position: -250% 0; } }
-  @media (prefers-reduced-motion: reduce) { .honour { animation: none; } }
-  .timeline .meta { margin-top: var(--u); }
-  .timeline .grade { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--deep-green); font-weight: 600; }
-  .timeline .detail { color: var(--ink-2); margin-top: var(--u); max-width: var(--measure); }
-  .timeline .detail li { padding: 0 0 0 calc(var(--u) * 2); }
-  .timeline .detail li::before { content: "–"; border: 0; background: none; width: auto; height: auto; left: 0; top: 0; }
-
-  /* ---------- Software ---------- */
-  .icon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: calc(var(--u) * 4) calc(var(--u) * 2);
-    max-width: 760px; padding-bottom: 24px;
-  }
-  @media (min-width: 600px) { .icon-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); max-width: 820px; row-gap: 64px; } }
-  @media (max-width: 599px) {
-    .icon-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 64px var(--u); justify-items: center; max-width: none; }
-  }
-  .icon-tile .tip {
-    position: absolute; top: calc(100% + 6px); left: 50%;
-    font-family: var(--mono); font-size: 13px; line-height: 16px; white-space: nowrap; color: var(--ink-2);
-    opacity: 0; transform: translate(-50%, 4px); transition: opacity 400ms ease, transform 400ms ease;
-    pointer-events: none;
-  }
-  .icon-tile:hover .tip { opacity: 1; transform: translate(-50%, 0); }
-  @media (prefers-reduced-motion: reduce) { .icon-tile .tip { transition: none; } }
-  .icon-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
-  .icon-tile .fme-mark { display: block; color: var(--ink); }
-  .icon-tile img { display: block; width: auto; height: 40px; max-width: 96px; object-fit: contain; filter: var(--logo-filter); }
-
   /* ---------- Footer ---------- */
   .foot {
     border-top: 1px solid var(--rule);
@@ -651,7 +547,7 @@
     .section { padding: 14px 0 18px; }
     .timeline li, .outputs li, .step, .logo { break-inside: avoid; }
     .section > h2, .tl-head { break-after: avoid; }
-    .honour { -webkit-text-fill-color: var(--ink); color: var(--ink); background: none; }
+    .honour, .outputs .honour { -webkit-text-fill-color: var(--ink); color: var(--ink); background: none; animation: none; }
     .logo { height: 96px; }
     .sub-strip { break-inside: avoid; }
     .skip, .marquee-list[aria-hidden="true"] { display: none; }
@@ -676,18 +572,6 @@
   .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
   @media print { .foot-line { display: none; } }
 
-  /* ---------- Organisation grids (collaborations, working groups) ---------- */
-  .org-grid { list-style: none; margin: 0; padding: 0 0 calc(var(--u) * 6); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); max-width: 760px; }
-  .org-tile { position: relative; display: flex; align-items: center; justify-content: center; height: 88px; outline-offset: 4px; }
-  .org-tile img { display: block; max-width: 100%; height: auto; max-height: 64px; width: auto; transition: transform 300ms ease; }
-  .org-tile:hover img, .org-tile:focus-visible img, .org-tile.is-active img { transform: translateY(-4px); }
-  .org-tile .caption {
-    position: absolute; top: calc(100% + 2px); bottom: auto; left: 50%; right: auto; z-index: 5;
-    width: max-content; max-width: 240px; padding: 6px 10px; background: var(--paper); border-radius: 2px;
-    transform: translate(-50%, 4px); opacity: 0; pointer-events: none;
-  }
-  .org-tile:hover .caption, .org-tile:focus .caption, .org-tile.is-active .caption { opacity: 1; transform: translate(-50%, 0); }
-  @media print { .org-grid { display: none; } }
 </style>
 </head>
 <body>
@@ -698,6 +582,7 @@
   <nav class="topnav" aria-label="Site">
     <div class="links">
       <a href="about">About</a>
+      <a href="listen">Listen</a>
       <a href="contact">Contact</a>
     </div>
   </nav>
@@ -728,7 +613,6 @@
   <p class="visually-hidden">Frequency scale from 63 Hz to 8 kHz, marking where the noise of the sources I study is concentrated: next-generation wind turbines around 100 Hz, air-source heat pumps around 200 Hz, passenger multicopter eVTOL aircraft around 400 Hz, the warning sounds of electric cars and e-scooters around 1 kHz, and drones around 2.5 kHz.</p>
 
   <div class="hero">
-    <p class="hero-claim hero-q">What does the future <em>sound</em> like?</p>
     <p class="hero-sub"><span class="g">Net Zero</span> is bringing new technology into our towns and cities – air taxis, electric cars, heat pumps and delivery drones – with sounds we’ve never lived with before. I research the effect these noise sources have on us, <em class="g">before</em> they arrive.</p>
     <p class="hero-why">Noise is a “silent killer”, second only to air pollution in its burden on health in Europe<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe">WHO, 2011</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge<a class="cite" href="https://committees.parliament.uk/event/17423">House of Lords, 2023</a>: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft flying low over gardens. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere.</p>
     <div class="cta">
@@ -752,10 +636,28 @@
     </div>
   </div>
 
-
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
+
+  <section class="section" id="gap" aria-labelledby="gap-h">
+    <h2 id="gap-h">The Gap</h2>
+    <div class="gap">
+      <p class="gap-lede">At the same sound level, some sources annoy far more people than others. Wind turbines, the first Net Zero source studied at scale, sit well above road, rail and aircraft. Drones, air taxis, heat pumps and e-scooters have no agreed curves yet.</p>
+      <figure class="err" aria-labelledby="err-cap">
+        <div class="err-legend" aria-hidden="true">
+          <span><i class="k k-wt"></i>Wind turbines</span><span><i class="k k-air"></i>Aircraft</span><span><i class="k k-road"></i>Road</span><span><i class="k k-rail"></i>Rail</span>
+        </div>
+        <div class="err-plot"><svg role="img" aria-label="Line chart of the percentage of people highly annoyed against day-evening-night sound level, for wind turbines, aircraft, road and rail noise"></svg><div class="err-tip" aria-hidden="true"></div></div>
+        <figcaption id="err-cap">Percentage highly annoyed (%HA) against L<sub>den</sub>. Road, rail and aircraft: Miedema &amp; Oudshoorn (2001). Wind turbines: Janssen et al. (2011). As compared in Fredianelli et al. (2019).</figcaption>
+        <table class="visually-hidden">
+          <caption>Percentage highly annoyed by source and level</caption>
+          <thead><tr><th scope="col">L<sub>den</sub> (dB)</th><th scope="col">Wind turbines</th><th scope="col">Aircraft</th><th scope="col">Road</th><th scope="col">Rail</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </figure>
+    </div>
+  </section>
 
   <section class="section" id="method" aria-labelledby="method-h">
     <h2 id="method-h">How the Research Works</h2>
@@ -876,166 +778,6 @@
       <p class="more-pubs"><a href="https://scholar.google.co.uk/citations?hl=en&amp;user=KxviwY4AAAAJ">All publications on Google Scholar</a> · <a href="https://orcid.org/0009-0007-5909-854X">ORCID</a></p>
     </div>
   </section>
-
-  <section class="section" id="software" aria-labelledby="software-h">
-    <h2 id="software-h">Software Proficiencies</h2>
-    <ul class="icon-grid" aria-label="Software">
-        <li class="icon-tile"><img src="software/colour/python.svg?v=2" class="colour" width="40" height="40" alt="Python" decoding="async"><span class="tip" aria-hidden="true">Python</span></li>
-        <li class="icon-tile"><img src="software/colour/r.svg?v=2" class="colour" width="40" height="40" alt="R" decoding="async"><span class="tip" aria-hidden="true">R</span></li>
-        <li class="icon-tile"><img src="software/colour/matlab.svg" class="colour" width="40" height="40" alt="MATLAB" decoding="async"><span class="tip" aria-hidden="true">MATLAB</span></li>
-        <li class="icon-tile"><img src="software/colour/max.svg?v=3" class="colour" width="40" height="40" alt="Max/MSP" decoding="async"><span class="tip" aria-hidden="true">Max/MSP</span></li>
-        <li class="icon-tile"><img src="software/colour/artemis.png" class="colour dark-ink" width="39" height="40" alt="ArtemiS SUITE" decoding="async"><span class="tip" aria-hidden="true">ArtemiS SUITE</span></li>
-        <li class="icon-tile"><img src="software/colour/qgis.svg?v=2" class="colour" width="40" height="40" alt="QGIS" decoding="async"><span class="tip" aria-hidden="true">QGIS</span></li>
-        <li class="icon-tile"><svg class="fme-mark" style="height:26px;width:auto;margin:7px 0" viewBox="0 0 1260 425" role="img" aria-label="FME (Feature Manipulation Engine)" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="84" stroke-linejoin="round" stroke-linecap="round"><path d="M86 345V82H290M86 210H262"/><path d="M398 345V82L560 262L722 82V345"/><path d="M1044 82H836V345H1044M836 212H1010"/></g><circle cx="1174" cy="126" r="68" fill="#E0322A"/><circle cx="1174" cy="300" r="68" fill="#14B8B0"/></svg><span class="tip" aria-hidden="true">Feature Manipulation<br class="no-print"> Engine (FME)</span></li>
-        <li class="icon-tile"><img src="software/colour/reaper.svg?v=2" class="colour" width="37" height="40" alt="REAPER" decoding="async"><span class="tip" aria-hidden="true">REAPER</span></li>
-        <li class="icon-tile"><img src="software/colour/pytorch.svg" class="colour" width="34" height="40" alt="PyTorch" decoding="async"><span class="tip" aria-hidden="true">PyTorch</span></li>
-        <li class="icon-tile"><img src="software/colour/tensorflow.svg" class="colour" width="38" height="40" alt="TensorFlow" decoding="async"><span class="tip" aria-hidden="true">TensorFlow</span></li>
-        <li class="icon-tile"><img src="software/colour/unity.svg" class="colour dark-ink" width="36" height="40" alt="Unity" decoding="async"><span class="tip" aria-hidden="true">Unity</span></li>
-        <li class="icon-tile"><img src="software/colour/overleaf.svg" class="colour" width="36" height="40" alt="LaTeX (Overleaf)" decoding="async"><span class="tip" aria-hidden="true">LaTeX (Overleaf)</span></li>
-        <li class="icon-tile"><img src="software/colour/ableton.svg" class="colour dark-ink" width="48" height="23" style="height:23px;margin:8.5px 0" alt="Ableton Live" decoding="async"><span class="tip" aria-hidden="true">Ableton</span></li>
-        <li class="icon-tile"><img src="software/colour/cadnaa.svg" class="colour" width="21" height="40" alt="CadnaA" decoding="async"><span class="tip" aria-hidden="true">CadnaA</span></li>
-    </ul>
-  </section>
-
-  <section class="section" id="experience" aria-labelledby="experience-h">
-    <h2 id="experience-h">Industry Experience</h2>
-    <div>
-      <ol class="timeline">
-        <li>
-          <span class="date">Aug 2027 – Oct 2027</span>
-          <h4>Research Engineer (PhD Placement)</h4>
-          <p class="where org"><img src="logos/orgs/dyson.png" width="80" height="30" alt="Dyson" title="Dyson" class="colour dark-ink" loading="lazy" decoding="async"><span class="print-only">Dyson</span></p>
-          <ul class="detail">
-            <li>Assessing whether structural vibration can underpin sound quality metrics for product components, comparing vibration and sound quality data across anechoic, semi-reverberant and reverberant conditions.</li>
-            <li>Applying transfer learning across sound quality metrics and jury test data from other products, to build machine learning models that predict listener response and satisfaction.</li>
-          </ul>
-          <div class="meta"><span class="tag">Machine Learning</span><span class="tag">Psychoacoustics</span><span class="tag">Vibroacoustics</span><span class="tag">DSP</span></div>
-        </li>
-        <li data-complete>
-          <span class="date">Aug 2026 – Oct 2026</span>
-          <h4>Specialist Consultant (PhD Placement)</h4>
-          <p class="where org"><img src="logos/orgs/noise-consultants-colour.png?v=1" width="168" height="27" alt="Noise Consultants Ltd. (part of Logika Group)" title="Noise Consultants Ltd. (part of Logika Group)" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/noise-consultants-colour-dark.png?v=1" width="168" height="27" alt="" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">Noise Consultants Ltd. (part of Logika Group)</span></p>
-          <ul class="detail">
-            <li>Validated open-source noise measurements against modelled Defra noise-mapping data for infrastructure assessment.</li>
-            <li>Ran a field campaign on an airport expansion project comparing physical and perceptual dominance of aircraft noise.</li>
-          </ul>
-          <div class="meta"><span class="tag">Field Measurements</span><span class="tag">Statistical Modelling</span><span class="tag">Data Visualisation</span><span class="tag">Technical Report Writing</span></div>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" id="academic" aria-labelledby="academic-h">
-    <h2 id="academic-h">Academic Experience</h2>
-    <div>
-      <ol class="timeline">
-        <li class="current">
-          <span class="date">Sep 2026 – May 2027</span>
-          <h4>Visiting Lecturer in Music Technology</h4>
-          <p class="where org"><img src="logos/orgs/uws.png?v=2" width="82" height="56" alt="University of the West of Scotland" title="University of the West of Scotland" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/uws-dark.png?v=2" width="82" height="56" alt="" title="University of the West of Scotland" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">University of the West of Scotland</span></p>
-          <ul class="detail">
-            <li>1st Supervisor on the Major Project (Dissertation) module for BSc (Hons) Music Technology students specialising in Acoustics and Environmental Noise.</li>
-          </ul>
-        </li>
-        <li class="current">
-          <span class="date">2026 – Present</span>
-          <h4>Associate Lecturer in Computer Science</h4>
-          <p class="where org"><img src="logos/orgs/st-marys.png?v=2" width="101" height="52" alt="St Mary’s University London" title="St Mary’s University London" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/st-marys-dark.png?v=2" width="101" height="52" alt="" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">St Mary’s University, Twickenham</span></p>
-          <ul class="detail">
-            <li>Teaching, marking and moderation across the online MSc Computer Science suite.</li>
-            <li>Module reviewer and author.</li>
-          </ul>
-        </li>
-        <li class="current">
-          <span class="date">2026 – Present</span>
-          <h4>Teaching Assistant in Applied Acoustics</h4>
-          <p class="where org"><img src="logos/orgs/salford-acoustics.png?v=1" width="148" height="44" alt="University of Salford, Acoustics Innovation Institute" title="University of Salford, Acoustics Innovation Institute" class="colour on-light" loading="lazy" decoding="async"><img src="logos/orgs/salford-acoustics-dark.png?v=1" width="148" height="44" alt="" class="colour on-dark" loading="lazy" decoding="async"><span class="print-only">University of Salford</span></p>
-          <ul class="detail">
-            <li>Lab demonstrator for Environmental Noise Measurement and Modelling (BEng/MSc).</li>
-            <li>Tutor for Immersive Sound Reproduction (MSc/PgDip).</li>
-          </ul>
-        </li>
-      
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" id="education" aria-labelledby="edu-h">
-    <h2 id="edu-h">Education</h2>
-    <div>
-      <ol class="timeline">
-        <li class="current">
-          <span class="date">2025 – 2028</span>
-          <h4>PhD Acoustics and Audio Engineering</h4>
-          <p class="where">University of Salford Acoustics Innovation Institute</p>
-          <p class="grade">Year 2</p>
-        </li>
-        <li>
-          <span class="date">2023 – 2024</span>
-          <h4>MSc Computer Science with Artificial Intelligence</h4>
-          <p class="where">Abertay University</p>
-          <p class="grade">Distinction</p>
-        </li>
-        <li>
-          <span class="date">2021 – 2023</span>
-          <h4>BDes (Hons) Sound for Moving Image</h4>
-          <p class="where">University of Glasgow</p>
-          <p class="grade">2nd Class Honours, Upper-Division (2:1)</p>
-        </li>
-        <li>
-          <span class="date">2019 – 2021</span>
-          <h4>DipHE Music Technology</h4>
-          <p class="where">University of the West of Scotland</p>
-          <p class="grade">Distinction</p>
-          <p class="honour">Awarded BSc Level 8 Court Medal</p>
-        </li>
-        <li>
-          <span class="date">2019</span>
-          <h4>BTEC Level 3 Digital Synthesis and Sampling</h4>
-          <p class="where">Fife College</p>
-          <p class="grade">Pass</p>
-        </li>
-        <li>
-          <span class="date">2018 – 2019</span>
-          <h4>SCQF Level 6 Sound Production</h4>
-          <p class="where">Glasgow Clyde College Anniesland</p>
-          <p class="grade">Pass</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" id="memberships" aria-labelledby="groups-h">
-    <h2 id="groups-h">Working Groups and Committees</h2>
-    <ul class="print-only print-list">
-      <li><strong>NASA</strong> Unmanned Aircraft Systems Noise Working Group (UNWG) — Member</li>
-      <li><strong>Noise Network Plus</strong> A.I. and Digital Working Group — Member</li>
-      <li><strong>Institute of Acoustics</strong> Scottish Branch Committee — Member; Early Careers Group — Member</li>
-    </ul>
-    <ul class="org-grid" aria-label="Working groups and committees">
-      <li class="org-tile" tabindex="0"><img src="logos/orgs/nasa.png?v=2" class="colour" width="75" height="64" alt="NASA Unmanned Aircraft Systems Noise Working Group (UNWG)" decoding="async"><span class="caption"><span>Unmanned Aircraft Systems Noise Working Group (UNWG)</span><span>Member</span></span></li>
-      <li class="org-tile" tabindex="0"><img src="logos/colour/noise-network-plus.png?v=3" class="colour dark-ink" width="129" height="57" alt="Noise Network Plus A.I. and Digital Working Group" decoding="async"><span class="caption"><span>A.I. and Digital Working Group</span><span>Member</span></span></li>
-      <li class="org-tile" tabindex="0"><img src="logos/colour/ioa.svg?v=2" class="colour dark-ink" width="142" height="47" alt="Institute of Acoustics: Scottish Branch and Early Careers Group committees" decoding="async"><span class="caption"><span class="t">Scottish Branch Committee</span><span>Member</span><span class="t">Early Careers Group</span><span>Member</span></span></li>
-    </ul>
-  
-  </section>
-
-  <section class="section" id="certificates" aria-labelledby="cert-h">
-    <h2 id="cert-h">Certifications</h2>
-    <ul class="certs">
-      <li><h4>Advanced Prompt Engineering</h4><p class="where">Vanderbilt University</p><a class="cred" href="https://coursera.org/verify/HZG8ASK3WT9J" target="_blank" rel="noopener">Show credential ↗</a></li>
-      <li><h4>Advanced R Programming</h4><p class="where">Johns Hopkins University</p></li>
-      <li><h4>AI for Noise Pollution Control</h4><p class="where">LSIB</p></li>
-      <li><h4>Applications of AI in Acoustics</h4><p class="where">European Acoustics Association Summer School</p></li>
-      <li><h4>Auralization</h4><p class="where">Autumn School Series in Acoustics (ASSA) 2026</p></li>
-      <li><h4>Digital Signal Processing</h4><p class="where">EPFL</p><a class="cred" href="https://www.coursera.org/account/accomplishments/specialization/W1KKXJOZYH7B" target="_blank" rel="noopener">Show credential ↗</a></li>
-      <li><h4>Ethics of Artificial Intelligence</h4><p class="where">Politecnico di Milano</p><a class="cred" href="https://coursera.org/verify/M70W08P4Y44D" target="_blank" rel="noopener">Show credential ↗</a></li>
-      <li><h4>Responsible Research and Innovation</h4><p class="where">ORBITRRI</p></li>
-      <li><h4>Transformer Models and BERT Model</h4><p class="where">Google</p></li>
-      <li><h4>Trustworthy Generative AI</h4><p class="where">Vanderbilt University</p><a class="cred" href="https://www.coursera.org/account/accomplishments/verify/5NAVIU4IMJIY" target="_blank" rel="noopener">Show credential ↗</a></li>
-    </ul>
-  </section>
-
 
 </main>
 
@@ -1414,29 +1156,6 @@
 })();
 </script>
 <script>
-  /* Mark roles and studies as current from their dates */
-  (() => {
-    const M = { jan:0, feb:1, mar:2, apr:3, may:4, jun:5, jul:6, aug:7, sep:8, oct:9, nov:10, dec:11 };
-    const now = new Date();
-    const parse = (t, end) => {
-      t = t.trim().toLowerCase();
-      if (t === 'present') return new Date(9999, 0);
-      const m = t.match(/^(?:([a-z]{3})\s+)?(\d{4})$/);
-      if (!m) return null;
-      const y = +m[2], mo = m[1] ? M[m[1]] : (end ? 11 : 0);
-      return end ? new Date(y, mo + 1, 0, 23, 59) : new Date(y, mo, 1);
-    };
-    document.querySelectorAll('#experience .timeline > li, #academic .timeline > li, #education .timeline > li').forEach((li) => {
-      const d = li.querySelector('.date'); if (!d) return;
-      const [a, b] = d.textContent.split('–');
-      const from = parse(a || '', false), to = parse(b || a || '', true);
-      if (li.hasAttribute('data-complete')) { li.classList.remove('current'); return; }
-      if (from && to) li.classList.toggle('current', from <= now && now <= to);
-    });
-  })();
-
-</script>
-<script>
   /* Ruler icons: crop each drawing to its own outline, then size them all to one height on one centre line */
   (() => {
     const fit = () => {
@@ -1550,6 +1269,117 @@
       if (on) t.classList.add('is-active');
     }));
     document.addEventListener('click', (e) => { if (!e.target.closest('.org-tile')) tiles.forEach((o) => o.classList.remove('is-active')); });
+  })();
+</script>
+<script>
+  /* The gap: exposure-response curves, drawn at the chart's real width so text stays legible on phones */
+  (() => {
+    const fig = document.querySelector('.err'); if (!fig) return;
+    const svg = fig.querySelector('svg'), tip = fig.querySelector('.err-tip');
+    const NS = 'http://www.w3.org/2000/svg';
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Miedema & Oudshoorn (2001) polynomials, x = Lden - 42, zero below 42 dB
+    const mo = (a, b, c) => (L) => { const x = L - 42; return x <= 0 ? 0 : Math.max(0, a * x ** 3 + b * x ** 2 + c * x); };
+    // Wind turbines (Janssen et al., 2011) — logistic fit to the published curve
+    const wt = (L) => 100 / (1 + Math.exp(-(-11.01 + 0.2016 * L)));
+    const S = [
+      { id: 'rail', name: 'Rail', f: mo(7.239e-4, -7.851e-3, 0.1695), from: 30, to: 80 },
+      { id: 'road', name: 'Road', f: mo(9.868e-4, -1.436e-2, 0.5118), from: 30, to: 80 },
+      { id: 'air', name: 'Aircraft', f: mo(-9.199e-5, 3.932e-2, 0.2939), from: 30, to: 78 },
+      { id: 'wt', name: 'Wind turbines', f: wt, from: 30, to: 53 },
+    ];
+    // accessible table, 5 dB steps
+    const tb = fig.querySelector('tbody');
+    for (let L = 30; L <= 80; L += 5) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<th scope="row">${L}</th>` + ['wt', 'air', 'road', 'rail'].map((id) => {
+        const s = S.find((q) => q.id === id); return `<td>${L <= s.to ? s.f(L).toFixed(1) + '%' : '—'}</td>`;
+      }).join('');
+      tb.appendChild(tr);
+    }
+    const el = (tag, attrs, parent, text) => {
+      const n = document.createElementNS(NS, tag);
+      for (const k in attrs) n.setAttribute(k, attrs[k]);
+      if (text != null) n.textContent = text;
+      (parent || svg).appendChild(n); return n;
+    };
+    let geo = null;
+    const draw = () => {
+      const W = Math.max(280, fig.clientWidth), narrow = W < 520;
+      const H = Math.round(Math.min(420, Math.max(280, W * 0.56)));
+      const m = { l: narrow ? 40 : 48, r: narrow ? 74 : 92, t: 12, b: 44 };
+      const pw = W - m.l - m.r, ph = H - m.t - m.b;
+      const X = (L) => m.l + (L - 30) / 55 * pw, Y = (p) => m.t + ph - p / 60 * ph;
+      geo = { X, Y, m, pw, ph, W, H };
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+      [...svg.children].forEach((c) => c.remove());
+      for (let p = 0; p <= 60; p += 10) {
+        el('line', { class: p ? 'grid' : 'axis', x1: m.l, x2: m.l + pw, y1: Y(p), y2: Y(p) });
+        el('text', { class: 'tick', x: m.l - 8, y: Y(p) + 4, 'text-anchor': 'end' }, null, p);
+      }
+      for (let L = 30; L <= 85; L += 5) {
+        if (narrow && L % 10) continue;
+        el('text', { class: 'tick', x: X(L), y: m.t + ph + 18, 'text-anchor': 'middle' }, null, L);
+      }
+      const xt = el('text', { class: 'atitle', x: m.l + pw / 2, y: H - 6, 'text-anchor': 'middle' }, null, 'L');
+      el('tspan', { 'font-size': '10', dy: 3 }, xt, 'den'); el('tspan', { dy: -3 }, xt, ' (dB)');
+      el('text', { class: 'atitle', x: 12, y: m.t + ph / 2, 'text-anchor': 'middle', transform: `rotate(-90 12 ${m.t + ph / 2})` }, null, '% highly annoyed');
+      // the unknown: new Net Zero sources
+      const g = el('g', { class: 'unknown', style: '--n:4' });
+      const qx = X(narrow ? 33 : 34), qy = Y(narrow ? 51 : 50);
+      el('circle', { class: 'q-ring', cx: qx, cy: qy - 15, r: 22 }, g);
+      el('text', { class: 'q', x: qx, y: qy, 'text-anchor': 'middle' }, g, '?');
+      const lines = narrow ? ['Drones, air taxis,', 'heat pumps,', 'e-scooters'] : ['Drones, air taxis,', 'heat pumps, e-scooters:', 'no agreed curves yet'];
+      lines.forEach((t, i) => el('text', { x: qx + 30, y: qy - 30 + i * 17 }, g, t));
+      S.forEach((s, n) => {
+        let d = '';
+        for (let L = s.from; L <= s.to + 1e-9; L += 0.25) d += (d ? 'L' : 'M') + X(L).toFixed(1) + ' ' + Y(s.f(L)).toFixed(1);
+        const p = el('path', { class: 'ln ' + s.id, d, style: `--n:${n}` });
+        const v = s.f(s.to);
+        let lx = X(s.to) + 8, ly = Y(v) + 4, anchor = 'start';
+        if (s.id === 'wt' && narrow) { lx = X(s.to) - 8; anchor = 'end'; }
+        if (s.id === 'air') ly -= 4;
+        if (s.id === 'road') ly += 6;
+        el('text', { class: 'lab ' + s.id, x: lx, y: ly, 'text-anchor': anchor, style: `--n:${n}` }, null, s.name);
+      });
+      geo.xhair = el('line', { class: 'xhair', y1: m.t, y2: m.t + ph, opacity: 0 });
+      geo.dots = S.map((s) => el('circle', { class: 'dot', r: 5, fill: s.id === 'wt' ? 'var(--neon-ink)' : s.id === 'air' ? 'var(--ink)' : 'var(--ink-2)', opacity: 0 }));
+    };
+    const hover = (cx) => {
+      const r = svg.getBoundingClientRect(), { X, Y, m, pw, W } = geo;
+      const x = (cx - r.left) * (W / r.width);
+      if (x < m.l || x > m.l + pw) return leave();
+      const L = Math.round(30 + (x - m.l) / pw * 55);
+      geo.xhair.setAttribute('x1', X(L)); geo.xhair.setAttribute('x2', X(L)); geo.xhair.setAttribute('opacity', 1);
+      let rows = '';
+      ['wt', 'air', 'road', 'rail'].forEach((id) => {
+        const i = S.findIndex((s) => s.id === id), s = S[i], dot = geo.dots[i];
+        if (L > s.to) { dot.setAttribute('opacity', 0); return; }
+        const v = s.f(L);
+        dot.setAttribute('cx', X(L)); dot.setAttribute('cy', Y(v)); dot.setAttribute('opacity', 1);
+        rows += `<span>${s.name}<em>${v.toFixed(1)}%</em></span>`;
+      });
+      tip.innerHTML = `<b>${L} dB Lden</b>` + (rows || '<span>No curve at this level</span>');
+      tip.classList.add('on');
+      const tw = tip.offsetWidth, px = X(L) * (r.width / W);
+      tip.style.transform = `translate(${px + 14 + tw > r.width ? px - tw - 14 : px + 14}px, 8px)`;
+    };
+    const leave = () => { tip.classList.remove('on'); if (geo) { geo.xhair.setAttribute('opacity', 0); geo.dots.forEach((d) => d.setAttribute('opacity', 0)); } };
+    svg.addEventListener('pointermove', (e) => hover(e.clientX));
+    svg.addEventListener('pointerdown', (e) => hover(e.clientX));
+    svg.addEventListener('pointerleave', leave);
+    draw();
+    let w = fig.clientWidth;
+    addEventListener('resize', () => { if (fig.clientWidth !== w) { w = fig.clientWidth; draw(); } });
+    if (reduce || !('IntersectionObserver' in window)) return;
+    fig.classList.add('armed');
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      requestAnimationFrame(() => fig.classList.add('lit'));
+      setTimeout(() => fig.classList.remove('armed', 'lit'), 4000);
+    }, { threshold: 0.45 });
+    io.observe(fig);
   })();
 </script>
 </body>
