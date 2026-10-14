@@ -154,20 +154,21 @@ p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balan
    per theme so nothing vanishes into the page.
    Noise sources by kind, each pair a small step apart: stationary ground (turbines, heat pumps),
    air (eVTOL, drones), moving ground (electric cars, e-scooters). Lightness also steps between the
-   three kinds, and all six read at 4.5:1 or better as text. */
+   three kinds. The four used as words read at 4.5:1 or better; the e-scooter colour is only ever a
+   graphic (3:1), which lets it sit lighter than the car so the pair stays apart for every eye. */
 :root {
   --vr1: #440154; --vr2: #472A7A; --vr3: #3C4F8A; --vr4: #2E6F8E; --vr5: #228B8D; --vr6: #22A884; --vr7: #4EC36B;
-  --s-turbine: #3C3776; --s-heatpump: #36467C; --s-evtol: #1A676A; --s-drone: #177168; --s-ev: #5C8018; --s-scooter: #6F7C11;
+  --s-turbine: #3C3776; --s-heatpump: #36467C; --s-evtol: #1A676A; --s-drone: #177168; --s-ev: #5C8018; --s-scooter: #969615;
   --nz1: #197B61; --nz2: #2D8638;
-  --ac-a: var(--s-turbine); --ac-b: var(--s-evtol); --ac-c: var(--nz2); --ac-d: var(--s-scooter);
+  --ac-a: var(--s-turbine); --ac-b: var(--s-evtol); --ac-c: var(--nz2); --ac-d: #A79401;   /* gold for graphics only (3:1), kept clear of the green for red- and green-blind eyes */
 }
 :root[data-theme="dark"] {
-  --vr1: #375A8C; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #B0DD2F; --vr7: #FDE725;
+  --vr1: #375A8C; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #A8DC55; --vr7: #FDE725;
   --s-turbine: #7A75BF; --s-heatpump: #7487C3; --s-evtol: #2DB1B7; --s-drone: #27BFB0; --s-ev: #ADDE4D; --s-scooter: #D1E53C;
-  --nz1: #26BA92; --nz2: #76D181;
+  --nz1: #26BA92; --nz2: #76D181; --ac-d: var(--s-scooter);
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme]) {
-  --vr1: #375A8C; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #B0DD2F; --vr7: #FDE725;
+  --vr1: #375A8C; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #A8DC55; --vr7: #FDE725;
   --s-turbine: #7A75BF; --s-heatpump: #7487C3; --s-evtol: #2DB1B7; --s-drone: #27BFB0; --s-ev: #ADDE4D; --s-scooter: #D1E53C;
-  --nz1: #26BA92; --nz2: #76D181;
+  --nz1: #26BA92; --nz2: #76D181; --ac-d: var(--s-scooter);
 } }
