@@ -206,6 +206,7 @@
   .scale { height: 24px; color: var(--v0); }
   .sources { position: relative; height: 48px; margin-bottom: 0; }
   .sources { --ih: 44px; height: 58px; }   /* the illustrated sources read best a little larger */
+  @media (max-width: 899px) { .sources { --ih: 32px; height: 46px; } }
   .src {
     position: absolute; top: 50%; left: calc(var(--x) * 100%);
     transform: translate(-50%, -50%);
