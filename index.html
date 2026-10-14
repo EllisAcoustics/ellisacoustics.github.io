@@ -370,6 +370,8 @@
   @media (max-width: 879px) { .eth-hint { display: block; } }
   .eth figcaption { margin-top: calc(var(--u) * 1.5); font-family: var(--serif); font-size: 14px; line-height: 20px; color: var(--ink-2); }
   .eth-body { font-size: 17px; line-height: 27px; color: var(--ink-2); max-width: 64ch; }
+  .eth-body a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; transition: color var(--dur-2) var(--ease), text-decoration-color var(--dur-2) var(--ease); }
+  .eth-body a:hover { color: var(--ink); text-decoration-color: currentColor; }
   .eth-svg .ez { fill: none; stroke: var(--c); stroke-opacity: 0.55; stroke-width: 1.2; stroke-dasharray: 6 5; }
   .eth-svg .el { fill: var(--c); font-family: var(--serif); font-size: 16px; font-weight: 700; }
   .eth-svg .el1 { fill: #C2361F; } .eth-svg .el2 { fill: #1F5BC4; } .eth-svg .el3 { fill: #1E7A2A; }   /* AA on white */
@@ -799,7 +801,7 @@
         <p class="eth-hint" aria-hidden="true">Swipe to follow the loop →</p>
         <figcaption>Adapted from Snellen et al. (2024), as included in Yupa-Villanueva et al., unpublished manuscript.</figcaption>
       </figure>
-      <p class="eth-body">It’s already how the best-sounding products are made. Škoda’s DuoBell, developed with acousticians at the University of Salford, rings in a narrow band that noise-cancelling headphones let through. Dyson tunes how its motors sound, not just how loud they are. Car makers design what a cabin sounds like, Bang &amp; Olufsen voice speakers by ear as well as by measurement, and acoustic sensors such as Arcani’s HARK recognise drones by sound alone. My research brings the same loop to drones, air taxis, heat pumps and electric vehicles, before they arrive in our streets.</p>
+      <p class="eth-body">It’s already how the best-sounding products are made. <a href="https://www.salford.ac.uk/news/skoda-and-salford-reinvent-the-bike-bell-for-the-noise-cancelling-era">Škoda’s DuoBell</a>, developed with acousticians at the University of Salford, rings in a narrow band that noise-cancelling headphones let through. <a href="https://blogs.salford.ac.uk/research/2015/09/25/university-of-salford-helps-to-make-dyson-appliances-quieter/">Dyson</a> appliances such as vacuums and hairdryers are shaped by how they sound, with Salford’s auralisation letting engineers hear new designs before they are built. <a href="https://www.open-access.bcu.ac.uk/14813/1/AASQ_West_Kendrick_FKFS-Conference-2019.pdf">Bentley</a> has put listeners in a full-vehicle simulator to judge the wind noise inside its cabins. My research brings the same loop to drones, air taxis, heat pumps and electric vehicles, before they arrive in our streets.</p>
     </div>
   </section>
 
