@@ -533,6 +533,14 @@
   .btn-quiet { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
   .btn-quiet:hover { background: transparent; color: var(--accent); border-color: var(--ink); }
   .btn-meta { margin-left: 8px; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink-2); }
+  /* phones: the four buttons sit two by two at equal widths, the social icons on a row of their own beneath */
+  @media (max-width: 599px) {
+    .cta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .cta .btn { justify-content: center; padding: 0 8px; font-size: 15px; white-space: nowrap; }
+    .cta .btn-meta { margin-left: 6px; font-size: 11px; }
+    .cta .socials { grid-column: 1 / -1; }
+  }
+  @media (max-width: 359px) { .cta .btn { font-size: 14px; padding: 0 4px; } .cta .btn-meta { display: none; } }
   .social {
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; color: var(--ink);
