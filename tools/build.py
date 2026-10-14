@@ -103,9 +103,17 @@ def block(s, start, end, new):
     return s[:a] + new + s[b:]
 
 
+def minify_css(css):
+    """Comments and spare whitespace out; the readable source stays in css/."""
+    css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
+    css = re.sub(r'\s+', ' ', css)
+    css = re.sub(r'\s*([{};,>])\s*', r'\1', css)
+    return css.replace(';}', '}').strip()
+
+
 def inline_css(s, href):
     path = href
-    css = open(path, encoding='utf-8').read().strip()
+    css = minify_css(open(path, encoding='utf-8').read())
     tag = f'<style data-src="{path}">\n{css}\n</style>'
     if f'<style data-src="{path}">' in s:
         return re.sub(r'<style data-src="' + re.escape(path) + r'">.*?</style>', lambda m: tag, s, count=1, flags=re.S)
