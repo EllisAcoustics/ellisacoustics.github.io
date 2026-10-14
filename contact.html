@@ -595,6 +595,10 @@
     window.__balance = balance;   // for text that is swapped in later
   }
 
+  // The illustrated machines spin their fans, rotors and wheels with SVG animation, which CSS cannot pause;
+  // visitors who ask for less motion get them still.
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelectorAll('svg.craft').forEach((v) => v.pauseAnimations && v.pauseAnimations());
+
   // Tile labels show on hover only, one at a time, and never stay pinned open.
   // On touch screens a tap stands in for hover: that tile's label shows alone, then fades by itself.
   const TILES = '.itile, .vol-tile, .org-tile, .icon-tile, .int';
