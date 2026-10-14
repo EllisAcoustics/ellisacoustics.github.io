@@ -496,13 +496,13 @@
   :root[data-theme="dark"] .hero-sub .t-car { color: #1FA187; } :root[data-theme="dark"] .hero-sub .t-drone { color: #63CB5F; }
   .hero-sub .snd, .hero-sub .src-n { font-style: italic; }
   .hero-sub .snd { position: relative; }
-  /* "sounds" is filled with a live viridis spectrogram (a rotor tone and its harmonics, low pitches at the bottom) that scrolls once the ruler has drawn */
-  .hero-sub .snd { padding-right: 0.06em; background: url("images/spectrogram.webp") 0 0 / 7em 100% repeat-x; -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent; color: transparent; animation: snd-spec 7s linear infinite paused; }
-  html.ruled .hero-sub .snd { animation-play-state: running; }
+  /* "noise sources" is filled with a live viridis spectrogram (a rotor tone and its harmonics, low pitches at the bottom) that scrolls once the ruler has drawn */
+  .hero-sub .src-n { padding-right: 0.06em; background: url("images/spectrogram.webp") 0 0 / 7em 100% repeat-x; -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent; animation: snd-spec 9s linear infinite paused; }
+  html.ruled .hero-sub .src-n { animation-play-state: running; }
   @keyframes snd-spec { to { background-position: -7em 0; } }
-  @media (prefers-reduced-motion: reduce) { .hero-sub .snd { animation: none; } }
-  @media print { .hero-sub .snd { background: none; -webkit-text-fill-color: currentColor; color: inherit; } }
+  @media (prefers-reduced-motion: reduce) { .hero-sub .src-n { animation: none; } }
+  @media print { .hero-sub .src-n { background: none; -webkit-text-fill-color: currentColor; color: inherit; } }
   /* a sound wave under "sounds", which starts travelling once the ruler has drawn itself */
   .hero-sub .snd::after { content: ""; position: absolute; left: 0; right: 0; bottom: -0.2em; height: 0.24em; background: var(--ink-2);
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0 8 3T16 3' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 0 50% / 0.5em 100% repeat-x;
