@@ -21,7 +21,7 @@ except ImportError:
 from fontTools import subset
 from fontTools.ttLib import TTFont
 
-PAGES = ['index', 'about', 'contact', 'listen', 'privacy', 'accessibility', 'credits', '404']
+PAGES = ['index', 'about', 'contact', 'press', 'listen', 'privacy', 'accessibility', 'credits', '404']
 FACES = {  # face key -> (source file, weight, style)
     'regular': ('fonts/sourcerer-regular.woff', 400, 'normal'),
     'italic': ('fonts/sourcerer-italic.woff', 400, 'italic'),

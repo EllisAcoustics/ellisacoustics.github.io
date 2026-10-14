@@ -164,12 +164,6 @@ img.on-dark { display: none !important; }
 @media print { .org-grid { display: none; } }
 
 
-/* Profile colours: ORCID green and Google Scholar blue, matching their icons.
-   On the light page each uses a deeper shade of its brand colour so the text stays readable. */
-.c-orcid, .c-orcid span, .more-pubs a.c-orcid { color: #5F7F14 !important; }
-.c-scholar, .c-scholar span, .more-pubs a.c-scholar { color: #1A5FE0 !important; }
-:root[data-theme="dark"] .c-orcid, :root[data-theme="dark"] .c-orcid span, :root[data-theme="dark"] .more-pubs a.c-orcid { color: #A6CE39 !important; }
-:root[data-theme="dark"] .c-scholar, :root[data-theme="dark"] .c-scholar span, :root[data-theme="dark"] .more-pubs a.c-scholar { color: #5B95F5 !important; }
 /* Grades: the same grey as the detail lines */
 .timeline .grade { color: var(--ink-2); }
 @media print { .c-orcid, .c-scholar { color: inherit !important; } }
@@ -180,6 +174,6 @@ img.on-dark { display: none !important; }
 :root[data-theme="dark"] .honour .medal { color: #E0A800; }
 @media (forced-colors: active) { .honour .medal { color: CanvasText; } }
 
-/* Paper links (PDF, DOI): the same gold as the credential links */
-.outputs .meta a { display: inline-block; min-width: 24px; min-height: 24px; color: #8A6500; text-underline-offset: 3px; }   /* 24px touch targets */
-:root[data-theme="dark"] .outputs .meta a { color: #F2C200; }
+/* Paper and profile links: the page's own ink with a quiet grey underline, like the other text links */
+.outputs .meta a, .more-pubs a { display: inline-block; min-width: 24px; min-height: 24px; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; transition: text-decoration-color var(--dur-2) var(--ease); }
+.outputs .meta a:hover, .more-pubs a:hover { color: var(--ink); text-decoration-color: currentColor; }

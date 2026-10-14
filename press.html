@@ -1,0 +1,450 @@
+<!doctype html>
+<!--
+  ellisacoustics.github.io · Max Ellis, psychoacoustics
+  Hand-built HTML, CSS and JavaScript: no frameworks, no trackers, no cookies.
+  Shared tokens: css/site.css · CV components: css/sections.css · Shared behaviour: js/site.js
+  These are inlined into each page by tools/build.py (one round trip, no render-blocking files):
+  edit the source file, then run python3 tools/build.py.
+  The CV PDF is printed from these pages by tools/make_cv.py.
+-->
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Press Kit — Max Ellis, Psychoacoustician</title>
+<meta name="description" content="Press kit for Max Ellis, psychoacoustics researcher at the University of Salford: how to credit him, short and full bios to copy, and photos to download.">
+<meta property="og:title" content="Press Kit — Max Ellis, Psychoacoustician">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ellisacoustics.github.io/press">
+<meta property="og:description" content="Press kit for Max Ellis, psychoacoustics researcher at the University of Salford: how to credit him, short and full bios to copy, and photos to download.">
+<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://ellisacoustics.github.io/press">
+<meta property="og:site_name" content="Max Ellis">
+<meta property="og:locale" content="en_GB">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
+<script>
+  (function () {
+    var mq = window.matchMedia && matchMedia('(prefers-color-scheme: dark)');
+    // Theme: the visitor's own choice (from the switch) wins, otherwise follow the system setting
+    var saved = null; try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved !== 'light' && saved !== 'dark') saved = null;
+    var setT = function () { document.documentElement.setAttribute('data-theme', saved || (mq && mq.matches ? 'dark' : 'light')); };
+    setT(); if (mq && mq.addEventListener) mq.addEventListener('change', function () { if (!saved) setT(); });
+    window.__setTheme = function (t) { saved = t; try { localStorage.setItem('theme', t); } catch (e) {} setT(); };
+    // When the intro is about to play, skip the page-change animation so the new page never shows before its intro
+    addEventListener('pagereveal', function (e) { if (e.viewTransition && document.documentElement.classList.contains('intro')) e.viewTransition.skipTransition(); });
+  })();
+</script>
+<style data-src="css/site.css">
+:root{--paper: #FFFFFF;--ink: #0B0B0C;--ink-2: #4A4A4F;--rule: #6E6E73;--hairline: #DCDCDF;--accent: var(--ink);--deep-blue: var(--ink);--deep-green: var(--ink);--neon-ink: var(--ink);--neon: var(--rule);--logo-filter: none;color-scheme: light;--sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--serif: "Sourcerer","Source Serif 4",Georgia,"Times New Roman",serif;--mono: ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--u: 8px;--measure: 68ch;--gutter: 16px;--dur-1: 150ms;--dur-2: 250ms;--dur-3: 400ms;--dur-4: 650ms;--ease: cubic-bezier(.4,0,.2,1);--ease-out: cubic-bezier(.2,.7,.2,1);--ease-in-out: cubic-bezier(.65,0,.35,1)}:root[data-theme="dark"]{--paper: #0B0B0C;--ink: #F2F2F3;--ink-2: #A8A8AD;--rule: #8E8E93;--hairline: #2C2C2F;--logo-filter: invert(1);color-scheme: dark}@media (prefers-color-scheme: dark){:root:not([data-theme]){--paper: #0B0B0C;--ink: #F2F2F3;--ink-2: #A8A8AD;--rule: #8E8E93;--hairline: #2C2C2F;--logo-filter: invert(1);color-scheme: dark}}@media (min-width: 720px){:root{--gutter: 40px}}html{hanging-punctuation: first allow-end last}h1,h2,h3,.lede,.hero-sub,.press-lede,.gap-lede{text-wrap: balance}p,li,figcaption{text-wrap: pretty}::selection{background: var(--ink);color: var(--paper)}.skip{position: absolute;left: var(--gutter);top: -100px;z-index: 200;background: var(--ink);color: var(--paper);padding: var(--u) calc(var(--u) * 2)}.skip:focus{top: var(--u)}.theme-toggle{position: relative;flex: none;width: 52px;height: 28px;padding: 0;margin-left: 4px;border: 1px solid var(--hairline);border-radius: 14px;background: #ECECEE;cursor: pointer}.theme-toggle::before{content: "";position: absolute;inset: -8px -2px}:root[data-theme="dark"] .theme-toggle{background: #26262A}.theme-toggle .tt-knob{position: absolute;top: 2px;left: 2px;display: grid;place-items: center;width: 22px;height: 22px;border-radius: 50%;background: #FFFFFF;box-shadow: 0 1px 3px rgba(0,0,0,0.25);transition: transform var(--dur-2) var(--ease)}:root[data-theme="dark"] .theme-toggle .tt-knob{transform: translateX(24px);background: #0B0B0C;box-shadow: 0 0 0 1px #3A3A3F}.theme-toggle svg{position: absolute;width: 15px;height: 15px;transition: opacity var(--dur-2) var(--ease),transform var(--dur-2) var(--ease)}.theme-toggle .sun{color: #F28C28}.theme-toggle .moon{color: #4C8BF5;opacity: 0;transform: rotate(-40deg)}:root[data-theme="dark"] .theme-toggle .sun{opacity: 0;transform: rotate(40deg)}:root[data-theme="dark"] .theme-toggle .moon{opacity: 1;transform: none}.theme-toggle:hover{border-color: var(--rule)}@media print{.theme-toggle{display: none}}@media (max-width: 379px){nav.topnav .links{gap: 12px}nav.topnav .home svg{width: 47px}nav.topnav .links a{font-size: 14px}.theme-toggle{width: 46px}:root[data-theme="dark"] .theme-toggle .tt-knob{transform: translateX(18px)}}@view-transition{navigation: auto}.topnav{view-transition-name: site-nav}.masthead h1{view-transition-name: page-title}.foot{view-transition-name: site-foot}::view-transition-old(root){animation: vt-out var(--dur-2) var(--ease) both}::view-transition-new(root){animation: vt-in var(--dur-3) var(--ease-out) both}::view-transition-group(page-title){animation-duration: var(--dur-3);animation-timing-function: var(--ease-in-out)}@keyframes vt-out{to{opacity: 0;transform: translateY(-6px)}}@keyframes vt-in{from{opacity: 0;transform: translateY(10px)}}@media (prefers-reduced-motion: reduce){@view-transition{navigation: none}:root{--dur-1: 0ms;--dur-2: 0ms;--dur-3: 0ms;--dur-4: 0ms}}@media (forced-colors: active){#intro{display: none !important}svg{forced-color-adjust: auto}.theme-toggle,.sw,.copy,.seg button,.ab button,.route,.btn,.social,.certs li,.card,.pk,.player,.play{border: 1px solid ButtonText}.theme-toggle .tt-knob{background: ButtonText;box-shadow: none}.theme-toggle svg{color: ButtonFace}[aria-checked="true"],[aria-pressed="true"]{outline: 2px solid Highlight;outline-offset: 2px}.honour,.outputs .honour{background: none !important;-webkit-text-fill-color: CanvasText !important;color: CanvasText !important}.spec-wrap{border: 1px solid CanvasText}:focus-visible{outline: 3px solid Highlight !important}}.subfoot{position: relative;z-index: 1;margin-top: calc(var(--u) * -4);padding: calc(var(--u) * 1.5) 0 calc(var(--u) * 4);border-top: 1px solid var(--hairline)}.subfoot .legal{display: flex;flex-wrap: wrap;align-items: center;gap: 4px 10px;font-family: var(--mono);font-size: 12px;line-height: 20px}.subfoot .legal a{display: inline-flex;align-items: center;min-height: 24px;color: var(--ink-2);text-decoration: none}.subfoot .legal a:hover,.subfoot .legal a[aria-current="page"]{color: var(--ink);text-decoration: underline;text-underline-offset: 3px}.subfoot .legal span{color: var(--rule)}@media print{.subfoot{display: none}}
+</style>
+<style>
+  /* Colours for this page's drawings (shared tokens live in css/site.css) */
+  :root { --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: var(--ink); --v5: var(--ink); }
+  :root[data-theme="dark"] { --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme]) { --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); } }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p, ul { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; box-shadow: 0 0 0 6px var(--paper); border-radius: 1px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+  .masthead { position: relative; padding-top: calc(var(--u) * 10); padding-bottom: calc(var(--u) * 4); }
+  /* ---------- Site navigation ---------- */
+  .topnav {
+    position: absolute; top: calc(var(--u) * 2); left: var(--gutter); right: var(--gutter);
+    display: flex; align-items: center; justify-content: space-between; gap: calc(var(--u) * 2);
+    min-height: 44px;
+  }
+  .topnav .home { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; min-height: 44px; }
+  .topnav .home svg { display: block; }
+  .topnav .home svg { width: 59px; height: auto; }
+  .topnav .home .mk-spin { transform-box: view-box; animation: mk-spin 7s linear infinite; }
+  .topnav .home .mk-rotor { transform-box: fill-box; transform-origin: center; animation: mk-rotor 0.2s linear infinite; }
+  @keyframes mk-spin { to { transform: rotate(360deg); } }
+  .topnav .home .mk-fan { transform-box: view-box; animation: mk-spin 0.9s linear infinite; }
+  .topnav .home .mk-note { opacity: 0; transform-box: view-box; animation: mk-note 1.8s ease-out infinite; }
+  @keyframes mk-note { 0% { opacity: 0; transform: translate(-1px, 1.5px); } 15% { opacity: 1; } 70%, 100% { opacity: 0; transform: translate(1.2px, -3px); } }
+  @keyframes mk-rotor { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.55); } }
+  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-spin, .topnav .home .mk-rotor, .topnav .home .mk-fan, .topnav .home .mk-note { animation: none; } }
+  .topnav .home .home-label { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+  .topnav .links { display: flex; align-items: center; gap: calc(var(--u) * 3); }
+  .topnav .links a { color: var(--ink); text-decoration: none; font-size: 15px; padding: 10px 0; }
+  .topnav .links a:hover, .topnav .links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  .topnav .links a[aria-current="page"] { text-decoration-thickness: 2px; }
+  @media (max-width: 479px) { .topnav .home .home-label { display: none; } .topnav .links { gap: calc(var(--u) * 2); } }
+  @media print { .topnav { display: none; } }
+
+  h1 { margin-top: calc(var(--u) * 4); font-size: clamp(40px, 7vw, 72px); line-height: 1.02; font-weight: 650; letter-spacing: -0.035em; }
+  .lede { margin-top: calc(var(--u) * 3); max-width: 40ch; font-size: clamp(20px, 2.4vw, 26px); line-height: 1.35; }
+  .section { padding: calc(var(--u) * 5) 0 calc(var(--u) * 7); display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 3); }
+  @media (min-width: 880px) { .section { grid-template-columns: 240px minmax(0, 1fr); gap: calc(var(--u) * 5); } }
+  .section > h2 { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--deep-blue); }
+  html, body { overflow-x: clip; }
+  /* each icon sits in the middle of an equal-width column, so the white space either side is the same */
+  .itiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); justify-items: center; gap: calc(var(--u) * 4) 0; max-width: 760px; }
+  @media (min-width: 640px) { .itiles { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; } }
+  .itile { position: relative; display: flex; justify-content: center; width: 44px; padding: 6px 0; outline-offset: 4px; cursor: default; }
+  .itile svg { width: 44px; height: 44px; color: var(--c, var(--ink)); transition: transform var(--dur-3) var(--ease); }
+  .itile:hover svg, .itile:focus-visible svg, .itile.is-active svg { transform: translateY(-4px); }
+  .pop {
+    position: absolute; top: calc(100% + 4px); left: 50%; z-index: 5; width: max-content; max-width: 220px;
+    transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none;
+    transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 2px; padding: 8px 10px; text-align: center;
+  }
+  .itile:hover .pop, .itile:focus .pop, .itile.is-active .pop { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
+  .pop-t { display: block; font-weight: 600; font-size: 14px; line-height: 20px; }
+  .pop:not(:has(.pop-d)) { max-width: calc(100vw - 24px); white-space: nowrap; }   /* a title alone stays on one line, so the box fits it */
+  .pop-d { display: block; margin-top: 4px; color: var(--ink-2); font-size: 13px; line-height: 19px; }
+  /* ---------- Looping icon animations ---------- */
+  .itile svg { overflow: visible; }
+  .itile svg * { transform-box: view-box; }
+  .a-wave { opacity: 0; animation: a-wave 1.4s ease-out infinite; }
+  @keyframes a-wave { 0% { opacity: 0; transform: scale(0.7); } 20% { opacity: 0.9; } 100% { opacity: 0; transform: scale(1.7); } }
+  .a-antenna { transform-origin: 8px 11px; animation: a-antenna 2.4s ease-in-out infinite; }
+  @keyframes a-antenna { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-8deg); } }
+  .a-cone { transform-origin: 11px 19px; animation: a-cone 0.5s ease-in-out infinite alternate; }
+  @keyframes a-cone { to { transform: scale(1.12); } }
+  .a-ln { stroke-dasharray: 13; animation: a-ln 3.6s linear infinite; }
+  .a-ln2 { animation-delay: 0.25s; } .a-ln3 { animation-delay: 0.5s; } .a-ln4 { animation-delay: 0.75s; }
+  @keyframes a-ln { 0% { stroke-dashoffset: 13; } 25%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -13; } }
+  .a-ring-l { animation: a-ring-l 3s ease-in-out infinite; } .a-ring-r { animation: a-ring-r 3s ease-in-out infinite; }
+  @keyframes a-ring-l { 0%, 100% { transform: translateX(-2.5px); } 50% { transform: translateX(0.5px); } }
+  @keyframes a-ring-r { 0%, 100% { transform: translateX(2.5px); } 50% { transform: translateX(-0.5px); } }
+  .a-puff { opacity: 0; transform-origin: 26px 4px; animation: a-puff 2.4s ease-out infinite; }
+  .a-puff.p2 { animation-delay: 1.2s; }
+  @keyframes a-puff { 0% { opacity: 0; transform: translate(0, 2px) scale(0.5); } 20% { opacity: 0.9; } 100% { opacity: 0; transform: translate(3px, -4px) scale(1.4); } }
+  .a-chart { stroke-dasharray: 22; animation: a-chart 3s ease-in-out infinite; }
+  @keyframes a-chart { 0% { stroke-dashoffset: 22; } 45%, 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -22; } }
+  .a-swing { transform-origin: 16px 3px; animation: a-swing 2.6s ease-in-out infinite; }
+  @keyframes a-swing { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+  .a-hover { animation: a-hover 2.6s ease-in-out infinite; }
+  @keyframes a-hover { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.6px, -1.6px); } }
+  .itile svg .a-rotor { transform-box: fill-box; }
+  .a-rotor { transform-box: fill-box; transform-origin: center; animation: a-rotor 0.16s linear infinite; }
+  .a-rotor.r2 { animation-delay: -0.08s; }
+  @keyframes a-rotor { 50% { transform: scaleX(0.2); } }
+  .a-spin { animation: a-spin 1.2s linear infinite; }
+  @keyframes a-spin { to { transform: rotate(360deg); } }
+  .a-drive { animation: a-drive 1.8s ease-in-out infinite; }
+  @keyframes a-drive { 0%, 100% { transform: translateX(-0.8px); } 50% { transform: translateX(0.8px); } }
+  .a-sway { transform-origin: 11px 28px; animation: a-sway 3.2s ease-in-out infinite; }
+  @keyframes a-sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+  .a-beat { transform-origin: 16px 16px; animation: a-beat 1.2s ease-in-out infinite; }
+  @keyframes a-beat { 0%, 40%, 100% { transform: scale(1); } 15% { transform: scale(1.08); } 28% { transform: scale(0.98); } }
+  .a-ecg { stroke-dasharray: 28; animation: a-ecg 1.2s linear infinite; }
+  @keyframes a-ecg { 0% { stroke-dashoffset: 28; } 60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -28; } }
+  .a-win { animation: a-win 2.8s steps(1) infinite; }
+  @keyframes a-win { 0%, 100% { opacity: 1; } 40% { opacity: 0.25; } 70% { opacity: 1; } }
+  .a-tram { animation: a-tram 4s ease-in-out infinite; }
+  @keyframes a-tram { 0% { transform: translateX(-6px); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(12px); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .itile svg * { animation: none !important; } .a-wave, .a-puff { opacity: 0.6; } }
+  @media (prefers-reduced-motion: reduce) { .itile svg, .pop { transition: none; } }
+  @media print { .itiles { display: block; } .itile svg { display: none; } .itile { display: block; padding: 0 0 6px; } .pop { position: static; opacity: 1; transform: none; border: 0; padding: 0; text-align: left; max-width: none; } }
+  .routes { display: grid; gap: calc(var(--u) * 1.5); max-width: 520px; }
+  .route {
+    display: flex; align-items: center; gap: calc(var(--u) * 2);
+    min-height: 56px; padding: 0 calc(var(--u) * 2);
+    border: 1px solid var(--rule); border-radius: 2px; color: var(--ink); text-decoration: none;
+  }
+  .route:hover { border-color: var(--ink); }
+  .route svg { width: 20px; height: 20px; flex: none; }
+  .route strong { font-weight: 600; }
+  .route span { margin-left: auto; min-width: 0; overflow-wrap: anywhere; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+  .route.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .route.primary span { color: var(--paper); opacity: 0.8; }
+  .note { max-width: 60ch; color: var(--ink-2); font-size: 15px; line-height: 22px; }
+  .foot { border-top: 1px solid var(--rule); padding: calc(var(--u) * 3) 0 calc(var(--u) * 6); font-family: var(--mono); font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--u); }
+  /* ---------- Listening room intro: a participant in a 16-speaker, third-order ambisonic room ---------- */
+  #intro { display: none; }
+  html.intro #intro {
+    display: block; position: fixed; inset: 0; z-index: 100; background: var(--paper); overflow: hidden;
+    animation: room-out 0.55s ease 3.5s forwards, intro-failsafe 0s linear 6s forwards;
+  }
+  @keyframes intro-failsafe { to { visibility: hidden; } }
+  @keyframes room-out { to { background-color: transparent; } }
+  /* the dome: a 16-speaker third-order ambisonic array round a seated listener, drawn in the page's ink */
+  #intro .dome { position: absolute; left: 50%; top: 50%; width: min(132vw, 1100px, 165vh); aspect-ratio: 1800 / 1005; translate: -50% -50%;
+    animation: dome-in 0.7s cubic-bezier(.2,.7,.2,1) 0.05s both, room-fade 0.5s ease 3.45s forwards; }
+  #intro .dome-art { position: absolute; inset: 0; background: var(--ink);
+    -webkit-mask: url("images/listening-dome.webp") center / contain no-repeat; mask: url("images/listening-dome.webp") center / contain no-repeat; }
+  #intro .pulses { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  @keyframes dome-in { from { opacity: 0; scale: 0.96; } }
+  @keyframes room-fade { to { opacity: 0; } }
+  #intro .pulses circle { opacity: 0; stroke-width: 4; transform-box: fill-box; transform-origin: center;
+    animation: pr-pulse var(--pd) ease-out infinite, pr-roy calc(var(--pd) * 7) step-end infinite; }   /* a new rainbow colour every pulse, speakers firing at random */
+  @keyframes pr-pulse { 0% { opacity: 0; transform: scale(0.7); } 12% { opacity: 0.95; } 100% { opacity: 0; transform: scale(2.6); } }
+  @keyframes pr-roy { 0% { stroke: #E8452C; } 14.28% { stroke: #F28C28; } 28.57% { stroke: #F2C200; } 42.85% { stroke: #3FAE3A; } 57.14% { stroke: #2F6FE0; } 71.42% { stroke: #4B3FD8; } 85.71% { stroke: #8E4FD8; } }
+  @media print { #intro { display: none !important; } }
+  .foot { border-top: 0 !important; position: relative; }
+  .foot-line { position: absolute; left: 0; top: -16px; width: 100%; height: 32px; display: block; overflow: visible; pointer-events: none; }
+  .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  @media print { .foot-line { display: none; } }
+  .skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
+  .skip:focus { top: var(--u); }
+  main:focus { outline: none; }
+  /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
+  @media (max-width: 879px) {
+    .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
+    .org-grid, .vol-grid { padding-bottom: calc(var(--u) * 3); }
+    .org-tile { height: 72px; }
+    .itiles { row-gap: calc(var(--u) * 3); }
+    .steps { gap: calc(var(--u) * 3); }
+    .outputs li { padding: calc(var(--u) * 2) 0; }
+    .timeline li { padding-bottom: calc(var(--u) * 3); }
+    .hero-why { font-size: 17px; line-height: 26px; }
+    .gap-lede { font-size: 17px; line-height: 26px; }
+  }
+  /* Profile colours: ORCID green and Google Scholar blue, matching their icons (deeper shades on the light page for legibility) */
+  .route.c-orcid { color: #5F7F14; }
+  :root[data-theme="dark"] .route.c-orcid { color: #A6CE39; }
+  .route.c-orcid span, .route.c-scholar span { color: var(--ink-2); }   /* the detail on the right stays grey like the other buttons */
+  .t-media .a-wave { color: #13B5CF; }                               /* microphone: cyan */
+  .t-radio .a-cone, .t-radio .a-antenna { color: #E0A800; }          /* radio: gold, like the heat pump fan */
+  .t-press .a-ln { color: #3FAE3A; }                                 /* writing: green */
+  .t-collab .a-ring-l { color: #E8452C; }                            /* collaboration: red and white */
+  .t-talks .a-chart, .t-talks .a-point { color: #2F6FE0; }           /* talks: blue */
+  .t-talks .a-point { transform-origin: 5.5px 13.5px; animation: a-point 2.6s ease-in-out infinite; }
+  @keyframes a-point { 0%, 100% { transform: rotate(0); } 35% { transform: rotate(-9deg); } 65% { transform: rotate(4deg); } }
+  .t-intern .a-head { animation: a-rainbow 7s steps(1) infinite; }
+  .t-intern .a-ring-pulse { transform-box: fill-box; transform-origin: center; animation: a-rainbow 7s steps(1) infinite, a-ringout 1s ease-out infinite; }
+  @keyframes a-rainbow { 0% { color: #E8452C; } 14.28% { color: #F28C28; } 28.57% { color: #F2C200; } 42.85% { color: #3FAE3A; } 57.14% { color: #2F6FE0; } 71.42% { color: #4B3FD8; } 85.71% { color: #8E4FD8; } }
+  @keyframes a-ringout { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
+  .t-drone .a-rotor, .t-drone .a-wave { color: #13B5CF; }   /* drone: cyan propellers and pulse */
+  .t-ashp .a-spin { color: #E0A800; }
+  .t-ev .a-wave, .t-ev .a-bolt { color: #3FAE3A; }                   /* EV: green bolt and warning-sound pulses */
+  .t-health .a-ecg { color: #E8452C; }                               /* heart white, pulse red */
+  .t-psy .a-wave { color: #2F6FE0; }                                 /* ear: blue */
+  @media (prefers-reduced-motion: reduce) { .t-intern .a-ring-pulse { opacity: 0; } }
+  /* ---------- Press kit ---------- */
+  .press { max-width: 820px; }
+  .press-lede { font-size: 18px; line-height: 27px; max-width: 58ch; }
+  .press-grid { display: grid; gap: 24px; margin-top: 20px; }
+  @media (min-width: 720px) { .press-grid { grid-template-columns: 220px minmax(0, 1fr); align-items: start; } }
+  .press-photo { margin: 0; }
+  .press-photo img { display: block; width: 100%; max-width: 260px; height: auto; border: 1px solid var(--rule); }
+  .press-photo figcaption { margin-top: 10px; font-size: 14px; line-height: 24px; }
+  .press-photo figcaption a { color: var(--ink); }
+  .press-photo figcaption span { display: block; margin-bottom: 6px; font-family: var(--mono); font-size: 11px; line-height: 16px; color: var(--ink-2); }
+  .press-copy { display: grid; gap: 14px; }
+  .pk { border: 1px solid var(--rule); padding: 12px 14px; }
+  .pk-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+  .pk h3 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
+  .pk h3 span { margin-left: 8px; font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--ink-2); }
+  .pk p { margin: 0; font-size: 15px; line-height: 23px; color: var(--ink-2); }
+  .copy { flex: none; min-height: 32px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 2px; background: transparent; color: var(--ink); font: 600 13px/1 var(--sans); cursor: pointer; }
+  .copy:hover { border-color: var(--ink); }
+  .copy.done { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  /* House logo colours: cyan spinning propellers, gold heat-pump fan, song notes and turbine blades, green pulsing bolt on the scooter */
+  .topnav .home .mk-rotor { color: #13B5CF; }
+  .topnav .home .mk-drone { opacity: 0.62; transition: opacity var(--dur-2) var(--ease); }   /* further off, so a little hazier */
+  .topnav .home .mk-fan, .topnav .home .mk-note { color: #E0A800; }
+  .topnav .home .mk-turbine .mk-spin { animation-duration: 2.6s; }   /* same pace as the ruler turbine */
+  .topnav .home .mk-air { color: #2B4FD8; }   /* royal blue air blowing in from the right */
+  .topnav .home .mk-air path { stroke-dasharray: 48 52; stroke-dashoffset: 100; animation: mk-air 1.6s linear infinite; }
+  @keyframes mk-air { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-air path { animation: none; stroke-dasharray: none; } }
+  .topnav .home .mk-note.n2 { animation-delay: 0.9s; }
+  .topnav .home .mk-bolt { color: #3FAE3A; animation: mk-bolt 1.2s ease-in-out infinite; }
+  @keyframes mk-bolt { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+  @media (prefers-reduced-motion: reduce) { .topnav .home .mk-bolt { animation: none; } .topnav .home .mk-note.n2 { opacity: 0; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="wrap masthead">
+  <nav class="topnav" aria-label="Site">
+    <a class="home" href="./" aria-label="Max Ellis, home"><svg class="" viewBox="-13 0 52.5 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><g opacity="0.32" stroke-width="0.7"><path d="M-10.4 13.6Q-3.2 9.6 3.4 13"/></g><g class="mk-turbine" stroke-width="0.7" opacity="0.6"><g class="mk-air" stroke-width="0.5" stroke-linecap="round"><path d="M2.4 2.5C1.6 2.3 1.1 2.7 0.2 2.5" pathLength="100"/><path d="M2.6 4.1H0.8" pathLength="100" style="animation-delay:-0.6s"/><path d="M2.4 5.7C1.6 5.9 1.1 5.5 0.2 5.7" pathLength="100" style="animation-delay:-1.2s"/></g><path d="M-3.34 11.35L-3.24 4.4H-3.16L-3.06 11.35Z" fill="currentColor" stroke="none"/><g class="mk-spin" style="transform-origin:-3.2px 4.0px" fill="currentColor" stroke="none"><path d="M-3.20 4.00C-2.87 3.31 -2.84 2.26 -3.08 1.24C-3.26 2.20 -3.39 3.22 -3.33 3.85Z"/><path d="M-3.20 4.00C-2.87 3.31 -2.84 2.26 -3.08 1.24C-3.26 2.20 -3.39 3.22 -3.33 3.85Z" transform="rotate(120 -3.2 4.0)"/><path d="M-3.20 4.00C-2.87 3.31 -2.84 2.26 -3.08 1.24C-3.26 2.20 -3.39 3.22 -3.33 3.85Z" transform="rotate(240 -3.2 4.0)"/></g><circle cx="-3.2" cy="4.0" r="0.38" fill="var(--paper)" stroke-width="0.28"/></g><path d="M5 30V17.5L14 10L23 17.5V30"/><path d="M3 19L14 9.6L25 19"/><path class="mk-chimney" d="M18.6 13.4V10.6H20.6V15.1" stroke-width="1"/><path d="M11.8 30V24.2H16.2V30" stroke-width="1"/><rect x="7.4" y="18.4" width="3" height="3" stroke-width="0.9"/><rect x="17.6" y="18.4" width="3" height="3" stroke-width="0.9"/><g class="mk-solar"><path d="M5.11 16.21L9.91 12.11L8.55 10.51L3.75 14.61Z" stroke-width="0.7"/><path d="M6.71 14.84L5.35 13.24M8.31 13.47L6.95 11.88M4.43 15.41L9.23 11.31" stroke-width="0.35"/></g><g class="mk-ashp"><rect x="26.5" y="23.5" width="8" height="6.5" rx="0.6"/><circle cx="29.6" cy="26.75" r="2" stroke-width="0.9"/><g class="mk-fan" style="transform-origin:29.6px 26.75px" stroke-width="0.7"><path d="M29.6 26.75V25.2M29.6 26.75L30.95 27.5M29.6 26.75L28.25 27.5"/></g><path d="M32.6 25V28.6" stroke-width="0.8"/></g><g stroke-width="0.6"><path d="M30.6 22.2Q31.4 23.4 32.8 22.9Q33.6 22.5 33.4 21.6"/><path d="M30.6 22.2Q31.6 21.3 33.1 21.4"/><path d="M30.6 22.2L29.5 21.7"/><path d="M33.1 21.4Q33.4 20.4 34.2 20.6Q34.8 20.8 34.6 21.4L35.4 21.5L34.5 21.8Q34.2 22.1 33.4 21.6"/><path d="M31.8 23.2V23.5M32.6 23.1V23.5" stroke-width="0.4"/></g><g class="mk-note" stroke-width="0.5"><ellipse cx="36.4" cy="18.6" rx="0.55" ry="0.4" fill="currentColor" stroke="none"/><path d="M36.9 18.5V16.4L37.7 16.8"/></g><g class="mk-note n2" stroke-width="0.5"><ellipse cx="36.4" cy="18.6" rx="0.55" ry="0.4" fill="currentColor" stroke="none"/><path d="M36.9 18.5V16.2"/></g><g class="mk-drone" transform="translate(31.5 3.2) scale(0.74) translate(-31.5 -3.2)"><path d="M24.5 4.6H29.5M33.5 4.6H38.5" class="mk-rotor"/><path d="M27 4.6V6.4H36V4.6" stroke-width="1"/><rect x="29.5" y="5.6" width="4" height="2.2" rx="0.8" stroke-width="1"/><rect x="30" y="9" width="3" height="2.6" stroke-width="0.9"/><path d="M31.5 7.8V9" stroke-width="0.7"/></g><circle cx="-10" cy="28" r="1.9" stroke-width="1"/><circle cx="-1.6" cy="28" r="1.9" stroke-width="1"/><rect x="-8.9" y="24.2" width="6.2" height="3" rx="0.8" stroke-width="0.9"/><path class="mk-bolt" d="M-5.3 24.85L-6.25 25.85H-5.35L-6.2 26.75" stroke-width="0.5"/><path d="M-1.6 28L-3.4 19.6M-5 19.6H-1.8" stroke-width="1"/><path d="M-12 30H38.6"/></svg></a>
+    <div class="links">
+      <a href="about">About</a>
+      <a href="listen">Listen</a>
+      <a href="contact">Contact</a>
+      <button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Light or dark mode"><span class="tt-knob" aria-hidden="true"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" focusable="false"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M5.1 18.9l1.7-1.7M17.2 6.8l1.7-1.7"/></svg><svg class="moon" viewBox="0 0 24 24" focusable="false"><path d="M20.4 14.6A8.6 8.6 0 1 1 9.4 3.6a7 7 0 0 0 11 11Z" fill="currentColor"/></svg></span></button>
+    </div>
+  </nav>
+  <h1>Press Kit</h1>
+  <p class="lede">Available for comment on drone, air taxi, heat pump and electric-vehicle noise, and on how sound affects health and wellbeing. Bios, a credit line and photos are below; for interviews and deadlines, <a href="contact">get in touch</a>.</p>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <section class="section" id="kit" aria-labelledby="kit-h">
+    <h2 id="kit-h">Photos and Bios</h2>
+    <div class="press">
+      <div class="press-grid" style="margin-top:0">
+        <figure class="press-photo">
+          <img src="images/max-ellis-portrait.jpg" width="700" height="700" alt="Max Ellis presenting his research at a conference" loading="lazy" decoding="async">
+          <figcaption><a href="images/max-ellis-portrait.jpg" download="Max-Ellis-headshot.jpg">Download headshot</a> <span>JPG · 700 × 700</span><a href="images/max-ellis-forum-acusticum-2025.jpg" download="Max-Ellis-presenting.jpg">Download landscape photo</a> <span>JPG · 1070 × 740</span></figcaption>
+        </figure>
+        <div class="press-copy">
+          <div class="pk">
+            <div class="pk-head"><h3>How to credit me</h3><button class="copy" type="button" data-copy="pk-credit">Copy</button></div>
+            <p id="pk-credit">Max Ellis, PhD researcher in psychoacoustics, University of Salford</p>
+          </div>
+          <div class="pk">
+            <div class="pk-head"><h3>Short bio <span>42 words</span></h3><button class="copy" type="button" data-copy="pk-short">Copy</button></div>
+            <p id="pk-short">Max Ellis is a Defra-funded PhD researcher in psychoacoustics at the University of Salford. He studies how people will perceive future sound environments and Net Zero noise sources (delivery drones, air taxis, heat pumps and electric-vehicle warning sounds) before they arrive, and trains A.I. models to predict the human response.</p>
+          </div>
+          <div class="pk">
+            <div class="pk-head"><h3>Full bio <span>138 words</span></h3><button class="copy" type="button" data-copy="pk-long">Copy</button></div>
+            <p id="pk-long">Max Ellis is a psychoacoustics researcher from Glasgow, based in Manchester, and a Defra-funded PhD candidate at the University of Salford’s Acoustics Innovation Institute. His research recreates future soundscapes, with delivery drones, air taxis, heat pumps and electric-vehicle warning sounds added to real places, and plays them to listening panels. Machine learning models trained on those responses predict who will be annoyed, by how much and why, giving regulators evidence to set standards and engineers a target for quieter machines. He came to acoustics through music, recording and mixing bands before studying music technology, sound for film and artificial intelligence. He teaches at the University of Salford, the University of the West of Scotland and St Mary’s University, London, and is a member of the NASA Unmanned Aircraft Systems Noise Working Group and the Institute of Acoustics Scottish Branch committee.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot"><svg class="foot-line" aria-hidden="true" focusable="false"><path d="M0 0H1000"/></svg><span>© 2026 Max Ellis</span><a href="./">ellisacoustics.github.io</a></div>
+  <div class="subfoot"><nav class="legal" aria-label="Site information"><a href="privacy">Privacy</a><span aria-hidden="true">·</span><a href="accessibility">Accessibility</a><span aria-hidden="true">·</span><a href="credits">Image credits</a></nav></div>
+</footer>
+
+<script>
+  (() => {
+    const tiles = document.querySelectorAll('.itile');
+    const place = (t) => {
+      // measure from the icon itself, not the label (the label may be mid-animation)
+      const p = t.querySelector('.pop'), tr = t.getBoundingClientRect(), w = p.offsetWidth, m = 12, W = document.documentElement.clientWidth;
+      const left = tr.left + tr.width / 2 - w / 2, right = left + w;
+      let dx = 0;
+      if (left < m) dx = m - left; else if (right > W - m) dx = W - m - right;
+      p.style.setProperty('--dx', dx + 'px');
+    };
+    tiles.forEach((t) => {
+      ['pointerenter', 'pointerdown', 'focus'].forEach((e) => t.addEventListener(e, () => place(t)));
+      place(t);
+      t.addEventListener('click', () => {
+        const on = !t.classList.contains('is-active');
+        tiles.forEach((o) => o.classList.remove('is-active'));
+        if (on) { t.classList.add('is-active'); place(t); }
+      });
+    });
+    document.addEventListener('click', (e) => { if (!e.target.closest('.itile')) tiles.forEach((o) => o.classList.remove('is-active')); });
+  })();
+</script>
+<script>
+  /* Footer line: every few seconds a pulse leaves the centre and ripples out both ways, as in the opening */
+  (() => {
+    const svg = document.querySelector('.foot-line'); if (!svg) return;
+    const path = svg.querySelector('path');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = 0, visible = false, raf = 0, t0 = performance.now();
+    const PERIOD = 4200, WAVE = 1600;
+    const draw = (now) => {
+      W = svg.clientWidth; svg.setAttribute('viewBox', `0 -16 ${W} 32`);
+      const t = (now - t0) % PERIOD;
+      if (reduce || t > WAVE) { path.setAttribute('d', `M0 0H${W}`); }
+      else {
+        const tau = t / WAVE, half = W / 2, cx = half;
+        const front = tau * half * 1.15, sigma = Math.max(20, half * 0.12);
+        const amp = 9 * Math.pow(1 - tau, 1.4), lambda = Math.max(16, half * 0.04);
+        let d = '';
+        for (let x = 0; x <= W; x += 2) {
+          const dd = Math.abs(x - cx) - front, env = Math.exp(-(dd * dd) / (2 * sigma * sigma));
+          const y = -amp * env * Math.sin((2 * Math.PI * dd) / lambda);
+          d += (x ? 'L' : 'M') + x + ' ' + y.toFixed(2);
+        }
+        path.setAttribute('d', d);
+      }
+      if (visible && !reduce) raf = requestAnimationFrame(draw);
+    };
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting; cancelAnimationFrame(raf);
+      if (visible) { t0 = performance.now(); raf = requestAnimationFrame(draw); } else draw(performance.now());
+    }).observe(svg);
+    addEventListener('resize', () => draw(performance.now()));
+    draw(performance.now());
+  })();
+</script>
+<script>
+  // Press kit: copy a bio or credit line with one tap
+  document.querySelectorAll('.copy[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    const text = document.getElementById(b.dataset.copy).textContent.trim();
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+      const t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select(); try { ok = document.execCommand('copy'); } catch (err) {} t.remove();
+    }
+    b.textContent = ok ? 'Copied' : 'Select and copy'; b.classList.toggle('done', ok);
+    setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('done'); }, 1800);
+  }));
+</script>
+<script data-src="js/site.js">
+/* ==========================================================================
+   ellisacoustics.github.io: shared behaviour
+   The theme itself is set by a tiny inline script in each page's <head>, so
+   the page never flashes the wrong colours. This file adds the switch, keeps
+   the tab icon and browser bar in step with it, and says hello in the console.
+   ========================================================================== */
+(() => {
+  const root = document.documentElement;
+  const toggle = document.querySelector('.theme-toggle');
+
+  // Tab icon and browser bar follow the theme, including the visitor's own choice from the switch
+  const syncChrome = () => {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0B0B0C' : '#FFFFFF'));
+    document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg' : 'favicon-light.svg'));
+    if (toggle) toggle.setAttribute('aria-checked', dark ? 'true' : 'false');
+  };
+  if (toggle) toggle.addEventListener('click', () => window.__setTheme && window.__setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  new MutationObserver(syncChrome).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  syncChrome();
+
+  // Pages start loading the moment a link is hovered, pressed or focused, so a click feels instant.
+  // Chromium gets a speculation rule (its prefetch survives into the navigation); others a plain prefetch.
+  const PAGE = /^\/(index|about|contact|listen|privacy|accessibility|credits)?(\.html)?$/;
+  let spec = false;
+  try { spec = HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules'); } catch (e) {}
+  const warmed = new Set([location.pathname.replace(/\.html$/, '')]);
+  const warm = (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.origin !== location.origin || !PAGE.test(a.pathname)) return;
+    const path = a.pathname.replace(/\.html$/, '');
+    if (warmed.has(path)) return;
+    warmed.add(path);
+    const url = a.origin + a.pathname;
+    if (spec) {
+      const rule = document.createElement('script');
+      rule.type = 'speculationrules';
+      rule.textContent = JSON.stringify({ prefetch: [{ source: 'list', urls: [url] }] });
+      document.head.appendChild(rule);
+    } else {
+      const link = document.createElement('link');
+      link.rel = 'prefetch'; link.href = url;
+      document.head.appendChild(link);
+    }
+  };
+  ['pointerover', 'touchstart', 'focusin'].forEach((t) => document.addEventListener(t, warm, { passive: true, capture: true }));
+
+  // For the developers who open the console
+  try {
+    console.log(
+      '%c▁▂▃▅▇█▇▅▃▂▁▂▃▅▇▅▃▂▁  Max Ellis · psychoacoustics\n%cHand-built: no frameworks, no trackers, no cookies. The CV PDF is printed from these pages.\nLooking for someone who can hear the future? ellisacoustics.github.io/contact',
+      'font: 600 13px ui-monospace, monospace; color: #3FAE3A',
+      'font: 12px ui-monospace, monospace; color: inherit'
+    );
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
