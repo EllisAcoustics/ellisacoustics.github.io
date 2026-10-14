@@ -14,6 +14,9 @@
     document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0B0B0C' : '#FFFFFF'));
     document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg' : 'favicon-light.svg'));
     if (toggle) toggle.setAttribute('aria-checked', dark ? 'true' : 'false');
+    // SVG <animate> colour sequences cannot read CSS variables, so they take the theme's viridis steps here
+    const cs = getComputedStyle(root);
+    document.querySelectorAll('animate[data-vr]').forEach((a) => a.setAttribute('values', a.dataset.vr.split(';').map((i) => cs.getPropertyValue('--vr' + i).trim()).join(';')));
   };
   if (toggle) toggle.addEventListener('click', () => window.__setTheme && window.__setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
   new MutationObserver(syncChrome).observe(root, { attributes: true, attributeFilter: ['data-theme'] });

@@ -147,3 +147,27 @@ p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balan
 @media screen and (max-width: 599px) { p, li, figcaption, dd, blockquote { hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 7 3 3; } }
 @media screen and (min-width: 880px) { .step p { hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 7 3 3; } }
 .no-hyph, .meta, .authors, a[href^="mailto:"] { hyphens: manual; -webkit-hyphens: manual; }
+
+/* ---------- Colour-blind-safe palette (adapted viridis) ----------
+   Every accent on the site is drawn from viridis, which steps evenly from dark to light, so colours stay
+   apart for red-, green- and blue-blind visitors and even in greyscale. The ends of the scale are cropped
+   per theme so nothing vanishes into the page.
+   Noise sources by kind, each pair a small step apart: stationary ground (turbines, heat pumps),
+   air (eVTOL, drones), moving ground (electric cars, e-scooters). Lightness also steps between the
+   three kinds, and all six read at 4.5:1 or better as text. */
+:root {
+  --vr1: #440154; --vr2: #472A7A; --vr3: #3C4F8A; --vr4: #2E6F8E; --vr5: #228B8D; --vr6: #22A884; --vr7: #4EC36B;
+  --s-turbine: #3C3776; --s-heatpump: #36467C; --s-evtol: #1A676A; --s-drone: #177168; --s-ev: #5C8018; --s-scooter: #6F7C11;
+  --nz1: #197B61; --nz2: #2D8638;
+  --ac-a: var(--s-turbine); --ac-b: var(--s-evtol); --ac-c: var(--nz2); --ac-d: var(--s-scooter);
+}
+:root[data-theme="dark"] {
+  --vr1: #375A8C; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #B0DD2F; --vr7: #FDE725;
+  --s-turbine: #7A75BF; --s-heatpump: #7487C3; --s-evtol: #2DB1B7; --s-drone: #27BFB0; --s-ev: #ADDE4D; --s-scooter: #D1E53C;
+  --nz1: #26BA92; --nz2: #76D181;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme]) {
+  --vr1: #375A8C; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #B0DD2F; --vr7: #FDE725;
+  --s-turbine: #7A75BF; --s-heatpump: #7487C3; --s-evtol: #2DB1B7; --s-drone: #27BFB0; --s-ev: #ADDE4D; --s-scooter: #D1E53C;
+  --nz1: #26BA92; --nz2: #76D181;
+} }
