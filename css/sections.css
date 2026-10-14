@@ -142,7 +142,7 @@ img.on-dark { display: none !important; }
   opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), 4px); transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease);
   pointer-events: none;
 }
-.icon-tile:hover .tip, .icon-tile:focus-within .tip, .icon-tile.is-active .tip { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
+.icon-tile:hover .tip, .icon-tile:focus-visible .tip, .icon-tile.tap-hover .tip { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
 @media (prefers-reduced-motion: reduce) { .icon-tile .tip { transition: none; } }
 .icon-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 1.5); text-align: center; }
 .icon-tile .fme-mark { display: block; color: var(--ink); }
@@ -152,13 +152,13 @@ img.on-dark { display: none !important; }
 .org-grid { list-style: none; margin: 0; padding: 0 0 calc(var(--u) * 6); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); max-width: 760px; }
 .org-tile { position: relative; display: flex; align-items: center; justify-content: center; height: 88px; outline-offset: 4px; }
 .org-tile img { display: block; max-width: 100%; height: auto; max-height: 64px; width: auto; transition: transform var(--dur-3) var(--ease); }
-.org-tile:hover img, .org-tile:focus-visible img, .org-tile.is-active img { transform: translateY(-4px); }
+.org-tile:hover img, .org-tile:focus-visible img, .org-tile.tap-hover img { transform: translateY(-4px); }
 .org-tile .caption {
   position: absolute; top: calc(100% + 2px); bottom: auto; left: 50%; right: auto; z-index: 5;
   width: max-content; max-width: 240px; padding: 6px 10px; background: var(--paper); border-radius: 2px;
   transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none;
 }
-.org-tile:hover .caption, .org-tile:focus .caption, .org-tile.is-active .caption { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
+.org-tile:hover .caption, .org-tile:focus-visible .caption, .org-tile.tap-hover .caption { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
 @media print { .org-grid { display: none; } }
 
 

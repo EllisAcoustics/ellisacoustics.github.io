@@ -50,7 +50,7 @@
   })();
 </script>
 <style data-src="css/site.css">
-:root{--paper: #FFFFFF;--ink: #0B0B0C;--ink-2: #4A4A4F;--rule: #6E6E73;--hairline: #DCDCDF;--accent: var(--ink);--deep-blue: var(--ink);--deep-green: var(--ink);--neon-ink: var(--ink);--neon: var(--rule);--logo-filter: none;color-scheme: light;--sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--serif: "Sourcerer","Source Serif 4",Georgia,"Times New Roman",serif;--mono: ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--u: 8px;--measure: 68ch;--gutter: 16px;--dur-1: 150ms;--dur-2: 250ms;--dur-3: 400ms;--dur-4: 650ms;--ease: cubic-bezier(.4,0,.2,1);--ease-out: cubic-bezier(.2,.7,.2,1);--ease-in-out: cubic-bezier(.65,0,.35,1)}:root[data-theme="dark"]{--paper: #0B0B0C;--ink: #F2F2F3;--ink-2: #A8A8AD;--rule: #8E8E93;--hairline: #2C2C2F;--logo-filter: invert(1);color-scheme: dark}@media (prefers-color-scheme: dark){:root:not([data-theme]){--paper: #0B0B0C;--ink: #F2F2F3;--ink-2: #A8A8AD;--rule: #8E8E93;--hairline: #2C2C2F;--logo-filter: invert(1);color-scheme: dark}}@media (min-width: 720px){:root{--gutter: 40px}}html{hanging-punctuation: first allow-end last}h1,h2,h3,.lede,.hero-sub,.press-lede,.gap-lede{text-wrap: balance}p,li,figcaption{text-wrap: pretty}::selection{background: var(--ink);color: var(--paper)}.skip{position: absolute;left: var(--gutter);top: -100px;z-index: 200;background: var(--ink);color: var(--paper);padding: var(--u) calc(var(--u) * 2)}.skip:focus{top: var(--u)}.theme-toggle{position: relative;flex: none;width: 52px;height: 28px;padding: 0;margin-left: 4px;border: 1px solid var(--hairline);border-radius: 14px;background: #ECECEE;cursor: pointer}.theme-toggle::before{content: "";position: absolute;inset: -8px -2px}:root[data-theme="dark"] .theme-toggle{background: #26262A}.theme-toggle .tt-knob{position: absolute;top: 2px;left: 2px;display: grid;place-items: center;width: 22px;height: 22px;border-radius: 50%;background: #FFFFFF;box-shadow: 0 1px 3px rgba(0,0,0,0.25);transition: transform var(--dur-2) var(--ease)}:root[data-theme="dark"] .theme-toggle .tt-knob{transform: translateX(24px);background: #0B0B0C;box-shadow: 0 0 0 1px #3A3A3F}.theme-toggle svg{position: absolute;width: 15px;height: 15px;transition: opacity var(--dur-2) var(--ease),transform var(--dur-2) var(--ease)}.theme-toggle .sun{color: #F28C28}.theme-toggle .moon{color: #4C8BF5;opacity: 0;transform: rotate(-40deg)}:root[data-theme="dark"] .theme-toggle .sun{opacity: 0;transform: rotate(40deg)}:root[data-theme="dark"] .theme-toggle .moon{opacity: 1;transform: none}.theme-toggle:hover{border-color: var(--rule)}@media print{.theme-toggle{display: none}}@media (max-width: 379px){nav.topnav .links{gap: 12px}nav.topnav .home svg{width: 40px}nav.topnav .links a{font-size: 14px}.theme-toggle{width: 46px}:root[data-theme="dark"] .theme-toggle .tt-knob{transform: translateX(18px)}}@view-transition{navigation: auto}.topnav{view-transition-name: site-nav}.masthead h1{view-transition-name: page-title}.foot{view-transition-name: site-foot}::view-transition-old(root){animation: vt-out var(--dur-2) var(--ease) both}::view-transition-new(root){animation: vt-in var(--dur-3) var(--ease-out) both}::view-transition-group(page-title){animation-duration: var(--dur-3);animation-timing-function: var(--ease-in-out)}@keyframes vt-out{to{opacity: 0;transform: translateY(-6px)}}@keyframes vt-in{from{opacity: 0;transform: translateY(10px)}}@media (prefers-reduced-motion: reduce){@view-transition{navigation: none}:root{--dur-1: 0ms;--dur-2: 0ms;--dur-3: 0ms;--dur-4: 0ms}}@media (forced-colors: active){#intro{display: none !important}svg{forced-color-adjust: auto}.theme-toggle,.sw,.copy,.seg button,.ab button,.route,.btn,.social,.certs li,.card,.pk,.player,.play{border: 1px solid ButtonText}.theme-toggle .tt-knob{background: ButtonText;box-shadow: none}.theme-toggle svg{color: ButtonFace}[aria-checked="true"],[aria-pressed="true"]{outline: 2px solid Highlight;outline-offset: 2px}.honour,.outputs .honour{background: none !important;-webkit-text-fill-color: CanvasText !important;color: CanvasText !important}.spec-wrap{border: 1px solid CanvasText}:focus-visible{outline: 3px solid Highlight !important}}.subfoot{position: relative;z-index: 1;margin-top: calc(var(--u) * -4);padding: calc(var(--u) * 1.5) 0 calc(var(--u) * 4);border-top: 1px solid var(--hairline)}.subfoot .legal{display: flex;flex-wrap: wrap;align-items: center;gap: 4px 10px;font-family: var(--mono);font-size: 12px;line-height: 20px}.subfoot .legal a{display: inline-flex;align-items: center;min-height: 24px;color: var(--ink-2);text-decoration: none}.subfoot .legal a:hover,.subfoot .legal a[aria-current="page"]{color: var(--ink);text-decoration: underline;text-underline-offset: 3px}.subfoot .legal span{color: var(--rule)}@media print{.subfoot{display: none}}
+:root{--paper: #FFFFFF;--ink: #0B0B0C;--ink-2: #4A4A4F;--rule: #6E6E73;--hairline: #DCDCDF;--accent: var(--ink);--deep-blue: var(--ink);--deep-green: var(--ink);--neon-ink: var(--ink);--neon: var(--rule);--logo-filter: none;color-scheme: light;--sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--serif: "Sourcerer","Source Serif 4",Georgia,"Times New Roman",serif;--mono: ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;--u: 8px;--measure: 68ch;--gutter: 16px;--dur-1: 150ms;--dur-2: 250ms;--dur-3: 400ms;--dur-4: 650ms;--ease: cubic-bezier(.4,0,.2,1);--ease-out: cubic-bezier(.2,.7,.2,1);--ease-in-out: cubic-bezier(.65,0,.35,1)}:root[data-theme="dark"]{--paper: #0B0B0C;--ink: #F2F2F3;--ink-2: #A8A8AD;--rule: #8E8E93;--hairline: #2C2C2F;--logo-filter: invert(1);color-scheme: dark}@media (prefers-color-scheme: dark){:root:not([data-theme]){--paper: #0B0B0C;--ink: #F2F2F3;--ink-2: #A8A8AD;--rule: #8E8E93;--hairline: #2C2C2F;--logo-filter: invert(1);color-scheme: dark}}@media (min-width: 720px){:root{--gutter: 40px}}html{hanging-punctuation: first allow-end last}h1,h2,h3,.lede,.hero-sub,.press-lede,.gap-lede{text-wrap: balance}p,li,figcaption,dd,dt,blockquote,td,th,summary,label{text-wrap: balance}::selection{background: var(--ink);color: var(--paper)}.skip{position: absolute;left: var(--gutter);top: -100px;z-index: 200;background: var(--ink);color: var(--paper);padding: var(--u) calc(var(--u) * 2)}.skip:focus{top: var(--u)}.theme-toggle{position: relative;flex: none;width: 52px;height: 28px;padding: 0;margin-left: 4px;border: 1px solid var(--hairline);border-radius: 14px;background: #ECECEE;cursor: pointer}.theme-toggle::before{content: "";position: absolute;inset: -8px -2px}:root[data-theme="dark"] .theme-toggle{background: #26262A}.theme-toggle .tt-knob{position: absolute;top: 2px;left: 2px;display: grid;place-items: center;width: 22px;height: 22px;border-radius: 50%;background: #FFFFFF;box-shadow: 0 1px 3px rgba(0,0,0,0.25);transition: transform var(--dur-2) var(--ease)}:root[data-theme="dark"] .theme-toggle .tt-knob{transform: translateX(24px);background: #0B0B0C;box-shadow: 0 0 0 1px #3A3A3F}.theme-toggle svg{position: absolute;width: 15px;height: 15px;transition: opacity var(--dur-2) var(--ease),transform var(--dur-2) var(--ease)}.theme-toggle .sun{color: #F28C28}.theme-toggle .moon{color: #4C8BF5;opacity: 0;transform: rotate(-40deg)}:root[data-theme="dark"] .theme-toggle .sun{opacity: 0;transform: rotate(40deg)}:root[data-theme="dark"] .theme-toggle .moon{opacity: 1;transform: none}.theme-toggle:hover{border-color: var(--rule)}@media print{.theme-toggle{display: none}}@media (max-width: 379px){nav.topnav .links{gap: 12px}nav.topnav .home svg{width: 40px}nav.topnav .links a{font-size: 14px}.theme-toggle{width: 46px}:root[data-theme="dark"] .theme-toggle .tt-knob{transform: translateX(18px)}}@view-transition{navigation: auto}.topnav{view-transition-name: site-nav}.masthead h1{view-transition-name: page-title}.foot{view-transition-name: site-foot}::view-transition-old(root){animation: vt-out var(--dur-2) var(--ease) both}::view-transition-new(root){animation: vt-in var(--dur-3) var(--ease-out) both}::view-transition-group(page-title){animation-duration: var(--dur-3);animation-timing-function: var(--ease-in-out)}@keyframes vt-out{to{opacity: 0;transform: translateY(-6px)}}@keyframes vt-in{from{opacity: 0;transform: translateY(10px)}}@media (prefers-reduced-motion: reduce){@view-transition{navigation: none}:root{--dur-1: 0ms;--dur-2: 0ms;--dur-3: 0ms;--dur-4: 0ms}}@media (forced-colors: active){#intro{display: none !important}svg{forced-color-adjust: auto}.theme-toggle,.sw,.copy,.seg button,.ab button,.route,.btn,.social,.certs li,.card,.pk,.player,.play{border: 1px solid ButtonText}.theme-toggle .tt-knob{background: ButtonText;box-shadow: none}.theme-toggle svg{color: ButtonFace}[aria-checked="true"],[aria-pressed="true"]{outline: 2px solid Highlight;outline-offset: 2px}.honour,.outputs .honour{background: none !important;-webkit-text-fill-color: CanvasText !important;color: CanvasText !important}.spec-wrap{border: 1px solid CanvasText}:focus-visible{outline: 3px solid Highlight !important}}.subfoot{position: relative;z-index: 1;margin-top: calc(var(--u) * -4);padding: calc(var(--u) * 1.5) 0 calc(var(--u) * 4);border-top: 1px solid var(--hairline)}.subfoot .legal{display: flex;flex-wrap: wrap;align-items: center;gap: 4px 10px;font-family: var(--mono);font-size: 12px;line-height: 20px}.subfoot .legal a{display: inline-flex;align-items: center;min-height: 24px;color: var(--ink-2);text-decoration: none}.subfoot .legal a:hover,.subfoot .legal a[aria-current="page"]{color: var(--ink);text-decoration: underline;text-underline-offset: 3px}.subfoot .legal span{color: var(--rule)}@media print{.subfoot{display: none}}@media screen{.bal{max-width: var(--bal-w) !important;text-wrap: wrap !important}.bal-c{margin-inline: auto}}@media screen and (max-width: 599px){p,li,figcaption,dd,blockquote{hyphens: auto;-webkit-hyphens: auto;hyphenate-limit-chars: 7 3 3}}@media screen and (min-width: 880px){.step p{hyphens: auto;-webkit-hyphens: auto;hyphenate-limit-chars: 7 3 3}}.no-hyph,.meta,.authors,a[href^="mailto:"]{hyphens: manual;-webkit-hyphens: manual}
 </style>
 <style>
   /* Colours for this page's drawings (shared tokens live in css/site.css) */
@@ -106,14 +106,14 @@
   @media (min-width: 640px) { .itiles { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; } }
   .itile { position: relative; display: flex; justify-content: center; width: 44px; padding: 6px 0; outline-offset: 4px; cursor: default; }
   .itile svg { width: 44px; height: 44px; color: var(--c, var(--ink)); transition: transform var(--dur-3) var(--ease); }
-  .itile:hover svg, .itile:focus-visible svg, .itile.is-active svg { transform: translateY(-4px); }
+  .itile:hover svg, .itile:focus-visible svg, .itile.tap-hover svg { transform: translateY(-4px); }
   .pop {
     position: absolute; top: calc(100% + 4px); left: 50%; z-index: 5; width: max-content; max-width: 220px;
     transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none;
     transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
     background: var(--paper); border: 1px solid var(--rule); border-radius: 2px; padding: 8px 10px; text-align: center;
   }
-  .itile:hover .pop, .itile:focus .pop, .itile.is-active .pop { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
+  .itile:hover .pop, .itile:focus-visible .pop, .itile.tap-hover .pop { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
   .pop-t { display: block; font-weight: 600; font-size: 14px; line-height: 20px; }
   .pop:not(:has(.pop-d)) { max-width: calc(100vw - 24px); white-space: nowrap; }   /* a title alone stays on one line, so the box fits it */
   .pop-d { display: block; margin-top: 4px; color: var(--ink-2); font-size: 13px; line-height: 19px; }
@@ -171,6 +171,7 @@
   .route:hover { border-color: var(--ink); }
   .route svg { width: 20px; height: 20px; flex: none; }
   .route strong { font-weight: 600; }
+  .route.primary span { overflow-wrap: normal; white-space: nowrap; font-size: clamp(11px, 3.4vw, 13px); }   /* the address never breaks */
   .route span { margin-left: auto; min-width: 0; overflow-wrap: anywhere; text-align: right; font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
   .route.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .route.primary span { color: var(--paper); opacity: 0.8; }
@@ -360,13 +361,7 @@
     tiles.forEach((t) => {
       ['pointerenter', 'pointerdown', 'focus'].forEach((e) => t.addEventListener(e, () => place(t)));
       place(t);
-      t.addEventListener('click', () => {
-        const on = !t.classList.contains('is-active');
-        tiles.forEach((o) => o.classList.remove('is-active'));
-        if (on) { t.classList.add('is-active'); place(t); }
-      });
     });
-    document.addEventListener('click', (e) => { if (!e.target.closest('.itile')) tiles.forEach((o) => o.classList.remove('is-active')); });
   })();
 </script>
 <script>
@@ -463,6 +458,149 @@
     }
   };
   ['pointerover', 'touchstart', 'focusin'].forEach((t) => document.addEventListener(t, warm, { passive: true, capture: true }));
+
+  // Even line lengths: no wrapped line of text is shorter than 80% of the longest line in its block
+  // (in a paragraph of more than six lines, its last line). CSS text-wrap: balance does most of this;
+  // browsers stop balancing after about six lines and are sometimes loose, so a block that still fails
+  // gets the measure (and, if need be, a hair of word spacing) that evens it out. Trial widths are laid
+  // out on a hidden copy in an isolated sandbox, so the page itself never reflows while searching, and
+  // a block only changes its number of lines when it is well below the screen (no visible shift).
+  // Screen only: the printed CV keeps its own measure.
+  const SEL = 'p, li, figcaption, dd, dt, blockquote, h1, h2, h3, h4, td, th, summary';
+  let painted = false;   // before the first paint a block may change its number of lines; after it, only off screen
+  const lineWidths = (el) => {
+    const rg = document.createRange(); rg.selectNodeContents(el);
+    const L = [];
+    for (const q of rg.getClientRects()) {
+      if (q.width < 0.5 || q.height < 4) continue;
+      const k = q.top + q.height / 2, l = L.find((x) => Math.abs(x.k - k) < q.height * 0.45);
+      if (!l) L.push({ k, a: q.left, b: q.right }); else { l.a = Math.min(l.a, q.left); l.b = Math.max(l.b, q.right); }
+    }
+    return L.sort((x, y) => x.k - y.k).map((x) => x.b - x.a);
+  };
+  const ratio = (ws) => (ws.length < 2 ? 1 : (ws.length > 6 ? ws[ws.length - 1] : Math.min(...ws)) / Math.max(...ws));
+  const even = (ws) => ratio(ws) >= 0.8;
+  const flowsText = (el) => {
+    if (el.closest('svg, nav, #intro, .courier, .no-bal')) return false;
+    const cs = getComputedStyle(el);
+    if (cs.display.startsWith('inline') || cs.whiteSpace === 'nowrap') return false;
+    if (parseFloat(cs.borderLeftWidth) > 0 || !/rgba\(.*, 0\)|transparent/.test(cs.backgroundColor)) return false;   // boxes keep their size
+    return [...el.children].every((c) => c.tagName === 'BR' || getComputedStyle(c).display.startsWith('inline'));
+  };
+  const TYPE = ['font-family', 'font-size', 'font-weight', 'font-style', 'font-stretch', 'font-variant', 'font-feature-settings',
+    'font-variation-settings', 'font-optical-sizing', 'font-kerning', 'line-height', 'letter-spacing', 'word-spacing', 'text-transform',
+    'hyphens', '-webkit-hyphens', 'white-space', 'vertical-align', 'padding-left', 'padding-right', 'margin-left', 'margin-right', 'display'];
+  let box;
+  const sandbox = () => {
+    if (!box) {
+      box = document.createElement('div'); box.setAttribute('aria-hidden', 'true');
+      box.style.cssText = 'position:fixed;left:-10000px;top:0;width:0;height:0;overflow:hidden;visibility:hidden;contain:strict;pointer-events:none';
+      document.body.appendChild(box);
+    }
+    return box;
+  };
+  const copyOf = (el) => {   // a typographically identical copy, every inline run carrying its own computed type
+    const c = el.cloneNode(true), src = [el, ...el.querySelectorAll('*')], dst = [c, ...c.querySelectorAll('*')];
+    src.forEach((s, i) => { const cs = getComputedStyle(s), d = dst[i]; d.removeAttribute('id'); d.removeAttribute('class');
+      TYPE.forEach((k) => d.style.setProperty(k, cs.getPropertyValue(k))); });
+    c.style.cssText += ';position:absolute;left:0;top:0;margin:0;padding:0;border:0;box-sizing:content-box;text-wrap:wrap;max-width:none;display:block';
+    sandbox().appendChild(c);
+    return c;
+  };
+  const search = (el, ws, mayReflow) => {
+    const n = ws.length, cs = getComputedStyle(el);
+    const C = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const c = copyOf(el);
+    const at = (t) => { c.style.width = t + 'px'; return lineWidths(c); };
+    let best = { r: ratio(at(C)), t: 0, sp: 0 };
+    const counts = mayReflow ? [n, n - 1, n + 1] : [n];   // near the screen, the number of lines never changes
+    for (const sp of [0, 0.05, -0.03, 0.1]) {             // width first; then a hair of word spacing (about a pixel) moves one word across a break
+      c.style.wordSpacing = sp ? sp + 'em' : cs.wordSpacing;
+      for (const m of counts) {
+        if (m < 2) continue;
+        const floor = C * (m > n ? 0.8 : 0.6);            // never pinch the column much narrower than its layout
+        let lo = floor, hi = C;                           // narrowest measure that still fits m lines
+        if (at(hi).length > m) continue;
+        while (hi - lo > 1.5) { const mid = (lo + hi) / 2; if (at(mid).length <= m) hi = mid; else lo = mid; }
+        for (let i = 0; i < 10; i++) {                    // and a range of wider ones, keeping the most even
+          const t = hi + (C - hi) * i / 10, w = at(t);
+          if (w.length === m && ratio(w) > best.r + 0.005) best = { r: ratio(w), t, sp };
+        }
+        if (best.r >= 0.8) break;
+      }
+      if (best.r >= 0.8) break;
+    }
+    c.remove();
+    if (!best.t) return null;
+    const pad = cs.boxSizing === 'border-box' ? parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) : 0;
+    return { w: best.t + pad, sp: best.sp, center: cs.textAlign === 'center' };
+  };
+  const apply = (el, res) => {
+    el.classList.toggle('bal', !!res); el.classList.toggle('bal-c', !!(res && res.center));
+    if (res) el.style.setProperty('--bal-w', res.w + 'px'); else el.style.removeProperty('--bal-w');
+    el.style.wordSpacing = res && res.sp ? res.sp + 'em' : '';
+  };
+  const balance = (el) => {
+    apply(el, null);
+    if (!el.offsetWidth || !flowsText(el)) return;
+    const ws = lineWidths(el);
+    if (even(ws)) return;
+    apply(el, search(el, ws, !painted || el.getBoundingClientRect().top > innerHeight + 200));
+  };
+  if (matchMedia('screen').matches) {
+    // one pass over the page in idle time once fonts are in, reading in batches and writing in batches;
+    // hidden text (drawers, pop-ups) is balanced when it is first shown
+    const idle = window.requestIdleCallback || ((f) => setTimeout(() => f({ timeRemaining: () => 8 }), 1));
+    const io = 'IntersectionObserver' in window && new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); balance(e.target); } }));
+    let first = true;
+    const run = () => {
+      const all = [...document.querySelectorAll(SEL)];
+      all.forEach((el) => { if (el.classList.contains('bal')) apply(el, null); });
+      const queue = [];
+      all.forEach((el) => {                                // one read pass: which blocks need help
+        if (!el.offsetWidth) { if (io) io.observe(el); return; }
+        if (!flowsText(el)) return;
+        const r = el.getBoundingClientRect();
+        if (first && r.top < innerHeight && r.bottom > 0) return;   // on screen at load: done before first paint, or left to the browser (never a visible shift)
+        const ws = lineWidths(el);
+        if (!even(ws)) queue.push([el, ws, r.top > innerHeight + 200]);
+      });
+      const step = (d) => {
+        const done = [];
+        while (queue.length && (d.timeRemaining() > 4 || !done.length)) { const [el, ws, far] = queue.shift(); done.push([el, search(el, ws, far)]); }
+        done.forEach(([el, res]) => apply(el, res));       // writes together, after the reads
+        if (queue.length) idle(step);
+      };
+      if (queue.length) idle(step);
+      first = false;
+    };
+    // Text on screen at load is balanced right now, before the first paint, if the fonts are already in
+    // (they are preloaded); otherwise it keeps the browser's balancing so nothing moves after it is drawn.
+    if (!document.fonts || document.fonts.status === 'loaded') {
+      document.querySelectorAll(SEL).forEach((el) => {
+        if (!el.offsetWidth) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < innerHeight && r.bottom > 0) balance(el);
+      });
+    }
+    requestAnimationFrame(() => { painted = true; });
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => idle(run));
+    let lastW = innerWidth, t;
+    addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (innerWidth !== lastW) { lastW = innerWidth; run(); } }, 150); });
+    window.__balance = balance;   // for text that is swapped in later
+  }
+
+  // Tile labels show on hover only, one at a time, and never stay pinned open.
+  // On touch screens a tap stands in for hover: that tile's label shows alone, then fades by itself.
+  const TILES = '.itile, .vol-tile, .org-tile, .icon-tile, .int';
+  let tapT;
+  document.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse') return;
+    const t = e.target.closest && e.target.closest(TILES);
+    document.querySelectorAll('.tap-hover').forEach((x) => { if (x !== t) x.classList.remove('tap-hover'); });
+    clearTimeout(tapT);
+    if (t) { t.classList.add('tap-hover'); tapT = setTimeout(() => t.classList.remove('tap-hover'), 2500); }
+  }, { passive: true });
 
   // For the developers who open the console
   try {

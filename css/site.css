@@ -71,7 +71,9 @@
 /* ---------- Typesetting ---------- */
 html { hanging-punctuation: first allow-end last; }      /* opening quotes sit in the margin (Safari) */
 h1, h2, h3, .lede, .hero-sub, .press-lede, .gap-lede { text-wrap: balance; }   /* even line lengths in headings */
-p, li, figcaption { text-wrap: pretty; }                  /* no single word left alone on a last line */
+/* Every wrapped block is balanced so its lines run to near-equal length (no short last line).
+   Browsers balance up to about six lines; longer paragraphs fall back to tidy wrapping. */
+p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balance; }
 ::selection { background: var(--ink); color: var(--paper); }
 
 /* ---------- Skip link ---------- */
@@ -138,3 +140,10 @@ p, li, figcaption { text-wrap: pretty; }                  /* no single word left
 .subfoot .legal a:hover, .subfoot .legal a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .subfoot .legal span { color: var(--rule); }
 @media print { .subfoot { display: none; } }
+
+/* Line balancing set by js/site.js (screen only): a block's measure narrows just enough to even its lines */
+@media screen { .bal { max-width: var(--bal-w) !important; text-wrap: wrap !important; } .bal-c { margin-inline: auto; } }
+/* Narrow measures (phones, and the six-column research steps) hyphenate long words, so lines can run even */
+@media screen and (max-width: 599px) { p, li, figcaption, dd, blockquote { hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 7 3 3; } }
+@media screen and (min-width: 880px) { .step p { hyphens: auto; -webkit-hyphens: auto; hyphenate-limit-chars: 7 3 3; } }
+.no-hyph, .meta, .authors, a[href^="mailto:"] { hyphens: manual; -webkit-hyphens: manual; }
