@@ -174,3 +174,30 @@ p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balan
   --s-turbine: #7A75BF; --s-heatpump: #7487C3; --s-evtol: #2DB1B7; --s-drone: #27BFB0; --s-ev: #ADDE4D; --s-scooter: #D1E53C;
   --nz1: #26BA92; --nz2: #76D181; --ac-d: var(--s-scooter); --chirp: #FFD43B;
 } }
+
+/* ---------- Illustrated aircraft (courier quad and friends) ----------
+   Flat two-tone vector drawings: frame in an ink tone, hull near paper, accents in the source colour
+   (currentColor). Everything follows the theme. Blades flicker as they spin; a slung case sways. */
+.craft {
+  --acc: currentColor; --acc-d: color-mix(in oklab, currentColor 72%, #000); --acc-l: color-mix(in oklab, currentColor 62%, #fff);
+  --frame: color-mix(in oklab, var(--ink) 74%, var(--paper)); --frame-d: color-mix(in oklab, var(--ink) 90%, var(--paper)); --frame-l: color-mix(in oklab, var(--ink) 40%, var(--paper));
+  --hull: color-mix(in oklab, var(--ink) 7%, var(--paper)); --hull-s: color-mix(in oklab, var(--ink) 20%, var(--paper));
+  --glass: color-mix(in oklab, currentColor 42%, var(--frame-d)); --glass-hi: color-mix(in oklab, #fff 80%, currentColor);
+  --rotor: color-mix(in oklab, var(--ink) 16%, transparent);
+}
+:root[data-theme="dark"] .craft {
+  --frame: color-mix(in oklab, var(--ink) 58%, var(--paper)); --frame-d: color-mix(in oklab, var(--ink) 36%, var(--paper)); --frame-l: color-mix(in oklab, var(--ink) 80%, var(--paper));
+  --hull: color-mix(in oklab, var(--ink) 88%, var(--paper)); --hull-s: color-mix(in oklab, var(--ink) 66%, var(--paper)); --glass: color-mix(in oklab, currentColor 55%, #0B0B0C);
+  --rotor: color-mix(in oklab, var(--ink) 22%, transparent);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme]) .craft {
+  --frame: color-mix(in oklab, var(--ink) 58%, var(--paper)); --frame-d: color-mix(in oklab, var(--ink) 36%, var(--paper)); --frame-l: color-mix(in oklab, var(--ink) 80%, var(--paper));
+  --hull: color-mix(in oklab, var(--ink) 88%, var(--paper)); --hull-s: color-mix(in oklab, var(--ink) 66%, var(--paper)); --glass: color-mix(in oklab, currentColor 55%, #0B0B0C);
+  --rotor: color-mix(in oklab, var(--ink) 22%, transparent);
+} }
+.craft .blade-spin { transform-box: fill-box; transform-origin: center; animation: craft-blade 0.18s linear infinite; }
+.craft .cargo-sway { transform-box: fill-box; transform-origin: 50% 0; animation: craft-sway 2.4s ease-in-out infinite alternate; }
+@keyframes craft-blade { 50% { transform: scaleX(0.14); } }
+@keyframes craft-sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+@media (prefers-reduced-motion: reduce) { .craft .blade-spin, .craft .cargo-sway { animation: none; } }
+.craft .sym-food { display: none; }   /* cargo shows the medical cross unless a page swaps it for food */
