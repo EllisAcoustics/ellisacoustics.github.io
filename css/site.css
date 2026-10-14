@@ -160,15 +160,17 @@ p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balan
   --vr1: #440154; --vr2: #472A7A; --vr3: #3C4F8A; --vr4: #2E6F8E; --vr5: #228B8D; --vr6: #1E9478; --vr7: #3AA45A;
   --s-turbine: #3C3776; --s-heatpump: #36467C; --s-evtol: #1A676A; --s-drone: #177168; --s-ev: #5C8018; --s-scooter: #969615;
   --nz1: #197B61; --nz2: #287D33;
+  --wind: var(--ink);            /* all wind: white on the dark page, ink on the light one so it never vanishes */
+  --chirp: #BD8C00;              /* the bird's song: golden yellow (3:1 on white) */
   --ac-a: var(--s-turbine); --ac-b: var(--s-evtol); --ac-c: var(--nz2); --ac-d: #A79401;   /* gold for graphics only (3:1), kept clear of the green for red- and green-blind eyes */
 }
 :root[data-theme="dark"] {
   --vr1: #4568A0; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #A8DC55; --vr7: #FDE725;
   --s-turbine: #7A75BF; --s-heatpump: #7487C3; --s-evtol: #2DB1B7; --s-drone: #27BFB0; --s-ev: #ADDE4D; --s-scooter: #D1E53C;
-  --nz1: #26BA92; --nz2: #76D181; --ac-d: var(--s-scooter);
+  --nz1: #26BA92; --nz2: #76D181; --ac-d: var(--s-scooter); --chirp: #FFD43B;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme]) {
   --vr1: #4568A0; --vr2: #2A788E; --vr3: #1F958B; --vr4: #2CB17E; --vr5: #63CB5F; --vr6: #A8DC55; --vr7: #FDE725;
   --s-turbine: #7A75BF; --s-heatpump: #7487C3; --s-evtol: #2DB1B7; --s-drone: #27BFB0; --s-ev: #ADDE4D; --s-scooter: #D1E53C;
-  --nz1: #26BA92; --nz2: #76D181; --ac-d: var(--s-scooter);
+  --nz1: #26BA92; --nz2: #76D181; --ac-d: var(--s-scooter); --chirp: #FFD43B;
 } }
