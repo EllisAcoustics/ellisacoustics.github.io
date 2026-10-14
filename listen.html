@@ -3,12 +3,17 @@
   ellisacoustics.github.io · Max Ellis, psychoacoustics
   Hand-built HTML, CSS and JavaScript: no frameworks, no trackers, no cookies.
   Shared tokens: css/site.css · CV components: css/sections.css · Shared behaviour: js/site.js
+  These are inlined into each page by tools/build.py (one round trip, no render-blocking files):
+  edit the source file, then run python3 tools/build.py.
   The CV PDF is printed from these pages by tools/make_cv.py.
 -->
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- @preload -->
+<link rel="preload" href="fonts/sub/listen-italic.17dba1e2.woff2" as="font" type="font/woff2" crossorigin>
+<!-- @preload:end -->
 <title>Listen — Max Ellis, Psychoacoustician</title>
 <meta name="description" content="Listen to the future: build a soundscape and hear how drones, air taxis, heat pumps and e-scooters change it. Coming soon.">
 <meta property="og:title" content="Listen — Max Ellis, Psychoacoustician">
@@ -46,9 +51,152 @@
     addEventListener('pagereveal', function (e) { if (e.viewTransition && document.documentElement.classList.contains('intro')) e.viewTransition.skipTransition(); });
   })();
 </script>
-<link rel="stylesheet" href="css/site.css?v=6">
+<style data-src="css/site.css">
+/* ==========================================================================
+   ellisacoustics.github.io: shared design tokens and base styles
+   --------------------------------------------------------------------------
+   Every page loads this file first, then its own <style> for the parts only
+   that page uses. css/sections.css holds the CV components (papers,
+   timelines, logo grids) shared by Home, About and the PDF CV.
+
+   Colour rule: the site is black, white and grey. Colour appears only where
+   it explains something: green for electricity and growth, blue for moving
+   air, red for warning sounds, gold for song and fans.
+   ========================================================================== */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* colour */
+  --paper: #FFFFFF;
+  --ink: #0B0B0C;
+  --ink-2: #4A4A4F;
+  --rule: #6E6E73;
+  --hairline: #DCDCDF;
+  --accent: var(--ink);
+  --deep-blue: var(--ink);   /* older names still used by some components: all monochrome now */
+  --deep-green: var(--ink);
+  --neon-ink: var(--ink);
+  --neon: var(--rule);
+  --logo-filter: none;
+  color-scheme: light;
+
+  /* type */
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Sourcerer", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* space */
+  --u: 8px;
+  --measure: 68ch;
+  --gutter: 16px;
+
+  /* motion: one set of timings and curves for every interface animation */
+  --dur-1: 150ms;   /* presses, small state changes */
+  --dur-2: 250ms;   /* switches, labels appearing */
+  --dur-3: 400ms;   /* logos lifting, reveals */
+  --dur-4: 650ms;   /* scene changes */
+  --ease: cubic-bezier(.4, 0, .2, 1);        /* standard */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);   /* things arriving */
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+}
+:root[data-theme="dark"] {
+  --paper: #0B0B0C;
+  --ink: #F2F2F3;
+  --ink-2: #A8A8AD;
+  --rule: #8E8E93;
+  --hairline: #2C2C2F;
+  --logo-filter: invert(1);
+  color-scheme: dark;
+}
+/* No JavaScript: follow the system setting */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --paper: #0B0B0C;
+    --ink: #F2F2F3;
+    --ink-2: #A8A8AD;
+    --rule: #8E8E93;
+    --hairline: #2C2C2F;
+    --logo-filter: invert(1);
+    color-scheme: dark;
+  }
+}
+@media (min-width: 720px) { :root { --gutter: 40px; } }
+
+/* ---------- Typesetting ---------- */
+html { hanging-punctuation: first allow-end last; }      /* opening quotes sit in the margin (Safari) */
+h1, h2, h3, .lede, .hero-sub, .press-lede, .gap-lede { text-wrap: balance; }   /* even line lengths in headings */
+p, li, figcaption { text-wrap: pretty; }                  /* no single word left alone on a last line */
+::selection { background: var(--ink); color: var(--paper); }
+
+/* ---------- Skip link ---------- */
+.skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
+.skip:focus { top: var(--u); }
+
+/* ---------- Light / dark switch: a sliding toggle, orange sun (light) and blue crescent (dark) ---------- */
+.theme-toggle { position: relative; flex: none; width: 52px; height: 28px; padding: 0; margin-left: 4px; border: 1px solid var(--hairline); border-radius: 14px; background: #ECECEE; cursor: pointer; }
+.theme-toggle::before { content: ""; position: absolute; inset: -8px -2px; }   /* 44px tap target */
+:root[data-theme="dark"] .theme-toggle { background: #26262A; }
+.theme-toggle .tt-knob { position: absolute; top: 2px; left: 2px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); transition: transform var(--dur-2) var(--ease); }
+:root[data-theme="dark"] .theme-toggle .tt-knob { transform: translateX(24px); background: #0B0B0C; box-shadow: 0 0 0 1px #3A3A3F; }
+.theme-toggle svg { position: absolute; width: 15px; height: 15px; transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
+.theme-toggle .sun { color: #F28C28; }
+.theme-toggle .moon { color: #4C8BF5; opacity: 0; transform: rotate(-40deg); }
+:root[data-theme="dark"] .theme-toggle .sun { opacity: 0; transform: rotate(40deg); }
+:root[data-theme="dark"] .theme-toggle .moon { opacity: 1; transform: none; }
+.theme-toggle:hover { border-color: var(--rule); }
+@media print { .theme-toggle { display: none; } }
+@media (max-width: 379px) {   /* nav.topnav: wins over each page's own nav rules */
+  nav.topnav .links { gap: 12px; }
+  nav.topnav .home svg { width: 47px; }
+  nav.topnav .links a { font-size: 14px; }
+  .theme-toggle { width: 46px; }
+  :root[data-theme="dark"] .theme-toggle .tt-knob { transform: translateX(18px); }
+}
+
+/* ---------- Seamless page changes ----------
+   Browsers that support cross-document view transitions keep the navigation
+   still while the page underneath cross-fades and the title morphs into the
+   next page's title. Others simply change page. */
+@view-transition { navigation: auto; }
+.topnav { view-transition-name: site-nav; }
+.masthead h1 { view-transition-name: page-title; }
+.foot { view-transition-name: site-foot; }
+::view-transition-old(root) { animation: vt-out var(--dur-2) var(--ease) both; }
+::view-transition-new(root) { animation: vt-in var(--dur-3) var(--ease-out) both; }
+::view-transition-group(page-title) { animation-duration: var(--dur-3); animation-timing-function: var(--ease-in-out); }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  :root { --dur-1: 0ms; --dur-2: 0ms; --dur-3: 0ms; --dur-4: 0ms; }
+}
+
+/* ---------- Windows high-contrast and other forced-colour modes ----------
+   The system picks every colour; keep shapes, borders and states visible. */
+@media (forced-colors: active) {
+  #intro { display: none !important; }
+  svg { forced-color-adjust: auto; }
+  .theme-toggle, .sw, .copy, .seg button, .ab button, .route, .btn, .social, .certs li, .card, .pk, .player, .play { border: 1px solid ButtonText; }
+  .theme-toggle .tt-knob { background: ButtonText; box-shadow: none; }
+  .theme-toggle svg { color: ButtonFace; }
+  [aria-checked="true"], [aria-pressed="true"] { outline: 2px solid Highlight; outline-offset: 2px; }
+  .honour, .outputs .honour { background: none !important; -webkit-text-fill-color: CanvasText !important; color: CanvasText !important; }
+  .spec-wrap { border: 1px solid CanvasText; }
+  :focus-visible { outline: 3px solid Highlight !important; }
+}
+
+/* ---------- Sub-footer: privacy, accessibility and credits, under the main footer ---------- */
+.subfoot { position: relative; z-index: 1; margin-top: calc(var(--u) * -4); padding: calc(var(--u) * 1.5) 0 calc(var(--u) * 4); border-top: 1px solid var(--hairline); }
+.subfoot .legal { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-family: var(--mono); font-size: 12px; line-height: 20px; }
+.subfoot .legal a { display: inline-flex; align-items: center; min-height: 24px; color: var(--ink-2); text-decoration: none; }
+.subfoot .legal a:hover, .subfoot .legal a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.subfoot .legal span { color: var(--rule); }
+@media print { .subfoot { display: none; } }
+</style>
 <style>
-  @font-face { font-family: "Sourcerer"; src: url("fonts/sourcerer-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+  /* @fonts: written by tools/build.py (subset to this page's characters) */
+  @font-face { font-family: "Sourcerer"; src: url("fonts/sub/listen-italic.17dba1e2.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: optional; }
+  /* @fonts:end */
   /* Colours for this page's drawings (shared tokens live in css/site.css) */
   :root { --f0: #3A3B3C; --f1: #4E4F51; --f2: #646568; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3A3B3C; --v1: #6B6C6E; --v2: #9A9B9D; --v3: #B6B8BA; --v4: var(--ink); --v5: var(--ink); }
   :root[data-theme="dark"] { --f0: #9A9B9D; --f1: #B0B1B3; --f2: #C6C7C9; --f3: var(--ink); --f4: var(--ink); --f5: var(--ink); --v0: #3E3F41; --v1: #5E5F62; --v2: #85868A; --v3: #A9AAAD; --v4: var(--ink); --v5: var(--ink); }
@@ -814,6 +962,63 @@
   }
 })();
 </script>
-<script src="js/site.js?v=3" defer></script>
+<script data-src="js/site.js">
+/* ==========================================================================
+   ellisacoustics.github.io: shared behaviour
+   The theme itself is set by a tiny inline script in each page's <head>, so
+   the page never flashes the wrong colours. This file adds the switch, keeps
+   the tab icon and browser bar in step with it, and says hello in the console.
+   ========================================================================== */
+(() => {
+  const root = document.documentElement;
+  const toggle = document.querySelector('.theme-toggle');
+
+  // Tab icon and browser bar follow the theme, including the visitor's own choice from the switch
+  const syncChrome = () => {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0B0B0C' : '#FFFFFF'));
+    document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg' : 'favicon-light.svg'));
+    if (toggle) toggle.setAttribute('aria-checked', dark ? 'true' : 'false');
+  };
+  if (toggle) toggle.addEventListener('click', () => window.__setTheme && window.__setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+  new MutationObserver(syncChrome).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  syncChrome();
+
+  // Pages start loading the moment a link is hovered, pressed or focused, so a click feels instant.
+  // Chromium gets a speculation rule (its prefetch survives into the navigation); others a plain prefetch.
+  const PAGE = /^\/(index|about|contact|listen|privacy|accessibility|credits)?(\.html)?$/;
+  let spec = false;
+  try { spec = HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules'); } catch (e) {}
+  const warmed = new Set([location.pathname.replace(/\.html$/, '')]);
+  const warm = (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.origin !== location.origin || !PAGE.test(a.pathname)) return;
+    const path = a.pathname.replace(/\.html$/, '');
+    if (warmed.has(path)) return;
+    warmed.add(path);
+    const url = a.origin + a.pathname;
+    if (spec) {
+      const rule = document.createElement('script');
+      rule.type = 'speculationrules';
+      rule.textContent = JSON.stringify({ prefetch: [{ source: 'list', urls: [url] }] });
+      document.head.appendChild(rule);
+    } else {
+      const link = document.createElement('link');
+      link.rel = 'prefetch'; link.href = url;
+      document.head.appendChild(link);
+    }
+  };
+  ['pointerover', 'touchstart', 'focusin'].forEach((t) => document.addEventListener(t, warm, { passive: true, capture: true }));
+
+  // For the developers who open the console
+  try {
+    console.log(
+      '%c▁▂▃▅▇█▇▅▃▂▁▂▃▅▇▅▃▂▁  Max Ellis · psychoacoustics\n%cHand-built: no frameworks, no trackers, no cookies. The CV PDF is printed from these pages.\nLooking for someone who can hear the future? ellisacoustics.github.io/contact',
+      'font: 600 13px ui-monospace, monospace; color: #3FAE3A',
+      'font: 12px ui-monospace, monospace; color: inherit'
+    );
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>

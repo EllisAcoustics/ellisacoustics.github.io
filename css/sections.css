@@ -181,5 +181,5 @@ img.on-dark { display: none !important; }
 @media (forced-colors: active) { .honour .medal { color: CanvasText; } }
 
 /* Paper links (PDF, DOI): the same gold as the credential links */
-.outputs .meta a { color: #8A6500; text-underline-offset: 3px; }
+.outputs .meta a { display: inline-block; min-width: 24px; min-height: 24px; color: #8A6500; text-underline-offset: 3px; }   /* 24px touch targets */
 :root[data-theme="dark"] .outputs .meta a { color: #F2C200; }

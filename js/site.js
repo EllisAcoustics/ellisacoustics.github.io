@@ -19,6 +19,32 @@
   new MutationObserver(syncChrome).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
   syncChrome();
 
+  // Pages start loading the moment a link is hovered, pressed or focused, so a click feels instant.
+  // Chromium gets a speculation rule (its prefetch survives into the navigation); others a plain prefetch.
+  const PAGE = /^\/(index|about|contact|listen|privacy|accessibility|credits)?(\.html)?$/;
+  let spec = false;
+  try { spec = HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules'); } catch (e) {}
+  const warmed = new Set([location.pathname.replace(/\.html$/, '')]);
+  const warm = (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.origin !== location.origin || !PAGE.test(a.pathname)) return;
+    const path = a.pathname.replace(/\.html$/, '');
+    if (warmed.has(path)) return;
+    warmed.add(path);
+    const url = a.origin + a.pathname;
+    if (spec) {
+      const rule = document.createElement('script');
+      rule.type = 'speculationrules';
+      rule.textContent = JSON.stringify({ prefetch: [{ source: 'list', urls: [url] }] });
+      document.head.appendChild(rule);
+    } else {
+      const link = document.createElement('link');
+      link.rel = 'prefetch'; link.href = url;
+      document.head.appendChild(link);
+    }
+  };
+  ['pointerover', 'touchstart', 'focusin'].forEach((t) => document.addEventListener(t, warm, { passive: true, capture: true }));
+
   // For the developers who open the console
   try {
     console.log(
