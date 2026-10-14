@@ -235,7 +235,9 @@
   .t-drone .a-rotor, .t-drone .a-wave { color: var(--s-drone); }   /* drone: air sources' colour */
   .t-ashp .a-spin { color: var(--s-heatpump); }   /* heat pump: stationary ground sources' colour */
   .t-ev .a-wave, .t-ev .a-bolt { color: var(--s-ev); }                   /* EV: moving ground sources' colour */
-  .t-health .a-ecg { color: var(--ac-a); }                               /* heart white, pulse red */
+  .t-health .a-ecg { color: #C2361F; }                               /* heart white, heartbeat red (5.5:1 on white) */
+  :root[data-theme="dark"] .t-health .a-ecg { color: #F2735F; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme]) .t-health .a-ecg { color: #F2735F; } }
   .t-psy .a-wave { color: var(--ac-b); }                                 /* ear: blue */
   @media (prefers-reduced-motion: reduce) { .t-intern .a-ring-pulse { opacity: 0; } }
   /* ---------- Press kit ---------- */

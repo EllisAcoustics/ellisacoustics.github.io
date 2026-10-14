@@ -435,10 +435,12 @@
   .err-legend { display: flex; flex-wrap: wrap; gap: 4px calc(var(--u) * 2.5); font-size: 14px; line-height: 20px; color: var(--ink-2); margin-bottom: var(--u); }
   .err-legend span { display: inline-flex; align-items: center; gap: 8px; }
   .k { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--ink-2); }
-  .err { --c-wt: var(--s-turbine); --c-air: var(--s-evtol); --c-road: var(--s-ev); --c-rail: var(--s-scooter); }   /* by kind of source: stationary ground, air, moving ground (road and rail a small step apart) */
+  .err { --c-wt: var(--s-turbine); --c-air: var(--s-evtol); --c-road: var(--s-ev); --c-rail: #A79401; }   /* by kind of source: stationary ground, air, moving ground (road and rail a small step apart) */
   .k-wt { border-top: 3px dashed var(--c-wt); }
   .k-air { border-top: 3px dotted var(--c-air); }
   .k-road { border-top-color: var(--c-road); }
+  :root[data-theme="dark"] .err { --c-rail: #FDE725; }   /* railway in viridis yellow, clear of road for every eye */
+  @media (prefers-color-scheme: dark) { :root:not([data-theme]) .err { --c-rail: #FDE725; } }
   .k-rail { border-top: 2px dashed var(--c-rail); }
   .err-plot { position: relative; }
   .err-plot svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--sans); touch-action: pan-y; }
@@ -505,9 +507,12 @@
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0 8 3T16 3' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 0 50% / 0.5em 100% repeat-x;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0 8 3T16 3' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 0 50% / 0.5em 100% repeat-x;
     animation: snd-wave 0.8s linear infinite paused; }
-  html.ruled .hero-sub .snd::after { animation-play-state: running; }
+  /* the squiggle draws itself in left to right, like the ruler, once the ruler and its icons have all appeared, then travels */
+  .hero-sub .snd::after { clip-path: inset(0 100% 0 0); }
+  html.ruled .hero-sub .snd::after { animation: snd-draw 0.9s cubic-bezier(.65,0,.35,1) 0.2s both, snd-wave 0.8s linear infinite; }
+  @keyframes snd-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
   @keyframes snd-wave { to { -webkit-mask-position: 0.5em 50%; mask-position: 0.5em 50%; } }
-  @media (prefers-reduced-motion: reduce) { .hero-sub .snd::after { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-sub .snd::after, html.ruled .hero-sub .snd::after { animation: none; clip-path: none; } }
   @media print { .hero-sub .snd::after { display: none; } }   /* Net Zero: deep emerald, AA on white */
   @media print { .hero-sub { font-size: 16pt; max-width: none; } }
   .cite {
@@ -959,7 +964,7 @@
 
 <script>
   // the wave under "sounds" starts once the ruler has finished drawing
-  (() => { const r = document.documentElement; if (r.classList.contains('intro')) addEventListener('intro-done', () => r.classList.add('ruled'), { once: true }); else r.classList.add('ruled'); })();
+  (() => { const r = document.documentElement; if (r.classList.contains('intro')) addEventListener('intro-done', () => r.classList.add('ruled'), { once: true }); else setTimeout(() => r.classList.add('ruled'), 1000); })();
 </script>
 <script>
 (() => {
