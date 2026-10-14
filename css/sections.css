@@ -5,10 +5,8 @@
 @media (min-width: 640px) { .certs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .certs li { border: 1px solid var(--rule); border-radius: 0; padding: calc(var(--u) * 1.5) calc(var(--u) * 2); }
 .certs h3 { margin: 0; font-size: 15px; line-height: 22px; font-weight: 600; }
-.certs .cred { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 12px; color: #8A6500; text-underline-offset: 3px; }   /* bird-song gold (deeper on white so it stays readable) */
-:root[data-theme="dark"] .certs .cred { color: #F2C200; }
-.certs .cred-id { margin: 6px 0 0; font-family: var(--mono); font-size: 12px; line-height: 18px; color: #8A6500; }
-:root[data-theme="dark"] .certs .cred-id { color: #F2C200; }
+.certs .cred { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); text-underline-offset: 3px; }   /* same grey as the reference links on the home page */
+.certs .cred-id { margin: 6px 0 0; font-family: var(--mono); font-size: 12px; line-height: 18px; color: var(--ink-2); }
 .certs .where { font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); margin: 2px 0 0; }
 .logo {
   position: relative;

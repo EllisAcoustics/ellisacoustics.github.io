@@ -21,7 +21,7 @@
 
   // Pages start loading the moment a link is hovered, pressed or focused, so a click feels instant.
   // Chromium gets a speculation rule (its prefetch survives into the navigation); others a plain prefetch.
-  const PAGE = /^\/(index|about|contact|listen|privacy|accessibility|credits)?(\.html)?$/;
+  const PAGE = /^\/(index|about|contact|press|listen|privacy|accessibility|credits)?(\.html)?$/;
   let spec = false;
   try { spec = HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules'); } catch (e) {}
   const warmed = new Set([location.pathname.replace(/\.html$/, '')]);
