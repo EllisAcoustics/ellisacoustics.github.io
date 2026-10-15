@@ -11,7 +11,7 @@
   // Tab icon and browser bar follow the theme, including the visitor's own choice from the switch
   const syncChrome = () => {
     const dark = root.getAttribute('data-theme') === 'dark';
-    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0B0B0C' : '#FFFFFF'));
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0B0B0C' : '#F7F6F2'));
     document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg' : 'favicon-light.svg'));
     if (toggle) toggle.setAttribute('aria-checked', dark ? 'true' : 'false');
     // SVG <animate> colour sequences cannot read CSS variables, so they take the theme's viridis steps here
