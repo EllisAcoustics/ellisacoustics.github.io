@@ -201,3 +201,5 @@ p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balan
 @keyframes craft-sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
 @media (prefers-reduced-motion: reduce) { .craft .blade-spin, .craft .cargo-sway { animation: none; } }
 .craft .sym-food { display: none; }   /* cargo shows the medical cross unless a page swaps it for food */
+
+html,body{overflow-x:clip}
