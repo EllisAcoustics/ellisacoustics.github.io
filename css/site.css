@@ -204,3 +204,5 @@ p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balan
 
 html,body{overflow-x:clip}
 .outputs h3, .outputs p { text-wrap: pretty; hyphens: manual; -webkit-hyphens: manual; }
+.steps p, .steps h3, #gap p { text-wrap: pretty; hyphens: manual; -webkit-hyphens: manual; }
+.steps { padding-bottom: 10px; }   /* the last step's text overhangs the list box; keep the section gap even */
