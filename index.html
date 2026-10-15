@@ -628,9 +628,9 @@
   .thesis-title { font-style: italic; max-width: 52ch; }
   .affil a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 3px; }
   .affil a:hover { color: var(--accent); }
-  .more-pubs { margin-top: calc(var(--u) * 3); font-family: var(--mono); font-size: 14px; }
-  .more-pubs a { color: var(--ink); text-underline-offset: 3px; }
-  .more-pubs a:hover { color: var(--accent); }
+  @media (max-width: 599px) { .pubs > li:last-child { padding-bottom: 0; } }   /* list now ends the section: keep the gap to the next heading even */
+
+
   .i-wrap { position: relative; display: inline-block; }
   .tittle {
     position: absolute; left: 50%; top: var(--tittle-top, 0.055em);
