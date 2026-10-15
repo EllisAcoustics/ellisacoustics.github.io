@@ -143,7 +143,7 @@
     const io = 'IntersectionObserver' in window && new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); balance(e.target); } }));
     let first = true;
     const run = () => {
-      const all = [...document.querySelectorAll(SEL)];
+      const all = [...document.querySelectorAll(SEL)].filter((e) => !e.hasAttribute('data-nobal'));
       all.forEach((el) => { if (el.classList.contains('bal')) apply(el, null); });
       const queue = [];
       all.forEach((el) => {                                // one read pass: which blocks need help
@@ -166,7 +166,7 @@
     // Text on screen at load is balanced right now, before the first paint, if the fonts are already in
     // (they are preloaded); otherwise it keeps the browser's balancing so nothing moves after it is drawn.
     if (!document.fonts || document.fonts.status === 'loaded') {
-      document.querySelectorAll(SEL).forEach((el) => {
+      document.querySelectorAll(SEL).forEach((el) => { if (el.hasAttribute('data-nobal')) return;
         if (!el.offsetWidth) return;
         const r = el.getBoundingClientRect();
         if (r.top < innerHeight && r.bottom > 0) balance(el);

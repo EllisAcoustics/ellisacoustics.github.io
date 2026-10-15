@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- @preload -->
-<link rel="preload" href="fonts/sub/index-regular.dee806e7.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/sub/index-regular.45a2f45a.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/sub/index-italic.35886b96.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/sub/index-bold.ba3e14ed.woff2" as="font" type="font/woff2" crossorigin>
 <!-- @preload:end -->
@@ -117,7 +117,7 @@
 </script>
 <style>
   /* @fonts: written by tools/build.py (subset to this page's characters) */
-  @font-face { font-family: "Sourcerer"; src: url("fonts/sub/index-regular.dee806e7.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: optional; }
+  @font-face { font-family: "Sourcerer"; src: url("fonts/sub/index-regular.45a2f45a.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: optional; }
   @font-face { font-family: "Sourcerer"; src: url("fonts/sub/index-italic.35886b96.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: optional; }
   @font-face { font-family: "Sourcerer"; src: url("fonts/sub/index-bold.ba3e14ed.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: optional; }
   /* @fonts:end */
@@ -512,10 +512,13 @@
     font-size: 18px; line-height: 28px; color: var(--ink-2);
   }
   .hero-sub { max-width: 33ch; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.22; }
+  @media (min-width: 0px) {        /* the headline is sized to its column (not the window), so its longest line always meets the paragraph's right edge */
+    .hero { container-type: inline-size; } .hero-sub { max-width: none; font-size: max(26px, calc(100cqi / 19.6)); line-height: 1.16; }
+    .hero-why { max-width: none; text-wrap: pretty; }
+  }
   @media (min-width: 1000px) {   /* desktop: headline, paragraph and buttons share one column the width of the headline */
     .hero { max-width: 900px; } .hero > :not(.hero-sub) { max-width: none; }
     .cta .btn { padding: 0 14px; } .cta .socials { gap: 6px; }
-    .hero-sub { max-width: none; font-size: clamp(38px, 3.5vw, 46px); line-height: 1.16; }
     .hero-why { font-size: 20px; line-height: 33px; }
     .cta .socials { margin-left: auto; padding-left: 10px; border-left: 1px solid var(--hairline); }
   }
@@ -795,8 +798,8 @@
   <p class="visually-hidden">Frequency scale from 63 Hz to 8 kHz, marking where the noise of the sources I study is concentrated: air-source heat pumps around 200 Hz, passenger multicopter eVTOL aircraft around 400 Hz, the warning sounds of electric cars around 1 kHz, and drones around 2.5 kHz. Select a source to see what it is, what it is used for, what makes it sound new, and the range where you would hear it.</p>
 
   <div class="hero">
-    <p class="hero-sub"><span class="g">Net Zero</span> technology will bring <span class="snd">sounds</span> we’ve never lived with into our towns and cities: <span class="t t-car">electric cars</span>, <span class="t t-drone">delivery drones</span>, <span class="t t-air">air taxis</span> and <span class="t t-hp">heat pumps</span>. I research how these noise sources affect us, <em class="g">before</em> they arrive.</p>
-    <p class="hero-why">Noise is a “silent killer”, second only to air pollution in its burden on health in Europe<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe" title="WHO, 2011" aria-label="Source: WHO, 2011">1</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge<a class="cite" href="https://committees.parliament.uk/event/17423" title="House of Lords, 2023" aria-label="Source: House of Lords, 2023">2</a>: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft<a class="cite" href="https://www.caa.co.uk/publication/download/16373" title="CAA, 2018" aria-label="Source: CAA, 2018">3</a><span class="cite-sep">,</span><a class="cite" href="https://www.gov.uk/government/publications/aviation-night-noise-effects-anne-study" title="DfT, 2026" aria-label="Source: DfT, 2026">4</a>. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere.</p>
+    <p class="hero-sub" data-nobal><span class="g">Net Zero</span> technology will bring <span class="snd">sounds</span> we’ve never lived with into our towns and cities: <span class="t t-car">electric cars</span>, <span class="t t-drone">delivery drones</span>, <span class="t t-air">air taxis</span> and <span class="t t-hp">heat pumps</span>. I research how these noise sources affect us, <em class="g">before</em> they arrive.</p>
+    <p class="hero-why" data-nobal>Noise is a “silent killer”, second only to air pollution in its burden on health in Europe<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe" title="WHO, 2011" aria-label="Source: WHO, 2011">1</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge<a class="cite" href="https://committees.parliament.uk/event/17423" title="House of Lords, 2023" aria-label="Source: House of Lords, 2023">2</a>: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft<a class="cite" href="https://www.caa.co.uk/publication/download/16373" title="CAA, 2018" aria-label="Source: CAA, 2018">3</a><span class="cite-sep">,</span><a class="cite" href="https://www.gov.uk/government/publications/aviation-night-noise-effects-anne-study" title="DfT, 2026" aria-label="Source: DfT, 2026">4</a>. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere.</p>
     <div class="cta">
       <a class="btn" href="contact">Get in touch</a>
       <a class="btn btn-quiet" href="listen">Hear the future <span class="btn-meta">Live</span></a>
@@ -1801,7 +1804,7 @@
     const io = 'IntersectionObserver' in window && new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); balance(e.target); } }));
     let first = true;
     const run = () => {
-      const all = [...document.querySelectorAll(SEL)];
+      const all = [...document.querySelectorAll(SEL)].filter((e) => !e.hasAttribute('data-nobal'));
       all.forEach((el) => { if (el.classList.contains('bal')) apply(el, null); });
       const queue = [];
       all.forEach((el) => {                                // one read pass: which blocks need help
@@ -1824,7 +1827,7 @@
     // Text on screen at load is balanced right now, before the first paint, if the fonts are already in
     // (they are preloaded); otherwise it keeps the browser's balancing so nothing moves after it is drawn.
     if (!document.fonts || document.fonts.status === 'loaded') {
-      document.querySelectorAll(SEL).forEach((el) => {
+      document.querySelectorAll(SEL).forEach((el) => { if (el.hasAttribute('data-nobal')) return;
         if (!el.offsetWidth) return;
         const r = el.getBoundingClientRect();
         if (r.top < innerHeight && r.bottom > 0) balance(el);
