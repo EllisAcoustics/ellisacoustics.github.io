@@ -1,8 +1,8 @@
 """Make every page load in about one round trip.
 
-Run from the repo root after editing css/, js/site.js or page text:  python3 tools/build.py
+Run from the repo root after editing assets/css/, assets/js/site.js or page text:  python3 tools/build.py
 
-  1. Inlines css/site.css, css/sections.css and js/site.js into each page, so the browser
+  1. Inlines assets/css/site.css, assets/css/sections.css and assets/js/site.js into each page, so the browser
      needs nothing else before it can paint (the page itself is the only blocking request).
   2. Cuts the Sourcerer serif down to exactly the characters each page uses, as WOFF2,
      and preloads those files so the serif arrives alongside the HTML.
@@ -23,13 +23,13 @@ from fontTools.ttLib import TTFont
 
 PAGES = ['index', 'about', 'contact', 'press', 'listen', 'privacy', 'accessibility', 'credits', '404']
 FACES = {  # face key -> (source file, weight, style)
-    'regular': ('fonts/sourcerer-regular.woff', 400, 'normal'),
-    'italic': ('fonts/sourcerer-italic.woff', 400, 'italic'),
-    'bold': ('fonts/sourcerer-bold.woff', 700, 'normal'),
+    'regular': ('assets/fonts/sourcerer-regular.woff', 400, 'normal'),
+    'italic': ('assets/fonts/sourcerer-italic.woff', 400, 'italic'),
+    'bold': ('assets/fonts/sourcerer-bold.woff', 700, 'normal'),
 }
 # Faces each page sets in the serif (found by checking computed styles on every element)
 USES = {'index': ['regular', 'italic', 'bold'], 'listen': ['italic']}
-OUT = 'fonts/sub'
+OUT = 'assets/fonts/sub'
 
 
 def page_chars(src):
@@ -104,7 +104,7 @@ def block(s, start, end, new):
 
 
 def minify_css(css):
-    """Comments and spare whitespace out; the readable source stays in css/."""
+    """Comments and spare whitespace out; the readable source stays in assets/css/."""
     css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
     css = re.sub(r'\s+', ' ', css)
     css = re.sub(r'\s*([{};,>])\s*', r'\1', css)
@@ -141,9 +141,9 @@ def main():
         if not os.path.exists(fn):
             continue
         s = open(fn, encoding='utf-8').read()
-        s = inline_css(s, 'css/site.css')
-        s = inline_css(s, 'css/sections.css')
-        s = inline_js(s, 'js/site.js')
+        s = inline_css(s, 'assets/css/site.css')
+        s = inline_css(s, 'assets/css/sections.css')
+        s = inline_js(s, 'assets/js/site.js')
         faces = USES.get(page, [])
         if faces:
             live = serif_chars(page)
@@ -168,7 +168,7 @@ def main():
             if '<!-- @preload -->' in s:
                 s = block(s, '<!-- @preload -->', '<!-- @preload:end -->', pre_html)
             else:
-                s = re.sub(r'<link rel="preload" href="fonts/sourcerer-[a-z]+\.woff" as="font" type="font/woff" crossorigin>\n', '', s)
+                s = re.sub(r'<link rel="preload" href="assets/fonts/sourcerer-[a-z]+\.woff" as="font" type="font/woff" crossorigin>\n', '', s)
                 s = s.replace('<meta name="viewport"', pre_html + '\n<meta name="viewport"', 1) if False else re.sub(r'(<meta name="viewport"[^>]*>\n)', lambda m: m.group(1) + pre_html + '\n', s, count=1)
             print(f'{fn}: ' + ', '.join(report) + (' (characters read from the rendered page)' if live else ''))
         open(fn, 'w', encoding='utf-8').write(s)
