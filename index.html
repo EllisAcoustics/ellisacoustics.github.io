@@ -512,6 +512,7 @@
     font-size: 18px; line-height: 28px; color: var(--ink-2);
   }
   .hero-sub { max-width: 33ch; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.22; }
+  @media (min-width: 1000px) { .hero { max-width: none; } .hero > :not(.hero-sub) { max-width: 820px; } .hero-sub { max-width: 40ch; font-size: clamp(38px, 3.6vw, 50px); line-height: 1.16; } }   /* desktop: the headline spans the ruler */
   .hero-sub .g { color: var(--accent); }
   .hero-sub span.g { font-weight: 600; color: var(--nz1); }   /* Net Zero: one green */
   /* the new technologies, each in its colour from the drawings; the sounds get a wave under them */
@@ -788,7 +789,7 @@
   <p class="visually-hidden">Frequency scale from 63 Hz to 8 kHz, marking where the noise of the sources I study is concentrated: air-source heat pumps around 200 Hz, passenger multicopter eVTOL aircraft around 400 Hz, the warning sounds of electric cars around 1 kHz, and drones around 2.5 kHz. Select a source to see what it is, what it is used for, what makes it sound new, and the range where you would hear it.</p>
 
   <div class="hero">
-    <p class="hero-sub"><span class="g">Net Zero</span> technology will bring <span class="snd">sounds</span> we’ve never lived with into our towns and cities – <span class="t t-car">electric cars</span>, <span class="t t-drone">delivery drones</span>, <span class="t t-air">air taxis</span> and <span class="t t-hp">heat pumps</span>. I research how these noise sources affect us, <em class="g">before</em> they arrive.</p>
+    <p class="hero-sub"><span class="g">Net Zero</span> technology will bring <span class="snd">sounds</span> we’ve never lived with into our towns and cities&nbsp;– <span class="t t-car">electric cars</span>, <span class="t t-drone">delivery drones</span>, <span class="t t-air">air taxis</span> and <span class="t t-hp">heat pumps</span>. I research how these noise sources affect us, <em class="g">before</em> they arrive.</p>
     <p class="hero-why">Noise is a “silent killer”, second only to air pollution in its burden on health in Europe<a class="cite" href="https://www.who.int/europe/news/item/30-03-2011-new-evidence-from-who-on-health-effects-of-traffic-related-noise-in-europe">WHO, 2011</a><span class="cite-sep">,</span><a class="cite" href="https://committees.parliament.uk/event/17423">House of Lords, 2023</a>. The next wave of technology will introduce noise that loudness alone cannot accurately judge: the high-pitched whine of a rotor, the tonal hum of a compressor, rumbles of large aircraft<a class="cite" href="https://www.caa.co.uk/publication/download/16373">CAA, 2018</a><span class="cite-sep">,</span><a class="cite" href="https://www.gov.uk/government/publications/aviation-night-noise-effects-anne-study">DfT, 2026</a> flying low over gardens. My PhD research, sponsored by the Department for Environment, Food and Rural Affairs (Defra), seeks to accurately simulate these future soundscapes to gather response data from listening panels, for machine learning models to predict who will be annoyed, to what extent, and why. That gives regulators evidence to set standards on, and engineers a target for quieter machines, before they are everywhere.</p>
     <div class="cta">
       <a class="btn" href="contact">Get in touch</a>
