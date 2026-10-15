@@ -243,6 +243,8 @@
   @keyframes a-note { 0%, 100% { opacity: 0.35; transform: translate(0, 0.6px); } 50% { opacity: 1; transform: translate(0.4px, -0.8px); } }   /* heat pump: stationary ground sources' colour */
   .t-ev .a-wave, .t-ev .a-bolt { color: var(--s-ev); }                   /* EV: moving ground sources' colour */
   .t-health .a-ecg { color: #9B111E; }                               /* heartbeat in the Salford repository red */
+  :root[data-theme="dark"] .t-health .a-ecg { color: #E5404D; }   /* same crimson, brightened for dark mode */
+  @media (prefers-color-scheme: dark) { :root:not([data-theme]) .t-health .a-ecg { color: #E5404D; } }
   .t-psy .a-wave { color: var(--ac-b); }                                 /* ear: blue */
   @media (prefers-reduced-motion: reduce) { .t-media .a-ring-pulse { opacity: 0; } }
   /* ---------- Press kit ---------- */
