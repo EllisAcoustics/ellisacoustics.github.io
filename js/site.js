@@ -55,7 +55,7 @@
   // out on a hidden copy in an isolated sandbox, so the page itself never reflows while searching, and
   // a block only changes its number of lines when it is well below the screen (no visible shift).
   // Screen only: the printed CV keeps its own measure.
-  const SEL = 'p, li, figcaption, dd, dt, blockquote, h1, h2, h3, h4, td, th, summary';
+  const SEL = 'h1, h2, h3, h4';   // headings only: body text fills its column
   let painted = false;   // before the first paint a block may change its number of lines; after it, only off screen
   const lineWidths = (el) => {
     const rg = document.createRange(); rg.selectNodeContents(el);
