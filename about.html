@@ -193,27 +193,14 @@
   #intro .line { position: absolute; height: 1px; background: var(--ink); transform: scaleX(0); }
   #intro .piece { position: absolute; left: 0; top: 0; color: var(--ink); }
   #intro .piece svg { display: block; width: 100%; height: auto; overflow: visible; }
-  #intro .hp { color: #8A8C90; }
-  #intro .hp .fan { color: var(--ink); }
-  #intro .bird { color: #FFFFFF; }
-  :root[data-theme="light"] #intro .bird { color: var(--ink); }
-  #intro .piece.note { color: var(--ac-d); }
-  #intro .leaf { color: var(--ac-c); }
-  /* heat: small embers glow and drift up through the vents */
-  #intro .ember { fill: var(--ac-a); stroke: none; opacity: 0; transform-box: fill-box; transform-origin: center; animation: ember 1.8s ease-out infinite; }
-  @keyframes ember { 0% { opacity: 0; transform: translateY(0) scale(0.6); } 20% { opacity: 1; transform: translateY(-0.6px) scale(1); } 60% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(-4px) scale(0.4); } }
-  #intro .wind { color: var(--wind); }
+  #intro .piece.note { color: var(--chirp); }
+  #intro .leaf { --lc: var(--nz2); --ll: color-mix(in oklab, var(--lc) 72%, #fff); --lv: color-mix(in oklab, var(--lc) 60%, #000); }
+  #intro .leaf.l2 { --lc: var(--nz1); } #intro .leaf.l3 { --lc: color-mix(in oklab, var(--nz2) 55%, var(--chirp)); }
+  #intro .hp .gust { stroke: var(--wind); stroke-width: 0.6; stroke-dasharray: 34 66; stroke-dashoffset: 100; animation: hp-gust 1.6s linear infinite; opacity: 0.8; }
+  @keyframes hp-gust { to { stroke-dashoffset: 0; } }
   #intro .pulse path { fill: none; stroke: var(--ink); stroke-width: 1; vector-effect: non-scaling-stroke; }
-  #intro .fan { transform-box: view-box; transform-origin: 13.5px 23.25px; animation: fan 0.9s linear infinite; }
-  @keyframes fan { to { transform: rotate(360deg); } }
   #intro .jaw, #intro .head, #intro .wing { transform-box: view-box; }
-  #intro .jaw { transform-origin: 31.4px 10.4px; }
-  #intro .head { transform-origin: 26px 13px; }
-  #intro .wing { transform-origin: 22px 16.6px; }
-  #intro .gust { stroke-dasharray: 5 4; animation: gust 0.7s linear infinite; }
-  #intro .gust.g2 { animation-duration: 0.55s; }
-  #intro .gust.g3 { animation-duration: 0.8s; }
-  @keyframes gust { to { stroke-dashoffset: -9; } }
+  #intro .jaw { transform-origin: -9.25px -9.9px; } #intro .head { transform-origin: -4.2px -9.2px; } #intro .wing { transform-origin: -3px -9.4px; }
   @keyframes arc { 0% { opacity: 0; transform: scale(0.7); } 25% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
   @media print { #intro { display: none !important; } }
   .foot { border-top: 0 !important; position: relative; }
@@ -254,10 +241,9 @@
 <body>
 <div id="intro" aria-hidden="true">
   <span class="line"></span>
-  <span class="piece hp"><svg viewBox="3 14 32 20.5" fill="none" stroke="currentColor" stroke-width="0.55" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14.5" width="30" height="17.5" rx="0.8"/><circle cx="13.5" cy="23.25" r="6.4"/><circle cx="13.5" cy="23.25" r="4.3" stroke-width="0.3"/><path d="M7.1 23.25H19.9M13.5 16.85V29.65" stroke-width="0.3"/><g class="fan" stroke-width="0.4"><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(120 13.5 23.25)"/><path d="M13.5 23.25C14.6 21.95 15.6 20.35 15.1 18.15C14.2 18.75 13.6 20.75 13.5 23.25Z" transform="rotate(240 13.5 23.25)"/></g><circle cx="13.5" cy="23.25" r="0.6" fill="currentColor" stroke="none"/><path d="M24.00 17V29.5M25.15 17V29.5M26.30 17V29.5M27.45 17V29.5M28.60 17V29.5M29.75 17V29.5M30.90 17V29.5" stroke-width="0.3"/><path d="M7 32V33.5M31 32V33.5"/><g class="embers"><circle class="ember" cx="24.6" cy="28" r="0.42" style="animation-delay:0s"/><circle class="ember" cx="26.3" cy="25.5" r="0.36" style="animation-delay:0.5s"/><circle class="ember" cx="28" cy="29" r="0.45" style="animation-delay:0.9s"/><circle class="ember" cx="29.7" cy="26.5" r="0.38" style="animation-delay:0.25s"/><circle class="ember" cx="25.4" cy="22.5" r="0.32" style="animation-delay:1.2s"/><circle class="ember" cx="27.4" cy="21" r="0.4" style="animation-delay:0.7s"/><circle class="ember" cx="30.4" cy="23.5" r="0.34" style="animation-delay:1.5s"/><circle class="ember" cx="28.6" cy="18.5" r="0.3" style="animation-delay:1.05s"/></g></svg></span>
-  <span class="piece bird"><svg viewBox="0 0 40 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17L3 13.6L5 18.6L10 20"/><path d="M10 19.6Q12 25.4 19.4 25Q26.4 24.4 27.6 17.6"/><path d="M10.6 17Q13.6 12.4 21.6 12.8"/><path d="M16.4 24.8V28.6M20.4 24.6V28.6M15.2 28.6H17.6M19.2 28.6H21.6" stroke-width="1"/><g class="wing"><path d="M22.6 15.6Q16 10.8 8.4 13.2Q12.6 20.6 22.6 18.2Z" fill="var(--paper)"/><path d="M11.6 15.2L17.4 15.9M12.6 17.2L18.4 17.3" stroke-width="0.7"/></g><g class="head"><path d="M21.6 12.8Q22.6 6.4 27.6 6.4Q32 6.6 31.4 10.6Q30.6 15.6 27.6 17.6"/><circle cx="28" cy="9.6" r="0.9" fill="currentColor" stroke="none"/><path d="M31.2 9.2L35.6 10.2L31.4 10.6"/><path class="jaw" d="M31.4 10.6L35 11.2L31 12" stroke-width="1"/></g></svg></span>
-  <span class="piece wind"><svg viewBox="0 0 22 30" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"><path class="gust" d="M5 30C3.6 22 6.4 16 5 8C4.4 5 5 2.5 6 0.5"/><path class="gust g2" d="M11 30C12.4 22 9.6 15 11 8C11.6 5 11 2.5 11 0.5"/><path class="gust g3" d="M17 30C18.4 22 15.6 16 17 8C17.6 5 17 2.5 16 0.5"/></svg></span>
-  <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6Q7 -0.6 18.6 5.6Q8 12.6 1 6Z" fill="var(--paper)"/><path d="M1 6L16 5.8M6 6L8.6 3.6M10 5.9L12.6 3.8M8 6.1L10 8.2" stroke-width="0.7"/></svg></span></template>
+  <span class="piece hp" style="color:var(--s-heatpump)"><svg class="craft" viewBox="64.7 8.8 75.8 94.1" overflow="visible" stroke="none" stroke-width=".3" stroke-linejoin="round" stroke-linecap="round" style="--h1:var(--hull);--h2:color-mix(in oklab, var(--hull) 55%, var(--hull-s));--h3:var(--hull-s);--h4:color-mix(in oklab, var(--hull-s) 70%, var(--frame-l));--g1:color-mix(in oklab, var(--frame-d) 88%, var(--paper));--g2:var(--frame-d);--g3:var(--frame-l);--b1:color-mix(in oklab, var(--ink) 80%, var(--paper));--b2:var(--ink);--b3:color-mix(in oklab, var(--ink) 52%, var(--paper))"><path d="M139.98 94.44L127.61 89.26L123.86 87.69C123.45 87.52 122.35 86.95 121.98 86.9C121.66 86.86 120.76 87.07 120.39 87.12L116.42 87.68L104.51 89.34L65.21 94.83L77.59 100.02L81.34 101.59C81.75 101.76 82.85 102.32 83.21 102.37C83.54 102.42 84.43 102.2 84.8 102.15L88.77 101.6L100.68 99.93L139.98 94.44Z" fill="var(--ink)" opacity="0.08"/><path d="M86.81 96.29L74.51 91.13L74.51 95.21L86.81 100.36L86.81 96.29Z" fill="var(--g2)" stroke="var(--g2)"/><path d="M86.81 96.29L90.97 95.71L90.97 99.78L86.81 100.36L86.81 96.29Z" fill="var(--g1)" stroke="var(--g1)"/><path d="M122.67 91.28L110.37 86.12L110.37 90.2L122.67 95.35L122.67 91.28Z" fill="var(--g2)" stroke="var(--g2)"/><path d="M122.67 91.28L126.82 90.7L126.82 94.77L122.67 95.35L122.67 91.28Z" fill="var(--g1)" stroke="var(--g1)"/><path d="M80.27 20.76L69.32 16.17L69.32 91.86L80.27 96.45L80.27 20.76Z" fill="var(--h3)" stroke="var(--h3)"/><path d="M80.27 20.76C81.18 21.08 82.19 21.06 83.14 20.95L83.14 96.63C82.19 96.74 81.18 96.76 80.27 96.45L80.27 20.76Z" fill="var(--h2)" stroke="var(--h2)"/><path d="M83.14 20.95L130.68 14.31L130.68 89.99L83.14 96.63L83.14 20.95Z" fill="var(--h2)" stroke="var(--h2)"/><path d="M130.68 14.31L122.43 10.85L119.43 9.59C119.18 9.49 118.95 9.32 118.68 9.28C118.34 9.24 117.83 9.4 117.49 9.45L113.9 9.95L103.55 11.39L69.32 16.17L76.87 19.34C78 19.81 79.89 20.79 81.04 20.95C82.9 21.21 84.86 20.71 86.7 20.45L97 19.01L130.68 14.31Z" fill="var(--h1)" stroke="var(--h1)"/><path d="M79.11 77.39L71.01 74" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 72.73L71.01 69.34" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 68.08L71.01 64.68" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 63.42L71.01 60.02" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 58.76L71.01 55.37" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 54.1L71.01 50.71" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 49.45L71.01 46.05" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 44.79L71.01 41.4" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M79.11 40.13L71.01 36.74" fill="none" stroke="var(--h4)" stroke-width="0.9"/><path d="M77.72 86.06L74.08 86.57L74.08 98.80" fill="none" stroke="var(--h4)" stroke-width="2.51" stroke-linejoin="round"/><path d="M77.72 86.06L74.08 86.57L74.08 98.80" fill="none" stroke="var(--h1)" stroke-width="0.79" stroke-linejoin="round" opacity=".7" transform="translate(-.5 -.4)"/><path d="M74.72 82.48L71.08 82.99L71.08 97.54" fill="none" stroke="var(--h4)" stroke-width="3.19" stroke-linejoin="round"/><path d="M74.72 82.48L71.08 82.99L71.08 97.54" fill="none" stroke="var(--h1)" stroke-width="1.01" stroke-linejoin="round" opacity=".7" transform="translate(-.5 -.4)"/><path d="M128.66 19.28C128.61 17.45 127.19 17.74 125.91 17.92L118.74 18.92L95.62 22.15L88.84 23.1C88.07 23.2 86.19 23.33 85.57 23.64C84.17 24.35 84.5 26.17 84.5 27.46L84.5 38.72L84.5 79.75L84.5 89.81C84.5 90.79 84.19 92.5 85.14 93.14C85.66 93.49 86.28 93.32 86.85 93.24L90.44 92.74L105.18 90.68L121.92 88.34L125.91 87.78C126.64 87.68 127.45 87.69 128.02 87.15C128.79 86.42 128.66 85.41 128.66 84.44L128.66 82.43L128.66 69.96L128.66 36.18L128.66 24.91C128.66 23.04 128.72 21.15 128.66 19.28Z" fill="var(--h1)"/><g transform="matrix(51.962 -7.258 0.000 -58.218 106.09 72.52)"><circle r="0.300" fill="var(--acc)"/><circle r="0.270" fill="var(--g1)"/><g><path transform="rotate(0.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><path transform="rotate(90.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><path transform="rotate(180.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><path transform="rotate(270.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><circle r="0.041" fill="var(--g2)"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="0.8s" repeatCount="indefinite"/></g><circle r="0.216" fill="none" stroke="var(--g3)" stroke-width=".011"/><circle r="0.162" fill="none" stroke="var(--g3)" stroke-width=".011"/><circle r="0.108" fill="none" stroke="var(--g3)" stroke-width=".011"/><circle r="0.054" fill="none" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(0)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(45)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(90)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(135)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(180)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(225)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(270)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(315)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><circle r="0.019" fill="var(--g3)"/></g><g transform="matrix(51.962 -7.258 0.000 -58.218 106.09 38.75)"><circle r="0.300" fill="var(--acc)"/><circle r="0.270" fill="var(--g1)"/><g><path transform="rotate(0.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><path transform="rotate(90.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><path transform="rotate(180.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><path transform="rotate(270.0)" d="M0 -0.045C0.028 -0.113 0.128 -0.079 0.232 -.02L0.232 .02C0.128 0.028 0.028 0.045 0 0.045Z" fill="var(--acc)"/><circle r="0.041" fill="var(--g2)"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.0s" repeatCount="indefinite"/></g><circle r="0.216" fill="none" stroke="var(--g3)" stroke-width=".011"/><circle r="0.162" fill="none" stroke="var(--g3)" stroke-width=".011"/><circle r="0.108" fill="none" stroke="var(--g3)" stroke-width=".011"/><circle r="0.054" fill="none" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(0)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(45)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(90)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(135)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(180)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(225)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(270)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><path transform="rotate(315)" d="M0 0H0.251" stroke="var(--g3)" stroke-width=".011"/><circle r="0.019" fill="var(--g3)"/></g><path d="M116.45 54.17C116.45 53.43 115.84 53.38 115.27 53.46L112.07 53.91L99.65 55.64L97.65 55.92C96.88 56.03 95.67 55.99 95.67 57.07C95.67 57.82 96.28 57.86 96.85 57.78L100.05 57.33L112.47 55.6L114.47 55.32C115.24 55.21 116.45 55.25 116.45 54.17Z" fill="var(--acc)"/><path class="gust" d="M72.5 33.2C65.3 30.2 65.3 38.3 58.0 35.3" pathLength="100" stroke="var(--wind)" stroke-width="1.3" fill="none" stroke-linecap="round" style="animation-delay:0.00s"/><path class="gust" d="M72.5 48.4C65.3 45.4 65.3 53.4 58.0 50.4" pathLength="100" stroke="var(--wind)" stroke-width="1.3" fill="none" stroke-linecap="round" style="animation-delay:0.37s"/><path class="gust" d="M72.5 68.2C65.3 65.2 65.3 73.2 58.0 70.2" pathLength="100" stroke="var(--wind)" stroke-width="1.3" fill="none" stroke-linecap="round" style="animation-delay:0.74s"/><path class="gust" d="M72.5 83.3C65.3 80.3 65.3 88.3 58.0 85.3" pathLength="100" stroke="var(--wind)" stroke-width="1.3" fill="none" stroke-linecap="round" style="animation-delay:1.11s"/></svg></span>
+  <span class="piece bird"><svg viewBox="-12.6 -14.4 25 14.8" style="--b1:color-mix(in oklab, var(--ink) 80%, var(--paper));--b2:var(--ink);--b3:color-mix(in oklab, var(--ink) 52%, var(--paper))"><path d="M-2.4 -2.4L-2.9 0M0.4 -2.5L0.6 0M-3.9 0H-1.7M-0.4 0H1.6" stroke="var(--b2)" stroke-width=".55" stroke-linecap="round" fill="none"/><path d="M-7.6 -9.4C-6 -10.6 -2.6 -11.6 -0.4 -11.0C1.6 -10.4 4.0 -9.0 6.0 -7.2L11.4 -5.6C11.9 -5.0 11.8 -4.2 11.2 -3.9L6.4 -4.4C4.6 -2.9 2.0 -2.1 -0.6 -2.2C-4.2 -2.3 -7.0 -3.9 -8.4 -6.4C-9 -7.6 -8.8 -8.6 -7.6 -9.4Z" fill="var(--b1)"/><path d="M-8.4 -6.4C-7.6 -8.0 -5.8 -8.6 -3.8 -8.2C-1.6 -7.7 1.2 -6.4 3.6 -4.0C1.8 -2.6 -0.2 -2.2 -2.2 -2.3C-4.8 -2.5 -7.2 -4.1 -8.4 -6.4Z" fill="var(--b3)"/><g class="head"><circle cx="-6.1" cy="-10.6" r="3.3" fill="var(--b1)"/><path d="M-9.2 -11.2C-8.2 -13.2 -5.8 -14.0 -3.6 -13.4C-2.4 -13.0 -1.6 -12.2 -1.6 -11.4C-4.2 -11.8 -6.6 -11.8 -9.2 -11.2Z" fill="var(--b2)"/><path d="M-9.3 -10.9L-12.2 -10.1L-9.2 -9.9Z" fill="var(--b2)"/><path class="jaw" d="M-9.2 -9.9L-11.6 -9.75L-9.3 -9.3Z" fill="var(--b2)"/><circle cx="-6.6" cy="-11.0" r=".62" fill="var(--b2)"/><circle cx="-6.75" cy="-11.15" r=".18" fill="var(--b3)"/></g><path class="wing" d="M-3.4 -10.2C0.2 -10.4 4.2 -8.6 6.6 -6.8L9.4 -5.2C6.6 -4.9 3.4 -5.0 1.0 -5.6C-1.4 -6.2 -3.0 -7.8 -3.4 -10.2Z" fill="var(--b2)"/></svg></span>
+  <template id="leaf-tpl"><span class="piece leaf"><svg viewBox="-2 0 22 12"><path d="M1 6L-1.6 7.3" stroke="var(--lv)" stroke-width=".8" stroke-linecap="round"/><path d="M1 6C5 0.4 12 0.6 18.6 5.6Z" fill="var(--ll)"/><path d="M1 6C6 11.4 13 10.8 18.6 5.6Z" fill="var(--lc)"/><path d="M1 6L17.4 5.7M6.4 5.9L9 3.4M10.6 5.8L13 3.8M8.6 5.9L11 8.4M12.8 5.8L14.6 7.6" stroke="var(--lv)" stroke-width=".55" stroke-linecap="round" fill="none"/></svg></span></template>
   <template id="note-tpl"><span class="piece note"><svg viewBox="0 0 12 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="14.6" rx="2.7" ry="2" transform="rotate(-22 3.4 14.6)" fill="currentColor" stroke="none"/><path d="M5.9 13.8V1.6"/><path d="M5.9 1.6Q6.6 5 9.8 6.6Q11.6 8.4 10.4 11.2" stroke-width="1.1"/></svg></span></template><template id="note-tpl-2"><span class="piece note"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="3.4" cy="15" rx="2.7" ry="2" transform="rotate(-22 3.4 15)" fill="currentColor" stroke="none"/><ellipse cx="13" cy="13" rx="2.7" ry="2" transform="rotate(-22 13 13)" fill="currentColor" stroke="none"/><path d="M5.9 14.2V3.4M15.5 12.2V1.6"/><path d="M5.9 3.4L15.5 1.6" stroke-width="2.4" stroke-linecap="butt"/></svg></span></template>
 </div>
 <a class="skip" href="#main">Skip to content</a>
@@ -498,8 +484,8 @@
 
 <script>
 (() => {
-  // Heat pump intro: a small pulse marks where a heat pump appears, floating, with air rising into its fan and embers
-  // in its vents; a bird beside it sings six notes, warm air lifts a flurry of leaves upwards, then the page appears. About 4 s.
+  // Heat pump intro (the ruler's twin-fan heat pump): a small pulse marks where it appears, its fans spinning and air
+  // flowing out; the songbird on top sings six notes, then the fans blow a flurry of leaves out towards you. About 4 s.
   const root = document.documentElement;
   const el = document.getElementById('intro');
   if (!el) return;
@@ -508,8 +494,6 @@
   const jaw = bird.querySelector('.jaw'), head = bird.querySelector('.head'), wing = bird.querySelector('.wing');
   const tpls = [document.getElementById('note-tpl'), document.getElementById('note-tpl-2')];
   const leafTpl = document.getElementById('leaf-tpl');
-  const windEl = el.querySelector('.wind');
-  const target = document.querySelector('main .section');
   window.scrollTo(0, 0);
   let done = false;
   const timers = [];
@@ -524,20 +508,19 @@
 
   requestAnimationFrame(() => {
     const W = innerWidth, H = innerHeight;
-    const base = Math.round(H * 0.6);                                   // where the heat pump floats
-    const hpW = Math.max(150, Math.min(260, W * 0.4)), hpH = hpW * 20.5 / 32;
-    const hpX = W / 2 - hpW / 2 + hpW * 0.12, hpY = base - hpH;
-    const bW = hpW * 0.3, bH = bW * 30 / 40;
-    const bX = hpX - bW * 1.15 - hpW * 0.15, bY = base - bH * (28.6 / 30);            // the bird sits beside it, not on the warm top
+    const base = Math.round(H * 0.66);                                  // where the heat pump stands
+    const hpH = Math.max(170, Math.min(330, H * 0.42, W * 0.62)), hpW = hpH * 0.8052;
+    const hpX = W / 2 - hpW / 2, hpY = base - hpH * 0.943;
+    const pt = (f) => [hpX + hpW * f[0], hpY + hpH * f[1]];
+    const [topX, topY] = pt([0.5538, 0.0553]), fans = [pt([0.5449, 0.3182]), pt([0.5449, 0.677])];
+    const bW = hpW * 0.34, bH = bW * 14.8 / 25;                          // the songbird perches on top, as on the ruler
+    const bX = topX - bW * (12.6 / 25), bY = topY - bH;
     line.remove();
     Object.assign(hp.style, { width: hpW + 'px', transform: `translate(${hpX}px, ${hpY}px)`, opacity: 0 });
     Object.assign(bird.style, { width: bW + 'px', transform: `translate(${bX}px, ${bY}px)`, opacity: 0 });
-    // air rises from below, straight up into the fan
-    const fanX = hpX + hpW * ((13.5 - 3) / 32), awW = hpW * 0.34, awH = awW * 30 / 22;
-    Object.assign(windEl.style, { width: awW + 'px', transform: `translate(${fanX - awW / 2}px, ${base - hpH * 0.02}px)`, opacity: 0 });
 
-    // 1. a small pulse ripples out along where the heat pump will sit, then fades
-    const NS = 'http://www.w3.org/2000/svg', pw = Math.min(W - 32, hpW * 1.9);
+    // 1. a small pulse ripples out along where the heat pump will stand, then fades
+    const NS = 'http://www.w3.org/2000/svg', pw = Math.min(W - 32, hpW * 2.6);
     const ps = document.createElementNS(NS, 'svg'), pp = document.createElementNS(NS, 'path');
     ps.setAttribute('class', 'pulse'); ps.setAttribute('viewBox', `0 -12 ${pw} 24`); ps.appendChild(pp);
     Object.assign(ps.style, { position: 'absolute', left: (W / 2 - pw / 2) + 'px', top: (base - 12) + 'px', width: pw + 'px', height: '24px', overflow: 'visible' });
@@ -558,53 +541,60 @@
     ps.animate([{ opacity: 0, transform: 'scaleX(0.3)' }, { opacity: 1, transform: 'scaleX(1)', offset: 0.25 }, { opacity: 1, offset: 0.7 }, { opacity: 0 }],
                { duration: DUR, easing: 'ease-out', fill: 'forwards' });
 
-    // 2. the heat pump fades in where the pulse was, with the bird beside it and air rising into the fan
-    [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 650, fill: 'forwards' }));
+    // 2. the heat pump rises into place where the pulse was, fans already turning; the bird lands on top
+    hp.animate([{ opacity: 0, transform: `translate(${hpX}px, ${hpY + 10}px)` }, { opacity: 1, transform: `translate(${hpX}px, ${hpY}px)` }],
+               { duration: 450, delay: 650, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+    bird.animate([{ opacity: 0, transform: `translate(${bX - 14}px, ${bY - 18}px)` }, { opacity: 1, transform: `translate(${bX}px, ${bY}px)` }],
+                 { duration: 380, delay: 850, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
 
-    // 3. six chirps, each with a note from the beak
-    const beakX = bX + bW * (35.4 / 40), beakY = bY + bH * (10.6 / 30);
+    // 3. six chirps, each with a yellow note rising from the beak
+    const beakX = bX + bW * (0.4 / 25), beakY = bY + bH * (4.5 / 14.8);
     const chirp = (i) => {
-      head.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-10deg)' }, { transform: 'rotate(0)' }], { duration: 300, easing: 'ease-out' });
-      jaw.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(26deg)' }, { transform: 'rotate(0)' }], { duration: 260, easing: 'ease-out' });
+      head.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(12deg)' }, { transform: 'rotate(0)' }], { duration: 300, easing: 'ease-out' });
+      jaw.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-28deg)' }, { transform: 'rotate(0)' }], { duration: 260, easing: 'ease-out' });
       const n = tpls[i % 2].content.firstElementChild.cloneNode(true);
-      const nw = bW * (i % 2 ? 0.46 : 0.3);
+      const nw = bW * (i % 2 ? 0.34 : 0.22);
       n.style.width = nw + 'px';
       el.appendChild(n);
-      const dx = 10 + (i % 3) * 8, dy = -46 - (i % 3) * 10, rot = i % 2 ? 12 : -10;
+      const dx = -14 - (i % 3) * 8, dy = -46 - (i % 3) * 10, rot = i % 2 ? -12 : 10;
       n.animate([
-        { transform: `translate(${beakX}px, ${beakY - nw}px) scale(0.5) rotate(0)`, opacity: 0 },
-        { transform: `translate(${beakX + dx * 0.3}px, ${beakY - nw + dy * 0.3}px) scale(1) rotate(${rot / 2}deg)`, opacity: 1, offset: 0.25 },
-        { transform: `translate(${beakX + dx}px, ${beakY - nw + dy}px) scale(1) rotate(${rot}deg)`, opacity: 0 }
+        { transform: `translate(${beakX - nw}px, ${beakY - nw}px) scale(0.5) rotate(0)`, opacity: 0 },
+        { transform: `translate(${beakX - nw + dx * 0.3}px, ${beakY - nw + dy * 0.3}px) scale(1) rotate(${rot / 2}deg)`, opacity: 1, offset: 0.25 },
+        { transform: `translate(${beakX - nw + dx}px, ${beakY - nw + dy}px) scale(1) rotate(${rot}deg)`, opacity: 0 }
       ], { duration: 1100, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' }).onfinish = () => n.remove();
     };
-    [1000, 1250, 1500, 1750, 2000, 2250].forEach((t, i) => at(t, () => chirp(i)));
+    [1150, 1400, 1650, 1900, 2150, 2400].forEach((t, i) => at(t, () => chirp(i)));
 
     const beat = (count, period, up, down) => wing.animate(
       [{ transform: 'rotate(0)' }, { transform: `rotate(${up}deg)` }, { transform: `rotate(${down}deg)` }, { transform: 'rotate(0)' }],
       { duration: period, iterations: count, easing: 'ease-in-out' });
-    // 4. warm air lifts a flurry of leaves upwards past the heat pump; the bird ruffles its wing
-    at(2050, () => {
-      const lw = Math.max(16, hpW * 0.1);
-      for (let k = 0; k < 14; k++) {
+    // 4. the fans blow a flurry of leaves out towards you: each grows as it comes closer, spinning away past the edges
+    at(2250, () => {
+      const lw = Math.max(18, hpW * 0.16), R = Math.hypot(W, H) * 0.62;
+      for (let k = 0; k < 18; k++) {
         const leafEl = leafTpl.content.firstElementChild.cloneNode(true);
-        const size = lw * (0.75 + ((k * 37) % 10) / 20);
+        leafEl.classList.add('l' + (1 + (k % 3)));
+        const size = lw * (0.8 + ((k * 37) % 10) / 25);
         leafEl.style.width = size + 'px';
         el.appendChild(leafEl);
-        const x = hpX - hpW * 0.7 + ((k * 53) % 100) / 100 * hpW * 2.4;
-        const wob = 16 + (k % 3) * 10, spin = (k % 2 ? 1 : -1) * (300 + k * 40);
+        const [fx, fy] = fans[k % 2];
+        const a = (-200 + ((k * 47) % 100) * 2.2) * Math.PI / 180;      // mostly left and up, some right
+        const ex = fx + Math.cos(a) * R, ey = fy + Math.sin(a) * R * 0.8;
+        const bend = (k % 2 ? 1 : -1) * (30 + (k % 4) * 18), spin = (k % 2 ? 1 : -1) * (260 + k * 30);
+        const mx = (fx + ex) / 2 - Math.sin(a) * bend, my = (fy + ey) / 2 + Math.cos(a) * bend;
         leafEl.animate([
-          { transform: `translate(${x}px, ${H + size * 2}px) rotate(0)` },
-          { transform: `translate(${x - wob}px, ${H * 0.62}px) rotate(${spin * 0.35}deg)`, offset: 0.35 },
-          { transform: `translate(${x + wob}px, ${H * 0.3}px) rotate(${spin * 0.7}deg)`, offset: 0.7 },
-          { transform: `translate(${x - wob / 2}px, ${-size * 3}px) rotate(${spin}deg)` }
-        ], { duration: 1050 + (k % 4) * 120, delay: k * 85, easing: 'cubic-bezier(.3,.1,.6,1)', fill: 'both' });
+          { transform: `translate(${fx - size / 2}px, ${fy - size / 4}px) scale(0.15) rotate(0)`, opacity: 0 },
+          { transform: `translate(${fx - size / 2}px, ${fy - size / 4}px) scale(0.35) rotate(${spin * 0.1}deg)`, opacity: 1, offset: 0.1 },
+          { transform: `translate(${mx}px, ${my}px) scale(1.1) rotate(${spin * 0.55}deg)`, opacity: 1, offset: 0.55 },
+          { transform: `translate(${ex}px, ${ey}px) scale(1.9) rotate(${spin}deg)`, opacity: 0.9 }
+        ], { duration: 1200 + (k % 4) * 130, delay: k * 70, easing: 'cubic-bezier(.35,.1,.55,1)', fill: 'both' });
       }
-      at(2300, () => beat(3, 170, 40, -16));
+      at(250, () => beat(3, 170, -34, 14));
     });
 
     // 5. everything fades as the last leaves leave, and the page appears
     at(4100, () => {
-      [hp, bird, windEl].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
+      [hp, bird].forEach((n) => n.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' }));
       el.animate([{ backgroundColor: getComputedStyle(el).backgroundColor }, { backgroundColor: 'transparent' }],
                  { duration: 600, easing: 'ease', fill: 'forwards' }).onfinish = finish;
     });
