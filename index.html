@@ -1087,6 +1087,7 @@
     if (swept) return;
     if (s0 === null) {
       s0 = now; sweeping = true;
+      dispatchEvent(new Event('sweep-start'));
       const { x0, x1 } = box(); clip(x1 - x0);
       el.classList.add('live');               // keep the canvas once the intro class goes
       root.classList.remove('intro');          // ruler is visible, but clipped to nothing
@@ -1216,6 +1217,7 @@
   let gone = false;
   const finish = () => {
     root.classList.remove('awaiting-dot', 'drone-away'); drone.remove();
+    document.querySelectorAll('.sources .src').forEach((e) => { e.style.visibility = ''; });
     if (!gone) { gone = true; dispatchEvent(new Event('dot-delivered')); }
   };
   const fly = () => {
@@ -1269,7 +1271,51 @@
         .onfinish = () => window.dotPing && (window.dotPing(3.4, 0.45, 700, 0), window.dotPing(3.4, 0.35, 700, 650));
     }, D * 0.41 + 120);
     setTimeout(() => swing(false), D * 0.53);
-    anim.onfinish = finish;
+    anim.onfinish = narrow ? homecoming : finish;
+  };
+  // Narrow screens: after leaving left, the drone flies back in from the left alongside the
+  // ruler sweep, landing in its own slot on the ruler just as the sweep reaches it.
+  const homecoming = () => {
+    const slot = document.querySelector('.sources .src[style*="--s-drone"]'), art = slot && slot.querySelector('svg');
+    if (!slot || !art) return finish();
+    slot.style.visibility = 'hidden';
+    if (!gone) { gone = true; root.classList.remove('awaiting-dot', 'drone-away'); dispatchEvent(new Event('dot-delivered')); }
+    const k = 56 / 40, ox = 20 * k, oy = 17.4 * k;
+    const land = () => {
+      // the return flight is a copy of the ruler's own drone, so it settles into its slot without a swap
+      drone.remove();
+      const r = slot.getBoundingClientRect();
+      const twin = slot.cloneNode(true);
+      ['role', 'tabindex', 'aria-label'].forEach((a) => twin.removeAttribute(a));
+      twin.setAttribute('aria-hidden', 'true');
+      Object.assign(twin.style, { visibility: 'visible', animation: 'none', opacity: '1', pointerEvents: 'none', zIndex: '5' });
+      // fly outside the ruler's sweep clip: a twin of the sources row, pinned to the same spot on the page
+      const row = slot.parentElement, rr = row.getBoundingClientRect(), lane = document.createElement('div');
+      lane.className = row.className; lane.setAttribute('aria-hidden', 'true');
+      Object.assign(lane.style, { position: 'absolute', left: rr.left + scrollX + 'px', top: rr.top + scrollY + 'px',
+        width: rr.width + 'px', height: rr.height + 'px', margin: '0', zIndex: '40', pointerEvents: 'none' });
+      lane.appendChild(twin); document.body.appendChild(lane);
+      // enter from the left and ride with the sweep, high enough to clear the other sources, then drop in past the EV
+      const dx0 = -(r.right + 10), up = r.height * 1.3, ev = slot.parentElement.getBoundingClientRect().width * (0.75 - 0.9);
+      const at = (dx, dy, rot) => `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rot}deg)`;
+      // sampled path: the horizontal glide eases out, and the descent is a long, smooth S-curve over the second half
+      const ease = (t) => 1 - Math.pow(1 - t, 3), smooth = (t) => t * t * t * (t * (6 * t - 15) + 10);
+      const frames = [];
+      for (let n = 0; n <= 40; n++) {
+        const t = n / 40, d = smooth(Math.max(0, (t - 0.58) / 0.42));
+        frames.push({ transform: at(dx0 * (1 - ease(t)), -up * (1 - d), 6 * (1 - smooth(t))), offset: t });
+      }
+      const fly = twin.animate(frames, { duration: 2000, easing: 'linear', fill: 'forwards' });
+      // hand over to the real slot only once the sweep has fully revealed the ruler
+      let landed = false, revealed = false;
+      const done = () => { if (landed && revealed) { slot.style.visibility = ''; lane.remove(); finish(); } };
+      fly.onfinish = () => { landed = true; done(); };
+      addEventListener('intro-done', () => { revealed = true; done(); }, { once: true });
+      setTimeout(() => { revealed = true; done(); }, 3000);
+    };
+    let flying = false;
+    addEventListener('sweep-start', () => { flying = true; land(); }, { once: true });
+    addEventListener('intro-done', () => { if (!flying) finish(); }, { once: true });   // intro skipped: drone is simply in place
   };
   const start = () => requestAnimationFrame(fly);
   // Fly in once the opening pulse has cleared (and the name's font has loaded, so the dot lands in the right place)
