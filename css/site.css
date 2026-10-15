@@ -203,3 +203,4 @@ p, li, figcaption, dd, dt, blockquote, td, th, summary, label { text-wrap: balan
 .craft .sym-food { display: none; }   /* cargo shows the medical cross unless a page swaps it for food */
 
 html,body{overflow-x:clip}
+.outputs h3, .outputs p { text-wrap: pretty; hyphens: manual; -webkit-hyphens: manual; }
