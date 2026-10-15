@@ -331,6 +331,10 @@
       .step .node { animation: node-in linear both; animation-timeline: view(); animation-range: entry 30% cover 35%; }
       @media (min-width: 880px) {
         .step, .step .node, .step .step-icon { animation-timeline: --steps; animation-range: cover calc(8% + var(--n) * 5.5%) cover calc(16% + var(--n) * 5.5%); }
+        /* the dots sit on the line, so only the text and icon rise into place, never the dot */
+        .step { animation: none; }
+        .step > :not(.node) { animation: step-in linear both; animation-timeline: --steps; animation-range: cover calc(8% + var(--n) * 5.5%) cover calc(16% + var(--n) * 5.5%); }
+        .step > .step-icon { animation-name: icon-in, step-in; }
       }
     }
   }
