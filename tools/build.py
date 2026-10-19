@@ -28,7 +28,7 @@ FACES = {  # face key -> (source file, weight, style)
     'bold': ('assets/fonts/sourcerer-bold.woff', 700, 'normal'),
 }
 # Faces each page sets in the serif (found by checking computed styles on every element)
-USES = {'index': ['regular', 'italic', 'bold'], 'listen': ['italic']}
+USES = {'index': ['regular', 'italic', 'bold']}
 OUT = 'assets/fonts/sub'
 
 
