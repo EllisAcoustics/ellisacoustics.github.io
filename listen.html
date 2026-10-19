@@ -208,6 +208,39 @@
   .lt-next { display: flex; align-items: center; justify-content: space-between; gap: var(--u); border-top: 1px solid var(--hairline); padding-top: calc(var(--u) * 2); }
   .lt-count { font-family: var(--mono); font-size: 14px; color: var(--ink-2); }
   .lt-next .lt-btn { min-width: 140px; }
+  .lt-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--hairline); }
+  .lt-tab { font: inherit; font-family: var(--mono); font-size: 14px; letter-spacing: .04em; color: var(--ink-2); background: none; border: 0; border-bottom: 2px solid transparent; padding: 10px 16px; margin-bottom: -1px; cursor: pointer; min-height: 44px; }
+  .lt-tab:hover { color: var(--ink); }
+  .lt-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--lt); font-weight: 700; }
+  .lt-pane { display: grid; gap: calc(var(--u) * 2.5); }
+  .lt-pane[hidden] { display: none; }
+  .lt-readme p { color: var(--ink-2); }
+  .lt-hint { font-size: 15px; line-height: 23px; color: var(--ink-2); margin-top: -6px; }
+  .lt-need { font-size: 14px; color: var(--ink-2); text-align: right; min-height: 20px; margin-top: calc(var(--u) * -2); }
+
+  /* Circumplex: Pleasantness (x) by Eventfulness (y), both -5 to +5; quadrant names sit outside the square */
+  .lt-circ { --sz: min(100%, 460px); display: grid; grid-template-columns: 22px var(--sz) 22px; grid-template-rows: auto var(--sz) auto; gap: 6px 8px; justify-content: center; align-items: center; justify-items: center; margin-top: 6px; }
+  .lt-quad { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: .01em; }
+  .lt-edge.top { grid-area: 1 / 2; } .lt-edge.bot { grid-area: 3 / 2; }
+  .lt-circ > .ax-l { grid-area: 2 / 1; } .lt-circ > .lt-grid { grid-area: 2 / 2; } .lt-circ > .ax-r { grid-area: 2 / 3; }
+  .lt-edge { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 8px; }
+  .lt-edge .lt-quad:first-child { justify-self: start; }
+  .lt-edge .lt-quad:last-child { justify-self: end; }
+  .lt-ax { font-size: 13px; color: var(--ink-2); }
+  .lt-ax.ax-l, .lt-ax.ax-r { writing-mode: vertical-rl; }
+  .lt-ax.ax-l { transform: rotate(180deg); }
+  .lt-grid { width: 100%; aspect-ratio: 1; touch-action: none; cursor: crosshair; border-radius: 4px; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+  .lt-grid.drag { cursor: grabbing; }
+  .lt-grid svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .lt-grid .g-sq { fill: color-mix(in oklab, var(--lt) 4%, var(--paper)); stroke: var(--rule); stroke-width: .04; }
+  .lt-grid .g-l { stroke: var(--hairline); stroke-width: .025; }
+  .lt-grid .g-ax { stroke: var(--rule); stroke-width: .05; }
+  .lt-grid .g-nums text { font-family: var(--mono); font-size: .36px; fill: var(--ink-2); }
+  .lt-grid .g-guide { stroke: var(--lt); stroke-width: .04; stroke-dasharray: .14 .12; fill: none; opacity: .7; }
+  .lt-grid .g-halo { fill: var(--lt); opacity: .18; }
+  .lt-grid .g-pt { fill: var(--lt); stroke: var(--paper); stroke-width: .08; }
+  .lt-grid.drag .g-halo { opacity: .3; }
+  @media (max-width: 520px) { .lt-quad { font-size: 14px; } .lt-ax { font-size: 12px; } .lt-circ { --sz: calc(100vw - 2 * var(--gutter) - 44px); grid-template-columns: 18px var(--sz) 18px; gap: 4px; } }
   .lt-small { font-size: 14px; color: var(--ink-2); }
   .lt-link { font: inherit; color: var(--ink-2); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
   .lt-link:hover { color: var(--ink); }
@@ -284,7 +317,7 @@
     <div class="prose">
       <p>You will hear <strong>48 sound environments</strong>, one at a time and in a random order. Each lasts about one minute.</p>
       <p>Please wear <strong>headphones</strong>: the recordings are binaural, so they only sound right over headphones. Set a comfortable volume on the first sound and then leave it.</p>
-      <p>When evaluating the scenes and providing your responses, please imagine yourself within each presented sound environment, as if you were undertaking a desirable activity within each scene (for example: taking a walk, shopping, sitting in a cafe, sightseeing, etc).</p>
+      <p>The next screen has two tabs: <strong>README</strong>, with how the test works, and <strong>TEST</strong>, where you listen and rate.</p>
     </div>
     <p class="lt-msg" id="start-msg"></p>
     <div class="lt-row end">
@@ -295,7 +328,20 @@
 
   <!-- 5. Trial -->
   <section class="lt-panel lt-trial" id="lt-trial" aria-labelledby="trial-h" hidden>
-    <h2 id="trial-h" class="vh">Trial</h2>
+    <h2 id="trial-h" class="vh">Listening test</h2>
+    <div class="lt-tabs" role="tablist" aria-label="Listening test">
+      <button class="lt-tab" type="button" role="tab" id="tab-readme" aria-controls="pane-readme" aria-selected="true">README</button>
+      <button class="lt-tab" type="button" role="tab" id="tab-test" aria-controls="pane-test" aria-selected="false" tabindex="-1">TEST</button>
+    </div>
+    <div class="lt-pane" role="tabpanel" id="pane-readme" aria-labelledby="tab-readme" tabindex="0">
+      <div class="prose lt-readme">
+        <p>In each trial of this test, a soundscape is presented. Your task is to rate how “annoying, disturbing or bothersome” you consider each of these soundscapes to be and to consider which sources of noise were significant when rating annoyance. There are no correct or incorrect answers in this test, only personal judgements of subjective impressions.</p>
+        <p>Each sound is played back using the controls. To advance to the next trial, each sound must be played to completion once. When each sound has completed playing, the playback control will automatically switch off. Sounds can also be stopped prematurely using the controls. Each sound can be played back as many times as desired. Once you have entered your ratings and advanced to the next trial, you will not be able to return to a previous trial to change your ratings.</p>
+        <p>Please open the ‘TEST’ tab above to start the test. You can review this information at any time during the test by clicking on the ‘README’ tab above.</p>
+      </div>
+      <div class="lt-row"><button class="lt-btn primary" type="button" id="go-test">Open the TEST tab</button></div>
+    </div>
+    <div class="lt-pane" role="tabpanel" id="pane-test" aria-labelledby="tab-test" tabindex="-1" hidden>
     <p class="lt-instr">When evaluating the scenes and providing your responses, please imagine yourself within each presented sound environment, as if you were undertaking a desirable activity within each scene (for example: taking a walk, shopping, sitting in a cafe, sightseeing, etc).</p>
     <p class="lt-instr">You can listen to the sound more than once, but the sound must be played through at least once to advance.</p>
 
@@ -312,21 +358,25 @@
     <form id="rate" class="lt-rate">
       <fieldset class="lt-q">
         <legend id="q1">How annoying, disturbing or bothersome do you judge this sound environment to be?</legend>
-        <input type="range" min="0" max="10" step="1" value="5" name="annoy" aria-labelledby="q1">
+        <input type="range" min="0" max="10" step="any" value="5" name="annoy" aria-labelledby="q1">
         <div class="lt-ticks" aria-hidden="true"></div>
         <div class="lt-ends" aria-hidden="true"><span>Not at all</span><span>Highly Annoying</span></div>
       </fieldset>
       <fieldset class="lt-q">
-        <legend id="q2">How Eventful or Uneventful do you judge this sound environment to be?</legend>
-        <input type="range" min="0" max="10" step="1" value="5" name="event" aria-labelledby="q2">
-        <div class="lt-ticks" aria-hidden="true"></div>
-        <div class="lt-ends" aria-hidden="true"><span>Uneventful</span><span>Eventful</span></div>
-      </fieldset>
-      <fieldset class="lt-q">
-        <legend id="q3">How Pleasant or Unpleasant do you judge this sound environment to be?</legend>
-        <input type="range" min="0" max="10" step="1" value="5" name="pleas" aria-labelledby="q3">
-        <div class="lt-ticks" aria-hidden="true"></div>
-        <div class="lt-ends" aria-hidden="true"><span>Unpleasant</span><span>Pleasant</span></div>
+        <legend id="q2">How Pleasant or Unpleasant, and how Eventful or Uneventful, do you judge this sound environment to be?</legend>
+        <p class="lt-hint" id="q2-hint">Click or tap the grid to place your dot. Hold it down and drag to move it; let go to set it.</p>
+        <div class="lt-circ">
+          <div class="lt-edge top" aria-hidden="true"><span class="lt-quad">Chaotic</span><span class="lt-ax">Eventful</span><span class="lt-quad">Vibrant</span></div>
+          <span class="lt-ax ax-l" aria-hidden="true">Unpleasant</span>
+          <div class="lt-grid" id="grid" tabindex="0" role="group" aria-labelledby="q2" aria-describedby="q2-hint q2-kb">
+            <svg viewBox="-5.6 -5.6 11.2 11.2" aria-hidden="true" focusable="false"><g class="g-lines"></g><g class="g-nums"></g>
+              <g class="g-dot" hidden><path class="g-guide" d=""/><circle class="g-halo" r=".62"/><circle class="g-pt" r=".32"/></g></svg>
+          </div>
+          <span class="lt-ax ax-r" aria-hidden="true">Pleasant</span>
+          <div class="lt-edge bot" aria-hidden="true"><span class="lt-quad">Monotonous</span><span class="lt-ax">Uneventful</span><span class="lt-quad">Calm</span></div>
+        </div>
+        <p class="vh" id="q2-kb">With the keyboard, use the arrow keys to move the dot; hold Shift for bigger steps.</p>
+        <p class="vh" id="grid-live" aria-live="polite"></p>
       </fieldset>
       <fieldset class="lt-q">
         <legend>When rating the annoyance, which sources of sound were most significant? (Tick as many as appropriate)</legend>
@@ -346,8 +396,10 @@
         <span class="lt-count" id="count" aria-live="polite">1 of 48 trials</span>
         <button class="lt-btn primary" type="submit" id="next" disabled>Next</button>
       </div>
+      <p class="lt-need" id="need" aria-live="polite"></p>
     </form>
     <p class="lt-small"><button class="lt-link" type="button" id="dl-now">Download ratings so far</button> · <button class="lt-link" type="button" id="switch-user">Change participant</button></p>
+    </div>
   </section>
 
   <!-- 6. Finished -->
@@ -405,8 +457,8 @@
      Order, progress and ratings are kept in this browser's localStorage and exported as CSV. Nothing is sent anywhere. */
   (() => {
     const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
-    const TOTAL = 48, KEY = n => 'lt:v1:' + n, NAMES = ['Antonio', 'Zuza', 'Hilary', 'Ruth', 'Admin'];
-    const enc = new TextEncoder(), dec = new TextDecoder();
+    const TOTAL = 48, KEY = n => 'lt:v2:' + n, NAMES = ['Antonio', 'Zuza', 'Hilary', 'Ruth', 'Admin'];
+    const enc = new TextEncoder(), dec = new TextDecoder(), VEH = 'Ambient + Vehicle';
     const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
     let keys = null, K = null, items = null, byId = {}, user = null, st = null;
 
@@ -485,6 +537,8 @@
     function shuffled() {
       const a = items.map(i => i.id), r = new Uint32Array(a.length); crypto.getRandomValues(r);
       for (let i = a.length - 1; i > 0; i--) { const j = r[i] % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+      // The first trial always contains the eVTOL (an Ambient + Vehicle scene): swap one forward if needed
+      if (byId[a[0]].set !== VEH) { const j = a.findIndex(id => byId[id].set === VEH); [a[0], a[j]] = [a[j], a[0]]; }
       return a;
     }
     const fresh = () => ({ order: shuffled(), ratings: [], started: new Date().toISOString() });
@@ -506,11 +560,73 @@
       delete b.dataset.armed; b.textContent = 'Start again';
       st = fresh(); save(); begin(user);
     });
-    $('#start-go').addEventListener('click', () => { if (!st) { st = fresh(); save(); } trial(); });
+    $('#start-go').addEventListener('click', () => { if (!st) { st = fresh(); save(); } first = true; trial(); });
+
+    /* Tabs: README and TEST */
+    const tabs = [$('#tab-readme'), $('#tab-test')];
+    function tab(t, focus) {
+      tabs.forEach(b => { const on = b === t; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; $('#' + b.getAttribute('aria-controls')).hidden = !on; });
+      if (focus) t.focus();
+    }
+    tabs.forEach((b, k) => {
+      b.addEventListener('click', () => tab(b));
+      b.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); tab(tabs[1 - k], true); } });
+    });
+    $('#go-test').addEventListener('click', () => { tab(tabs[1]); scrollTo({ top: 0 }); sw.focus({ preventScroll: true }); });
+
+    /* Circumplex grid: x = pleasantness, y = eventfulness, both -5..+5 */
+    const grid = $('#grid'), gsvg = $('svg', grid), gdot = $('.g-dot', grid);
+    let pt = null, dragging = false;
+    (() => {
+      const NS = 'http://www.w3.org/2000/svg', el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+      const L = $('.g-lines', gsvg), N = $('.g-nums', gsvg);
+      L.append(el('rect', { class: 'g-sq', x: -5, y: -5, width: 10, height: 10 }));
+      for (let v = -4; v <= 4; v++) if (v) { L.append(el('path', { class: 'g-l', d: `M${v} -5V5M-5 ${v}H5` })); }
+      L.append(el('path', { class: 'g-ax', d: 'M0 -5V5M-5 0H5' }));
+      for (let v = -4; v <= 4; v++) {
+        if (!v) continue;
+        const tx = el('text', { x: v, y: 0.52, 'text-anchor': 'middle' }); tx.textContent = v; N.append(tx);
+        const ty = el('text', { x: -0.16, y: -v + 0.13, 'text-anchor': 'end' }); ty.textContent = v; N.append(ty);
+      }
+    })();
+    const clamp = v => Math.max(-5, Math.min(5, v)), r2 = v => Math.round(v * 100) / 100;
+    function setPt(x, y, announce) {
+      pt = { pl: r2(clamp(x)), ev: r2(clamp(y)) };
+      const sx = pt.pl, sy = -pt.ev;
+      gdot.hidden = false;
+      $('.g-halo', gdot).setAttribute('cx', sx); $('.g-halo', gdot).setAttribute('cy', sy);
+      $('.g-pt', gdot).setAttribute('cx', sx); $('.g-pt', gdot).setAttribute('cy', sy);
+      $('.g-guide', gdot).setAttribute('d', `M${sx} ${sy}V0M${sx} ${sy}H0`);
+      if (announce) $('#grid-live').textContent = `Pleasantness ${pt.pl.toFixed(1)}, eventfulness ${pt.ev.toFixed(1)}`;
+      gate();
+    }
+    function fromEvent(e) {
+      const r = gsvg.getBoundingClientRect(), s = 11.2 / r.width;
+      return [(e.clientX - r.left) * s - 5.6, -((e.clientY - r.top) * s - 5.6)];
+    }
+    grid.addEventListener('pointerdown', (e) => {
+      if (e.button > 0) return;
+      e.preventDefault(); dragging = true; grid.classList.add('drag');
+      try { grid.setPointerCapture(e.pointerId); } catch (_) {}
+      grid.focus({ preventScroll: true }); setPt(...fromEvent(e));
+    });
+    grid.addEventListener('pointermove', (e) => { if (dragging) { e.preventDefault(); setPt(...fromEvent(e)); } });
+    const endDrag = () => { if (!dragging) return; dragging = false; grid.classList.remove('drag'); if (pt) setPt(pt.pl, -(-pt.ev), true); };
+    grid.addEventListener('pointerup', endDrag); grid.addEventListener('pointercancel', endDrag); grid.addEventListener('lostpointercapture', endDrag);
+    grid.addEventListener('keydown', (e) => {
+      const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] }[e.key]; if (!d) return;
+      e.preventDefault(); const st = e.shiftKey ? 1 : 0.1, p0 = pt || { pl: 0, ev: 0 };
+      setPt(p0.pl + d[0] * st, p0.ev + d[1] * st, true);
+    });
+    function clearPt() { pt = null; gdot.hidden = true; $('#grid-live').textContent = ''; }
+    function gate() {
+      next.disabled = !(played && pt);
+      $('#need').textContent = next.disabled ? (!played ? 'Play the sound to the end to continue.' : 'Place your dot on the grid to continue.') : '';
+    }
 
     /* 5. Trials */
     const aud = $('#aud'), sw = $('#play'), stop = $('#stop'), next = $('#next'), fill = $('#fill');
-    const cache = new Map(); let cur = null, played = false, plays = 0, raf = 0;
+    const cache = new Map(); let cur = null, played = false, plays = 0, raf = 0, first = true;
     const status = t => $('#status').textContent = t;
     function clip(id) {
       if (!cache.has(id)) cache.set(id, (async () => {
@@ -528,17 +644,17 @@
     async function trial() {
       const i = st.ratings.length; if (i >= TOTAL) return finish();
       cur = st.order[i]; played = false; plays = 0;
-      $('#rate').reset(); $$('.lt-q').forEach(ticks);
+      $('#rate').reset(); $$('.lt-q').forEach(ticks); clearPt();
       $('#count').textContent = `${i + 1} of ${TOTAL} trials`;
-      next.disabled = true; sw.disabled = true; stop.disabled = true; setSw(false); fill.style.width = '0';
+      sw.disabled = true; stop.disabled = true; setSw(false); fill.style.width = '0'; gate();
       aud.pause(); aud.removeAttribute('src');
-      show('lt-trial'); status('Loading sound…');
+      show('lt-trial'); tab(i === 0 && first ? tabs[0] : tabs[1]); first = false; status('Loading sound…');
       const id = cur;
       try {
         const url = await clip(id); if (id !== cur) return;
         aud.src = url; aud.load();
         sw.disabled = false; stop.disabled = false; status('Ready. Switch Play sound to On to listen.');
-        sw.focus({ preventScroll: true });
+        if (!tabs[1].hidden && tabs[1].getAttribute('aria-selected') === 'true') sw.focus({ preventScroll: true });
         const nx = st.order[i + 1]; prune([id, nx].filter(Boolean)); if (nx) clip(nx).catch(() => cache.delete(nx));
       } catch (e) {
         cache.delete(id); status('This sound didn’t load. Check your connection; retrying in 3 seconds…');
@@ -553,7 +669,7 @@
     aud.addEventListener('play', () => { setSw(true); status(played ? 'Playing again.' : 'Playing… listen to the end to continue.'); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); });
     aud.addEventListener('pause', () => { setSw(false); cancelAnimationFrame(raf); tick(); if (!aud.ended) status(played ? 'Paused. You can rate and press Next.' : 'Paused. Play the sound to the end to continue.'); });
     aud.addEventListener('ended', () => {
-      played = true; next.disabled = false; setSw(false); aud.currentTime = 0; fill.style.width = '0';
+      played = true; setSw(false); aud.currentTime = 0; fill.style.width = '0'; gate();
       status('Played through. Rate the sound, then press Next.');
     });
     aud.addEventListener('error', () => { if (aud.getAttribute('src')) status('This browser couldn’t play the sound. Please try Chrome, Edge, Firefox or Safari.'); });
@@ -561,17 +677,16 @@
     function ticks(q) {
       const r = $('input[type="range"]', q), t = $('.lt-ticks', q); if (!r || !t) return;
       if (!t.children.length) for (let v = 0; v <= 10; v++) { const s = document.createElement('span'); s.textContent = v; t.append(s); }
-      [...t.children].forEach((s, v) => s.classList.toggle('on', v === +r.value));
-      r.setAttribute('aria-valuetext', r.value + ' out of 10');
+      r.setAttribute('aria-valuetext', (+r.value).toFixed(1) + ' out of 10');
     }
     $$('.lt-q').forEach(q => { const r = $('input[type="range"]', q); if (r) r.addEventListener('input', () => ticks(q)); ticks(q); });
 
     $('#rate').addEventListener('submit', (e) => {
-      e.preventDefault(); if (!played) return;
+      e.preventDefault(); if (!played || !pt) return;
       const f = e.currentTarget, it = byId[cur], srcs = $$('input[name="src"]:checked', f).map(c => c.value);
       st.ratings.push({
         trial: st.ratings.length + 1, stimulus: it.name, set: it.set,
-        annoy: +f.annoy.value, event: +f.event.value, pleas: +f.pleas.value,
+        annoy: r2(+f.annoy.value), pleas: pt.pl, event: pt.ev,
         src: srcs, other: f.other.value.trim(), plays, time: new Date().toISOString()
       });
       aud.pause(); save(); trial();
@@ -583,8 +698,8 @@
     const q = v => { v = String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     const pad = n => String(n).padStart(2, '0');
     function download(n, s) {
-      const head = ['Participant', 'Trial', 'Stimulus', 'Set', 'Annoyance (0-10)', 'Eventfulness (0-10)', 'Pleasantness (0-10)', ...SRC, 'Other description', 'Plays', 'Time'];
-      const rows = s.ratings.map(r => [n, r.trial, r.stimulus, r.set, r.annoy, r.event, r.pleas, ...SRC.map(x => r.src.includes(x) ? 1 : 0), r.other, r.plays, r.time]);
+      const head = ['Participant', 'Trial', 'Stimulus', 'Set', 'Annoyance (0 to 10)', 'Pleasantness (-5 to 5)', 'Eventfulness (-5 to 5)', ...SRC, 'Other description', 'Plays', 'Time'];
+      const rows = s.ratings.map(r => [n, r.trial, r.stimulus, r.set, r.annoy, r.pleas, r.event, ...SRC.map(x => r.src.includes(x) ? 1 : 0), r.other, r.plays, r.time]);
       const csv = [head, ...rows].map(r => r.map(q).join(',')).join('\r\n') + '\r\n';
       const d = new Date(), name = `${n}_Ratings_${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}_${pad(d.getHours())}-${pad(d.getMinutes())}-${pad(d.getSeconds())}.csv`;
       const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = name;
