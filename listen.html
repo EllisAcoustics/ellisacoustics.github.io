@@ -219,16 +219,15 @@
   .lt-need { font-size: 14px; color: var(--ink-2); text-align: right; min-height: 20px; margin-top: calc(var(--u) * -2); }
 
   /* Circumplex: Pleasantness (x) by Eventfulness (y), both -5 to +5; quadrant names sit outside the square */
-  .lt-circ { --sz: min(100%, 460px); display: grid; grid-template-columns: 22px var(--sz) 22px; grid-template-rows: auto var(--sz) auto; gap: 6px 8px; justify-content: center; align-items: center; justify-items: center; margin-top: 6px; }
-  .lt-quad { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: .01em; }
-  .lt-edge.top { grid-area: 1 / 2; } .lt-edge.bot { grid-area: 3 / 2; }
-  .lt-circ > .ax-l { grid-area: 2 / 1; } .lt-circ > .lt-grid { grid-area: 2 / 2; } .lt-circ > .ax-r { grid-area: 2 / 3; }
+  .lt-circ { --sz: min(460px, calc(100% - 220px)); display: grid; grid-template-columns: 1fr var(--sz) 1fr; grid-template-rows: auto auto auto; grid-template-areas: ". top ." "l sq r" ". bot ."; gap: 6px 12px; align-items: center; justify-items: center; margin-top: 6px; }
+  .lt-quad { font-size: 15px; font-weight: 600; color: var(--ink-2); letter-spacing: .01em; }
+  .lt-edge.top { grid-area: top; } .lt-edge.bot { grid-area: bot; }
+  .lt-circ > .ax-l { grid-area: l; justify-self: end; } .lt-circ > .lt-grid { grid-area: sq; width: 100%; } .lt-circ > .ax-r { grid-area: r; justify-self: start; }
+  .lt-circ > .lt-ax.ax-l, .lt-circ > .lt-ax.ax-r { font-size: 16px; font-weight: 700; color: var(--ink); }
   .lt-edge { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 8px; }
   .lt-edge .lt-quad:first-child { justify-self: start; }
   .lt-edge .lt-quad:last-child { justify-self: end; }
   .lt-ax { font-size: 13px; color: var(--ink-2); }
-  .lt-ax.ax-l, .lt-ax.ax-r { writing-mode: vertical-rl; }
-  .lt-ax.ax-l { transform: rotate(180deg); }
   .lt-grid { width: 100%; aspect-ratio: 1; touch-action: none; cursor: crosshair; border-radius: 4px; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
   .lt-grid.drag { cursor: grabbing; }
   .lt-grid svg { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -240,7 +239,25 @@
   .lt-grid .g-halo { fill: var(--lt); opacity: .18; }
   .lt-grid .g-pt { fill: var(--lt); stroke: var(--paper); stroke-width: .08; }
   .lt-grid.drag .g-halo { opacity: .3; }
-  @media (max-width: 520px) { .lt-quad { font-size: 14px; } .lt-ax { font-size: 12px; } .lt-circ { --sz: calc(100vw - 2 * var(--gutter) - 44px); grid-template-columns: 18px var(--sz) 18px; gap: 4px; } }
+  /* Phones: no room either side, so Unpleasant / Pleasant sit under the left and right edges with arrows */
+  @media (max-width: 600px) {
+    .lt-quad { font-size: 14px; } .lt-ax { font-size: 12px; }
+    .lt-circ { --sz: auto; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto auto; grid-template-areas: "top top" "sq sq" "l r" "bot bot"; gap: 6px; }
+    .lt-circ > .lt-grid { width: 100%; }
+    .lt-circ > .ax-l { justify-self: start; } .lt-circ > .ax-r { justify-self: end; }
+    .lt-circ > .ax-l::before { content: "\2190\00a0"; } .lt-circ > .ax-r::after { content: "\00a0\2192"; }
+  }
+  .lt-vol { --lt: var(--vr4); position: sticky; top: 0; z-index: 50; background: color-mix(in oklab, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hairline); }
+  .lt-vol[hidden] { display: none; }
+  .lt-vol-in { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; min-height: 52px; padding-top: 6px; padding-bottom: 6px; }
+  .lt-vol-ic { width: 22px; height: 22px; color: var(--lt); flex: none; }
+  .lt-vol-ic .w1, .lt-vol-ic .w2 { transition: opacity var(--dur-1, .15s); }
+  .lt-vol[data-lvl="0"] .lt-vol-ic .w1, .lt-vol[data-lvl="0"] .lt-vol-ic .w2, .lt-vol[data-lvl="1"] .lt-vol-ic .w2 { opacity: .15; }
+  .lt-vol label { font-weight: 600; font-size: 15px; }
+  .lt-vol input[type="range"] { flex: 1 1 160px; max-width: 320px; accent-color: var(--lt); height: 28px; margin: 0; cursor: pointer; }
+  .lt-vol output { font-family: var(--mono); font-size: 13px; color: var(--ink-2); min-width: 4ch; }
+  .lt-vol-tip { font-size: 13px; color: var(--ink-2); }
+  .lt-vol-tip[hidden] { display: none; }
   .lt-small { font-size: 14px; color: var(--ink-2); }
   .lt-link { font: inherit; color: var(--ink-2); background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
   .lt-link:hover { color: var(--ink); }
@@ -248,6 +265,15 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="lt-vol" id="vol" hidden>
+  <div class="wrap lt-vol-in">
+    <svg class="lt-vol-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w1" d="M15.5 9.2a4 4 0 0 1 0 5.6"/><path class="w2" d="M18.3 6.6a7.6 7.6 0 0 1 0 10.8"/></svg>
+    <label for="vol-r">Volume</label>
+    <input type="range" id="vol-r" min="0" max="100" step="1" value="70">
+    <output id="vol-o" for="vol-r">70%</output>
+    <span class="lt-vol-tip" id="vol-tip">Set a comfortable level on this first sound, then leave it.</span>
+  </div>
+</div>
 <header class="wrap masthead">
   <nav class="topnav" aria-label="Site">
     <a class="home" href="./" aria-label="Max Ellis, home"><svg class="ear-mark" viewBox="0 0 40 32" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 11.6C21.2 6 17.4 2.2 12.4 2.2C6.8 2.2 3.2 6.4 3.2 11.8C3.2 15.8 5 18.2 7 20.4C8.6 22.2 9.2 23.8 9.2 26C9.2 28.6 11 30 13 30C15.2 30 16.6 28.4 16.8 26.4"/><path d="M15.9 12.2C15.9 9 14.2 7.2 12 7.2C9.6 7.2 8.2 9 8.2 11.4C8.2 13.2 9.2 14.2 10.6 15C12 15.8 12.6 17 12.4 18.6" stroke-width="1.6"/><g class="ear-pulse" stroke-width="1.6"><path d="M25 10.8A6.4 6.4 0 0 1 25 20.6"/><path d="M29.4 7.4A11 11 0 0 1 29.4 24"/><path d="M33.8 4A15.6 15.6 0 0 1 33.8 27.4"/></g></svg></a>
@@ -370,7 +396,7 @@
           <span class="lt-ax ax-l" aria-hidden="true">Unpleasant</span>
           <div class="lt-grid" id="grid" tabindex="0" role="group" aria-labelledby="q2" aria-describedby="q2-hint q2-kb">
             <svg viewBox="-5.6 -5.6 11.2 11.2" aria-hidden="true" focusable="false"><g class="g-lines"></g><g class="g-nums"></g>
-              <g class="g-dot" hidden><path class="g-guide" d=""/><circle class="g-halo" r=".62"/><circle class="g-pt" r=".32"/></g></svg>
+              <g class="g-dot" style="display:none"><path class="g-guide" d=""/><circle class="g-halo" r=".62"/><circle class="g-pt" r=".32"/></g></svg>
           </div>
           <span class="lt-ax ax-r" aria-hidden="true">Pleasant</span>
           <div class="lt-edge bot" aria-hidden="true"><span class="lt-quad">Monotonous</span><span class="lt-ax">Uneventful</span><span class="lt-quad">Calm</span></div>
@@ -462,7 +488,7 @@
     const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
     let keys = null, K = null, items = null, byId = {}, user = null, st = null;
 
-    const show = id => { $$('.lt-panel').forEach(p => p.hidden = p.id !== id); const h = $('#' + id + ' h2'); if (h && id !== 'lt-trial') { h.tabIndex = -1; h.focus({ preventScroll: true }); } scrollTo({ top: 0 }); };
+    const show = id => { $$('.lt-panel').forEach(p => p.hidden = p.id !== id); $('#vol').hidden = id !== 'lt-trial'; const h = $('#' + id + ' h2'); if (h && id !== 'lt-trial') { h.tabIndex = -1; h.focus({ preventScroll: true }); } scrollTo({ top: 0 }); };
     const load = n => { try { return JSON.parse(localStorage.getItem(KEY(n))); } catch (e) { return null; } };
     const save = () => { st.saved = new Date().toISOString(); try { localStorage.setItem(KEY(user), JSON.stringify(st)); } catch (e) { status('Could not save progress on this device: please download your ratings now.'); } };
 
@@ -560,7 +586,7 @@
       delete b.dataset.armed; b.textContent = 'Start again';
       st = fresh(); save(); begin(user);
     });
-    $('#start-go').addEventListener('click', () => { if (!st) { st = fresh(); save(); } first = true; trial(); });
+    $('#start-go').addEventListener('click', () => { if (!st) { st = fresh(); save(); } first = true; loadVol(); trial(); });
 
     /* Tabs: README and TEST */
     const tabs = [$('#tab-readme'), $('#tab-test')];
@@ -593,7 +619,7 @@
     function setPt(x, y, announce) {
       pt = { pl: r2(clamp(x)), ev: r2(clamp(y)) };
       const sx = pt.pl, sy = -pt.ev;
-      gdot.hidden = false;
+      gdot.style.display = '';
       $('.g-halo', gdot).setAttribute('cx', sx); $('.g-halo', gdot).setAttribute('cy', sy);
       $('.g-pt', gdot).setAttribute('cx', sx); $('.g-pt', gdot).setAttribute('cy', sy);
       $('.g-guide', gdot).setAttribute('d', `M${sx} ${sy}V0M${sx} ${sy}H0`);
@@ -618,7 +644,7 @@
       e.preventDefault(); const st = e.shiftKey ? 1 : 0.1, p0 = pt || { pl: 0, ev: 0 };
       setPt(p0.pl + d[0] * st, p0.ev + d[1] * st, true);
     });
-    function clearPt() { pt = null; gdot.hidden = true; $('#grid-live').textContent = ''; }
+    function clearPt() { pt = null; gdot.style.display = 'none'; $('#grid-live').textContent = ''; }
     function gate() {
       next.disabled = !(played && pt);
       $('#need').textContent = next.disabled ? (!played ? 'Play the sound to the end to continue.' : 'Place your dot on the grid to continue.') : '';
@@ -648,7 +674,7 @@
       $('#count').textContent = `${i + 1} of ${TOTAL} trials`;
       sw.disabled = true; stop.disabled = true; setSw(false); fill.style.width = '0'; gate();
       aud.pause(); aud.removeAttribute('src');
-      show('lt-trial'); tab(i === 0 && first ? tabs[0] : tabs[1]); first = false; status('Loading sound…');
+      $('#vol-tip').hidden = i !== 0; show('lt-trial'); tab(i === 0 && first ? tabs[0] : tabs[1]); first = false; status('Loading sound…');
       const id = cur;
       try {
         const url = await clip(id); if (id !== cur) return;
@@ -661,8 +687,30 @@
         setTimeout(() => { if (id === cur) trial(); }, 3000);
       }
     }
+    /* Volume: perceptual curve (gain = level^2), remembered per participant, recorded with each rating */
+    const volR = $('#vol-r'), volO = $('#vol-o');
+    let actx = null, gainN = null;
+    const vlev = () => +volR.value, vgain = () => Math.pow(vlev() / 100, 2);
+    function applyVol() {
+      const v = vlev(); volO.textContent = v + '%'; volR.setAttribute('aria-valuetext', v + ' percent');
+      $('#vol').dataset.lvl = v === 0 ? '0' : v < 50 ? '1' : '2';
+      if (gainN) gainN.gain.setTargetAtTime(vgain(), actx.currentTime, 0.02); else aud.volume = vgain();
+      if (user) { try { localStorage.setItem('lt:vol:' + user, String(v)); } catch (e) {} }
+    }
+    function audioGraph() {
+      if (actx) return actx.resume();
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext; actx = new AC();
+        gainN = actx.createGain(); actx.createMediaElementSource(aud).connect(gainN).connect(actx.destination);
+        aud.volume = 1; applyVol();
+      } catch (e) { actx = null; gainN = null; }
+      return actx ? actx.resume() : Promise.resolve();
+    }
+    volR.addEventListener('input', applyVol);
+    function loadVol() { let v = null; try { v = localStorage.getItem('lt:vol:' + user); } catch (e) {} volR.value = v === null ? 70 : v; applyVol(); }
+
     sw.addEventListener('click', () => {
-      if (aud.paused) { if (aud.currentTime === 0) plays++; aud.play().catch(() => { setSw(false); status('Your browser blocked playback. Press the switch again.'); }); }
+      if (aud.paused) { audioGraph(); if (aud.currentTime === 0) plays++; aud.play().catch(() => { setSw(false); status('Your browser blocked playback. Press the switch again.'); }); }
       else aud.pause();
     });
     stop.addEventListener('click', () => { aud.pause(); aud.currentTime = 0; fill.style.width = '0'; });
@@ -686,7 +734,7 @@
       const f = e.currentTarget, it = byId[cur], srcs = $$('input[name="src"]:checked', f).map(c => c.value);
       st.ratings.push({
         trial: st.ratings.length + 1, stimulus: it.name, set: it.set,
-        annoy: r2(+f.annoy.value), pleas: pt.pl, event: pt.ev,
+        annoy: r2(+f.annoy.value), pleas: pt.pl, event: pt.ev, vol: vlev(),
         src: srcs, other: f.other.value.trim(), plays, time: new Date().toISOString()
       });
       aud.pause(); save(); trial();
@@ -698,8 +746,8 @@
     const q = v => { v = String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     const pad = n => String(n).padStart(2, '0');
     function download(n, s) {
-      const head = ['Participant', 'Trial', 'Stimulus', 'Set', 'Annoyance (0 to 10)', 'Pleasantness (-5 to 5)', 'Eventfulness (-5 to 5)', ...SRC, 'Other description', 'Plays', 'Time'];
-      const rows = s.ratings.map(r => [n, r.trial, r.stimulus, r.set, r.annoy, r.pleas, r.event, ...SRC.map(x => r.src.includes(x) ? 1 : 0), r.other, r.plays, r.time]);
+      const head = ['Participant', 'Trial', 'Stimulus', 'Set', 'Annoyance (0 to 10)', 'Pleasantness (-5 to 5)', 'Eventfulness (-5 to 5)', ...SRC, 'Other description', 'Plays', 'Volume (%)', 'Time'];
+      const rows = s.ratings.map(r => [n, r.trial, r.stimulus, r.set, r.annoy, r.pleas, r.event, ...SRC.map(x => r.src.includes(x) ? 1 : 0), r.other, r.plays, r.vol ?? '', r.time]);
       const csv = [head, ...rows].map(r => r.map(q).join(',')).join('\r\n') + '\r\n';
       const d = new Date(), name = `${n}_Ratings_${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}_${pad(d.getHours())}-${pad(d.getMinutes())}-${pad(d.getSeconds())}.csv`;
       const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = name;
