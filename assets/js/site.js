@@ -12,7 +12,7 @@
   const syncChrome = () => {
     const dark = root.getAttribute('data-theme') === 'dark';
     document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0B0B0C' : '#F7F6F2'));
-    document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg' : 'favicon-light.svg'));
+    document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg?v=2' : 'favicon-light.svg?v=2'));
     if (toggle) toggle.setAttribute('aria-checked', dark ? 'true' : 'false');
     // SVG <animate> colour sequences cannot read CSS variables, so they take the theme's viridis steps here
     const cs = getComputedStyle(root);

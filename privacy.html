@@ -22,10 +22,10 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
-<link rel="icon" href="favicon.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-light.svg?v=2" type="image/svg+xml" media="(prefers-color-scheme: light)">
+<link rel="icon" href="favicon.svg?v=2" type="image/svg+xml" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon-32.png?v=2" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://ellisacoustics.github.io/privacy">
 <meta property="og:site_name" content="Max Ellis">
@@ -252,7 +252,7 @@
   const syncChrome = () => {
     const dark = root.getAttribute('data-theme') === 'dark';
     document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0B0B0C' : '#F7F6F2'));
-    document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg' : 'favicon-light.svg'));
+    document.querySelectorAll('link[rel="icon"][type="image/svg+xml"]').forEach((l) => l.setAttribute('href', dark ? 'favicon.svg?v=2' : 'favicon-light.svg?v=2'));
     if (toggle) toggle.setAttribute('aria-checked', dark ? 'true' : 'false');
     // SVG <animate> colour sequences cannot read CSS variables, so they take the theme's viridis steps here
     const cs = getComputedStyle(root);
