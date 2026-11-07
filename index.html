@@ -499,6 +499,7 @@
   .err-tip span { display: flex; justify-content: space-between; gap: 16px; }
   .err-tip em { font-style: normal; font-family: var(--mono); }
   .err-title { font-family: var(--serif); font-weight: 700; font-size: 18px; line-height: 26px; margin-bottom: 6px; }
+  .err-gap { height: 26px; }   /* the title was removed; its space is kept so the graph stays put */
   .err figcaption a, .eth figcaption a { color: inherit; text-underline-offset: 3px; text-decoration-color: var(--rule); }
   .err figcaption a:hover, .eth figcaption a:hover { color: var(--ink); text-decoration-color: currentColor; }
   .err figcaption { margin-top: calc(var(--u) * 1.5); font-family: var(--serif); font-size: 14px; line-height: 20px; color: var(--ink-2); max-width: 80ch; }
@@ -915,8 +916,8 @@
     <h2 id="gap-h">The Gap</h2>
     <div class="gap">
       <p class="gap-lede">At the same sound level, some sources annoy far more people than others. Wind turbines, the first Net Zero source studied at scale, sit well above road, rail and aircraft. Drones, air taxis, heat pumps and e-scooters have no agreed curves yet.</p>
-      <figure class="err" aria-labelledby="err-title">
-        <p class="err-title" id="err-title">Exposure-response relationships</p>
+      <figure class="err" aria-label="Exposure-response relationships">
+        <div class="err-title err-gap" aria-hidden="true"></div>
         <div class="err-legend" aria-hidden="true">
           <span><i class="k k-wt"></i>Wind turbines</span><span><i class="k k-air"></i>Aircraft</span><span><i class="k k-road"></i>Road</span><span><i class="k k-rail"></i>Railway</span>
         </div>
