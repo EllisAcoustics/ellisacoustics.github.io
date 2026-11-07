@@ -954,11 +954,11 @@
     <h2 id="collab-h">Research Collaborations</h2>
     <ul class="print-only print-list">
       <li><strong>Defra</strong> — PhD Sponsor</li>
-      <li><strong>HEAD Acoustics GmbH</strong> — Journal Paper</li>
+      <li><strong>HEAD Acoustics GmbH</strong> — Conference Paper</li>
     </ul>
     <ul class="org-grid" aria-label="Research collaborators">
       <li class="org-tile" tabindex="0"><img loading="lazy" src="assets/logos/orgs/defra.png" class="colour dark-ink" width="80" height="56" style="height:56px" alt="Department for Environment, Food &amp; Rural Affairs (Defra)" decoding="async"><span class="caption"><span class="t">Department for Environment, Food &amp; Rural Affairs</span><span>PhD Sponsor</span></span></li>
-      <li class="org-tile" tabindex="0"><img loading="lazy" class="colour on-light" src="assets/logos/orgs/head-acoustics.svg" width="31" height="56" style="height:56px" alt="HEAD Acoustics GmbH" decoding="async"><img loading="lazy" class="colour on-dark" src="assets/logos/orgs/head-acoustics-dark.svg" width="31" height="56" style="height:56px" alt="" decoding="async"><span class="caption"><span class="t">HEAD Acoustics GmbH</span><span>Journal Paper</span></span></li>
+      <li class="org-tile" tabindex="0"><img loading="lazy" class="colour on-light" src="assets/logos/orgs/head-acoustics.svg" width="31" height="56" style="height:56px" alt="HEAD Acoustics GmbH" decoding="async"><img loading="lazy" class="colour on-dark" src="assets/logos/orgs/head-acoustics-dark.svg" width="31" height="56" style="height:56px" alt="" decoding="async"><span class="caption"><span class="t">HEAD Acoustics GmbH</span><span>Conference Paper</span></span></li>
     </ul>
   
   </section>
@@ -1205,6 +1205,12 @@
     + '<path class="door door-r" d="M20 21H24.5" stroke="var(--ink)" stroke-width="1.15"/></svg>';
   document.body.appendChild(drone);
 
+  // A tap, scroll or key press skips the intro straight to the finished page. If that happens before the
+  // courier gets home, the ruler's own drone is already showing, so the courier just leaves (no return flight,
+  // which would hide the ruler's drone while it waits for a sweep that has already been skipped).
+  let introOver = false;
+  addEventListener('intro-done', () => { introOver = true; }, { once: true });
+
   let gone = false;
   const finish = () => {
     root.classList.remove('awaiting-dot', 'drone-away'); drone.remove();
@@ -1262,7 +1268,7 @@
         .onfinish = () => window.dotPing && (window.dotPing(3.4, 0.45, 700, 0), window.dotPing(3.4, 0.35, 700, 650));
     }, D * 0.41 + 120);
     setTimeout(() => swing(false), D * 0.53);
-    anim.onfinish = narrow ? homecoming : finish;
+    anim.onfinish = () => (narrow && !introOver ? homecoming() : finish());
   };
   // Narrow screens: after leaving left, the drone flies back in from the left alongside the
   // ruler sweep, landing in its own slot on the ruler just as the sweep reaches it.
