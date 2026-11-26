@@ -6,6 +6,9 @@ Run from the repo root after editing assets/css/, assets/js/site.js or page text
      needs nothing else before it can paint (the page itself is the only blocking request).
   2. Cuts the Sourcerer serif down to exactly the characters each page uses, as WOFF2,
      and preloads those files so the serif arrives alongside the HTML.
+  3. Cuts Inter (body text) and Geist Mono (labels) down to every character any page can show,
+     once for the whole site, so all pages share (and cache) the same two small files. Serving
+     the type ourselves is what makes Mac, Windows, Linux, iOS and Android all look the same.
 
 Sources stay where they are; the build rewrites the marked blocks in each page in place, so
 it is safe to run as often as you like.
@@ -30,6 +33,18 @@ FACES = {  # face key -> (source file, weight, style)
 # Faces each page sets in the serif (found by checking computed styles on every element)
 USES = {'index': ['regular', 'italic', 'bold']}
 OUT = 'assets/fonts/sub'
+# Sans and mono, shared by every page: (key, source, family, style, preload)
+SHARED = [
+    ('sans', 'assets/fonts/inter-variable.woff2', 'Inter', 'normal', True),
+    ('sans-italic', 'assets/fonts/inter-variable-italic.woff2', 'Inter', 'italic', False),
+    ('mono', 'assets/fonts/geist-mono-variable.woff2', 'Geist Mono', 'normal', True),
+]
+SHARED_EXTRA = set('–—‘’“”…·×→←↗↘↑↓°±²³µ€£©®™−≈≤≥✓')
+# Arial (Windows, Mac), Liberation Sans / Arimo (Linux) and Helvetica stretched to Inter's size,
+# so text barely moves in the moment before Inter arrives.
+FALLBACK = ('  @font-face { font-family: "Inter fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), '
+            'local("Arimo"), local("Helvetica"); size-adjust: 107.4%; ascent-override: 90.2%; descent-override: 22.5%; '
+            'line-gap-override: 0%; }')
 
 
 def page_chars(src):
@@ -97,6 +112,29 @@ def make_subset(face, chars, page):
     return name, len(data)
 
 
+def make_shared(key, src, chars):
+    """One subset of a variable face for the whole site (axes kept, so every weight still works)."""
+    opts = subset.Options()
+    opts.flavor = 'woff2'
+    opts.layout_features = ['kern', 'liga', 'calt', 'ccmp', 'locl', 'mark', 'mkmk', 'rvrn', 'case',
+                            'tnum', 'lnum', 'pnum', 'frac', 'numr', 'dnom', 'sups', 'subs']
+    opts.hinting = False
+    opts.desubroutinize = True
+    opts.name_IDs = [0, 1, 2, 3, 4, 5, 6]
+    opts.notdef_outline = True
+    font = subset.load_font(src, opts)
+    sub = subset.Subsetter(opts)
+    sub.populate(text=chars)
+    sub.subset(font)
+    os.makedirs(OUT, exist_ok=True)
+    tmp = os.path.join(OUT, f'_{key}.woff2')
+    subset.save_font(font, tmp, opts)
+    data = open(tmp, 'rb').read()
+    name = f'{key}.{hashlib.sha1(data).hexdigest()[:8]}.woff2'
+    os.replace(tmp, os.path.join(OUT, name))
+    return name, len(data)
+
+
 def block(s, start, end, new):
     """Replace the text between two marker strings (inclusive), or fail loudly."""
     a = s.index(start); b = s.index(end, a) + len(end)
@@ -136,6 +174,8 @@ def inline_js(s, path):
 
 def main():
     keep = set()
+    texts = {}
+    # 1. inline the shared CSS and JS, and write the pages so the browser-based checks below read current styles
     for page in PAGES:
         fn = page + '.html'
         if not os.path.exists(fn):
@@ -144,33 +184,55 @@ def main():
         s = inline_css(s, 'assets/css/site.css')
         s = inline_css(s, 'assets/css/sections.css')
         s = inline_js(s, 'assets/js/site.js')
+        open(fn, 'w', encoding='utf-8').write(s)
+        texts[page] = s
+
+    # 2. Inter and Geist Mono: one subset each for the whole site
+    chars = set(SHARED_EXTRA)
+    for s in texts.values():
+        chars |= set(page_chars(s))
+    chars = ''.join(sorted(chars))
+    shared = []
+    for key, src, fam, style, preload in SHARED:
+        name, size = make_shared(key, src, chars)
+        keep.add(name)
+        shared.append((key, name, fam, style, preload))
+        print(f'{key}: {size / 1024:.1f} KB ({len(chars)} characters, shared by every page)')
+
+    # 3. per page: the serif subsets where used, then the @font-face rules and preloads
+    for page, s in texts.items():
+        fn = page + '.html'
+        root = '/' if page == '404' else ''          # the 404 page is served at any depth
+        ff, pre, report = [FALLBACK], [], []
+        for key, name, fam, style, preload in shared:
+            ff.append(f'  @font-face {{ font-family: "{fam}"; src: url("{root}{OUT}/{name}") format("woff2"); '
+                      f'font-weight: 100 900; font-style: {style}; font-display: swap; }}')
+            if preload:
+                pre.append(f'<link rel="preload" href="{root}{OUT}/{name}" as="font" type="font/woff2" crossorigin>')
         faces = USES.get(page, [])
         if faces:
             live = serif_chars(page)
-            chars = page_chars(s)
-            ff, pre, report = [], [], []
+            pchars = page_chars(s)
             for face in faces:
-                name, size = make_subset(face, live[face] if live else chars, page)
+                name, size = make_subset(face, live[face] if live else pchars, page)
                 keep.add(name)
                 _, w, st = FACES[face]
-                ff.append(f'  @font-face {{ font-family: "Sourcerer"; src: url("{OUT}/{name}") format("woff2"); '
-                          f'font-weight: {w}; font-style: {st}; font-display: optional; }}')
-                pre.append(f'<link rel="preload" href="{OUT}/{name}" as="font" type="font/woff2" crossorigin>')
+                ff.append(f'  @font-face {{ font-family: "Sourcerer"; src: url("{root}{OUT}/{name}") format("woff2"); '
+                          f'font-weight: {w}; font-style: {st}; font-display: swap; }}')
+                pre.append(f'<link rel="preload" href="{root}{OUT}/{name}" as="font" type="font/woff2" crossorigin>')
                 report.append(f'{face} {size / 1024:.1f} KB')
-            fonts = '  /* @fonts: written by tools/build.py (subset to this page\'s characters) */\n' + '\n'.join(ff) + '\n  /* @fonts:end */'
-            if '/* @fonts:' in s:
-                s = block(s, "  /* @fonts:", "/* @fonts:end */", fonts)
-            else:
-                lines = [l for l in s.split('\n') if l.strip().startswith('@font-face { font-family: "Sourcerer"')]
-                for i, l in enumerate(lines):
-                    s = s.replace(l + '\n', (fonts + '\n') if i == 0 else '', 1)
-            pre_html = '<!-- @preload -->\n' + '\n'.join(pre) + '\n<!-- @preload:end -->'
-            if '<!-- @preload -->' in s:
-                s = block(s, '<!-- @preload -->', '<!-- @preload:end -->', pre_html)
-            else:
-                s = re.sub(r'<link rel="preload" href="assets/fonts/sourcerer-[a-z]+\.woff" as="font" type="font/woff" crossorigin>\n', '', s)
-                s = s.replace('<meta name="viewport"', pre_html + '\n<meta name="viewport"', 1) if False else re.sub(r'(<meta name="viewport"[^>]*>\n)', lambda m: m.group(1) + pre_html + '\n', s, count=1)
-            print(f'{fn}: ' + ', '.join(report) + (' (characters read from the rendered page)' if live else ''))
+        fonts = '  /* @fonts: written by tools/build.py (Inter and Geist Mono shared; serif subset to this page) */\n' + '\n'.join(ff) + '\n  /* @fonts:end */'
+        if '/* @fonts:' in s:
+            s = block(s, "  /* @fonts:", "/* @fonts:end */", fonts)
+        else:
+            s = s.replace('<style', '<style>\n' + fonts + '\n</style>\n<style', 1)
+        pre_html = '<!-- @preload -->\n' + '\n'.join(pre) + '\n<!-- @preload:end -->'
+        if '<!-- @preload -->' in s:
+            s = block(s, '<!-- @preload -->', '<!-- @preload:end -->', pre_html)
+        else:
+            s = re.sub(r'(<meta name="viewport"[^>]*>\n)', lambda m: m.group(1) + pre_html + '\n', s, count=1)
+        if report:
+            print(f'{fn}: serif ' + ', '.join(report))
         open(fn, 'w', encoding='utf-8').write(s)
     for f in os.listdir(OUT) if os.path.isdir(OUT) else []:
         if f not in keep:
