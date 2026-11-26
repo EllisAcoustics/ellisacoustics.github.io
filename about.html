@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ellisacoustics.github.io/about">
 <meta property="og:description" content="About Max Ellis: educator, acoustician and researcher, born in Glasgow and based in Manchester, from recording bands to training machines to predict how people respond to sound.">
-<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=3">
+<meta property="og:image" content="https://ellisacoustics.github.io/assets/images/og-card.png?v=4">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
@@ -70,7 +70,7 @@
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body { overflow-x: clip; }
-  @media (max-width: 899px) { #memberships .org-grid { padding-bottom: 0; margin-bottom: -4px; } #volunteering .vol-grid { padding-bottom: 0; } #software .icon-grid { padding-bottom: 0; } }   /* even section gaps on phones */ /* nothing can ever cause sideways scrolling */
+  @media (max-width: 899px) { #memberships .org-grid { padding-bottom: 0; margin-bottom: -4px; } #software .icon-grid { padding-bottom: 0; } }   /* even section gaps on phones */ /* nothing can ever cause sideways scrolling */
   body {
     margin: 0; background: var(--paper); color: var(--ink);
     font-family: var(--sans); font-size: 16px; line-height: 24px;
@@ -196,17 +196,8 @@
   .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
   @media print { .foot-line { display: none; } }
   /* same grid as Working Groups above, so the three columns line up */
-  .vol-grid { list-style: none; margin: 0; padding: 0 0 calc(var(--u) * 6); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 3) calc(var(--u) * 2); max-width: 760px; }
-  .vol-tile { position: relative; display: flex; align-items: center; justify-content: center; height: 88px; outline-offset: 4px; }
-  .vol-tile img { display: block; height: 60px; width: auto; transition: transform var(--dur-3) var(--ease); }
-  .vol-tile:hover img, .vol-tile:focus-visible img, .vol-tile.tap-hover img { transform: translateY(-4px); }
-  .vol-tip { position: absolute; top: calc(100% + 2px); left: 50%; z-index: 5; width: max-content; max-width: 220px; text-align: center;
     display: flex; flex-direction: column; font-size: 14px; line-height: 20px; background: var(--paper);
     transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none; transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
-  .vol-tip span { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
-  .vol-tile:hover .vol-tip, .vol-tile:focus-visible .vol-tip, .vol-tile.tap-hover .vol-tip { opacity: 1; transform: translate(calc(-50% + var(--dx, 0px)), 0); }
-  :root[data-theme="dark"] .vol-tile img[src*="yan"] { filter: brightness(1.6); }
-  @media print { .vol-tile img { display: none; } .vol-tip { position: static; opacity: 1; transform: none; } .vol-tile { height: auto; } }
   .print-only { display: none; }
   .skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
   .skip:focus { top: var(--u); }
@@ -214,7 +205,7 @@
   /* Phones and small tablets: tighter vertical rhythm so sections don't float in empty space */
   @media (max-width: 879px) {
     .section { padding: calc(var(--u) * 3) 0 calc(var(--u) * 4); gap: calc(var(--u) * 2); }
-    .org-grid, .vol-grid { padding-bottom: calc(var(--u) * 3); }
+    .org-grid { padding-bottom: calc(var(--u) * 3); }
     .org-tile { height: 72px; }
     .itiles { row-gap: calc(var(--u) * 3); }
     .steps { gap: calc(var(--u) * 3); }
@@ -382,15 +373,6 @@
   
   </section>
 
-  <section class="section" id="volunteering" aria-labelledby="vol-h">
-    <h2 id="vol-h">Volunteering</h2>
-    <ul class="vol-grid">
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="assets/logos/volunteering/broadcasting-scotland.png" width="52" height="84" style="height:84px" alt="Broadcasting Scotland" decoding="async"><span class="vol-tip"><strong>Broadcasting Scotland</strong><span>Live Sound Engineer, 2018</span></span></li>
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="assets/logos/volunteering/young-acousticians-network.svg" width="106" height="64" alt="Young Acousticians Network" decoding="async"><span class="vol-tip"><strong>Young Acousticians Network</strong><span>Committee Member</span></span></li>
-      <li class="vol-tile" tabindex="0"><img loading="lazy" src="assets/logos/volunteering/stem-ambassadors.svg" width="60" height="60" alt="STEM Ambassadors" decoding="async"><span class="vol-tip"><strong>STEM Ambassador</strong><span>Scotland</span></span></li>
-    </ul>
-  </section>
-
   <section class="section" id="software" aria-labelledby="software-h">
     <h2 id="software-h">Software Proficiencies</h2>
     <ul class="icon-grid" aria-label="Software">
@@ -529,7 +511,7 @@
 <script>
   // Keep pop-up labels on screen: shift any label that would run off the edge of a narrow phone
   (() => {
-    const SEL = '.org-tile .caption, .icon-tile .tip, .vol-tip';
+    const SEL = '.org-tile .caption, .icon-tile .tip';
     const place = (p) => {
       const tr = p.parentElement.getBoundingClientRect(), w = p.offsetWidth, m = 12, W = document.documentElement.clientWidth;
       const l = tr.left + tr.width / 2 - w / 2, r = l + w;

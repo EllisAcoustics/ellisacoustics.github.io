@@ -24,7 +24,7 @@
 <meta property="og:url" content="https://ellisacoustics.github.io/">
 <meta name="description" content="Max Ellis is a Defra-funded PhD candidate in psychoacoustics at the University of Salford, researching how people perceive drones, eVTOL aircraft, heat pumps and electric-vehicle warning sounds in complex soundscapes.">
 <meta property="og:description" content="Max Ellis is a Defra-funded PhD candidate in psychoacoustics at the University of Salford, researching how people perceive drones, eVTOL aircraft, heat pumps and electric-vehicle warning sounds in complex soundscapes.">
-<meta property="og:image" content="https://ellisacoustics.github.io/images/og-card.png?v=3">
+<meta property="og:image" content="https://ellisacoustics.github.io/assets/images/og-card.png?v=4">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Max Ellis, PhD researcher in psychoacoustics at the University of Salford: What does the future sound like? Drones, air taxis, heat pumps and EV warning sounds on a frequency ruler">
@@ -200,87 +200,17 @@
     display: block; position: fixed; inset: 0; z-index: 100; pointer-events: none; background: var(--paper);
     animation: intro-failsafe 0s linear 11s forwards; /* never lingers, even if scripts fail */
   }
-  /* The ruler waits until the courier drone has delivered the dot and flown off */
-  html.intro .scale, html.intro .sources, html.intro .freq-labels { opacity: 0; animation: ruler-failsafe 0s linear 11s forwards; }
-  @keyframes ruler-failsafe { to { opacity: 1; } }
   #intro.live { display: block; position: fixed; inset: 0; z-index: 100; pointer-events: none; }
   #intro canvas { display: block; width: 100%; height: 100%; }
   @keyframes intro-failsafe { to { visibility: hidden; } }
   @media print { #intro { display: none !important; } }
 
-  /* ---------- Noise sources on the frequency ruler ---------- */
-  .scale { height: 24px; color: var(--v0); }
-  .sources { position: relative; height: 48px; margin-bottom: 0; }
-  .sources { --ih: 66px; height: 96px; }   /* desktop: the illustrated sources large enough to read */
-  @media (max-width: 899px) { .sources { --ih: 44px; height: 62px; } }
-  .src {
-    position: absolute; top: 50%; left: calc(var(--x) * 100%);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    animation: src-in 500ms ease forwards;
-    animation-delay: calc(var(--i) * 90ms);
-  }
-  html.intro .src { animation-play-state: paused; }
-  .src svg { display: block; width: 56px; height: auto; overflow: visible; }
-  @keyframes src-in { from { opacity: 0; transform: translate(-50%, calc(-50% + 4px)); } to { opacity: 1; transform: translate(-50%, -50%); } }
-  @media (max-width: 599px) {
-    .sources { height: 50px; --ih: 34px; }
-  }
-
-  /* Ruler icons: the same simple line drawings as the Contact page. Bodies are ink; each source's moving
-     parts take its colour (adapted viridis, colour-blind safe). The span keeps the source colour for its band. */
-  .src svg { color: var(--ink); }
-  .src svg:not(.craft) { width: auto; height: calc(var(--ih) * 1.25); }   /* every line icon at the Contact scale: one height, so lines and sizes match */
-  .src svg * { transform-box: view-box; }
-  .src .a-wave { opacity: 0; animation: a-wave 1.4s ease-out infinite; }
-  @keyframes a-wave { 0% { opacity: 0; transform: scale(0.7); } 20% { opacity: 0.9; } 100% { opacity: 0; transform: scale(1.7); } }
-  .src .a-hover { animation: a-hover 2.6s ease-in-out infinite; }
-  @keyframes a-hover { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.6px, -1.6px); } }
-  .src svg .a-rotor { transform-box: fill-box; transform-origin: center; animation: a-rotor 0.16s linear infinite; }
-  .src .a-rotor.r2 { animation-delay: -0.08s; }
-  @keyframes a-rotor { 50% { transform: scaleX(0.2); } }
-  .src .a-spin { animation: a-spin 1.2s linear infinite; }
-  @keyframes a-spin { to { transform: rotate(360deg); } }
-  .src .a-drive { animation: a-drive 1.8s ease-in-out infinite; }
-  @keyframes a-drive { 0%, 100% { transform: translateX(-0.8px); } 50% { transform: translateX(0.8px); } }
-  .src .a-air path { animation: a-in 3s ease-in-out infinite; }   /* heat pump: air sucked in from both sides */
-  @keyframes a-in { 0% { opacity: 0; transform: scale(1.25); } 30%, 60% { opacity: 0.45; } 100% { opacity: 0; transform: scale(0.85); } }
-  .src .a-spin.rev { animation-direction: reverse; }   /* its two fans turn opposite ways */
-  .src .a-note { animation: a-note 1.8s ease-in-out infinite; }
-  @keyframes a-note { 0%, 100% { opacity: 0.35; transform: translate(0, 0.6px); } 50% { opacity: 1; transform: translate(0.4px, -0.8px); } }
-  .k-drone .a-rotor, .k-drone .a-wave { color: #13B5CF; }                  /* drone: cyan rotors and pulse, as on Contact */
-  .k-ashp .a-spin { color: var(--s-heatpump); } .k-ashp .a-air { color: var(--ac-b); } .k-ashp .a-note { color: var(--ac-d); }
-  .k-ev .a-wave, .k-ev .a-bolt { color: var(--s-ev); }
-  .k-evtol .a-rotor, .k-evtol .a-spin, .k-evtol .a-wave { color: var(--s-evtol); }
-  @media (prefers-reduced-motion: reduce) {
-    .src { opacity: 1; animation: none; }
-    .src * { animation: none !important; }
-    .src .a-wave { opacity: 0.6; }
-  }
-
-  /* Ruler: click (or press Enter on) a source to see what it is, what makes it sound new,
-     and the band of the ruler where you would hear it; click elsewhere or Escape to close */
-  .freq { position: relative; }
-  .src[data-n] { cursor: help; outline: none; -webkit-tap-highlight-color: transparent; }
-  .src[data-n] svg { transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
-  .src[data-n]:hover svg, .src.on svg { transform: translateY(-3px); }
-  .src[data-n]:focus-visible svg { outline: 2px solid currentColor; outline-offset: 5px; border-radius: 4px; }
-  .sources.picking .src:not(.on) svg { opacity: 0.28; }
-  .ruler-band { position: absolute; left: 0; top: 0; width: 0; height: 12px; margin-top: -6px; border-radius: 6px; pointer-events: none;
-    background: color-mix(in srgb, var(--c, currentColor) 26%, transparent); box-shadow: inset 0 0 0 1.5px var(--c, currentColor);
-    opacity: 0; transition: opacity var(--dur-2) var(--ease); }
-  .ruler-band.on { opacity: 1; }
-  .src-pop { width: min(340px, calc(100% - 16px)); }
-  .src-pop p + p { margin-top: 10px; }
-  .src-pop strong { font-weight: 600; color: var(--ink); }
-  .src-pop .refs, .eth-note .refs { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--hairline); }
-  .src-pop .refs-h, .eth-note .refs-h { display: block; margin-bottom: 6px; font-family: var(--mono); font-size: 11px; line-height: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
-  .src-pop .refs ul, .eth-note .refs ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  .src-pop .refs a, .eth-note .refs a { color: var(--ink); font-size: 14px; line-height: 20px; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
-  .src-pop .refs a:hover, .eth-note .refs a:hover { text-decoration-color: currentColor; }
-  .src-pop .refs li span, .eth-note .refs li span { display: block; font-size: 13px; line-height: 18px; color: var(--ink-2); }
-  @media (prefers-reduced-motion: reduce) { .src[data-n] svg { transition: none; } .src[data-n]:hover svg, .src.on svg { transform: none; } }
-  @media (forced-colors: active) { .ruler-band { background: Highlight; box-shadow: none; } }
+  .eth-note .refs { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--hairline); }
+  .eth-note .refs-h { display: block; margin-bottom: 6px; font-family: var(--mono); font-size: 11px; line-height: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+  .eth-note .refs ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .eth-note .refs a { color: var(--ink); font-size: 14px; line-height: 20px; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  .eth-note .refs a:hover { text-decoration-color: currentColor; }
+  .eth-note .refs li span { display: block; font-size: 13px; line-height: 18px; color: var(--ink-2); }
   /* ---------- Research method figure ---------- */
   .method { min-width: 0; }
   @media (min-width: 880px) {
@@ -333,7 +263,7 @@
   @keyframes node-in { from { background: var(--paper); } to { background: var(--sc); border-color: var(--sc); } }
   @media print { .steps, .step, .step .node, .step .step-icon { animation: none !important; } }
   /* ---------- Method icon colours: each animated part says what it is ---------- */
-  .si1 .m-rotor { color: #13B5CF; }   /* drone rotors: the same cyan as the ruler and Contact drone */
+  .si1 .m-rotor { color: #13B5CF; }   /* drone rotors: the same cyan as the Contact drone */
   .si1 .m-fan { animation: m-fan 1.2s linear infinite; }   /* heat pump fan turns (origin set inline, view-box units) */
   @keyframes m-fan { to { transform: rotate(360deg); } }
   .si1 .m-bolt { color: var(--s-ev); animation: m-bolt 1.6s ease-in-out infinite; }   /* EV: green charge bolt, pulsing as it charges */
@@ -510,17 +440,17 @@
   .hero-sub span.g { font-weight: 600; color: var(--nz1); }   /* Net Zero: one green */
   /* the new technologies, each in its colour from the drawings; the sounds get a wave under them */
   .hero-sub .t { font-weight: 600; }
-  /* each technology in the colour of its kind of source, as on the ruler: stationary ground, air, moving ground
+  /* each technology in the colour of its kind of source: stationary ground, air, moving ground
      (adapted viridis; every word reads at 4.5:1 or better in both themes) */
   .hero-sub .t-hp { color: var(--s-heatpump); } .hero-sub .t-air { color: var(--s-evtol); } .hero-sub .t-car { color: var(--s-ev); } .hero-sub .t-drone { color: var(--s-drone); }
   .hero-sub .snd { font-style: italic; }
   .hero-sub .snd { position: relative; }
-  /* a sound wave under "sounds", which starts travelling once the ruler has drawn itself */
+  /* a sound wave under "sounds", which starts travelling once the opening has finished */
   .hero-sub .snd::after { content: ""; position: absolute; left: 0; right: 0; bottom: -0.2em; height: 0.24em; background: var(--ink-2);
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0 8 3T16 3' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 0 50% / 0.5em 100% repeat-x;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0 8 3T16 3' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3C/svg%3E") 0 50% / 0.5em 100% repeat-x;
     animation: snd-wave 0.8s linear infinite paused; }
-  /* the squiggle draws itself in left to right, like the ruler, once the ruler and its icons have all appeared, then travels */
+  /* the squiggle draws itself in left to right once the opening has finished, then travels */
   .hero-sub .snd::after { clip-path: inset(0 100% 0 0); }
   html.ruled .hero-sub .snd::after { animation: snd-draw 0.9s cubic-bezier(.65,0,.35,1) 0.2s both, snd-wave 0.8s linear infinite; }
   @keyframes snd-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
@@ -617,22 +547,6 @@
     margin-left: 0.15em;
   }
 
-  .scale {
-    display: block;
-    width: 100%;
-    height: auto;
-    color: var(--rule);
-  }
-  .freq { margin: calc(var(--u) * 6) 0 calc(var(--u) * 4); }
-  .freq-labels {
-    position: relative; height: 16px; margin-top: var(--u);
-    font-family: var(--mono); font-size: 12px; line-height: 16px; color: var(--ink-2);
-  }
-  .freq-labels span { position: absolute; top: 0; left: calc(var(--i) * 100% / 7); transform: translateX(-50%); white-space: nowrap; }
-  .freq-labels span:first-child { transform: none; }
-  .freq-labels span:last-child { transform: translateX(-100%); }
-  @media (max-width: 599px) { .freq-labels span:nth-child(even) { visibility: hidden; } }
-
   .contact {
     display: flex; flex-wrap: wrap; gap: var(--u) calc(var(--u) * 4);
     font-family: var(--mono); font-size: 14px; line-height: 24px;
@@ -676,8 +590,6 @@
     body { font-size: 10.5pt; line-height: 1.45; }
     .print-only { display: block; margin-top: 8px; font-family: var(--mono); font-size: 9pt; color: var(--ink-2); }
     #intro, .courier, .impulse, .skip { display: none !important; }
-    .src { opacity: 1 !important; animation: none !important; }
-    .src * { animation: none !important; }
     .masthead { padding-top: 0; padding-bottom: 12px; }
     .masthead h1 { font-size: 40pt; }
     .hero { margin-top: 18px; }
@@ -689,7 +601,7 @@
     .logo { height: 96px; }
     .sub-strip { break-inside: avoid; }
     .skip { display: none; }
-    #method, .freq, footer, .icon-tile img, .icon-tile svg { display: none !important; }
+    #method, footer, .icon-tile img, .icon-tile svg { display: none !important; }
     br.no-print { display: none; }
     .print-list { display: grid !important; gap: 2px; margin: 0; }
     .print-list strong { font-weight: 600; }
@@ -738,29 +650,9 @@
   </nav>
   <h1><span class="name"><span class="visually-hidden">Max Ellis</span><span aria-hidden="true">Max Ell<span class="i-wrap"><span class="bl"></span>ı<span class="tittle"></span></span>s</span></span> <span class="postnominals">BDes (Hons) MSc AFHEA</span></h1>
   <p class="role">PhD Candidate in Psychoacoustics</p>
-  <p class="affil thesis-title">Psychoacoustic Assessment and Machine Learning-Based Modelling of Novel Noise Source Perception in Complex Soundscapes</p>
+  <p class="affil thesis-title">Psychoacoustic Assessment and Autonomous Modelling of Advanced Air Mobility Perception in Complex Soundscapes</p>
   <p class="print-only">ellisacoustics.github.io · linkedin.com/in/psychoacoustic · github.com/ellisacoustics · orcid.org/0009-0007-5909-854X</p>
 
-  <figure class="freq">
-  <!-- Noise sources spread evenly, low to high frequency; each one’s real band is highlighted on the ruler when selected -->
-  <div class="sources">
-    <span class="src k-ashp" data-r="https://acta-acustica.edpsciences.org/articles/aacus/abs/2026/01/aacus250155/aacus250155.html|Human response to air source heat pump noise: influence of background noise, operating conditions and acoustic characteristics|Acta Acustica, 2026||https://acta-acustica.edpsciences.org/articles/aacus/ref/2026/01/aacus250103/aacus250103.html|Heat pump noise: Determination and modelling of preference-equivalent levels|Acta Acustica, 2026" style="--x:0.1000;--i:1;color:var(--s-heatpump)" data-k="1.25" role="button" tabindex="0" aria-label="Air Source Heat Pump (ASHP): what this means" data-n="Air Source Heat Pump (ASHP)" data-u="Heats a home with electricity instead of gas, from a unit outside the house, often close to a neighbour’s window." data-p="Its fans and compressor hum with steady tones that carry through winter nights, when everything else is quiet. Tonal sound annoys more than the broadband roar of a gas boiler at the same level." data-lo="63" data-hi="800"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9.4" y="5.6" width="13.2" height="22.4" rx="1.4"/><circle cx="16" cy="11.4" r="4.4"/><g class="a-spin" style="transform-origin:16px 11.4px"><path d="M16 11.4L19.60 11.40M16 11.4L18.55 13.95M16 11.4L16.00 15.00M16 11.4L13.45 13.95M16 11.4L12.40 11.40M16 11.4L13.45 8.85M16 11.4L16.00 7.80M16 11.4L18.55 8.85" stroke-width="0.85"/></g><circle cx="16" cy="11.4" r="0.95" fill="currentColor" stroke="none"/><circle cx="16" cy="22.2" r="4.4"/><g class="a-spin rev" style="transform-origin:16px 22.2px"><path d="M16 22.2L19.60 22.20M16 22.2L18.55 24.75M16 22.2L16.00 25.80M16 22.2L13.45 24.75M16 22.2L12.40 22.20M16 22.2L13.45 19.65M16 22.2L16.00 18.60M16 22.2L18.55 19.65" stroke-width="0.85"/></g><circle cx="16" cy="22.2" r="0.95" fill="currentColor" stroke="none"/><path d="M11.4 30V28M20.6 30V28"/><g stroke-width="0.9" transform="translate(-12.6 -18.3)"><path d="M30.6 22.2Q31.4 23.4 32.8 22.9Q33.6 22.5 33.4 21.6"/><path d="M30.6 22.2Q31.6 21.3 33.1 21.4"/><path d="M30.6 22.2L29.5 21.7"/><path d="M33.1 21.4Q33.4 20.4 34.2 20.6Q34.8 20.8 34.6 21.4L35.4 21.5L34.5 21.8Q34.2 22.1 33.4 21.6"/><path d="M31.8 23.2V23.9M32.6 23.1V23.9" stroke-width="0.6"/></g><g class="a-note"><ellipse cx="25.6" cy="3.7" rx="0.95" ry="0.7" fill="currentColor" stroke="none" transform="rotate(-20 25.6 3.7)"/><path d="M26.38 3.48V1.23L27.63 1.88" stroke-width="0.9"/></g><g class="a-air in-l" stroke-width="1"><path d="M4.34 9.5Q5.71 11.1 6.82 11.4Q5.71 11.7 4.34 13.3" style="transform-origin:11.4px 11.4px"/><path d="M4.34 20.3Q5.71 21.9 6.82 22.2Q5.71 22.5 4.34 24.1" style="transform-origin:11.4px 22.2px"/><path d="M4.34 9.5Q5.71 11.1 6.82 11.4Q5.71 11.7 4.34 13.3" style="transform-origin:11.4px 11.4px;animation-delay:-1.5s"/><path d="M4.34 20.3Q5.71 21.9 6.82 22.2Q5.71 22.5 4.34 24.1" style="transform-origin:11.4px 22.2px;animation-delay:-1.5s"/></g><g class="a-air in-r" stroke-width="1"><path d="M27.66 9.5Q26.29 11.1 25.18 11.4Q26.29 11.7 27.66 13.3" style="transform-origin:20.6px 11.4px"/><path d="M27.66 20.3Q26.29 21.9 25.18 22.2Q26.29 22.5 27.66 24.1" style="transform-origin:20.6px 22.2px"/><path d="M27.66 9.5Q26.29 11.1 25.18 11.4Q26.29 11.7 27.66 13.3" style="transform-origin:20.6px 11.4px;animation-delay:-1.5s"/><path d="M27.66 20.3Q26.29 21.9 25.18 22.2Q26.29 22.5 27.66 24.1" style="transform-origin:20.6px 22.2px;animation-delay:-1.5s"/></g></svg></span>
-    <span class="src k-evtol" data-r="https://www.frontiersin.org/journals/acoustics/articles/10.3389/facou.2025.1624669/full|Human response to eVTOL drone sound: an online listening experiment exploring the effects of operational and contextual factors|Frontiers in Acoustics, 2025||https://www.researchgate.net/publication/396802152_Sound_perception_study_of_an_eVTOL_vehicle|Sound perception study of an eVTOL vehicle|Inter-Noise 2025" style="--x:0.3650;--i:2;color:var(--s-evtol)" role="button" tabindex="0" aria-label="Electric Vertical Take-off and Landing Aircraft (eVTOL): what this means" data-n="Electric Vertical Take-off and Landing Aircraft (eVTOL)" data-u="Commonly referred to as an air taxi. An electric aircraft that takes off and lands vertically, carrying passengers on short hops across and between cities." data-p="Its propellers make the sound. Rather than one big helicopter rotor, several smaller ones each add their own blade tones, which shift as the craft tilts from hover to cruise, giving a buzzing, many-toned sound low over neighbourhoods." data-lo="80" data-hi="2000"><svg viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="31" cy="8.5" rx="10" ry="1.3" stroke-width="0.8" opacity="0.5"/><path class="a-rotor" d="M21 8.5H41" stroke-width="1.2"/><path d="M31 9.1V11.5" stroke-width="1.2"/><circle cx="31" cy="8.5" r="0.85" fill="currentColor" stroke="none"/><path d="M7.6 8.8H10.6L15.2 13.6C18.4 13.4 21.4 13.3 24 13.2C25 11.9 26.5 11.5 29 11.5H33C34.6 11.5 35.6 12.1 36.4 13.2C39.4 13.5 41.9 15.6 42.7 17.9C43.2 19.4 42 20.2 39.9 20.2H26.6C23 20.2 18 17.4 14.6 16L10.4 14.6Z"/><path d="M13.9 16.1L10.7 18.1H13.5L16.1 16.9" stroke-width="1.1"/><rect x="29" y="14.4" width="3.6" height="2.4" rx="0.7" stroke-width="0.9"/><path d="M34.1 14.4H36.6L39 16.8H34.1Z" stroke-width="0.9"/><path d="M27.4 20.2L25.9 22.6M38.2 20.2V22.7" stroke-width="1.1"/><circle cx="25.6" cy="23.9" r="1.25" stroke-width="1.1"/><circle cx="38.2" cy="23.85" r="1.1" stroke-width="1.1"/><g class="a-spin" style="transform-origin:11.5px 12.6px"><path d="M11.5 12.6L11.5 11.35M11.5 12.6L12.58 13.22M11.5 12.6L10.42 13.22" stroke-width="0.9"/></g><path class="a-wave" d="M44 15.5Q45.2 18 44 20.5" stroke-width="1.1" style="transform-origin:41.2px 18px;animation-delay:0s"/><path class="a-wave" d="M44 15.5Q45.2 18 44 20.5" stroke-width="1.1" style="transform-origin:41.2px 18px;animation-delay:0.7s"/><path class="a-wave" d="M6.2 9.3Q5 11.8 6.2 14.3" stroke-width="1.1" style="transform-origin:9px 11.8px;animation-delay:0s"/><path class="a-wave" d="M6.2 9.3Q5 11.8 6.2 14.3" stroke-width="1.1" style="transform-origin:9px 11.8px;animation-delay:0.7s"/></svg></span>
-    <span class="src k-ev" data-r="https://www.nature.com/articles/s41598-024-80975-1|Evaluation of auditory alerting systems for safe electric scooter operations|Scientific Reports (Nature), 2024||https://research.chalmers.se/en/publication/551657|Listening experiments in virtual acoustic environments: framework and application to electric vehicle noise|PhD Thesis, Chalmers University of Technology, 2026" style="--x:0.6350;--i:3;color:var(--s-ev)" role="button" tabindex="0" aria-label="Electric Vehicle (EV): what this means" data-n="Electric Vehicle (EV)" data-u="A battery-powered car, charged at home, at work or on the street." data-p="With no engine to hear, EVs play a warning sound (AVAS) at low speeds, and above that tyre noise takes over. Streets that rumbled with engines will hear synthetic tones and tyre hiss instead. It is becoming common for e-scooters and e-bikes to be fitted with AVAS too." data-lo="250" data-hi="3000"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g class="a-drive"><g transform="translate(16.95 17) scale(0.82) translate(-16 -17)"><path d="M3 21V18Q3.3 16.2 6.5 15.8L10 12.3Q11.2 11.3 13 11.3H19Q20.8 11.3 22 12.5L24.5 15.6Q26.5 16 26.7 18V21H24.4A3 3 0 0 0 18.6 21H11.4A3 3 0 0 0 5.6 21Z"/><path class="a-bolt" d="M15.6 13.2L13.8 16.4H16.4L14.6 19.6" stroke-width="1.1"/><g class="a-spin" style="transform-origin:8.5px 21.5px"><circle cx="8.5" cy="21.5" r="2.3"/><path d="M8.5 19.2V23.8" stroke-width="0.9"/></g><g class="a-spin" style="transform-origin:21.5px 21.5px"><circle cx="21.5" cy="21.5" r="2.3"/><path d="M21.5 19.2V23.8" stroke-width="0.9"/></g></g></g><path class="a-wave" d="M29.3 14Q30.7 17 29.3 20" stroke-width="1.1" style="transform-origin:25.72px 17px;animation-delay:0s"/><path class="a-wave" d="M29.3 14Q30.7 17 29.3 20" stroke-width="1.1" style="transform-origin:25.72px 17px;animation-delay:0.7s"/><path class="a-wave" d="M29.3 14Q30.7 17 29.3 20" stroke-width="1.1" style="transform-origin:25.72px 17px;animation-delay:1.4s"/><path class="a-wave" d="M2.7 14Q1.3 17 2.7 20" stroke-width="1.1" style="transform-origin:6.29px 17px;animation-delay:0s"/><path class="a-wave" d="M2.7 14Q1.3 17 2.7 20" stroke-width="1.1" style="transform-origin:6.29px 17px;animation-delay:0.7s"/><path class="a-wave" d="M2.7 14Q1.3 17 2.7 20" stroke-width="1.1" style="transform-origin:6.29px 17px;animation-delay:1.4s"/></svg></span>
-    <span class="src k-drone" data-r="https://salford-repository.worktribe.com/output/5051416/characterisation-and-perceptual-studies-of-noise-from-unmanned-aircraft-systems|Characterisation and perceptual studies of noise from unmanned aircraft systems|PhD Thesis, University of Salford, 2026||https://www.nature.com/articles/s44384-024-00001-6|Human perception and response to sound from unmanned aircraft systems within ambient acoustic environments|npj Acoustics (Nature), 2025" style="--x:0.9000;--i:4;color:var(--s-drone)" role="button" tabindex="0" aria-label="Unmanned Aerial Vehicle (UAV): what this means" data-n="Unmanned Aerial Vehicle (UAV)" data-u="Commonly referred to as a drone. Used for deliveries, such as parcels and urgent medical supplies, over towns and countryside." data-p="Small, fast-spinning propellers, often in contra-rotating pairs, and their motors make a high-pitched whine at the frequencies our hearing is most sensitive to, and it comes from overhead, where we aren’t used to hearing traffic." data-lo="200" data-hi="6000"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><g class="a-hover"><ellipse cx="7" cy="9" rx="5" ry="1.3" stroke-width="0.8" opacity="0.5"/><ellipse cx="25" cy="9" rx="5" ry="1.3" stroke-width="0.8" opacity="0.5"/><path class="a-rotor" d="M2.5 9H11.5" stroke-width="1.2"/><path class="a-rotor r2" d="M20.5 9H29.5" stroke-width="1.2"/><path d="M7 9.6V12.5M25 9.6V12.5M7 12.5H25"/><rect x="12" y="11" width="8" height="4.6" rx="1.8" fill="var(--paper)"/><path d="M13.4 15.6L11.6 19.4M18.6 15.6L20.4 19.4M10.2 19.4H13M19 19.4H21.8" stroke-width="1.2"/></g><path class="a-wave" d="M10 24Q16 27 22 24" stroke-width="1.1" style="transform-origin:16px 20px;animation-delay:0s"/><path class="a-wave" d="M10 24Q16 27 22 24" stroke-width="1.1" style="transform-origin:16px 20px;animation-delay:0.7s"/></svg></span>
-  </div>
-  <svg class="scale" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <defs><linearGradient id="spectrum" gradientUnits="userSpaceOnUse" x1="0" x2="1000" y1="0" y2="0"><stop offset="0.00" style="stop-color:var(--v0)"/><stop offset="0.20" style="stop-color:var(--v1)"/><stop offset="0.40" style="stop-color:var(--v2)"/><stop offset="0.60" style="stop-color:var(--v3)"/><stop offset="0.80" style="stop-color:var(--v4)"/><stop offset="1.00" style="stop-color:var(--v5)"/></linearGradient></defs><line x1="0" y1="12" x2="1000" y2="12" stroke="url(#spectrum)" stroke-width="2" vector-effect="non-scaling-stroke"/>
-    <g stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
-      <line x1="0.0" y1="4" x2="0.0" y2="20"/><line x1="142.9" y1="4" x2="142.9" y2="20"/><line x1="285.7" y1="4" x2="285.7" y2="20"/><line x1="428.6" y1="4" x2="428.6" y2="20"/><line x1="571.4" y1="4" x2="571.4" y2="20"/><line x1="714.3" y1="4" x2="714.3" y2="20"/><line x1="857.1" y1="4" x2="857.1" y2="20"/><line x1="999" y1="4" x2="999" y2="20"/>
-      <line x1="47.6" y1="8" x2="47.6" y2="16"/><line x1="95.2" y1="8" x2="95.2" y2="16"/><line x1="190.5" y1="8" x2="190.5" y2="16"/><line x1="238.1" y1="8" x2="238.1" y2="16"/><line x1="333.3" y1="8" x2="333.3" y2="16"/><line x1="381.0" y1="8" x2="381.0" y2="16"/><line x1="476.2" y1="8" x2="476.2" y2="16"/><line x1="523.8" y1="8" x2="523.8" y2="16"/><line x1="619.0" y1="8" x2="619.0" y2="16"/><line x1="666.7" y1="8" x2="666.7" y2="16"/><line x1="761.9" y1="8" x2="761.9" y2="16"/><line x1="809.5" y1="8" x2="809.5" y2="16"/><line x1="904.8" y1="8" x2="904.8" y2="16"/><line x1="952.4" y1="8" x2="952.4" y2="16"/>
-    </g>
-  </svg>
-  <div class="ruler-band" aria-hidden="true"></div>
-  <div class="freq-labels" aria-hidden="true"><span style="--i:0">63 Hz</span><span style="--i:1">125 Hz</span><span style="--i:2">250 Hz</span><span style="--i:3">500 Hz</span><span style="--i:4">1 kHz</span><span style="--i:5">2 kHz</span><span style="--i:6">4 kHz</span><span style="--i:7">8 kHz</span></div>
-  <div class="eth-pop src-pop" role="dialog" aria-live="polite" hidden><b></b><p class="u"></p><p class="p"></p><div class="refs"><span class="refs-h">Open-access reading</span><ul></ul></div></div>
-  </figure>
-  <p class="visually-hidden">A frequency scale from 63 Hz to 8 kHz with four noise sources arranged from low to high pitch: Air Source Heat Pumps, eVTOL air taxis, Electric Vehicles and Unmanned Aerial Vehicles (drones). Select one to see what it is and what makes it sound new, and to highlight the range of the scale where its noise is heard.</p>
 
   <div class="hero">
     <p class="hero-sub" data-nobal><span class="g">Net Zero</span> technology will bring <span class="snd">sounds</span> we’ve never lived with into our towns and cities: <span class="t t-car">electric cars</span>, <span class="t t-drone">delivery drones</span>, <span class="t t-air">air taxis</span> and <span class="t t-hp">heat pumps</span>. I research how these noise sources affect us, <em class="g">before</em> they arrive.</p>
@@ -912,27 +804,24 @@
 </footer>
 
 <script>
-  // the wave under "sounds" starts once the ruler has finished drawing
+  // the wave under "sounds" starts once the opening has finished
   (() => { const r = document.documentElement; if (r.classList.contains('intro')) addEventListener('intro-done', () => r.classList.add('ruled'), { once: true }); else setTimeout(() => r.classList.add('ruled'), 1000); })();
 </script>
 <script>
 (() => {
   // Opening sequence: 1. a pulse ripples across a blank page  2. the courier drone delivers the dot of the "i"
-  // 3. the ruler draws itself left to right as a sine wave travels along it
   const root = document.documentElement;
   const el = document.getElementById('intro');
   if (!root.classList.contains('intro') || !el) { el && el.remove(); return; }
 
   const cv = el.querySelector('canvas');
   const ctx = cv.getContext('2d');
-  const ruler = document.querySelector('.scale');
-  const reveal = [ruler, document.querySelector('.sources'), document.querySelector('.freq-labels')].filter(Boolean);
+  const head = document.querySelector('.masthead');
   const css = getComputedStyle(root);
   const v = (n) => css.getPropertyValue(n).trim();
   const INK = v('--ink'), PAPER = v('--paper');
 
   const DRAW = 400, WAVE = 900, FADE = 450;            // the opening pulse
-  const SWEEP = 1500;                                 // the ruler sweep
 
   let W, H;
   const size = () => {
@@ -947,17 +836,17 @@
 
   const easeOut = (x) => 1 - Math.pow(1 - x, 3);
   const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-  const box = () => {
-    const r = ruler ? ruler.getBoundingClientRect() : { left: W * 0.1, right: W * 0.9, top: H * 0.4, height: 0 };
-    return { x0: r.left, x1: r.right, y: r.top + r.height / 2 };
+  const box = () => {   // the pulse spans the text column of the header
+    if (!head) return { x0: W * 0.1, x1: W * 0.9 };
+    const r = head.getBoundingClientRect(), s = getComputedStyle(head);
+    return { x0: r.left + parseFloat(s.paddingLeft), x1: r.right - parseFloat(s.paddingRight) };
   };
   const hline = (x0, x1, y, alpha) => {
     ctx.globalAlpha = alpha; ctx.strokeStyle = INK; ctx.lineWidth = 1.25;
     ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
   };
 
-  let pulsed = false, swept = false, sweeping = false;
-  const clip = (px) => reveal.forEach((e) => { e.style.clipPath = px == null ? '' : `inset(-60px ${px}px -60px -60px)`; });
+  let pulsed = false, done = false;
 
   // ---------- 1. the pulse ----------
   const pulseDone = () => {
@@ -996,52 +885,23 @@
     requestAnimationFrame(pulse);
   };
 
-  // ---------- 3. the ruler sweep ----------
+  // ---------- the end: once the dot is in place ----------
   const finish = () => {
-    swept = true; sweeping = false;
-    root.classList.remove('intro'); clip(null); el.remove();
+    if (done) return; done = true;
+    root.classList.remove('intro'); el.remove();
     dispatchEvent(new Event('intro-done'));
   };
-  let s0 = null;
-  const sweep = (now) => {
-    if (swept) return;
-    if (s0 === null) {
-      s0 = now; sweeping = true;
-      dispatchEvent(new Event('sweep-start'));
-      const { x0, x1 } = box(); clip(x1 - x0);
-      el.classList.add('live');               // keep the canvas once the intro class goes
-      root.classList.remove('intro');          // ruler is visible, but clipped to nothing
-    }
-    const { x0, x1, y } = box(), len = x1 - x0;
-    const p = Math.min(1, (now - s0) / SWEEP), front = x0 + len * easeInOut(p);
-    clip(Math.max(0, x1 - front));
-    // a short sine wave rides the leading edge, in the ruler's own viridis colours
-    const lambda = Math.max(22, len * 0.035), amp = 10 * Math.sin(Math.PI * Math.min(1, p * 1.25));
-    const g = ctx.createLinearGradient(x0, 0, x1, 0);
-    ['--v0', '--v1', '--v2', '--v3', '--v4', '--v5'].forEach((n, i) => g.addColorStop(i / 5, v(n)));
-    ctx.clearRect(0, 0, W, H);
-    ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.beginPath();
-    const span = lambda * 3;
-    for (let x = Math.max(x0, front - span); x <= Math.min(x1, front + lambda * 0.5); x += 1) {
-      const d = x - front, env = Math.exp(-((d + span * 0.45) ** 2) / (2 * (span * 0.28) ** 2));
-      const yy = y - amp * env * Math.sin((2 * Math.PI * d) / lambda + now / 70);
-      x <= Math.max(x0, front - span) ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
-    }
-    ctx.stroke();
-    if (p < 1) requestAnimationFrame(sweep); else finish();
-  };
-  const startSweep = () => { if (!swept && !sweeping) setTimeout(() => requestAnimationFrame(sweep), 300); };
 
   // Skipping (scroll, key, tap) jumps straight to the finished page; the drone still delivers the dot
   const skip = () => {
     ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => removeEventListener(t, skip));
-    pulseDone(); if (!swept) finish();
+    pulseDone(); finish();
   };
   ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => addEventListener(t, skip, { passive: true }));
 
-  if (root.classList.contains('awaiting-dot')) addEventListener('dot-delivered', startSweep, { once: true });
-  else addEventListener('pulse-done', startSweep, { once: true });
-  setTimeout(startSweep, 8000);       // never wait forever
+  if (root.classList.contains('awaiting-dot')) addEventListener('dot-delivered', finish, { once: true });
+  else addEventListener('pulse-done', finish, { once: true });
+  setTimeout(finish, 8000);           // never wait forever
   requestAnimationFrame(pulse);
 })();
 </script>
@@ -1123,7 +983,7 @@
   drone.className = 'courier';
   drone.style.visibility = 'hidden';   // stays hidden until its flight path is applied
   drone.setAttribute('aria-hidden', 'true');
-  // the same line drone as the ruler and Contact page, carrying a medical case; the dot rides inside the case at (20, 17.8)
+  // the same line drone as the Contact page, carrying a medical case; the dot rides inside the case at (20, 17.8)
   drone.innerHTML = '<svg viewBox="0 0 40 34" overflow="visible" fill="none" stroke-linecap="round" stroke-linejoin="round">'
     + '<g stroke="var(--ink)" stroke-width="1.3">'
     + '<ellipse cx="9" cy="4" rx="6.5" ry="1.5" stroke-width="0.9" opacity="0.5"/><ellipse cx="31" cy="4" rx="6.5" ry="1.5" stroke-width="0.9" opacity="0.5"/>'
@@ -1140,16 +1000,9 @@
     + '<path class="door door-r" d="M20 21H24.5" stroke="var(--ink)" stroke-width="1.15"/></svg>';
   document.body.appendChild(drone);
 
-  // A tap, scroll or key press skips the intro straight to the finished page. If that happens before the
-  // courier gets home, the ruler's own drone is already showing, so the courier just leaves (no return flight,
-  // which would hide the ruler's drone while it waits for a sweep that has already been skipped).
-  let introOver = false;
-  addEventListener('intro-done', () => { introOver = true; }, { once: true });
-
   let gone = false;
   const finish = () => {
     root.classList.remove('awaiting-dot', 'drone-away'); drone.remove();
-    document.querySelectorAll('.sources .src').forEach((e) => { e.style.visibility = ''; });
     if (!gone) { gone = true; dispatchEvent(new Event('dot-delivered')); }
   };
   const fly = () => {
@@ -1203,51 +1056,7 @@
         .onfinish = () => window.dotPing && (window.dotPing(3.4, 0.45, 700, 0), window.dotPing(3.4, 0.35, 700, 650));
     }, D * 0.41 + 120);
     setTimeout(() => swing(false), D * 0.53);
-    anim.onfinish = () => (narrow && !introOver ? homecoming() : finish());
-  };
-  // Narrow screens: after leaving left, the drone flies back in from the left alongside the
-  // ruler sweep, landing in its own slot on the ruler just as the sweep reaches it.
-  const homecoming = () => {
-    const slot = document.querySelector('.sources .src[style*="--s-drone"]'), art = slot && slot.querySelector('svg');
-    if (!slot || !art) return finish();
-    slot.style.visibility = 'hidden';
-    if (!gone) { gone = true; root.classList.remove('awaiting-dot', 'drone-away'); dispatchEvent(new Event('dot-delivered')); }
-    const k = 56 / 40, ox = 20 * k, oy = 17.4 * k;
-    const land = () => {
-      // the return flight is a copy of the ruler's own drone, so it settles into its slot without a swap
-      drone.remove();
-      const r = slot.getBoundingClientRect();
-      const twin = slot.cloneNode(true);
-      ['role', 'tabindex', 'aria-label'].forEach((a) => twin.removeAttribute(a));
-      twin.setAttribute('aria-hidden', 'true');
-      Object.assign(twin.style, { visibility: 'visible', animation: 'none', opacity: '1', pointerEvents: 'none', zIndex: '5' });
-      // fly outside the ruler's sweep clip: a twin of the sources row, pinned to the same spot on the page
-      const row = slot.parentElement, rr = row.getBoundingClientRect(), lane = document.createElement('div');
-      lane.className = row.className; lane.setAttribute('aria-hidden', 'true');
-      Object.assign(lane.style, { position: 'absolute', left: rr.left + scrollX + 'px', top: rr.top + scrollY + 'px',
-        width: rr.width + 'px', height: rr.height + 'px', margin: '0', zIndex: '40', pointerEvents: 'none' });
-      lane.appendChild(twin); document.body.appendChild(lane);
-      // enter from the left and ride with the sweep, high enough to clear the other sources, then drop in past the EV
-      const dx0 = -(r.right + 10), up = r.height * 1.3, ev = slot.parentElement.getBoundingClientRect().width * (0.75 - 0.9);
-      const at = (dx, dy, rot) => `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rot}deg)`;
-      // sampled path: the horizontal glide eases out, and the descent is a long, smooth S-curve over the second half
-      const ease = (t) => 1 - Math.pow(1 - t, 3), smooth = (t) => t * t * t * (t * (6 * t - 15) + 10);
-      const frames = [];
-      for (let n = 0; n <= 40; n++) {
-        const t = n / 40, d = smooth(Math.max(0, (t - 0.58) / 0.42));
-        frames.push({ transform: at(dx0 * (1 - ease(t)), -up * (1 - d), 6 * (1 - smooth(t))), offset: t });
-      }
-      const fly = twin.animate(frames, { duration: 2000, easing: 'linear', fill: 'forwards' });
-      // hand over to the real slot only once the sweep has fully revealed the ruler
-      let landed = false, revealed = false;
-      const done = () => { if (landed && revealed) { slot.style.visibility = ''; lane.remove(); finish(); } };
-      fly.onfinish = () => { landed = true; done(); };
-      addEventListener('intro-done', () => { revealed = true; done(); }, { once: true });
-      setTimeout(() => { revealed = true; done(); }, 3000);
-    };
-    let flying = false;
-    addEventListener('sweep-start', () => { flying = true; land(); }, { once: true });
-    addEventListener('intro-done', () => { if (!flying) finish(); }, { once: true });   // intro skipped: drone is simply in place
+    anim.onfinish = finish;
   };
   const start = () => requestAnimationFrame(fly);
   // Fly in once the opening pulse has cleared (and the name's font has loaded, so the dot lands in the right place)
@@ -1316,98 +1125,6 @@
     requestAnimationFrame(frame);
   });
 })();
-</script>
-<script>
-  /* Ruler icons: crop each drawing to its own outline, then size them all to one height on one centre line */
-  (() => {
-    const fit = () => {
-      const sources = document.querySelector('.sources'); if (!sources) return;
-      const H = parseFloat(getComputedStyle(sources).getPropertyValue('--ih')) || 34;
-      const wide = matchMedia('(min-width: 900px)').matches;
-      sources.querySelectorAll('.src svg.craft').forEach((svg) => {
-        if (!svg.dataset.vb) {
-          let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-          svg.querySelectorAll('path, rect, circle, ellipse, line, polygon, polyline').forEach((el) => {
-            if (el.closest('.pulse, .ring, .wind, .note, .a-wave, .a-air, .a-note')) return;
-            const b = el.getBBox(); if (!b.width && !b.height) return;
-            const m = el.getCTM && svg.getCTM() ? svg.getCTM().inverse().multiply(el.getCTM()) : null;
-            const pts = [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].map(([x, y]) => {
-              if (!m) return [x, y];
-              return [m.a * x + m.c * y + m.e, m.b * x + m.d * y + m.f];
-            });
-            pts.forEach(([x, y]) => { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); });
-          });
-          if (!isFinite(x0)) return;
-          const p = 0.6;
-          svg.dataset.vb = [x0 - p, y0 - p, x1 - x0 + 2 * p, y1 - y0 + 2 * p].map((v) => +v.toFixed(2)).join(' ');
-          svg.setAttribute('viewBox', svg.dataset.vb);
-        }
-        const [, , w, h] = svg.dataset.vb.split(' ').map(Number);
-        const Hs = H * (wide ? +(svg.parentNode.dataset.k || 1) : 1);   /* desktop: tall, narrow sources get a little extra height */
-        const width = Math.min(Hs * w / h, H * (wide ? 2.7 : 2.1));
-        svg.style.width = width + 'px'; svg.style.height = (width * h / w) + 'px';
-        // keep line weights the same on every icon, whatever its scale (2 px per unit at the desktop height)
-        const k = width / w, ref = 2 * (H / 66);
-        [svg, ...svg.querySelectorAll('[stroke-width]')].forEach((el) => {
-          if (!el.dataset.sw) el.dataset.sw = el.getAttribute('stroke-width') || '1';
-          el.setAttribute('stroke-width', (+el.dataset.sw * ref / k).toFixed(3));
-        });
-      });
-    };
-    fit();
-    addEventListener('resize', () => { clearTimeout(fit.t); fit.t = setTimeout(fit, 150); });
-  })();
-</script>
-<script>
-  /* Ruler: click or press Enter on a source for what it is and where it sits on the ruler; click elsewhere or Escape to close */
-  (() => {
-    const fig = document.querySelector('.freq'); if (!fig) return;
-    const sources = fig.querySelector('.sources'), scale = fig.querySelector('.scale'), band = fig.querySelector('.ruler-band'),
-          labels = fig.querySelector('.freq-labels'), pop = fig.querySelector('.src-pop');
-    if (!sources || !scale || !band || !pop) return;
-    const [title, use, part, refs] = pop.children, refList = refs.querySelector('ul');
-    const at = (f) => Math.max(0, Math.min(1, Math.log2(f / 63) / 7));     /* same log scale as the ruler: 63 Hz to 8 kHz */
-    let open = null;
-    const close = () => {
-      if (!open) return;
-      open.classList.remove('on'); open.setAttribute('aria-expanded', 'false'); open = null;
-      sources.classList.remove('picking'); band.classList.remove('on'); pop.classList.remove('on');
-      setTimeout(() => { if (!open) pop.hidden = true; }, 200);
-    };
-    const place = (s) => {
-      const fr = fig.getBoundingClientRect(), sr = scale.getBoundingClientRect(), lo = +s.dataset.lo, hi = +s.dataset.hi;
-      band.style.left = (sr.left - fr.left + at(lo) * sr.width) + 'px';
-      band.style.width = ((at(hi) - at(lo)) * sr.width) + 'px';
-      band.style.top = (sr.top - fr.top + sr.height / 2) + 'px';
-      const r = s.getBoundingClientRect(), w = pop.offsetWidth, below = (labels || scale).getBoundingClientRect().bottom;
-      pop.style.left = Math.max(8, Math.min(r.left - fr.left + r.width / 2 - w / 2, fr.width - w - 8)) + 'px';
-      pop.style.top = (below - fr.top + 12) + 'px';
-    };
-    const show = (s) => {
-      if (open === s) return close();
-      if (open) { open.classList.remove('on'); open.setAttribute('aria-expanded', 'false'); }
-      open = s; s.classList.add('on'); s.setAttribute('aria-expanded', 'true'); sources.classList.add('picking');
-      title.textContent = s.dataset.n;
-      use.textContent = s.dataset.u;
-      part.textContent = s.dataset.p;
-      refList.replaceChildren(...(s.dataset.r || '').split('||').filter(Boolean).map((r) => {
-        const [href, t, v] = r.split('|'), li = document.createElement('li'), link = document.createElement('a'), venue = document.createElement('span');
-        link.href = href; link.textContent = t; venue.textContent = v; li.append(link, venue); return li;
-      }));
-      refs.hidden = !refList.children.length;
-      band.style.setProperty('--c', getComputedStyle(s).color);
-      pop.hidden = false; place(s);
-      requestAnimationFrame(() => { band.classList.add('on'); pop.classList.add('on'); });
-    };
-    sources.querySelectorAll('.src[data-n]').forEach((s) => {
-      s.setAttribute('aria-expanded', 'false');
-      s.addEventListener('click', (e) => { e.stopPropagation(); show(s); });
-      s.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(s); } });
-    });
-    document.addEventListener('click', (e) => { if (!pop.contains(e.target)) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) { const s = open; close(); s.focus(); } });
-    addEventListener('resize', () => { if (open) place(open); });
-  })();
 </script>
 <script>
   // Hold the network animation still for people who prefer reduced motion

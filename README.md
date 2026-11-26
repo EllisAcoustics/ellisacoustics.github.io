@@ -24,7 +24,7 @@ plain HTML, one stylesheet, one script, no bundler, no runtime dependencies and 
 | Page | Purpose |
 | --- | --- |
 | [`index.html`](index.html) | Home: animated frequency ruler of noise sources, research statement, publications, collaborators |
-| [`about.html`](about.html) | Full CV: experience, education, memberships, volunteering, software, certificates |
+| [`about.html`](about.html) | Full CV: experience, education, memberships, software, certificates |
 | [`listen.html`](listen.html) | Sounds synthesised live in the browser with the Web Audio API (nothing is recorded or sent) |
 | [`press.html`](press.html) | Press and media resources |
 | [`contact.html`](contact.html) | Contact routes and the topics Max can speak on |
@@ -51,7 +51,7 @@ plain HTML, one stylesheet, one script, no bundler, no runtime dependencies and 
 │   ├── js/site.js              Theme switch, heading balancer, shared behaviour
 │   ├── fonts/                  Sourcerer source fonts and per-page WOFF2 subsets (generated)
 │   ├── images/                 Photographs and the social-share card
-│   └── logos/                  Organisation, volunteering and software marks (light and dark)
+│   └── logos/                  Organisation and software marks (light and dark)
 ├── cv/                         Generated CV PDF, linked from the site and from external profiles
 ├── papers/                     Open-access copy of the publication
 ├── design/originals/           Unmodified source artwork that the logos were derived from
