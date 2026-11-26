@@ -123,22 +123,9 @@
   .photo img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 2px; }
   .photo figcaption { margin-top: var(--u); font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--ink-2); }
   .about-body p { font-size: 18px; line-height: 29px; }
-  /* ---------- More about Max: a hidden drawer of interests ---------- */
-  .more-wrap { margin: 0; }
-  .more-row { padding: 0 0 calc(var(--u) * 2); }
   .story-sec { padding-bottom: 0; }
   .photo-row { padding-top: calc(var(--u) * 4); }
-  .reveal .section { padding-bottom: calc(var(--u) * 4); }
-  .more-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer;
-    font: inherit; font-size: 15px; color: var(--ink-2); }
-  .more-btn .more-l { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; transition: text-decoration-color var(--dur-2) var(--ease); }
-  .more-btn:hover, .more-btn[aria-expanded="true"] { color: var(--ink); }
-  .more-btn:hover .more-l { text-decoration-color: currentColor; }
-  .more-btn svg { width: 12px; height: 12px; transition: transform var(--dur-3) var(--ease); }
-  .more-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .reveal { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows var(--dur-4) var(--ease-out), opacity var(--dur-3) var(--ease); }
-  .reveal.open { grid-template-rows: 1fr; opacity: 1; }
-  .reveal-in { overflow: hidden; min-height: 0; }
+  /* ---------- Interests ---------- */
   .ints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 4) calc(var(--u) * 2); max-width: 760px; }
   @media (min-width: 640px) { .ints { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
   .int, .int > a { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; color: var(--ink); text-decoration: none; }
@@ -148,8 +135,6 @@
   .int-s { font-size: 13px; line-height: 18px; color: var(--ink-2); }
   .int > a .int-n { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
   .int > a:hover .int-n { text-decoration-color: currentColor; }
-  .reveal .int { opacity: 0; transform: translateY(8px); }
-  .reveal.open .int { opacity: 1; transform: none; transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease-out); transition-delay: calc(120ms + var(--i) * 70ms); }
   .int svg * { transform-box: view-box; }
   .int-weights .i-lift { animation: i-lift 2.6s var(--ease-in-out) infinite; }
   @keyframes i-lift { 0%, 100% { transform: none; } 45%, 60% { transform: translateY(-3px); } }
@@ -180,10 +165,9 @@
   a.int-s:hover { color: var(--ink); text-decoration-color: currentColor; }
   .int[tabindex] { outline-offset: 6px; border-radius: 2px; }
   @media (prefers-reduced-motion: reduce) {
-    .reveal, .reveal .int, .more-btn svg { transition: none !important; }
     .int svg * { animation: none !important; } .int-production .i-note { opacity: 1; } .int .int-s { opacity: 1; } .int-film .i-flash { opacity: 0; }
   }
-  @media print { .more-wrap, .reveal { display: none !important; } }
+  @media print { #interests { display: none !important; } }
 
   .about-body p + p { margin-top: calc(var(--u) * 2.5); }
   .next { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 1.5); }
@@ -195,9 +179,6 @@
   .foot-line { position: absolute; left: 0; top: -16px; width: 100%; height: 32px; display: block; overflow: visible; pointer-events: none; }
   .foot-line path { fill: none; stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
   @media print { .foot-line { display: none; } }
-  /* same grid as Working Groups above, so the three columns line up */
-    display: flex; flex-direction: column; font-size: 14px; line-height: 20px; background: var(--paper);
-    transform: translate(calc(-50% + var(--dx, 0px)), 4px); opacity: 0; pointer-events: none; transition: opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease); }
   .print-only { display: none; }
   .skip { position: absolute; left: var(--gutter); top: -100px; z-index: 200; background: var(--ink); color: var(--paper); padding: var(--u) calc(var(--u) * 2); }
   .skip:focus { top: var(--u); }
@@ -358,6 +339,19 @@
     </div>
   </section>
 
+  <section class="section" id="collaborations" aria-labelledby="collab-h">
+    <h2 id="collab-h">Research Collaborations</h2>
+    <ul class="print-only print-list">
+      <li><strong>Defra</strong> — PhD Sponsor</li>
+      <li><strong>HEAD Acoustics GmbH</strong> — Conference Paper</li>
+    </ul>
+    <ul class="org-grid" aria-label="Research collaborators">
+      <li class="org-tile" tabindex="0"><img loading="lazy" src="assets/logos/orgs/defra.png" class="colour dark-ink" width="80" height="56" style="height:56px" alt="Department for Environment, Food &amp; Rural Affairs (Defra)" decoding="async"><span class="caption"><span class="t">Department for Environment, Food &amp; Rural Affairs</span><span>PhD Sponsor</span></span></li>
+      <li class="org-tile" tabindex="0"><img loading="lazy" class="colour on-light" src="assets/logos/orgs/head-acoustics.svg" width="31" height="56" style="height:56px" alt="HEAD Acoustics GmbH" decoding="async"><img loading="lazy" class="colour on-dark" src="assets/logos/orgs/head-acoustics-dark.svg" width="31" height="56" style="height:56px" alt="" decoding="async"><span class="caption"><span class="t">HEAD Acoustics GmbH</span><span>Conference Paper</span></span></li>
+    </ul>
+  
+  </section>
+
   <section class="section" id="memberships" aria-labelledby="groups-h">
     <h2 id="groups-h">Working Groups and Committees</h2>
     <ul class="print-only print-list">
@@ -409,14 +403,7 @@
     </ul>
   </section>
 
-  <div class="section more-row">
-    <div aria-hidden="true"></div>
-    <p class="more-wrap"><button class="more-btn" type="button" aria-expanded="false" aria-controls="interests"><span class="more-l">More about Max</span><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5L6 8L9.5 4.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
-  </div>
-
-  <div class="reveal" id="interests" inert>
-    <div class="reveal-in">
-  <section class="section" aria-labelledby="interests-h">
+  <section class="section" id="interests" aria-labelledby="interests-h">
     <h2 id="interests-h">Interests</h2>
       <ul class="ints">
         <li class="int int-chess" style="--i:0"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><g class="i-pawn"><circle cx="20" cy="8.4" r="3.9"/><path d="M14.8 15.2Q20 13.4 25.2 15.2"/><path d="M16.6 15.6Q17.2 22.6 13.6 26.8H26.4Q22.8 22.6 23.4 15.6"/><rect x="11" y="26.8" width="18" height="3.6" rx="1.2"/></g></svg><span class="int-n">Chess</span><a class="int-s" href="https://www.chess.com/member/max3llis">1800+ Elo</a></li>
@@ -425,8 +412,6 @@
         <li class="int int-film" style="--i:3"><svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" overflow="visible" aria-hidden="true" focusable="false"><path d="M4.6 10.4H13L15.6 6H24.4L27 10.4H35.4Q37.2 10.4 37.2 12.2V27.4Q37.2 29.2 35.4 29.2H4.6Q2.8 29.2 2.8 27.4V12.2Q2.8 10.4 4.6 10.4Z"/><path d="M2.8 14.6H12.6M27.4 14.6H37.2M2.8 25.4H12.4M27.6 25.4H37.2" stroke-width="0.6" opacity="0.6"/><rect x="28.6" y="8" width="3.4" height="2.4" rx="0.6" stroke-width="0.8"/><rect x="6" y="8.4" width="4.2" height="2" rx="0.6" stroke-width="0.8"/><circle cx="20" cy="20" r="7.4" fill="var(--paper)"/><circle cx="20" cy="20" r="5.4" stroke-width="0.8"/><circle class="i-glass" cx="20" cy="20" r="3.2" stroke="none"/><path class="i-glint" d="M18 18.4A2.4 2.4 0 0 1 20.6 17.4" stroke-width="0.8"/><g class="i-flash" stroke-width="0.8"><path d="M20 3.6V1.4M23.2 4.4L24.6 2.8M16.8 4.4L15.4 2.8"/></g></svg><span class="int-n">Film Photography</span></li>
       </ul>
   </section>
-    </div>
-  </div>
 
   <section class="section" aria-labelledby="next-h">
     <h2 id="next-h">Where Next?</h2>
@@ -520,23 +505,6 @@
     };
     const all = () => document.querySelectorAll(SEL).forEach(place);
     all(); addEventListener('resize', all);
-  })();
-</script>
-<script>
-  /* More about Max: opens the interests drawer below the story */
-  (() => {
-    const btn = document.querySelector('.more-btn'), box = document.getElementById('interests');
-    if (!btn || !box) return;
-    btn.addEventListener('click', () => {
-      const open = btn.getAttribute('aria-expanded') !== 'true';
-      btn.setAttribute('aria-expanded', String(open));
-      btn.querySelector('.more-l').textContent = open ? 'Less about Max' : 'More about Max';
-      box.classList.toggle('open', open);
-      box.inert = !open;
-      if (open && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 260);
-      }
-    });
   })();
 </script>
 <script data-src="assets/js/site.js">
